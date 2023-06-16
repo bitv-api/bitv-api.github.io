@@ -106,7 +106,7 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 
 **Websocket Feed（资产和订单）**
 
-**`wss://api.bitv.com/ws/v1`**  
+**`wss://api.bitv.com/ws/v2`**  
 
 
 ## 签名认证

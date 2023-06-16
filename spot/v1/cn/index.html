@@ -214,6 +214,7 @@
       <div style="flex-grow: 1;">
         <a href="/docs/spot/v1/en/" class="lang" id="lang_box_en" style="float: right; margin-left: 5px;">English</a>
         <a href="/docs/spot/v1/cn/" class="lang" id="lang_box_zn" style="float: right; margin-left: 5px;">简体中文</a>
+        <a href="/docs/spot/v1/hk/" class="lang" id="lang_box_zn" style="float: right; margin-left: 5px;">繁体中文</a>
       </div>
     </header>
     <div class="toc-wrapper">
@@ -642,7 +643,7 @@
 
 <p><strong>Websocket Feed（资产和订单）</strong></p>
 
-<p><strong><code>wss://api.bitv.com/ws/v1</code></strong>  </p>
+<p><strong><code>wss://api.bitv.com/ws/v2</code></strong>  </p>
 <h2 id='c64cd15fdc'>签名认证</h2><h3 id='34addae335'>签名说明</h3>
 <p>API 请求在通过 internet 传输的过程中极有可能被篡改，为了确保请求未被更改，除公共接口（基础信息，行情数据）外的私有接口均必须使用您的 API Key 做签名认证，以校验参数或参数值在传输途中是否发生了更改。<br>
 每一个API Key需要有适当的权限才能访问相应的接口，每个新创建的API Key都需要分配权限。在使用接口前，请查看每个接口的权限类型，并确认你的API Key有相应的权限。</p>

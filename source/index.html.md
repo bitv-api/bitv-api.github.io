@@ -2093,8 +2093,8 @@ API Key 权限：读取<br>
 API Key 权限：提币<br>
 限频值（NEW）：20次/2s
 
-<aside class="notice">如果用户在 <a href='https://www.huobi.co.kr/zh-cn/user_center/uc_setting/'>个人设置 </a> 里设置了优先使用快速提币，通过API发起的提币也会优先选择快速提币通道。快速提币是指当提币目标地址是平台内部用户地址时，提币将通过平台内部快速通道，不通过区块链。</aside>
-<aside class="notice">API提币仅支持用户 <a href='https://www.huobi.co.kr/zh-cn/withdraw_address/'>提币地址列表</a> 中的地址。IOTA一次性提币地址无法被设置为常用地址，因此不支持通过API方式提币IOTA。 </aside>
+<aside class="notice">如果用户在个人设置 </a> 里设置了优先使用快速提币，通过API发起的提币也会优先选择快速提币通道。快速提币是指当提币目标地址是平台内部用户地址时，提币将通过平台内部快速通道，不通过区块链。</aside>
+<aside class="notice">API提币仅支持用户提币地址列表</a> 中的地址。IOTA一次性提币地址无法被设置为常用地址，因此不支持通过API方式提币IOTA。 </aside>
 
 ### HTTP 请求
 
@@ -4400,7 +4400,6 @@ Websocket服务器同时支持一次性请求数据（pull）。
 | high   | float    | 最高价                                      |
 | vol    | float    | 成交额, 即 sum(每一笔成交价 * 该笔的成交量) |
 
-<aside class="notice">当symbol被设为“hb10”或“huobi10”时，amount，count，vol均为零值。</aside>
 
 ### 数据请求
 

@@ -3855,7 +3855,7 @@ API Key 权限：读取<br>
 | symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type                | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
-| filled-points       | true     | string   | 抵扣数量（可为ht或hbpoint）                                  |                                                              |
+| filled-points       | true     | string   | 抵扣数量                                 |                                                              |
 | fee-deduct-currency | true     | string   | 抵扣类型                                                     | 如果为空，代表扣除的手续费是原币；代表抵扣手续费的是抵扣资产 |
 | fee-deduct-state    | true     | string   | 抵扣状态                                                     | 抵扣中：ongoing，抵扣完成：done                              |
 
@@ -4124,7 +4124,7 @@ API Key 权限：读取<br>
 | symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type                | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
-| filled-points       | true     | string   | 抵扣数量（可为ht或hbpoint）                                  |                                                              |
+| filled-points       | true     | string   | 抵扣数量                                |                                                              |
 | fee-deduct-currency | true     | string   | 抵扣类型                                                     |                                                              |
 | fee-deduct-state    | true     | string   | 抵扣状态                                                     | 抵扣中：ongoing，抵扣完成：done                              |
 

@@ -5,8 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - json
 
 toc_footers:
-  - <a href='https://www.bitv.com/api/'>Create API Key</a>
-
+  - <a href='https://www.bitv.com/api/'>创建 API Key </a>
 includes:
 
 search: false
@@ -19,100 +18,114 @@ search: false
 
 Welcome to the BitV API!
 
-This document serves as the official API documentation for BitV. The provided functionalities and services will be continuously updated here, so please stay tuned for updates.
+This document is the only official API document of BitV. The features and services provided will be continuously updated here.
 
-You can use the menu above to switch between different business APIs and use the language button in the top right corner to switch the document language.
+You can switch to get the API for different services by clicking the menu above, and you can also switch the language of the document by clicking the language button on the top right.
 
-The right side of the document displays examples of request parameters and response results.
+Examples of request parameters and response results are shown on the right side of the document.
 
-## Subscription Updates
+## Update Subscription
 
-Announcements regarding API additions, updates, deprecations, and other information will be provided in advance. We recommend that you follow and subscribe to our announcements to stay informed.
+We will notify you in advance about API additions, updates and downgrades. We suggest you pay attention to and subscribe to our announcements to get relevant information in time.
 
-## Contact Us
+## Contact us
 
-If you have any questions or inquiries regarding API usage, please refer to the `Q&A` section for consultation.
+If you have any questions or inquiries regarding the use of the API, please refer to the `Q&A` for inquiries.
 
 # Quick Start
 
 ## Access Preparation
 
-To use the API, please log in to the web portal first, complete the application for an API key, and configure the permissions according to the details in this document for development and trading.
+To use the API, please log in to the web terminal and complete the API key application and permission configuration before developing and trading according to the details in this document.
 
-You can click <a href='https://www.bitv.com/api/'>here
+You can create an API key by clicking [here ](https://www.bitv.com/api/).
 
+Each parent user can create 20 groups of Api Key, and each Api Key can set three kinds of permissions: read, trade and withdraw coins.
 
+Permissions are described as follows:
 
+- Read permission: Read permission is used for the query interface of data, such as: order query, transaction query, etc.
+- Trading permission: Trading permission is used for placing, withdrawing and transferring orders.
+- Withdrawal permission: Withdrawal permission is used to create withdrawal orders and cancel withdrawal order operations.
+
+After successful creation, please make sure to remember the following information:
+
+- `Access Key` API access key
+
+- `Secret Key` The key used for signature authentication encryption (only visible when applying)
+
+<aside class="notice">
+Each API Key can be bound to a maximum of 20 IP addresses (host or network addresses), and API Keys that are not bound to IP addresses are valid for 90 days. For security reasons, it is strongly recommended that you bind an IP address.
+</aside>
+<aside class="warning"> 
+ <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets (even if you do not open withdrawal privileges), if you find API Key leakage, please delete the API Key as soon as possible.
+</aside> 
 
 ## Interface Types
 
-We provide two types of interfaces for users. You can choose the appropriate method for querying market data, trading, or withdrawals based on your usage scenario and preferences.
+We provide two kinds of interfaces for users, you can choose the suitable way to check the quotes, trade or withdraw coins according to your usage scenarios and preferences.
 
 ### REST API
 
-REST, which stands for Representational State Transfer, is a widely used communication mechanism based on HTTP. Each URL represents a resource.
+REST, which stands for Representational State Transfer, is a popular HTTP-based communication mechanism, where each URL represents a resource.
 
-For one-time operations such as trading or asset withdrawals, it is recommended for developers to use the REST API.
+For one-time operations such as trading or withdrawing coins from assets, developers are recommended to use the REST API for operations.
 
 ### WebSocket API
 
-WebSocket is a new protocol introduced in HTML5. It enables full-duplex communication between the client and the server, allowing the server to actively push information to the client based on business rules.
+WebSocket is a new protocol (Protocol) for HTML5. It implements full-duplex communication between client and server. A client-server connection can be established through a simple handshake, and the server can actively push information to the client according to business rules.
 
-For market data, order book depth, and other information, it is recommended for developers to use the WebSocket API.
+It is recommended that developers use the WebSocket API to obtain information such as market quotes and buying and selling depth.
 
-**Authentication for API**
+**Interface Authentication**
 
-Both types of interfaces include public and private interfaces.
+Both of the above interfaces contain two types of public and private interfaces.
 
-Public interfaces can be used to obtain basic information and market data. Public interfaces do not require authentication to be called.
+The public interface can be used to obtain basic information and quotation data. The public interface can be called without authentication.
 
-Private interfaces can be used for trade management and account management. Each private request must be signed and authenticated using your API Key.
+The private interface can be used for trade management and account management. Each private request must be signed and authenticated using your API Key.
 
 ## Access URLs
-
-
 **REST API**
 
-**`https://api.bitv.com`**  
+**`https://api.bitv.com`**
 
-**WebSocket Feed (Market Data, excluding MBP incremental data)**
+**Websocket Feed (quotes, not including MBP incremental quotes)**
 
-**`wss://api.bitv.com/ws`**  
+**`wss://api.bitv.com/ws`**
 
-**WebSocket Feed (Market Data, MBP incremental data only)**
+**Websocket Feed (ticker, MBP incremental ticker only)**
 
-**`wss://api.bitv.com/feed`**  
+**`wss://api.bitv.com/feed`**
 
-**WebSocket Feed (Assets and Orders)**
+**Websocket Feed (assets and orders)**
 
-**`wss://api.bitv.com/ws/v2`**  
-
+*`*wss://api.bitv.com/ws/v2`*
 
 ## Signature Authentication
 
 ### Signature Description
 
-API requests are susceptible to tampering during transmission over the internet. To ensure that requests have not been modified, private interfaces (excluding basic information and market data) must be authenticated using your API Key to verify whether the parameters or parameter values have changed during transmission.
-
-Each API Key requires appropriate permissions to access the corresponding interfaces. Permissions need to be assigned to each newly created API Key. Before using the interfaces, check the permissions required for each interface and confirm that your API Key has the necessary permissions.
+To ensure that requests are not altered, private interfaces other than public interfaces (base information, ticker data) must be signed and authenticated with your API Key to verify that parameters or parameter values have not been altered in transit.  
+Each API Key requires the appropriate permissions to access the corresponding interface, and each newly created API Key needs to be assigned permissions. Before using an interface, check the permission type for each interface and make sure your API Key has the appropriate permissions.
 
 A legitimate request consists of the following components:
 
-- Method Request URL: The URL for accessing the server, such as https://api.bitv.com.
-- API Access ID (AccessKeyId): The Access Key in your API Key.
-- Signature Method (SignatureMethod): The hash-based protocol used to calculate the signature. In this case, HmacSHA256 is used.
-- Signature Version (SignatureVersion): The version of the signature protocol. In this case, version 2 is used.
-- Timestamp (Timestamp): The time (in UTC) when you send the request. For example: 2017-05-11T16:22:06. Including this value in the query request helps prevent third-party interception of your request.
-- Required and Optional Parameters: Each method has a set of required parameters and optional parameters for defining the API call. You can refer to the documentation for each method to see these parameters and their meanings.
-  - For GET requests, all the parameters included in each method need to be signed.
-  - For POST requests, the parameters included in each method are not signed and should be placed in the request body.
-- Signature: The calculated signature value used to ensure the validity and integrity of the signature.
+- Method request address: that is, access to the server address <https://api.bitv.com>
+- API AccessId (AccessKeyId): The Access Key in the API Key you requested.
+- SignatureMethod: The hash-based protocol used by the user to calculate the signature, here HmacSHA256 is used.
+- SignatureVersion: The version of the signature protocol, here 2 is used.
+- Timestamp: The time you sent the request (UTC time). For example: 2017-05-11T16:22:06. Including this value in the query request helps prevent third parties from intercepting your request.
+- Required and Optional Parameters: Each method has a set of required and optional parameters that are used to define the API call. You can see these parameters and their meaning in the description of each method.
+  - For GET requests, each method comes with its own parameters that require a signature operation.
+  - For POST requests, each method's own parameters are not signed and need to be placed in the body.
+- Signature: The value resulting from the signature calculation, which is used to ensure that the signature is valid and has not been tampered with.
 
-### Signature Steps
+### Signing steps
 
-To calculate the signature, the request needs to be normalized. Using a different content to calculate the HMAC results in completely different values. Therefore, before calculating the signature, normalize the request. The following example demonstrates the process using a request to query order details:
+Because when using HMAC for signature computation, the result of the computation can be completely different using different content. Therefore, please normalize the request before performing the signature calculation. The following is an example of a request for order details:
 
-Complete URL for querying order details:
+The full request URL for an order detail query
 
 `https://api.bitv.com/v1/order/orders?`
 
@@ -126,31 +139,23 @@ Complete URL for querying order details:
 
 `&order-id=1234567890`
 
-**1. Request method (GET or POST, GET for WebSocket), followed by a newline character "\n".**
+**1. request method (GET or POST, GET for WebSocket), followed by the newline character "\n"**
 
-For example:
-`GET\n`
+For example: `GET\n`
 
-**2. Lowercase access domain, followed by a newline character "\n".**
+**2. add the access domain name in lowercase, followed by the newline character "\n"**
 
-For example:
-`api.bitv.com\n`
+For example: `api.bitv.com\n`
 
-**3. Path of the access method, followed by a newline character "\n".**
+**3. add the path to the access method, followed by a line break "\n"**
 
-For example, for querying orders:
-`
-/v1/order/orders\n
-`
+For example, to check orders:<br/>`/v1/order/orders\n`<br/>
 
-For WebSocket v2:
-`
-/ws/v2
-`
+For example WebSocket v2<br/>`/ws/v2`<br/>
 
-**4. URL-encode the parameters and sort them in ASCII order.**
+**4. URL encoding of the parameters and sorting them in ASCII order**
 
-For example, the original order of the request parameters (URL-encoded):
+For example, here is the original order of the request parameters and after URL encoding
 
 `AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx`
 
@@ -162,14 +167,14 @@ For example, the original order of the request parameters (URL-encoded):
 
 `Timestamp=2017-05-11T15%3A19%3A30`
 
-<aside class="notice">
-Use UTF-8 encoding and URL-encode the parameters. Hexadecimal characters must be in uppercase. For example, ":" is encoded as "%3A" and space is encoded as "%20".
+<aside class="notice"> 
+Use UTF-8 encoding and URL encoding, hexadecimal characters must be capitalized, e.g. ":" will be encoded as "%3A" and spaces are encoded as "%20".
 </aside>
-<aside class="notice">
-The timestamp (Timestamp) should be added in the format of YYYY-MM-DDThh:mm:ss and URL-encoded.
+<aside class="notice"> 
+Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 </aside>
 
-After sorting:
+After sorting
 
 `AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx`
 
@@ -181,11 +186,11 @@ After sorting:
 
 `order-id=1234567890`
 
-**5. Concatenate the parameters using the character "&" according to the above order.**
+**5. In the above order, connect the parameters using the character "&"**
 
-`AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=2017-05-11T15%3A19%3A30&order-id=1234567890`
+`AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=2017-05-11T15% 3A19%3A30&order-id=1234567890`
 
-**6. Create the final string for signature calculation as follows:**
+**6. compose the final string for the signature calculation as follows**
 
 `GET\n`
 
@@ -193,29 +198,30 @@ After sorting:
 
 `/v1/order/orders\n`
 
-`AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=2017-05-11T15%3A19%3A30&order-id=1234567890`
+`AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=2017-05-11T15% 3A19%3A30&order-id=1234567890`
 
-**7. Generate a digital signature using the "Request String" obtained from the previous step and your secret key.**
 
-1. Use the HmacSHA256 hash function with the request string and your API secret key as parameters to obtain the hash value.
-2. Base64-encode the hash value to obtain the digital signature for this API call.
+**7. Generate a digital signature with the "request string" created in the previous step and your Secret Key**
+
+1. Use the request string from the previous step and the API private key as two parameters, call the HmacSHA256 hash function to obtain the hash value.
+2. Base-64 encode this hash value to get the digital signature for this API call.
 
 `4F65x5A2bLyMWVQj3Aqp+B4w+ivaA7n5Oi2SuYtCJ9o=`
 
-**8. Add the generated digital signature to the request.**
+**8. Include the generated digital signature in your request**
 
-For REST interfaces:
+For Rest API:
 
-1. Add all the required authentication parameters to the path parameters of the API call.
-2. URL-encode the digital signature and add it as a path parameter. The parameter name is "Signature".
+1. Add all required authentication parameters to the path parameters of the interface call
+2. URL encode the digital signature and add it to the path parameters, with the parameter name as "Signature".
 
-Finally, the API request sent to the server should be:
+Ultimately, the API request sent to the server should look like this:
 
 `https://api.bitv.com/v1/order/orders?AccessKeyId=e2xxxxxx-99xxxxxx-84xxxxxx-7xxxx&order-id=1234567890&SignatureMethod=HmacSHA256&SignatureVersion=2&Timestamp=2017-05-11T15%3A19%3A30&Signature=4F65x5A2bLyMWVQj3Aqp%2BB4w%2BivaA7n5Oi2SuYtCJ9o%3D`
 
-For WebSocket interfaces:
+For WebSocket interface:
 
-1. Fill in the parameters and signature in the required JSON format.
+1. Fill in the parameters and signature as per the required JSON format.
 2. The parameters in the JSON request do not need to be URL-encoded.
 
 For example:
@@ -234,141 +240,138 @@ For example:
     }
 }
 `
-
 ## Sub-Users
 
-Sub-users can be used to separate assets and trading. Assets can be transferred between main and sub-users. Sub-users can only trade within their own accounts, and assets cannot be transferred directly between sub-users. Only the main user has the authority to transfer assets.
+Sub-users can be used to segregate assets and transactions. Assets can be transferred between the main user and the sub-users. Sub-users can only trade within the sub-user's account, and assets cannot be directly transferred between sub-users - only the main user has transfer authority. 
 
-Sub-users have independent login credentials and API Keys, which are managed by the main user on the web portal.
+Sub-users have independent login usernames, passwords, and API Keys, all of which are managed by the main user via the web interface. 
 
-Each main user can create up to 200 sub-users, and each sub-user can create up to 5 sets of API Keys. Each API Key can be set with Read and Trade permissions.
+Each main user can create up to 200 sub-users. Each sub-user can create up to 5 sets of API Keys, each with the option to set read and trade permissions.
 
-API Keys for sub-users can also be bound to IP addresses, and the validity period is the same as that of the main user's API Keys.
+The API Key of a sub-user can also be bound to an IP address. The expiration limit is the same as the API Key of the main user.
 
-Sub-users can access all public interfaces, including basic information and market data. The private interfaces that sub-users can access are as follows:
+Sub-users can access all public interfaces, including basic information and market trends. Sub-users have access to the following private interfaces:
 
-| Interface                                                    | Description                    |
+| Interface                                                         | Explanation                            |
 | ------------------------------------------------------------ | ------------------------------- |
-| [POST /v1/order/orders/place](#fd6ce2a756)                   | Create and execute an order     |
-| [POST /v1/order/orders/{order-id}/submitcancel](#4e53c0fccd) | Cancel an order                 |
-| [POST /v1/order/orders/submitCancelClientOrder](#client-order-id) | Cancel an order based on the client order ID |
-| [POST /v1/order/orders/batchcancel](#ad00632ed5)             | Cancel multiple orders          |
-| [POST /v1/order/orders/batchCancelOpenOrders](#open-orders)  | Cancel all current orders       |
-| [GET /v1/order/orders/{order-id}](#92d59b6aad)               | Query order details             |
-| [GET /v1/order/orders](#d72a5b49e7)                          | Query current and historical orders |
-| [GET /v1/order/openOrders](#95f2078356)                      | Query current open orders       |
-| [GET /v1/order/matchresults](#0fa6055598)                    | Query trade details             |
-| [GET /v1/order/orders/{order-id}/matchresults](#56c6c47284)  | Query match results of a specific order |
-| [GET /v1/account/accounts](#bd9157656f)                      | Query all user accounts         |
-| [GET /v1/account/accounts/{account-id}/balance](#870c0ab88b) | Query balance of a specific account |
-| [GET /v1/account/history](#84f1b5486d)                       | Query account transaction history |
-| [GET /v2/account/ledger](#2f6797c498)                        | Query financial transaction history |
-| [POST /v1/account/transfer](#0d3c2e7382)                     | Asset transfer                  |
+| [POST /v1/order/orders/place](#fd6ce2a756)                   | Create and execute orders                  |
+| [POST /v1/order/orders/{order-id}/submitcancel](#4e53c0fccd) | Cancel an order                   |
+| [POST /v1/order/orders/submitCancelClientOrder](#client-order-id) | Cancel order (based on client order ID) |
+| [POST /v1/order/orders/batchcancel](#ad00632ed5)             | Batch cancel orders                    |
+| [POST /v1/order/orders/batchCancelOpenOrders](#open-orders)  | Cancel current order delegation               |
+| [GET /v1/order/orders/{order-id}](#92d59b6aad)               | Query order details                |
+| [GET /v1/order/orders](#d72a5b49e7)                          | Query current and historical delegation         |
+| [GET /v1/order/openOrders](#95f2078356)                      | Query current delegated orders               |
+| [GET /v1/order/matchresults](#0fa6055598)                    | Query transactions                       |
+| [GET /v1/order/orders/{order-id}/matchresults](#56c6c47284)  | Query transaction details of an order         |
+| [GET /v1/account/accounts](#bd9157656f)                      | Query all accounts of the current user          |
+| [GET /v1/account/accounts/{account-id}/balance](#870c0ab88b) | Query balance of a specific account              |
+| [GET /v1/account/history](#84f1b5486d)                       | Query account history                    |
+| [GET /v2/account/ledger](#2f6797c498)                        | Query financial history                    |
+| [POST /v1/account/transfer](#0d3c2e7382)                     | Asset transfer                        |
 
 <aside class="notice">
-Sub-users cannot access other interfaces. If attempted, the system will return "error-code 403".
+Other interfaces cannot be accessed by sub-users. If an attempt is made, the system will return "error-code 403".
 </aside>
-
-
 
 ## Business Glossary
 
 ### Trading Pairs
 
-A trading pair consists of a base currency and a quote currency. For example, in the trading pair BTC/USDT, BTC is the base currency, and USDT is the quote currency.
+Trading pairs consist of a base currency and a quote currency. For example, in the trading pair BTC/USDT, BTC is the base currency, and USDT is the quote currency.
 
-The base currency corresponds to the field "base-currency".
+The field corresponding to the base currency is called `base-currency`.
 
-The quote currency corresponds to the field "quote-currency".
+The field corresponding to the quote currency is called `quote-currency`.
 
 ### Accounts
 
-Different businesses require different accounts. The account ID (`account-id`) serves as the unique identifier for different business accounts.
+Different businesses require different types of accounts. The `account-id` is a unique identifier for each business account.
 
-The account ID can be obtained through the `/v1/account/accounts` interface, and specific accounts can be distinguished based on the account type (`account-type`).
+The `account-id` can be obtained through the `/v1/account/accounts` interface, and the specific account type can be determined based on the `account-type`.
 
 Account types include:
 
-- spot: Spot accounts
+- Spot: Spot trading account
 
-### Order and Trade ID Explanation
+### Order and Trade-related ID Explanation
 
-- `order-id`: Unique identifier for an order
-- `client-order-id`: Custom ID provided by the client during order placement. It corresponds to the `order-id` returned after a successful order placement and is valid for 24 hours. Allowed characters include letters (case sensitive), numbers, underscores (_), and hyphens (-), with a maximum length of 64 characters.
-- `match-id`: Sequential number assigned to an order during matching
-- `trade-id`: Unique identifier for a trade
+- `order-id`: A unique identifier for an order.
+- `client-order-id`: A customer-defined ID that is passed in during order placement. It corresponds to the `order-id` returned after a successful order placement. This ID is valid for 24 hours. Allowed characters include letters (case-sensitive), numbers, underscores (_), and dashes (-), with a maximum length of 64 characters.
+- `match-id`: A sequential number assigned to an order during the matching process.
+- `trade-id`: A unique identifier for a trade.
 
 ### Order Types
 
-The current order types are composed of the buy/sell direction and the order operation type. For example, "buy-market" indicates the buy direction and the market order operation.
+The order type is determined by the combination of the trade direction and the order operation type. For example, "buy-market" consists of the buy direction and the market operation type.
 
-Buy/Sell directions:
+Trade directions:
 
-- buy: Buy
-- sell: Sell
+- Buy: Buy
+- Sell: Sell
 
 Order types:
 
-- limit: Limit order. This type of order requires specifying the order price and quantity.
-- market: Market order. This type of order only requires specifying the order amount or quantity, without specifying the price. The order is matched directly with the counterparty until the amount or quantity falls below the minimum transaction amount or quantity.
-- limit-maker: Limit maker order. This order can only enter the market depth as a maker during matching. If the order would be executed, the matching will directly reject the order.
-- ioc: Immediate or Cancel. This order, when entered into matching, will be canceled directly if it cannot be executed immediately (even partially filled). 
-- stop-limit: Stop-limit order. It sets an order above or below the market price. The order is formally entered into the matching queue only when it reaches the trigger price.
+- Limit: A limit order requires specifying the order price and quantity.
+- Market: A market order only requires specifying the order amount or quantity, without specifying a price. The order is matched directly with the counterparty until the amount or quantity is lower than the minimum trade amount or quantity.
+- Limit-maker: A limit order that can only enter the market depth as a maker. If the order would result in a match, the matching process will directly reject the order.
+- IOC: Immediate or cancel. After entering the matching process, if the order cannot be immediately matched, it will be canceled (the remaining part will also be canceled after partial fulfillment).
+- Stop-limit: A stop-loss or take-profit order that is set above or below the market price. The order is only officially placed in the matching queue when the trigger price is reached.
 
 ### Order Status
 
-- submitted: Waiting for execution. Orders in this status have entered the matching queue.
-- partial-filled: Partially filled. Orders in this status are in the matching queue, and a portion of the order quantity has been traded, waiting for the remaining portion to be filled.
-- filled: Filled. Orders in this status are not in the matching queue anymore, and the entire order quantity has been traded.
-- partial-canceled: Partially filled and canceled. Orders in this status are not in the matching queue anymore. They transition from the partial-filled status, indicating that a portion of the order quantity was traded but then canceled.
-- canceled: Canceled. Orders in this status are not in the matching queue anymore. They were successfully canceled without any traded quantity.
-- canceling: Canceling. Orders in this status are currently in the process of being canceled. The order needs to be removed from the matching queue to be truly canceled, so this status serves as an intermediate state.
+- Submitted: Waiting for fulfillment. Orders in this status have entered the matching queue.
+- Partial-filled: Partially filled. Orders in this status are in the matching queue, and a portion of the order quantity has been filled by the market, waiting for the remaining part to be filled.
+- Filled: Filled. Orders in this status are not in the matching queue anymore, and the entire order quantity has been filled by the market.
+- Partial-canceled: Partially filled and canceled. Orders in this status are not in the matching queue anymore. They transition from the `partial-filled` status, where a portion of the order quantity was filled but later canceled.
+- Canceled: Canceled. Orders in this status are not in the matching queue anymore. They have not been filled and have been successfully canceled.
+- Canceling: Canceling. Orders in this status are in the process of being canceled. The order needs to be removed from the matching queue to be completely canceled, so this status serves as an intermediate state.
 
 # Integration Guide
 
 ## API Overview
 
-| API Category | Category Link                  | Description                                          |
-| ------------ | ------------------------------ | ---------------------------------------------------- |
-| Basic        | /v1/common/*                   | Basic API category, including currency, currency pair, timestamp, etc. |
-| Market       | /market/*                      | Public market-related API, including trade, depth, ticker, etc. |
-| Account      | /v1/account/*  /v1/subuser/*    | Account-related API, including account information, subusers, etc. |
-| Order        | /v1/order/*                    | Order-related API, including order placement, cancellation, order query, trade query, etc. |
+| API Category | Category Link                | Description                                          |
+| ------------ | ---------------------------- | ---------------------------------------------------- |
+| Basic        | /v1/common/*                 | Basic APIs, including currency, trading pair, timestamp, etc. |
+| Market       | /market/*                    | Public market APIs, including trades, depth, market data, etc. |
+| Account      | /v1/account/*  /v1/subuser/* | Account APIs, including account information, subusers, etc. |
+| Order        | /v1/order/*                  | Order APIs, including order placement, cancellation, order query, trade query, etc. |
 
-This categorization is a general classification. Some APIs may not follow this rule. Please refer to the relevant API documentation based on your needs.
+This categorization provides a general overview, but some APIs may not follow this convention. Please refer to the corresponding API documentation based on your specific needs.
 
 ## New Rate Limit Rules
 
-- Currently, the new rate limit rules are being gradually rolled out. The new rate limit rules apply to APIs that have been individually marked with rate limit values and labeled as NEW.
+- Currently, the new rate limit rules are gradually being implemented. APIs that have a separate rate limit value and are marked as "NEW" are subject to the new rate limit rules.
 
-- The new rate limit rules adopt a UID-based rate limiting mechanism, which means that the frequency of requests from different API Keys under the same UID to a specific node should not exceed the maximum allowed access limit for that node within a unit time.
+- The new rate limit rules adopt a frequency limit mechanism based on the UID. This means that the total frequency of requests from all API keys under the same UID to a single node cannot exceed the maximum allowed access times within a unit time period.
 
-- Users can check the current rate limit usage and the expiration time of the current time window by using the "X-HB-RateLimit-Requests-Remain" (remaining rate limit count) and "X-HB-RateLimit-Requests-Expire" (window expiration time) in the HTTP header. Based on this information, you can dynamically adjust your request frequency.
+- Users can check the current rate limit usage and the expiration time of the time window by referring to the "X-HB-RateLimit-Requests-Remain" (remaining rate limit count) and "X-HB-RateLimit-Requests-Expire" (window expiration time) in the HTTP header. Adjust your request frequency dynamically based on this value.
 
 ## Rate Limit Rules
 
-For APIs without the NEW rate limit values individually marked:
+Except for APIs that have a separate rate limit value marked as "NEW" -
 
-- Each API Key is limited to 10 requests per second.
-- If an API does not require an API Key, each IP is limited to 10 requests per second.
+* Each API Key is limited to 10 requests within 1 second.
+* If an API does not require an API Key, each IP is limited to 10 requests within 1 second.
 
 For example:
 
-- Asset order-related APIs are rate-limited based on the API Key: 10 requests per second.
-- Market-related APIs are rate-limited based on IP: 10 requests per second.
+* Asset and order APIs are rate-limited based on the API Key: 10 requests per second.
+* Market APIs are rate-limited based on the IP: 10 requests per second.
 
 ## Request Format
 
-All API requests are RESTful, and currently, there are only two methods: GET and POST.
+All API requests are RESTful and currently support two methods: GET and POST.
 
-- GET requests: All parameters are included in the path parameters.
-- POST requests: All parameters are sent in JSON format in the request body.
+* GET requests: All parameters are passed in the path parameters.
+* POST requests: All parameters are sent in the request body as JSON format.
 
 ## Response Format
 
-All interfaces return data in JSON format. There are slight differences in the JSON structure between v1 and v2 interfaces.
+All APIs return data in JSON format. There are slight differences in the JSON structure between v1 and v2 APIs.
 
-**v1 Interface Response Format**: The top-level contains four fields: `status`, `ch`, `ts`, and `data`. The first three fields represent the request status and attributes, and the actual business data is in the `data` field.
+**v1 API response format**: The top-level structure consists of four fields: `status`, `ch`, `ts`, and `data`. The first three fields represent the request status and attributes, and the actual business data is contained in the `data` field.
 
 Here is an example of the response format:
 
@@ -379,13 +382,39 @@ Here is an example of the response format:
   "ts": 1499223904680,
   "data": // per API response data in nested JSON object
 }
+```
+  
+| Field Name | Data Type | Description                                                  |
+| ---------- | --------- | ------------------------------------------------------------ |
+| code       | int       | API interface response code                                  |
+| message    | string    | Error message (if any)                                       |
+| data       | object    | Main data returned by the interface                          |
 
 
-| Parameter Name | Data Type | Description          |
-| -------------- | --------- | -------------------- |
-| code           | int       | API interface code   |
-| message        | string    | Error message (if any) |
-| data           | object    | Interface response data body |
+**v2 API response format**: The top-level structure consists of three fields: `code`, `message`, and `data`. The first two fields represent the response code and the error message, respectively. The actual business data is contained in the `data` field.
+
+Here is an example of the response format:
+
+```json
+{
+  "code": 200,
+  "message": "",
+  "data": // per API response data in nested JSON object
+}
+```
+  
+| Field Name | Data Type | Description                                                  |
+| ---------- | --------- | ------------------------------------------------------------ |
+| code       | int       | API interface response code                                  |
+| message    | string    | Error message (if any)                                       |
+| data       | object    | Main data returned by the interface                          |
+
+
+
+
+
+
+
 
 ## Data Types
 

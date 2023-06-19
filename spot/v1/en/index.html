@@ -1359,16 +1359,63 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='return-fields'>return fields</h3>
-<p>| name | type | required | description |
-| ----------------- | ------- | -------- | -------------- ---------------------------------------------- |
-| code | integer | TRUE | status code |
-| message | string | FALSE | error description (if any) |
-| data | object | TRUE | |
-| { marketStatus | integer | TRUE | market status (1=normal, 2=halted, 3=cancel-only) |
-| haltStartTime | long | FALSE | market pause start time (unix time in millisecond), only valid for marketStatus=halted or cancel-only |
-| haltEndTime | long | FALSE | The expected end time of market suspension (unix time in millisecond), only valid for marketStatus=halted or cancel-only; if this field is not returned when marketStatus=halted or cancel-only, it means that the market suspension is over The time is temporarily unpredictable |
-| haltReason | integer | FALSE | Reason for market suspension (2=emergency-maintenance, 3=scheduled-maintenance), only valid for marketStatus=halted or cancel-only |
-| affectedSymbols } | string | FALSE | A list of trading pairs affected by market suspension, separated by commas, if all trading pairs are affected, return &quot;all&quot;, only valid for marketStatus=halted or cancel-only |</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td>integer</td>
+<td>TRUE</td>
+<td>Status code</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td>FALSE</td>
+<td>Error description (if any)</td>
+</tr>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>TRUE</td>
+<td></td>
+</tr>
+<tr>
+<td>marketStatus</td>
+<td>integer</td>
+<td>TRUE</td>
+<td>Market status (1=normal, 2=halted, 3=cancel-only)</td>
+</tr>
+<tr>
+<td>haltStartTime</td>
+<td>long</td>
+<td>FALSE</td>
+<td>Market pause start time (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only</td>
+</tr>
+<tr>
+<td>haltEndTime</td>
+<td>long</td>
+<td>FALSE</td>
+<td>Expected end time of market suspension (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only. If not returned, the end time is temporarily unpredictable.</td>
+</tr>
+<tr>
+<td>haltReason</td>
+<td>integer</td>
+<td>FALSE</td>
+<td>Reason for market suspension (2=emergency maintenance, 3=scheduled maintenance), valid only for marketStatus=halted or cancel-only</td>
+</tr>
+<tr>
+<td>affectedSymbols</td>
+<td>string</td>
+<td>FALSE</td>
+<td>A list of trading pairs affected by market suspension, separated by commas. If all trading pairs are affected, return &quot;all&quot;. Valid only for marketStatus=halted or cancel-only.</td>
+</tr>
+</tbody></table>
 <h2 id='get-all-trading-pairs'>Get all trading pairs</h2>
 <p>This interface returns all supported trading pairs.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/symbols"</span>
@@ -1411,26 +1458,123 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='return-fields-2'>return fields</h3>
-<p>| field name | required | data type | description |
-| -------------------------- | -------- | -------- | ---- -------------------------------------------------- ------ |
-| base-currency | true | string | base currency in the transaction pair |
-| quote-currency | true | string | quote currency in the trading pair |
-| price-precision | true | integer | The precision of the trading pair quotation (digits after the decimal point) |
-| amount-precision | true | integer | trading pair base currency counting precision (digits after the decimal point) |
-| symbol-partition | true | string | transaction partition, possible values: [main, innovation] |
-| symbol | true | string | trading pair |
-| state | true | string | trading pair status; possible values: [online, offline,suspend] online - online; offline - trading pair is offline and cannot be traded; suspend - trading is suspended; pre-online - coming soon |
-| value-precision | true | integer | The precision of the transaction amount of the transaction pair (digits after the decimal point) |
-| min-order-amt | true | float | The minimum order size of a limit order for a trading pair, in the base currency (to be obsolete) |
-| max-order-amt | true | float | The maximum order size of a limit order for a trading pair, in the base currency (to be obsolete soon) |
-| limit-order-min-order-amt | true | float | The minimum order size of a limit order for a trading pair, in base currency (NEW) |
-| limit-order-max-order-amt | true | float | The maximum order size of a limit order for a trading pair, in base currency (NEW) |
-| sell-market-min-order-amt | true | float | The minimum order size of a market sell order for a trading pair, in base currency (NEW) |
-| sell-market-max-order-amt | true | float | The maximum order size of a market sell order for a trading pair, in base currency (NEW) |
-| buy-market-max-order-value | true | float | The maximum order value of a buy order at the market price of the trading pair, in the unit of pricing currency (NEW) |
-| min-order-value | true | float | The minimum order amount for a limit order and a market buy order for a trading pair, in the pricing currency |
-| max-order-value | false | float | The maximum order amount of a limit order and a market buy order for a trading pair, in converted USDT (NEW) |
-| api-trading | true | string | API trading enable flag (valid value: enabled, disabled) |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Required</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>base-currency</td>
+<td>true</td>
+<td>string</td>
+<td>Base currency in the transaction pair</td>
+</tr>
+<tr>
+<td>quote-currency</td>
+<td>true</td>
+<td>string</td>
+<td>Quote currency in the trading pair</td>
+</tr>
+<tr>
+<td>price-precision</td>
+<td>true</td>
+<td>integer</td>
+<td>Precision of the trading pair quotation (digits after the decimal point)</td>
+</tr>
+<tr>
+<td>amount-precision</td>
+<td>true</td>
+<td>integer</td>
+<td>Precision of the trading pair base currency counting (digits after the decimal point)</td>
+</tr>
+<tr>
+<td>symbol-partition</td>
+<td>true</td>
+<td>string</td>
+<td>Transaction partition; possible values: [main, innovation]</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>true</td>
+<td>string</td>
+<td>Trading pair</td>
+</tr>
+<tr>
+<td>state</td>
+<td>true</td>
+<td>string</td>
+<td>Trading pair status; possible values: [online, offline, suspend, pre-online]</td>
+</tr>
+<tr>
+<td>value-precision</td>
+<td>true</td>
+<td>integer</td>
+<td>Precision of the transaction amount of the trading pair (digits after the decimal point)</td>
+</tr>
+<tr>
+<td>min-order-amt</td>
+<td>true</td>
+<td>float</td>
+<td>Minimum order size of a limit order for the trading pair, in the base currency (to be obsolete)</td>
+</tr>
+<tr>
+<td>max-order-amt</td>
+<td>true</td>
+<td>float</td>
+<td>Maximum order size of a limit order for the trading pair, in the base currency (to be obsolete soon)</td>
+</tr>
+<tr>
+<td>limit-order-min-order-amt</td>
+<td>true</td>
+<td>float</td>
+<td>Minimum order size of a limit order for the trading pair, in the base currency (NEW)</td>
+</tr>
+<tr>
+<td>limit-order-max-order-amt</td>
+<td>true</td>
+<td>float</td>
+<td>Maximum order size of a limit order for the trading pair, in the base currency (NEW)</td>
+</tr>
+<tr>
+<td>sell-market-min-order-amt</td>
+<td>true</td>
+<td>float</td>
+<td>Minimum order size of a market sell order for the trading pair, in the base currency (NEW)</td>
+</tr>
+<tr>
+<td>sell-market-max-order-amt</td>
+<td>true</td>
+<td>float</td>
+<td>Maximum order size of a market sell order for the trading pair, in the base currency (NEW)</td>
+</tr>
+<tr>
+<td>buy-market-max-order-value</td>
+<td>true</td>
+<td>float</td>
+<td>Maximum order value of a buy order at the market price of the trading pair, in the unit of pricing currency (NEW)</td>
+</tr>
+<tr>
+<td>min-order-value</td>
+<td>true</td>
+<td>float</td>
+<td>Minimum order amount for a limit order and a market buy order for the trading pair, in the pricing currency</td>
+</tr>
+<tr>
+<td>max-order-value</td>
+<td>false</td>
+<td>float</td>
+<td>Maximum order amount of a limit order and a market buy order for the trading pair, in converted USDT (NEW)</td>
+</tr>
+<tr>
+<td>api-trading</td>
+<td>true</td>
+<td>string</td>
+<td>API trading enable flag (valid value: enabled, disabled)</td>
+</tr>
+</tbody></table>
 <h2 id='get-all-currencies'>Get all currencies</h2>
 <p>This interface returns all supported currencies.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/currencys"</span>
@@ -1459,10 +1603,30 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </ul>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/v2/reference/currencies?currency=usdt"</span>
 </code></pre><h3 id='request-parameters-4'>Request parameters</h3>
-<p>| field name | required | type | field description | value range |
-| -------------- | -------- | ------- | ---------- | -------------------------------------------------- ---- |
-| currency | false | string | currency | btc, ltc, bch, eth, etc ... (refer to <code>GET /v1/common/currencys</code>) |
-| authorizedUser | false | boolean | authenticated user | true or false (if not filled, the default is true) |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Required</th>
+<th>Type</th>
+<th>Field Description</th>
+<th>Value Range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>currency</td>
+<td>false</td>
+<td>string</td>
+<td>Currency</td>
+<td>btc, ltc, bch, eth, etc ... (refer to <code>GET /v1/common/currencys</code>)</td>
+</tr>
+<tr>
+<td>authorizedUser</td>
+<td>false</td>
+<td>boolean</td>
+<td>Authenticated User</td>
+<td>true or false (default: true if not filled)</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p>Response:</p>

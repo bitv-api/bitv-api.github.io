@@ -1327,10 +1327,10 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 - GET `/market/trade`
 
 ### Request parameters
-
 | Parameter | Data Type | Required | Default Value | Description |
 | --------- | --------- | -------- | ------------- | ----------- |
 | symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+
 
 
 > Response:
@@ -1355,6 +1355,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 ### Response data
 
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
+
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
 | id         | integer   | unique transaction id (will be discarded) |
@@ -1453,9 +1454,10 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 
 ### Request parameters
 
-| parameter | data type | required | default value | description |
-| ------ | -------- | -------- | ------ | ----------------- ----------------------------------------- |
+| Parameter | Data Type | Required | Default Value | Description |
+| --------- | -------- | -------- | ------------- | ----------- |
 | symbol | string | true | NA | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+
 
 > Response:
 
@@ -1478,16 +1480,17 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
 | Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --------- |
-| id | integer | response id |
-| amount | float | transaction volume in base currency (rolling 24 hours) |
-| count | integer | number of transactions (according to rolling 24 hours) |
+| ---------- | --------- | ----------- |
+| id | integer | Response ID |
+| amount | float | Transaction volume in base currency (rolling 24 hours) |
+| count | integer | Number of transactions (according to rolling 24 hours) |
 | open | float | Opening price of this stage (according to rolling 24 hours) |
-| close | float | The closing price of this stage (according to rolling 24 hours) |
-| low | float | The lowest price of this stage (according to rolling 24 hours) |
-| high | float | The highest price of this stage (according to rolling 24 hours) |
-| vol | float | volume in quote currency (rolling 24 hours) |
-| version | integer | internal data |
+| close | float | Closing price of this stage (according to rolling 24 hours) |
+| low | float | Lowest price of this stage (according to rolling 24 hours) |
+| high | float | Highest price of this stage (according to rolling 24 hours) |
+| vol | float | Volume in quote currency (rolling 24 hours) |
+| version | integer | Internal data |
+
 
 # Account related
 
@@ -1500,16 +1503,17 @@ The account-related interface provides functions such as account, balance, histo
 The following are the error codes, error messages and descriptions returned by account-related interfaces.
 
 | Error Code | Error Message | Description |
-| ------ | ------------------------------------------ - | ------------------------------------------------ --- |
+| ---------- | ------------- | ----------- |
 | 500 | system error | Exception in calling internal service |
-| 1002 | forbidden | Forbidden operation, such as the accountId and UID in the user input parameters are inconsistent |
-| 2002 | "invalid field value in `currency`" | currency does not conform to regular rules ^[a-z0-9]{2,10}$ |
+| 1002 | forbidden | Forbidden operation, such as inconsistency between accountId and UID in user input parameters |
+| 2002 | "invalid field value in `currency`" | Currency does not conform to regular rules ^[a-z0-9]{2,10}$ |
 | 2002 | "invalid field value in `transactTypes`" | The change type transactTypes is not "transfer" |
-| 2002 | "invalid field value in `sort`" | pagination request parameter is not valid "asc or desc" |
-| 2002 | "value in `fromId` is not found in record” | fromId not found |
+| 2002 | "invalid field value in `sort`" | Pagination request parameter is not valid "asc" or "desc" |
+| 2002 | "value in `fromId` is not found in record" | fromId not found |
 | 2002 | "invalid field value in `accountId`" | accountId in the query parameter is empty |
-| 2002 | "value in `startTime` exceeded valid range" | The parameter query time is greater than the current time, or more than 180 days from the current time |
-| 2002 | "value in `endTime` exceeded valid range") | The query end time is less than the start time, or the query time span is greater than 10 days |
+| 2002 | "value in `startTime` exceeded valid range" | The query time parameter is greater than the current time or more than 180 days from the current time |
+| 2002 | "value in `endTime` exceeded valid range" | The query end time is less than the start time or the query time span is greater than 10 days |
+
 
 ## account information 
 
@@ -1542,12 +1546,12 @@ none
 ```
 
 ### Response data
-
 | Parameter name | Required | Data type | Description | Value range |
-| -------- | -------- | -------- | ---------- | ----------- -------------------- |
+| -------------- | -------- | --------- | ----------- | ----------- |
 | id | true | long | account-id | |
 | state | true | string | account status | working: normal, lock: account is locked |
 | type | true | string | account type | spot: spot account |
+
 
 ## Account Balance
 
@@ -1565,8 +1569,9 @@ spot: spot account
 ### Request parameters
 
 | Parameter name | Required | Type | Description | Default value | Value range |
-| ---------- | -------- | ------ | ------------------- ----------------------------------------- | ------ | ---- ---- |
+| -------------- | -------- | ---- | ----------- | ------------- | ----------- |
 | account-id | true | string | account-id, fill in the path, value reference `GET /v1/account/accounts` | | |
+
 
 > Response:
 
@@ -1593,21 +1598,21 @@ spot: spot account
 ```
 
 ### Response data
-
 | Parameter name | Required | Data type | Description | Value range |
-| -------- | -------- | -------- | -------- | ------------- ------------------ |
-| id | true | long | account ID | |
-| state | true | string | account status | working: normal lock: account is locked |
-| type | true | string | account type | spot: spot account |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| id | true | long | Account ID | |
+| state | true | string | Account status | working: normal, lock: account is locked |
+| type | true | string | Account type | spot: spot account |
 | list | false | Array | | |
 
-list field description
+**list** field description:
 
 | Parameter name | Required | Data type | Description | Value range |
-| -------- | -------- | -------- | ---- | ----------------- ---------------- |
-| balance | true | string | balance | |
-| currency | true | string | currency | |
-| type | true | string | type | trade: trade balance, frozen: frozen balance |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| balance | true | string | Balance | |
+| currency | true | string | Currency | |
+| type | true | string | Type | trade: trade balance, frozen: frozen balance |
+
 
 ## Get account asset valuation
 
@@ -1623,11 +1628,13 @@ According to BTC or fiat currency denomination unit, obtain the total asset valu
 
 ### Request parameters
 
-| Parameter | Required | Data Type | Description | Default Value | Value Range |
-| ----------------- | -------- | -------- | ------------- ----------------------------------------------- | ----- - | ------------------------------------- |
-| accountType | true | string | account type | NA | spot: spot account |
-| valuationCurrency | false | string | Asset valuation fiat currency, that is, which fiat currency is used to value assets. | BTC | Available legal currencies are: BTC, USD (case sensitive) |
-| subUid | false | long | The UID of the sub-user, if not filled, returns the account asset valuation of the user whose API key belongs | NA | |
+
+| Parameter          | Required | Data Type | Description                                                                                                      | Default Value | Value Range                                         |
+| ------------------ | -------- | --------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------- |
+| accountType        | true     | string    | The type of the account                                                                                          | NA            | spot: spot account                                  |
+| valuationCurrency  | false    | string    | The fiat currency used for asset valuation                                                                       | BTC           | Available legal currencies: BTC, USD (case sensitive) |
+| subUid             | false    | long      | The UID of the sub-user. If not provided, the account asset valuation of the user associated with the API key is returned | NA            |                                                     |
+
 
 > Responses:
 
@@ -1644,10 +1651,11 @@ According to BTC or fiat currency denomination unit, obtain the total asset valu
 
 ### return fields
 
-|Parameter|Required | Data Type | Description |
-|-----------|------------|-----------|------------ |----------|
-| balance | true | string | total asset valuation based on a certain fiat currency |
-| timestamp | true | long | data return time, which is unix time in millisecond |
+| Parameter | Required | Data Type | Description                                                |
+| --------- | -------- | --------- | ---------------------------------------------------------- |
+| balance   | true     | string    | Total asset valuation based on a certain fiat currency      |
+| timestamp | true     | long      | Data return time, represented in Unix time (milliseconds)   |
+
 
 
 ## Asset transfer
@@ -1672,16 +1680,17 @@ Other transfer functions will be launched gradually, so stay tuned. <br>
 
 ### Request parameters
 
-| Parameter | Required | Data Type | Description | Value Range |
-| ----------------- | -------- | -------- | ------------- ---------------------- | --------------------------- ----- |
-| from-user | true | long | transfer-out user uid | parent user uid, child user uid |
-| from-account-type | true | string | transfer-out account type | spot |
-| from-account | true | long | transfer account id | |
-| to-user | true | long | transfer-in user uid | parent user uid, child user uid |
-| to-account-type | true | string | Transfer to account type | spot |
-| to-account | true | long | Transfer to account id | |
-| currency | true | string | Currency, namely btc, ltc, bch, eth, etc ... | Value reference GET /v1/common/currencys |
-| amount | true | string | transfer amount | |
+| Parameter          | Required | Data Type | Description                                    | Value Range                          |
+| ------------------ | -------- | --------- | ---------------------------------------------- | ------------------------------------ |
+| from-user          | true     | long      | Transfer-out user UID                          | Parent user UID, Child user UID       |
+| from-account-type  | true     | string    | Transfer-out account type                      | spot                                 |
+| from-account       | true     | long      | Transfer account ID                            |                                      |
+| to-user            | true     | long      | Transfer-in user UID                           | Parent user UID, Child user UID       |
+| to-account-type    | true     | string    | Transfer to account type                       | spot                                 |
+| to-account         | true     | long      | Transfer to account ID                         |                                      |
+| currency           | true     | string    | Currency                                       | Value reference GET /v1/common/currencys |
+| amount             | true     | string    | Transfer amount                                |                                      |
+
 
 
 > Response:
@@ -1698,12 +1707,13 @@ Other transfer functions will be launched gradually, so stay tuned. <br>
 
 ### Response data
 
-| parameter | required | data type | description | value range |
-| --------------- | -------- | -------- | ---------- | ---- ----------- |
-| status | true | string | status | "ok" or "error" |
-| data | true | list | | |
-| { transact-id | true | int | transaction serial number | |
-| transact-time } | true | long | transaction time | |
+| Parameter        | Required | Data Type | Description              | Value Range |
+| ---------------- | -------- | --------- | ------------------------ | ----------- |
+| status           | true     | string    | Status                   | "ok" or "error" |
+| data             | true     | list      |                          |             |
+| { transact-id    | true     | int       | Transaction serial number |             |
+| transact-time }  | true     | long      | Transaction time         |             |
+
 
 
 ## Account History
@@ -1719,16 +1729,17 @@ This node returns the account history based on the user account ID.
 
 ### Request parameters
 
-| Parameter name | Required | Data type | Description | Default value | Value range |
-| -------------- | -------- | -------- | ---------------- ----------------------------------------------- | ----- --------------- | ---------------------------------- ----------------------------- |
-| account-id | true | string | account number, refer to `GET /v1/account/accounts` | | |
-| currency | false | string | Currency, ie btc, ltc, bch, eth, etc... (refer to `GET /v1/common/currencys` for value) | | |
-| transact-types | false | string | change types, multiple choices, separated by commas | all | trade (transaction), transact-fee (transaction fee), fee-deduction (deduction of transaction fee), transfer (transfer ), deposit (deposit), withdraw (withdrawal), withdraw-fee (withdrawal fee), other-types (other), rebate (transaction rebate) |
-| start-time | false | long | Unix time in millisecond. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | ((end-time) – 1hour ) | [((end-time) – 1hour), (end-time)] |
-| end-time | false | long | Unix time in millisecond. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | current-time | [(current- time) – 29days,(current-time)] |
-| sort | false | string | search direction | asc | asc or desc |
-| size | false | int | maximum number of entries | 100 | [1,500] |
-| from-id | false | long | start number (only valid when querying on the next page) | | |
+| Parameter Name | Required | Data Type | Description | Default Value | Value Range |
+| -------------- | -------- | --------- | ----------- | ------------- | ----------- |
+| account-id     | true     | string    | Account number, refer to `GET /v1/account/accounts` |               |             |
+| currency       | false    | string    | Currency, e.g., btc, ltc, bch, eth, etc... (refer to `GET /v1/common/currencys` for values) |               |             |
+| transact-types | false    | string    | Change types, multiple choices separated by commas | all           | trade, transact-fee, fee-deduction, transfer, deposit, withdraw, withdraw-fee, other-types, rebate |
+| start-time     | false    | long      | Unix time in milliseconds. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | ((end-time) - 1 hour) | [(end-time) - 1 hour, end-time] |
+| end-time       | false    | long      | Unix time in milliseconds. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | current-time   | [(current-time) - 29 days, current-time] |
+| sort           | false    | string    | Search direction | asc           | asc, desc   |
+| size           | false    | int       | Maximum number of entries | 100           | [1, 500]    |
+| from-id        | false    | long      | Start number (valid only when querying for the next page) |               |             |
+
 
 > Response:
 
@@ -1762,19 +1773,20 @@ This node returns the account history based on the user account ID.
 
 ### Response data
 
-| Field name | Data type | Description | Value range |
-| ------------- | -------- | -------------------------- -------------------------- | -------- |
-| status | string | status code | |
-| data | object | | |
-| { account-id | long | account number | |
-| currency | string | currency | |
-| transact-amt | string | Change amount (Positive for deposit or Negative for deposit) | |
-| transact-type | string | transact type | |
-| avail-balance | string | available balance | |
-| acct-balance | string | account balance | |
-| transact-time | long | transaction time (database record time) | |
-| record-id } | long | database record ID (globally unique) | |
-| next-id | long | The start number of the next page (this field is only included when the query results need to be returned in pages) | |
+| Field Name    | Data Type | Description                                              | Value Range |
+| ------------- | --------- | -------------------------------------------------------| ------------|
+| status        | string    | Status code                                              |             |
+| data          | object    |                                                         |             |
+| { account-id  | long      | Account number                                           |             |
+| currency      | string    | Currency                                                 |             |
+| transact-amt  | string    | Change amount (Positive for deposit or Negative for withdrawal) |             |
+| transact-type | string    | Transaction type                                         |             |
+| avail-balance | string    | Available balance                                        |             |
+| acct-balance  | string    | Account balance                                          |             |
+| transact-time | long      | Transaction time (database record time)                  |             |
+| record-id }   | long      | Database record ID (globally unique)                     |             |
+| next-id       | long      | The start number of the next page (included when the query results need to be returned in pages) |             |
+
 
 ## Financial statement
 
@@ -1785,22 +1797,22 @@ For the first phase of the launch, only the query of transfer transaction (“tr
 The query window framed by "startTime"/"endTime" is up to 10 days, which means that the range that can be retrieved through a single query is up to 10 days. <br>
 The query window can be shifted within the range of the last 180 days, that is, records of the past 180 days can be retrieved at most through multiple shift window queries. <br>
 
-###HTTP Request
+### HTTP Request
 
 - GET `/v2/account/ledger`
 
 ### Request parameters
+| Parameter Name | Data Type | Required | Description |
+| -------------- | --------- | -------- | ----------- |
+| accountId      | string    | TRUE     | Account ID |
+| currency       | string    | FALSE    | Currency (default: all currencies) |
+| transactTypes  | string    | FALSE    | Transact types, multiple choices separated by commas (default: all) Possible values: transfer |
+| startTime      | long      | FALSE    | Start time in milliseconds (See Note 1 for value range and default value) |
+| endTime        | long      | FALSE    | End time in milliseconds (See Note 2 for value range and default value) |
+| sort           | string    | FALSE    | Search direction ('asc' for ascending, 'desc' for descending, default: 'desc') |
+| limit          | int       | FALSE    | Maximum number of items returned in a single page [1,500] (default: 100) |
+| fromId         | long      | FALSE    | Starting number (only valid when querying on the next page, See Note 3) |
 
-| parameter name | data type | required | description |
-| ------------- | -------- | -------- | ----------------- ------------------------------------- |
-| accountId | string | TRUE | account ID |
-| currency | string | FALSE | currency (default all currencies) |
-| transactTypes | string | FALSE | Transact type, can fill in more (default value is all) Enumeration value: transfer |
-| startTime | long | FALSE | Apogee time (see note 1 for value range and default value) |
-| endTime | long | FALSE | Peripheral time (see Note 2 for value range and default value) |
-| sort | string | FALSE | search direction (asc from far to near, desc from near to far, default value desc) |
-| limit | int | FALSE | maximum number of items returned in a single page [1,500] (default 100) |
-| fromId | long | FALSE | Starting number (only valid when querying on the next page, see note 3) |
 
 Note 1:<br>
 startTime value range: [(endTime - 10 days), endTime], unix time in millisecond<br>
@@ -1845,18 +1857,19 @@ endTime default value: current time
 
 ### Response data
 
-| Field name | Data type | Required | Description | Value range |
-| ------------ | -------- | -------- | ------------------ -------------------------------------------- | ------- -------------------------------------------------- --- |
-| code | integer | TRUE | status code | |
-| message | string | FALSE | error description (if any) | |
-| data | object | TRUE | in the order defined in the user request parameter sort | |
-| { accountId | integer | TRUE | account ID | |
-| currency | string | TRUE | currency | |
-| transactAmt | number | TRUE | Amount of change (Positive for incoming or negative for outgoing) | |
-| transactType | string | TRUE | transact type | transfer |
-| transferType | string | FALSE | transfer type (only valid for transactType=transfer) | master-transfer-in (transfer to parent user), master-transfer-out (transfer from parent user), sub-transfer-in (transfer to sub-user), sub-transfer-out (transfer from sub-user) |
-| transactId | integer | TRUE | transaction serial number | |
-| transactTime | integer | TRUE | transaction time |
+| Field Name    | Data Type | Required | Description                                            | Value Range |
+| ------------- | --------- | -------- | ------------------------------------------------------ | ----------- |
+| code          | integer   | TRUE     | Status code                                            |             |
+| message       | string    | FALSE    | Error description (if any)                             |             |
+| data          | object    | TRUE     | Order of fields defined in the user request parameter   |             |
+| { accountId   | integer   | TRUE     | Account ID                                             |             |
+| currency      | string    | TRUE     | Currency                                               |             |
+| transactAmt   | number    | TRUE     | Amount of change (Positive for incoming or negative for outgoing) |             |
+| transactType  | string    | TRUE     | Transact type                                          | transfer    |
+| transferType  | string    | FALSE    | Transfer type (only valid for transactType=transfer)   | master-transfer-in, master-transfer-out, sub-transfer-in, sub-transfer-out |
+| transactId    | integer   | TRUE     | Transaction serial number                              |             |
+| transactTime  | integer   | TRUE     | Transaction time                                       |             |
+
 
 # Wallet (deposit and withdrawal related)
 
@@ -1868,14 +1881,15 @@ The interface related to deposit and withdrawal provides functions such as depos
 
 The following are the return codes, return messages and instructions returned by the relevant interfaces of deposit and withdrawal.
 
-| Return Code | Return Message | Description |
-| ------ | ------------------------------------ | ----- ------- |
-| 200 | success | Request succeeded |
-| 500 | error | System error |
-| 1002 | unauthorized | Unauthorized |
-| 1003 | invalid signature | Signature verification failed |
-| 2002 | invalid field value in "field name" | illegal field value |
-| 2003 | missing mandatory field "field name" | mandatory field missing |
+| Return Code | Return Message                    | Description                           |
+| ----------- | -------------------------------- | ------------------------------------- |
+| 200         | success                          | Request succeeded                     |
+| 500         | error                            | System error                          |
+| 1002        | unauthorized                     | Unauthorized                          |
+| 1003        | invalid signature                | Signature verification failed         |
+| 2002        | invalid field value in "field name" | Illegal field value                   |
+| 2003        | missing mandatory field "field name" | Mandatory field missing               |
+
 
 ## Deposit Address Query
 
@@ -1896,9 +1910,10 @@ curl "https://api.bitv.com/v2/account/deposit/address?currency=btc"
 
 ### Request parameters
 
-| field name | required | type | field description | value range |
-| -------- | -------- | ------ | -------- | --------------- ------------------------------------------------ |
-| currency | true | string | Currency | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`) |
+| Field Name | Required | Type   | Field Description | Value Range                               |
+| ---------- | -------- | ------ | ----------------- | ----------------------------------------- |
+| currency   | true     | string | Currency          | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`) |
+
 
 > Response:
 
@@ -1918,27 +1933,27 @@ curl "https://api.bitv.com/v2/account/deposit/address?currency=btc"
 
 ### Response data
 
+| Field Name  | Required | Data Type | Field Description                     | Value Range                                              |
+| ----------- | -------- | --------- | ------------------------------------ | ------------------------------------------------------- |
+| code        | true     | int       | Status code                           |                                                         |
+| message     | false    | string    | Error description (if any)            |                                                         |
+| data        | true     | object    |                                       |                                                         |
+| { currency  | true     | string    | Currency                              |                                                         |
+|   address   | true     | string    | Deposit address                       |                                                         |
+|   addressTag| true     | string    | Deposit address tag                   |                                                         |
+|   chain }   | true     | string    | Chain name                            |                                                         |
 
-| field name | required | data type | field description | value range |
-| ---------- | -------- | -------- | ---------------- | --- ----- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| {currency | true | string | currency | |
-| address | true | string | deposit address | |
-| addressTag | true | string | deposit address tag | |
-| chain } | true | string | chain name | |
+### Status Code
 
-### status code
+| Status Code | Error Message                  | Error Scenario Description                                |
+| ----------- | ----------------------------- | -------------------------------------------------------- |
+| 200         | success                       | Request succeeded                                        |
+| 500         | error                         | System error                                             |
+| 1002        | unauthorized                  | Unauthorized                                             |
+| 1003        | invalid signature             | Signature verification failed                            |
+| 2002        | invalid field value in "field name" | Illegal field value                                      |
+| 2003        | missing mandatory field "field name" | Mandatory field missing                                 |
 
-| Status Code | Error Message | Error Scenario Description |
-| ------ | ------------------------------------ | ----- ------- |
-| 200 | success | Request succeeded |
-| 500 | error | System error |
-| 1002 | unauthorized | Unauthorized |
-| 1003 | invalid signature | Signature verification failed |
-| 2002 | invalid field value in "field name" | illegal field value |
-| 2003 | missing mandatory field "field name" | mandatory field missing |
 
 ## Withdrawal limit query
 
@@ -1957,9 +1972,10 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
 
 ### Request parameters
 
-| field name | required | type | field description | value range |
-| -------- | -------- | ------ | -------- | --------------- ------------------------------------------------ |
-| currency | true | string | Currency | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`) |
+| Field Name | Required | Data Type | Field Description | Value Range                                      |
+| ---------- | -------- | --------- | ---------------- | ----------------------------------------------- |
+| currency   | true     | string    | Currency          | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`) |
+
 
 > Response:
 
@@ -1987,31 +2003,31 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
 
 ### Response data
 
-| field name | required | data type | field description | value range |
-| -------------------------- | -------- | -------- | ---- ------------ | -------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| currency | true | string | currency | |
-| chains | true | object | | |
-| { chain | true | string | chain name | |
-| maxWithdrawAmt | true | string | single maximum withdrawal amount | |
-| withdrawQuotaPerDay | true | string | daily withdrawal quota | |
-| remainWithdrawQuotaPerDay | true | string | remaining withdrawal quota for the day | |
-| withdrawQuotaPerYear | true | string | withdrawal quota for the year | |
-| remainWithdrawQuotaPerYear | true | string | remaining withdrawal quota for the year | |
-| withdrawQuotaTotal | true | string | total withdrawal quota | |
-| remainWithdrawQuotaTotal } | true | string | remaining withdrawal quota | |
+| Field Name                  | Required | Data Type | Field Description                 | Value Range                                                                                     |
+| -------------------------- | -------- | --------- | --------------------------------- | ---------------------------------------------------------------------------------------------- |
+| code                       | true     | int       | Status code                       |                                                                                                  |
+| message                    | false    | string    | Error description (if any)        |                                                                                                  |
+| data                       | true     | object    |                                   |                                                                                                  |
+| currency                   | true     | string    | Currency                          | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`)                       |
+| chains                     | true     | object    |                                   |                                                                                                  |
+| { chain                    | true     | string    | Chain name                        |                                                                                                  |
+| maxWithdrawAmt             | true     | string    | Single maximum withdrawal amount  |                                                                                                  |
+| withdrawQuotaPerDay        | true     | string    | Daily withdrawal quota            |                                                                                                  |
+| remainWithdrawQuotaPerDay  | true     | string    | Remaining withdrawal quota for the day  |                                                                                              |
+| withdrawQuotaPerYear       | true     | string    | Withdrawal quota for the year     |                                                                                                  |
+| remainWithdrawQuotaPerYear | true     | string    | Remaining withdrawal quota for the year  |                                                                                              |
+| withdrawQuotaTotal         | true     | string    | Total withdrawal quota            |                                                                                                  |
+| remainWithdrawQuotaTotal   | true     | string    | Remaining withdrawal quota        |                                                                                                  |
 
-### status code
+### Status Code
 
-| Status Code | Error Message | Error Scenario Description |
-| ------ | -------------------------------------- | ------ ------ |
-| 200 | success | Request succeeded |
-| 500 | error | System error |
-| 1002 | unauthorized | Unauthorized |
-| 1003 | invalid signature | Signature verification failed |
-| 2002 | invalid field value in "field name" | illegal field value |
+| Status Code | Error Message                     | Error Scenario Description                   |
+| ----------- | --------------------------------- | ------------------------------------------- |
+| 200         | success                           | Request succeeded                            |
+| 500         | error                             | System error                                 |
+| 1002        | unauthorized                      | Unauthorized                                 |
+| 1003        | invalid signature                 | Signature verification failed                |
+| 2002        | invalid field value in "field name" | Illegal field value                          |
 
 ## Withdraw address query
 
@@ -2025,13 +2041,14 @@ This node is used to query the withdrawal addresses available for the API key, a
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ------ | ------------------------ ------------------------------ | ------------------- ----------- | -------------------------------------- ---------------------- |
-| currency | true | string | Currency | | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| chain | false | string | chain name | If not filled, return the withdrawal addresses of all chains | |
-| note | false | string | address note | If not filled, return all note withdrawal addresses | |
-| limit | false | int | maximum number of items returned in a single page | 100 | [1,500] |
-| fromId | false | long | Starting number (withdrawal address ID, only valid when querying on the next page, see notes for details) | NA | |
+| Parameter name | Required | Type   | Description                                                    | Default value | Value range                                              |
+| -------------- | -------- | ------ | -------------------------------------------------------------- | ------------- | -------------------------------------------------------- |
+| currency       | true     | string | Currency                                                       |               | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
+| chain          | false    | string | Chain name                                                      |               | If not filled, return the withdrawal addresses of all chains |
+| note           | false    | string | Address note                                                   |               | If not filled, return all note withdrawal addresses      |
+| limit          | false    | int    | Maximum number of items returned in a single page               | 100           | [1, 500]                                                 |
+| fromId         | false    | long   | Starting number (withdrawal address ID, valid for pagination)   | NA            |                                                          |
+
 
 > Response:
 
@@ -2052,17 +2069,17 @@ This node is used to query the withdrawal addresses available for the API key, a
 
 ### Response data
 
-| Parameter name | Required | Data type | Description | Value range |
-| ---------- | -------- | -------- | -------------------- ------------------------------------------- | -------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| { currency | true | string | currency | |
-| chain | true | string | chain name | |
-| note | true | string | address note | |
-| addressTag | false | string | address tag, if any | |
-| address } | true | string | address | |
-| nextId | false | long | The starting number of the next page (withdrawal address ID, this field is only included when the query results need to be returned in pages, see the remarks for details) | |
+| Parameter name | Required | Data type | Description                                                    | Value range |
+| -------------- | -------- | --------- | -------------------------------------------------------------- | ----------- |
+| code           | true     | int       | Status code                                                     |             |
+| message        | false    | string    | Error description (if any)                                      |             |
+| data           | true     | object    |                                                                |             |
+| { currency     | true     | string    | Currency                                                        |             |
+| chain          | true     | string    | Chain name                                                       |             |
+| note           | true     | string    | Address note                                                    |             |
+| addressTag     | false    | string    | Address tag, if any                                             |             |
+| address }      | true     | string    | Address                                                         |             |
+| nextId         | false    | long      | Starting number of the next page (withdrawal address ID)        |             |
 
 Remarks:<br>
 The server returns the "nextId" field only when the data item requested by the user exceeds the single-page limit (set by the "limit" field). After the user receives the "nextId" returned by the server –<br>
@@ -2098,14 +2115,14 @@ Frequency limit value (NEW): 20 times/2s
 
 ### Request parameters
 
-| parameter name | required | type | description | value range |
-| -------- | -------- | ------ | ------------------------ -------------------------------------- | ------------- ----------------------------------------------- |
-| address | true | string | Withdrawal address | Only supports addresses in the corresponding currency address list on the official website |
-| amount | true | string | withdrawal amount | |
-| currency | true | string | asset type | btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys`) |
-| fee | true | string | transfer fee | |
-| chain | false | string | Value reference `GET /v2/reference/currencies`, for example, when withdrawing USDT to OMNI, this parameter must be set to "usdt", when withdrawing USDT to TRX, this parameter must be set to "trc20usdt", others Currency withdrawal does not need to set this parameter | |
-| addr-tag | false | string | virtual currency shared address tag, suitable for xrp, xem, bts, steem, eos, xmr | format, integer string like "123" |
+| Parameter name | Required | Data type | Description | Value range |
+| -------------- | -------- | --------- | ----------------------------------------------------- | ----------- |
+| address        | true     | string    | Withdrawal address | Only supports addresses in the corresponding currency address list on the official website |
+| amount         | true     | string    | Withdrawal amount | |
+| currency       | true     | string    | Asset type | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
+| fee            | true     | string    | Transfer fee | |
+| chain          | false    | string    | Value reference `GET /v2/reference/currencies`. For example, when withdrawing USDT to OMNI, this parameter must be set to "usdt". When withdrawing USDT to TRX, this parameter must be set to "trc20usdt". For other currencies, this parameter does not need to be set. | |
+| addr-tag       | false    | string    | Virtual currency shared address tag, suitable for xrp, xem, bts, steem, eos, xmr | Integer string format, e.g., "123" |
 
 > Response:
 
@@ -2117,10 +2134,10 @@ Frequency limit value (NEW): 20 times/2s
 
 ### Response data
 
-
 | Parameter name | Required | Data type | Description | Value range |
-| -------- | -------- | -------- | ------- | -------- |
-| data | false | long | withdrawal ID | |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| data           | false    | long      | Withdrawal ID |             |
+
 
 ## Cancel withdrawal
 
@@ -2135,9 +2152,10 @@ Frequency limit value (NEW): 20 times/2s
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ----------- | -------- | ---- | --------------------- | - ----- | -------- |
-| withdraw-id | true | long | withdrawal ID, fill in path | | |
+| Parameter name | Required | Type | Description |
+| -------------- | -------- | ---- | ----------- |
+| withdraw-id   | true     | long | Withdrawal ID (to be filled in the path) |
+
 
 
 > Response:
@@ -2151,9 +2169,10 @@ Frequency limit value (NEW): 20 times/2s
 ### Response data
 
 
-| Parameter name | Required | Data type | Description | Value range |
-| -------- | -------- | -------- | ------- | -------- |
-| data | false | long | withdrawal ID | |
+| Parameter name | Required | Data type | Description |
+| -------------- | -------- | --------- | ----------- |
+| data           | false    | long      | Withdrawal ID |
+
 
 ## Deposit and withdrawal record
 
@@ -2167,14 +2186,14 @@ Frequency limit value (NEW): 20 times/2s
 - GET `/v1/query/deposit-withdraw`
 
 ### Request parameters
+| Parameter name | Required | Data type | Description | Default value | Value range |
+| -------------- | -------- | --------- | ----------- | ------------- | ----------- |
+| currency       | false    | string    | Currency    |               | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
+| type           | true     | string    | Recharge or withdrawal |             | deposit or withdraw, sub-users can only deposit |
+| from           | false    | string    | Query starting ID | By default, the default value is direct. When direct is 'prev', from is 1, return from old to new in ascending order; when direct is 'next', from is the ID of the latest record, and return from new to old in descending order | |
+| size           | false    | string    | Query record size | 100           | 1-500 |
+| direct         | false    | string    | Return record sorting direction | default       | "prev" (ascending) or "next" (descending) |
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ------ | ---------------- | ------- -------------------------------------------------- --- | ---------------------------------------------- -------------- |
-| currency | false | string | Currency | | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| type | true | string | recharge or withdrawal | | deposit or withdraw, sub-users can only deposit |
-| from | false | string | query starting ID | By default, the default value is direct. When direct is 'prev', from is 1, return from old to new in ascending order; when direct is 'next', from is the ID of the latest record, and return from new to old in descending order | |
-| size | false | string | query record size | 100 | 1-500 |
-| direct | false | string | return record sorting direction | default, the default is "prev" (ascending) | "prev" (ascending) or "next" (descending) |
 
 > Response:
 
@@ -2201,51 +2220,50 @@ Frequency limit value (NEW): 20 times/2s
 ```
 
 ### Response data
-
 | Parameter name | Required | Data type | Description | Value range |
-| ----------- | -------- | -------- | ------------------- -------------------------------------------- | -------- ----------------------------------- |
-| id | true | long | deposit order id | |
-| type | true | string | type | 'deposit', 'withdraw', only deposit for sub-users |
-| currency | true | string | currency | |
-| tx-hash | true | string | transaction hash | |
-| chain | true | string | chain name | |
-| amount | true | float | number | |
-| address | true | string | destination address | |
-| address-tag | true | string | address-tag | |
-| fee | true | float | handling fee | |
-| state | true | string | state | state see table below |
-| error-code | false | string | Withdrawal failure error code, only when the type is "withdraw" and the state is "reject", "wallet-reject" and "failed". | |
-| error-msg | false | string | Withdrawal failure error description, only when the type is "withdraw" and the state is "reject", "wallet-reject" and "failed". | |
-| created-at | true | long | creation time | |
-| updated-at | true | long | last updated time | |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| id             | true     | long      | Deposit order ID | |
+| type           | true     | string    | Type | 'deposit', 'withdraw', deposit only for sub-users |
+| currency       | true     | string    | Currency | |
+| tx-hash        | true     | string    | Transaction hash | |
+| chain          | true     | string    | Chain name | |
+| amount         | true     | float     | Amount | |
+| address        | true     | string    | Destination address | |
+| address-tag    | true     | string    | Address tag | |
+| fee            | true     | float     | Handling fee | |
+| state          | true     | string    | State | See table below |
+| error-code     | false    | string    | Withdrawal failure error code, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed" | |
+| error-msg      | false    | string    | Withdrawal failure error message, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed" | |
+| created-at     | true     | long      | Creation time | |
+| updated-at     | true     | long      | Last updated time | |
 
-- Definition of virtual currency recharge status:
+- Definition of virtual currency deposit status:
 
-| Status | Description |
-| ---------- | -------- |
-| unknown | status unknown |
-| confirming | confirming |
-| confirmed | confirmed |
+| Status   | Description   |
+| -------- | ------------- |
+| unknown  | Status unknown |
+| confirming  | Confirming |
+| confirmed | Confirmed |
 | safe | Completed |
 | orphan | To be confirmed |
 
 - Definition of virtual currency withdrawal status:
 
-| Status | Description |
-| --------------- | ------------ |
-| verifying | pending verification |
-| failed | authentication failed |
-| submitted | Submitted |
-| reexamine | under review |
-| canceled | canceled |
-| pass | approved |
-| reject | Approval rejected |
-| pre-transfer | processing |
+| Status        | Description       |
+| -------------- | ----------------- |
+| verifying      | Pending verification |
+| failed            | Authentication failed |
+| submitted     | Submitted |
+| reexamine    | Under review |
+| canceled       | Canceled |
+| pass              | Approved |
+| reject           | Approval rejected |
+| pre-transfer   | Processing |
 | wallet-transfer | Sent |
-| wallet-reject | Wallet reject |
-| confirmed | block confirmed |
-| confirm-error | block confirmation error |
-| repealed | revoked |
+| wallet-reject   | Wallet reject |
+| confirmed    | Block confirmed |
+| confirm-error   | Block confirmation error |
+| repealed         | Revoked |
 
 # Sub-user management
 
@@ -2256,15 +2274,15 @@ The sub-user management interface provides functions such as creation, query, pe
 <aside class="notice">Signature authentication is required to access related interfaces of sub-user management. </aside>
 
 The following are the return codes, return messages, and descriptions returned by sub-user-related interfaces.
-
 | Error code | Return message | Description |
-| ------ | ------------------------------------------ --------------- | ---------------------------------- |
-| 1002 | "forbidden" | Forbidden operations, such as the account is not allowed to create sub-users |
-| 1003 | "unauthorized” | Unauthenticated |
-| 2002 | invalid field value | parameter error |
-| 2014 | number of sub account in the request exceeded valid range | The number of sub accounts has reached the limit |
-| 2014 | number of api key in the request exceeded valid range | The number of API Key exceeds the limit |
-| 2016 | invalid request while value specified in sub user states | freeze/thaw failure |
+| ---------- | -------------- | ----------- |
+| 1002 | "forbidden" | Forbidden operations, such as the account not being allowed to create sub-users |
+| 1003 | "unauthorized" | Unauthenticated |
+| 2002 | Invalid field value | Parameter error |
+| 2014 | Number of sub-accounts in the request exceeded valid range | The number of sub-accounts has reached the limit |
+| 2014 | Number of API keys in the request exceeded valid range | The number of API keys exceeds the limit |
+| 2016 | Invalid request while value specified in sub-user states | Freeze/thaw failure |
+
 
 
 ## Sub-user creation
@@ -2298,10 +2316,11 @@ API Key Permissions: Transactions
 ### Request parameters
 
 | Parameter name | Required | Type | Description | Default value | Value range |
-| ----------- | -------- | ------ | ------------------ ----------------------- | ------ | ----------------- ----------------------------------------------- |
+| -------------- | -------- | ---- | ----------- | ------------- | ----------- |
 | userList | true | object | | | |
-| [{ userName | true | string | Sub-username, an important identification of sub-user identity, requires uniqueness within the platform | NA | A combination of 6 to 20 letters and numbers, which can be pure letters; if a combination of letters and numbers, it needs to be Starts with a letter; letters are not case sensitive; |
+| [{ userName | true | string | Sub-username, an important identification of sub-user identity, requires uniqueness within the platform | NA | A combination of 6 to 20 letters and numbers, which can be pure letters; if a combination of letters and numbers, it needs to start with a letter; letters are not case-sensitive; |
 | note }] | false | string | Sub-user note, no uniqueness requirement | NA | Up to 20 characters, unlimited character types |
+
 
 > Response:
 
@@ -2325,14 +2344,13 @@ API Key Permissions: Transactions
 ```
 
 ### Response data
-
 | Parameter name | Required | Data type | Description | Value range |
-| ------------- | -------- | -------- | ----------------- --------------------------- | -------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
+| -------------- | -------- | -------- | ----------- | ----------- |
+| code | true | int | Status code | |
+| message | false | string | Error description (if any) | |
 | data | true | object | | |
-| [{ userName | true | string | sub-username | |
-| note | false | string | sub-user notes (only valid for sub-users with notes) | |
+| [{ userName | true | string | Sub-username | |
+| note | false | string | Sub-user notes (only valid for sub-users with notes) | |
 | uid | false | long | Sub-user UID (only valid for successfully created sub-users) | |
 | errCode | false | string | Creation failure error code (only valid for sub-users that failed to be created) | |
 | errMessage }] | false | string | Error reason for failed creation (only valid for sub-users that failed to be created) | |
@@ -2349,9 +2367,10 @@ API Key permission: read
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ---- | -------------------------- ------ | ------ | -------- |
-| fromId | FALSE | long | Query starting number (only valid for page turning query) | | |
+| Parameter name | Required | Data type | Description | Default value | Value range |
+| -------------- | -------- | --------- | ----------- | ------------- | ----------- |
+| fromId | false | long | Query starting number (valid for pagination queries) | | |
+
 
 > Response:
 
@@ -2374,13 +2393,14 @@ API Key permission: read
 ### Response data
 
 | Parameter name | Required | Data type | Description | Value range |
-| ----------- | -------- | -------- | ---------------- ----------------------- | --------------- |
-| code | TRUE | int | status code | |
-| message | FALSE | string | error description (if any) | |
-| data | TRUE | object | | |
-| { uid | TRUE | long | subuser UID | |
-| userState } | TRUE | string | Sub-user state | lock, normal |
-| nextId | FALSE | long | The start number of next page query (returned only when there is next page data) | |
+| -------------- | -------- | --------- | ----------- | --------------- |
+| code | true | int | status code | |
+| message | false | string | error description (if any) | |
+| data | true | object | | |
+| { uid | true | long | subuser UID | |
+| userState } | true | string | subuser state | lock, normal |
+| nextId | false | long | starting number for the next page query (included only when there is next page data) | |
+
 
 ## Freeze/Unfreeze sub-users
 
@@ -2396,9 +2416,10 @@ This interface is used by the parent user to freeze and unfreeze the next sub-us
 ### Request parameters
 
 | Parameter | Required | Data Type | Length | Description | Value Range |
-| ------ | -------- | -------- | ---- | ----------- | ------- ----------------- |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
 | subUid | true | long | - | UID of the sub-user | - |
-| action | true | string | - | operation type | lock (freeze), unlock (unfreeze) |
+| action | true | string | - | Operation type | lock (freeze), unlock (unfreeze) |
+
 
 > Response:
 
@@ -2414,9 +2435,10 @@ This interface is used by the parent user to freeze and unfreeze the next sub-us
 ### Response data
 
 | Parameter | Required | Data Type | Length | Description | Value Range |
-| --------- | -------- | -------- | ---- | ---------- | ----- --------------------- |
-| subUid | true | long | - | sub-user UID | - |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
+| subUid | true | long | - | Sub-user UID | - |
 | userState | true | string | - | Sub-user state | lock (frozen), normal (normal) |
+
 
 
 ## Get the user status of a specific sub-user
@@ -2432,8 +2454,8 @@ API Key permission: read
 ### Request parameters
 
 | Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ---- | --------- | ------ | -------- |
-| subUid | TRUE | long | Sub-user UID | | |
+| -------------- | -------- | ---- | ----------- | ------------- | ------------ |
+| subUid         | TRUE     | long | Sub-user UID |               |              |
 
 > Response:
 
@@ -2448,14 +2470,14 @@ API Key permission: read
 ```
 
 ### Response data
-
 | Parameter name | Required | Data type | Description | Value range |
-| ----------- | -------- | -------- | ---------------- | -- ---------- |
-| code | TRUE | int | status code | |
-| message | FALSE | string | error description (if any) | |
-| data | TRUE | object | | |
-| { uid | TRUE | long | subuser UID | |
-| userState } | TRUE | string | Sub-user state | lock, normal |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| code           | TRUE     | int       | status code |             |
+| message        | FALSE    | string    | error description (if any) | |
+| data           | TRUE     | object    |             |             |
+| { uid          | TRUE     | long      | subuser UID |             |
+| userState      | TRUE     | string    | Sub-user state | lock, normal |
+
 
 ##Set sub-user transaction permissions
 
@@ -2470,11 +2492,11 @@ The sub-user's spot trading authority is enabled by default and does not need to
 
 ### Request parameters
 
-| Parameter | Required | Data Type | Length | Description | Value Range |
-| ----------- | -------- | -------- | ---- | -------------- ------------------------------- | ------------------ ---------- |
-| subUids | true | string | - | Sub-user UID list (multiple filling is supported, up to 50, separated by commas) | - |
-| accountType | true | string | - | account type | isolated-margin,cross-margin |
-| activation | true | string | - | account activation status | activated,deactivated |
+| Parameter   | Required | Data Type | Length | Description                                    | Value Range                            |
+| ----------- | -------- | --------- | ------ | ---------------------------------------------- | -------------------------------------- |
+| subUids     | true     | string    | -      | Sub-user UID list (multiple filling is supported, up to 50, separated by commas) | -                                      |
+| accountType | true     | string    | -      | Account type                                   | isolated-margin, cross-margin           |
+| activation  | true     | string    | -      | Account activation status                      | activated, deactivated                  |
 
 > Response:
 
@@ -2493,16 +2515,17 @@ The sub-user's spot trading authority is enabled by default and does not need to
 
 ### Response data
 
-| Parameter | Required | Data Type | Length | Description | Value Range |
-| ----------- | -------- | -------- | ---- | -------------- ----------------------------------------------- | ----- ----------------------- |
-| code | true | int | - | status code | |
-| message | false | string | - | error description (if any) | |
-| data | true | object | | | |
-| {subUid | true | string | - | sub user UID | - |
-| accountType | true | string | - | account type | isolated-margin,cross-margin |
-| activation | true | string | - | account activation status | activated,deactivated |
-| errCode | false | int | - | Request rejected error code (returned only when the subUid market access permission error is set) | |
-| errMessage} | false | string | - | Request rejected error message (returned only when the subUid market access permission is set incorrectly) | |
+| Parameter    | Required | Data Type | Length | Description                                                             | Value Range                    |
+| ------------ | -------- | --------- | ------ | ----------------------------------------------------------------------- | ------------------------------ |
+| code         | true     | int       | -      | Status code                                                             |                                |
+| message      | false    | string    | -      | Error description (if any)                                              |                                |
+| data         | true     | object    | -      |                                                                        |                                |
+| {subUid      | true     | string    | -      | Sub-user UID                                                            |                                |
+| accountType  | true     | string    | -      | Account type                                                            | isolated-margin, cross-margin  |
+| activation   | true     | string    | -      | Account activation status                                               | activated, deactivated         |
+| errCode      | false    | int       | -      | Request rejected error code (returned only when the subUid permission is incorrect) |                                |
+| errMessage}  | false    | string    | -      | Request rejected error message (returned only when the subUid permission is incorrect) |                                |
+
 
 ## Set sub-user asset transfer permission
 
@@ -2519,12 +2542,12 @@ Sub-user's fund transfer authority includes:
 - POST `/v2/sub-user/transferability`
 
 ### Request parameters
+| Parameter     | Required | Data Type | Length | Description                                                          | Value Range                     |
+| ------------- | -------- | --------- | ------ | -------------------------------------------------------------------- | ------------------------------- |
+| subUids       | true     | string    | -      | Sub-user UID list (multiple values are supported, up to 50)          | -                               |
+| accountType   | false    | string    | -      | Account type (default value is "spot" if not filled)                  | spot                            |
+| transferrable | true     | bool      | -      | Transferrable indicator                                              | true, false                     |
 
-| Parameter | Required | Data Type | Length | Description | Value Range |
-| ------------- | -------- | -------- | ---- | ------------ --------------------------------- | ---------- |
-| subUids | true | string | - | Sub-user UID list (multiple filling is supported, up to 50, separated by commas) | - |
-| accountType | false | string | - | account type (if not filled, the default value is spot) | spot |
-| transferrable | true | bool | - | transferrable | true,false |
 
 > Response:
 
@@ -2542,17 +2565,16 @@ Sub-user's fund transfer authority includes:
 ```
 
 ### Response data
-
-| Parameter | Required | Data Type | Length | Description | Value Range |
-| ------------- | -------- | -------- | ---- | ------------ ------------------------------------------------- | --- ------- |
-| code | true | int | - | status code | |
-| message | false | string | - | error description (if any) | |
-| data | true | object | | | |
-| {subUid | true | long | - | sub user UID | - |
-| accountType | true | string | - | account type | spot |
-| transferrable | true | bool | - | transferrable | true,false |
-| errCode | false | int | - | Request rejected error code (returned only when the subUid market access permission error is set) | |
-| errMessage} | false | string | - | Request rejected error message (returned only when the subUid market access permission is set incorrectly) | |
+| Parameter     | Required | Data Type | Length | Description                                                          | Value Range                     |
+| ------------- | -------- | --------- | ------ | -------------------------------------------------------------------- | ------------------------------- |
+| code          | true     | int       | -      | Status code                                                          |                                 |
+| message       | false    | string    | -      | Error description (if any)                                           |                                 |
+| data          | true     | object    | -      | Data                                                                 |                                 |
+| {subUid       | true     | long      | -      | Sub-user UID                                                         | -                               |
+| accountType   | true     | string    | -      | Account type                                                         | spot                            |
+| transferrable | true     | bool      | -      | Transferrable indicator                                              | true, false                     |
+| errCode       | false    | int       | -      | Request rejected error code (returned only when market access error) |                                 |
+| errMessage}   | false    | string    | -      | Request rejected error message (returned only when market access error)|                                 |
 
 ## Get a list of accounts for a specific subuser
 
@@ -2565,10 +2587,10 @@ API Key permission: read
 - GET `/v2/sub-user/account-list`
 
 ### Request parameters
-
 | Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ---- | --------- | ------ | -------- |
-| subUid | TRUE | long | Sub-user UID | | |
+| -------------- | -------- | ---- | ----------- | ------------- | ----------- |
+| subUid         | TRUE     | long | Sub-user UID |               |             |
+
 
 > Response:
 
@@ -2605,19 +2627,19 @@ API Key permission: read
 ### Response data
 
 | Parameter name | Required | Data type | Description | Value range |
-| ----------------- | -------- | -------- | ------------- -------------------------------------- | ------------- --------- |
-| code | TRUE | int | status code | |
-| message | FALSE | string | error description (if any) | |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| code | TRUE | int | Status code | |
+| message | FALSE | string | Error description (if any) | |
 | data | TRUE | object | | |
-| { uid | TRUE | long | subuser UID | |
+| { uid | TRUE | long | Subuser UID | |
 | list | TRUE | object | | |
-| { accountType | TRUE | string | account type | spot, futures, swap |
-| activation | TRUE | string | account activation status | activated, deactivated |
-| transferrable | FALSE | bool | transferable permission (only valid for accountType=spot) | true, false |
+| { accountType | TRUE | string | Account type | spot, futures, swap |
+| activation | TRUE | string | Account activation status | activated, deactivated |
+| transferrable | FALSE | bool | Transferable permission (only valid for accountType=spot) | true, false |
 | accountIds | FALSE | object | | |
-| { accountId | TRUE | string | account ID | |
-| subType | FALSE | string | account subtype (only valid for accountType=isolated-margin) | |
-| accountStatus }}} | TRUE | string | account status | normal, locked |
+| { accountId | TRUE | string | Account ID | |
+| subType | FALSE | string | Account subtype (only valid for accountType=isolated-margin) | |
+| accountStatus }}} | TRUE | string | Account status | normal, locked |
 
 ## Sub-user API key creation
 
@@ -2631,13 +2653,14 @@ API Key Permissions: Transactions
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ----------- | -------- | ------ | ------------------ -------------------------------- | ------ | ----------- -------------------------------------------------- |
-| otpToken | true | string | Google verification code of the parent user, the parent user must enable GA secondary verification on the official website page | NA | 6 characters, pure numbers |
-| subUid | true | long | sub-user UID | NA | |
-| note | ture | string | API key note | NA | Up to 255 characters, unlimited character types |
-| permission | true | string | API key permission | NA | Value range: readOnly, trade, among which readOnly must be passed, trade is optional, and the two are separated by a half-width comma. |
-| ipAddresses | false | string | The IPv4/IPv6 host address or IPv4 network address bound to the API key | NA | Up to 20 IP addresses, separated by commas, such as: 192.168.1.1,202.106.96.0/24 . If no IP address is bound, the API key is only valid for 90 days. |
+| Parameter name | Required | Type   | Description                                                                                           | Default value | Value range                                                     |
+| -------------- | -------- | ------ | ----------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------- |
+| otpToken       | true     | string | Google verification code of the parent user, the parent user must enable GA secondary verification   | NA            | 6 characters, pure numbers                                      |
+| subUid         | true     | long   | Sub-user UID                                                                                          | NA            | -                                                               |
+| note           | true     | string | API key note                                                                                          | NA            | Up to 255 characters, unlimited character types                  |
+| permission     | true     | string | API key permission                                                                                    | NA            | Value range: readOnly, trade. Separate multiple permissions with a comma. |
+| ipAddresses    | false    | string | The IPv4/IPv6 host address or IPv4 network address bound to the API key                               | NA            | Up to 20 IP addresses, separated by commas. If no IP address is bound, the API key is only valid for 90 days. |
+
 
 > Response:
 
@@ -2654,17 +2677,17 @@ API Key Permissions: Transactions
 }
 ```
 ### Response data
+| Parameter name | Required | Data type | Description                              | Value range |
+| -------------- | -------- | --------- | ---------------------------------------- | ----------- |
+| code           | true     | int       | Status code                              |             |
+| message        | false    | string    | Error description (if any)               |             |
+| data           | true     | object    |                                          |             |
+| { note         | true     | string    | API key note                             |             |
+| accessKey      | true     | string    | Access key                               |             |
+| secretKey      | true     | string    | Secret key                               |             |
+| permission     | true     | string    | API key permission                       |             |
+| ipAddresses    | false    | string    | IP address bound to the API key          |             |
 
-| Parameter name | Required | Data type | Description | Value range |
-| ------------- | -------- | -------- | ----------------- -- | -------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| { note | true | string | API key note | |
-| accessKey | true | string | access key | |
-| secretKey | true | string | secret key | |
-| permission | true | string | API key permission | |
-| ipAddresses } | false | string | IP address bound to the API key | |
 
 ## Parent-child user API key information query
 
@@ -2678,10 +2701,11 @@ API Key permission: read
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| --------- | -------- | ------ | -------------------- --------------------------------------- | ------ | ------ -- |
-| uid | true | long | parent user UID, child user UID | NA | |
-| accessKey | false | string | the access key of the API key, if default, returns all API keys of the user corresponding to the UID | NA | |
+| Parameter name | Required | Type   | Description                                                          | Default value | Value range |
+| -------------- | -------- | ------ | -------------------------------------------------------------------- | ------------- | ----------- |
+| uid            | true     | long   | Parent user UID, child user UID                                       | NA            |             |
+| accessKey      | false    | string | The access key of the API key. If not specified, returns all API keys | NA            |             |
+
 
 > Response:
 
@@ -2704,20 +2728,21 @@ API Key permission: read
 }
 ```
 ### Response data
+| Parameter name | Required | Data type | Description                              | Value range                      |
+| -------------- | -------- | --------- | ---------------------------------------- | -------------------------------- |
+| code           | true     | int       | Status code                              |                                  |
+| message        | false    | string    | Error description (if any)               |                                  |
+| data           | true     | object    |                                          |                                  |
+| [{             |          |           |                                          |                                  |
+| accessKey      | true     | string    | Access key                               |                                  |
+| note           | true     | string    | API key note                             |                                  |
+| permission     | true     | string    | API key permission                       |                                  |
+| ipAddresses    | false    | string    | IP address bound to the API key          |                                  |
+| validDays      | true     | int       | Remaining valid days of the API key      | If -1, it means permanent validity |
+| status         | true     | string    | Current status of the API key            | normal (normal), expired (expired) |
+| createTime     | true     | long      | Creation time of the API key             |                                  |
+| updateTime     | true     | long      | Last modification time of the API key    |                                  |
 
-| Parameter name | Required | Data type | Description | Value range |
-| ------------- | -------- | -------- | ----------------- ------ | ----------------------------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| [{ accessKey | true | string | access key | |
-| note | true | string | API key note | |
-| permission | true | string | API key permission | |
-| ipAddresses | false | string | IP address bound to the API key | |
-| validDays | true | int | API key remaining valid days | If it is -1, it means permanent validity |
-| status | true | string | current status of API key | normal (normal), expired (expired) |
-| createTime | true | long | API key creation time | |
-| updateTime }] | true | long | API key last modification time | |
 
 ## Modify sub-user API key
 
@@ -2731,13 +2756,14 @@ API Key Permissions: Transactions
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ----------- | -------- | ------ | ------------------ ---- | ------ | -------------------------------------- ---------------------- |
-| subUid | true | long | uid of the sub-user | NA | |
-| accessKey | true | string | access key of sub-user API key | NA | |
-| note | false | string | API key note | NA | Up to 255 characters |
-| permission | false | string | API key permission | NA | Value range: readOnly, trade, where readOnly must be passed, trade is optional, and the two are separated by a half-width comma. |
-| ipAddresses | false | string | IP address bound to the API key | NA | IPv4/IPv6 host address or IPv4 network address, up to 20 bindings, multiple IP addresses are separated by half-width commas, such as: 192.168.1.1, 202.106. 96.0/24. If no IP address is bound, the API key is only valid for 90 days. |
+| Parameter name | Required | Type   | Description                                  | Default value | Value range                                                                                                                  |
+| -------------- | -------- | ------ | -------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| subUid         | true     | long   | UID of the sub-user                           | NA            |                                                                                                                              |
+| accessKey      | true     | string | Access key of the sub-user's API key          | NA            |                                                                                                                              |
+| note           | false    | string | API key note                                 | NA            | Up to 255 characters                                                                                                         |
+| permission     | false    | string | API key permission                           | NA            | Value range: readOnly, trade. readOnly must be passed, while trade is optional. The two values are separated by a comma.     |
+| ipAddresses    | false    | string | IP address(es) bound to the API key           | NA            | IPv4/IPv6 host address or IPv4 network address. Up to 20 IP addresses can be bound, separated by commas. No default value. If no IP address is bound, the API key is valid for 90 days. |
+
 
 > Response:
 
@@ -2753,15 +2779,15 @@ API Key Permissions: Transactions
 ```
 
 ### Response data
+| Parameter name | Required | Data type | Description                     | Value range |
+| -------------- | -------- | --------- | ------------------------------- | ----------- |
+| code           | true     | int       | Status code                     |             |
+| message        | false    | string    | Error description (if any)      |             |
+| data           | true     | object    |                                 |             |
+| { note         | false    | string    | API key note                    |             |
+| permission     | false    | string    | API key permission              |             |
+| ipAddresses    | false    | string    | IP address bound to the API key |             |
 
-| Parameter name | Required | Data type | Description | Value range |
-| ------------- | -------- | -------- | ----------------- -- | -------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| { note | false | string | API key note | |
-| permission | false | string | API key permission | |
-| ipAddresses } | false | string | IP address bound to the API key | |
 
 ## Delete sub-user API key
 
@@ -2775,10 +2801,11 @@ API Key Permissions: Transactions
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| --------- | -------- | ------ | -------------------- -- | ------ | -------- |
-| subUid | true | long | uid of the sub-user | NA | |
-| accessKey | true | string | access key of sub-user API key | NA | |
+| Parameter name | Required | Type  | Description                    | Default value | Value range |
+| -------------- | -------- | ------| ------------------------------ | ------------- | ----------- |
+| subUid         | true     | long  | UID of the sub-user             | NA            |             |
+| accessKey      | true     | string| Access key of sub-user API key  | NA            |             |
+
 
 > Response:
 
@@ -2792,9 +2819,10 @@ API Key Permissions: Transactions
 ### Response data
 
 | Parameter name | Required | Data type | Description | Value range |
-| -------- | -------- | -------- | ---------------- | ----- --- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| code           | true     | int       | Status code |             |
+| message        | false    | string    | Error description (if any) |             |
+
 
 ## Asset transfer (between parent and child users)
 
@@ -2810,11 +2838,11 @@ The parent user executes the transfer between the parent and child users
 ### Request parameters
 
 | Parameter | Required | Data Type | Description | Value Range |
-| -------- | -------- | -------- | ------------------- ----------------------------------------- | ----------- -------------------------------------------------- |
-| sub-uid | true | long | sub-uid | - |
-| currency | true | string | Currency, namely btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys` for value) | - |
-| amount | true | decimal | transfer amount | - |
-| type | true | string | transfer type | master-transfer-in (sub-user transfers virtual currency to parent user) / master-transfer-out (master user transfers virtual currency to sub-user) |
+| --------- | -------- | --------- | ----------- | ----------- |
+| sub-uid | true | long | Sub-UID | - |
+| currency | true | string | Currency | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys` for valid values) |
+| amount | true | decimal | Transfer amount | - |
+| type | true | string | Transfer type | master-transfer-in (Sub-user transfers virtual currency to parent user) / master-transfer-out (Master user transfers virtual currency to sub-user) |
 
 > Response:
 
@@ -2828,16 +2856,17 @@ The parent user executes the transfer between the parent and child users
 ### Response data
 
 | Parameter | Required | Data Type | Length | Description | Value Range |
-| ------ | -------- | -------- | ---- | ---------- | -------- ------- |
-| data | true | int | - | transfer order id | - |
-| status | true | | - | status | "OK" or "Error" |
+| --------- | -------- | --------- | ------ | ----------- | ------------ |
+| data | true | int | - | Transfer order ID | - |
+| status | true | - | - | Status | "OK" or "Error" |
 
-### error code
+### Error Codes
 
-| error_code | Description | Type |
-| ----------------------------------------------- | ----- --------------------------- | ------ |
+| Error Code | Description | Type |
+| ----------------------------- | ----------------------------- | ---- |
 | account-transfer-balance-insufficient-error | Insufficient account balance | string |
-| base-operation-forbidden | Forbidden operation (parent-child user relationship error reporting) | string |
+| base-operation-forbidden | Forbidden operation (parent-child user relationship error) | string |
+
 
 ## Sub-user deposit address query
 
@@ -2851,10 +2880,10 @@ API Key permission: read
 
 ### Request parameters
 
-| field name | required | type | description | default value | value range |
-| -------- | -------- | ------ | --------- | ------ | ------- -------------------------------------------------- --- |
+| Field Name | Required | Type | Description | Default Value | Value Range |
+| ---------- | -------- | ---- | ----------- | ------------- | ----------- |
 | subUid | true | long | Sub-user UID | NA | Only 1 |
-| currency | true | string | currency | NA | btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys`) |
+| currency | true | string | Currency | NA | btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys`) |
 
 > Response:
 
@@ -2874,15 +2903,16 @@ API Key permission: read
 
 ### Response data
 
-| field name | required | data type | field description | value range |
-| ---------- | -------- | -------- | ---------------- | --- ----- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| { currency | true | string | currency | |
-| address | true | string | deposit address | |
-| addressTag | true | string | deposit address tag | |
-| chain } | true | string | chain name | |
+| Field Name | Required | Data Type | Field Description | Value Range |
+| ---------- | -------- | --------- | ---------------- | ----------- |
+| code | true | int | Status code | |
+| message | false | string | Error description (if any) | |
+| data | true | object | - | |
+| { currency | true | string | Currency | |
+| address | true | string | Deposit address | |
+| addressTag | true | string | Deposit address tag | |
+| chain } | true | string | Chain name | |
+
 
 
 ## Sub-user deposit record query
@@ -2897,15 +2927,16 @@ API Key permission: read
 
 ### Request parameters
 
-| parameter name | data type | required | description |
-| --------- | -------- | -------- | ------------------ ----------------------------------- |
-| subUid | long | TRUE | Sub-user UID, limit to 1 |
-| currency | string | FALSE | currency, default all currencies |
-| startTime | long | FALSE | Far point time, retrieved by createTime, see note 1 for value range and default value |
-| endTime | long | FALSE | Near point time, retrieved by createTime, see Note 2 for the value range and default value |
-| sort | string | FALSE | search direction, asc from far to near, desc from near to far, default value desc |
-| limit | int | FALSE | maximum number of items returned in a single page [1,500] (default 100) |
-| fromId | long | FALSE | Initial deposit order ID, only valid when querying on the next page, see note 3 |
+| Parameter Name | Data Type | Required | Description |
+| -------------- | --------- | -------- | ----------- |
+| subUid | long | true | Sub-user UID (limited to 1) |
+| currency | string | false | Currency. If not provided, returns deposits for all currencies |
+| startTime | long | false | Start time in Unix timestamp (milliseconds). Retrieves deposits created after this time |
+| endTime | long | false | End time in Unix timestamp (milliseconds). Retrieves deposits created before this time |
+| sort | string | false | Sort direction. "asc" for ascending order (from far to near), "desc" for descending order (from near to far). Default value is "desc" |
+| limit | int | false | Maximum number of items to be returned in a single page. Default is 100. Must be between 1 and 500 |
+| fromId | long | false | Initial deposit order ID. Only valid when querying the next page of results |
+
 
 Note 1:<br>
 startTime value range: [(endTime - 30 days), endTime]<br>
@@ -2946,31 +2977,32 @@ The server returns the "nextId" field only if the data entries in the time range
 ### Response data
 
 | Parameter name | Required | Data type | Description | Value range |
-| ------------ | -------- | ---------- | ---------------- ----------------------------------------------- | ----- ------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
+| -------------- | -------- | --------- | ----------- | ----------- |
+| code | true | int | Status code | |
+| message | false | string | Error description (if any) | |
 | data | true | object | | |
-| { id | true | long | deposit order id | |
-| currency | true | string | currency | |
-| txHash | true | string | transaction hash | |
-| chain | true | string | chain name | |
-| amount | true | bigdecimal | number | |
-| address | true | string | address | |
-| addressTag | true | string | address tag | |
-| state | true | string | state | state see table below |
-| createTime | true | long | launch time | |
-| updateTime } | true | long | last update time | |
-| nextId | false | long | The starting number of the next page (the ID of the deposit order, this field is only included when the query results need to be returned in pages) | |
+| { id | true | long | Deposit order ID | |
+| currency | true | string | Currency | |
+| txHash | true | string | Transaction hash | |
+| chain | true | string | Chain name | |
+| amount | true | bigdecimal | Deposit amount | |
+| address | true | string | Deposit address | |
+| addressTag | true | string | Deposit address tag | |
+| state | true | string | Deposit status | See table below |
+| createTime | true | long | Creation time | |
+| updateTime } | true | long | Last update time | |
+| nextId | false | long | Starting number for the next page (ID of the deposit order). Included only when there are more pages of results | |
 
-- Definition of virtual currency recharge status:
+- Definition of deposit status:
 
 | Status | Description |
-| ---------- | -------- |
-| unknown | status unknown |
-| confirming | confirming |
-| confirmed | confirmed |
+| ------ | ----------- |
+| unknown | Unknown status |
+| confirming | Confirming |
+| confirmed | Confirmed |
 | safe | Completed |
 | orphan | To be confirmed |
+
 
 ## Sub-user balance (summary)
 
@@ -3013,19 +3045,19 @@ none
 }
 ```
 ### Response data
-
 | Parameter | Required | Data Type | Length | Description | Value Range |
-| ------ | -------- | -------- | ---- | ---- | -------------- - |
-| status | true | | - | status | "OK" or "Error" |
-| data | true | list | - | | - |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
+| status | true | - | - | Status | "OK" or "Error" |
+| data | true | list | - | - | - |
 
 - data
 
-Parameter|Required | Data Type | Length | Description | Value Range |
------------|------------|-----------|------------| ----------|--|--
-currency| is | string| -|currency|-|
-type| is |string| - |account type| spot: spot account |
-balance| is | string| -| account balance (sum of available balance and frozen balance) |-|
+| Parameter | Required | Data Type | Length | Description | Value Range |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
+| currency | true | string | - | Currency | - |
+| type | true | string | - | Account type | "spot" for spot account |
+| balance | true | string | - | Account balance (sum of available balance and frozen balance) | - |
+
 
 ## Sub-user balance
 
@@ -3041,8 +3073,9 @@ The parent user queries the balance of each currency account of the sub-user
 ### Request parameters
 
 | Parameter | Required | Data Type | Length | Description | Value Range |
-| ------- | -------- | -------- | ---- | ------------ | ----- --- |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
 | sub-uid | true | long | - | UID of the sub-user | - |
+
 
 > Response:
 
@@ -3078,19 +3111,21 @@ The parent user queries the balance of each currency account of the sub-user
 
 ### Response data
 
-Parameter|Required | Data Type | Length | Description | Value Range |
------------|------------|-----------|------------| ----------|--|--
-id| - |long| - |subuser UID|-|
-type| - |string| - |account type| spot: spot account |
-list| - |object| - |-|-|
+| Parameter | Required | Data Type | Length | Description | Value Range |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
+| id | - | long | - | Sub-user UID | - |
+| type | - | string | - | Account type | spot: spot account |
+| list | - | object | - | - | - |
+
 
 - list
 
 | Parameter | Required | Data Type | Length | Description | Value Range |
-| -------- | -------- | -------- | ---- | -------- | -------- ------------------------- |
-| currency | - | string | - | currency | - |
-| type | - | string | - | account type | trade: trading account, frozen: frozen account |
-| balance | - | decimal | - | account balance | - |
+| --------- | -------- | --------- | ------ | ----------- | ----------- |
+| currency | - | string | - | Currency | - |
+| type | - | string | - | Account type | trade: trading account, frozen: frozen account |
+| balance | - | decimal | - | Account balance | - |
+
 
 # Spot Trading
 
@@ -3100,15 +3135,14 @@ The spot trading interface provides functions such as order placement, order can
 
 <aside class="notice">Signature authentication is required to access transaction-related interfaces. </aside>
 
-The following are the return codes and descriptions returned by transaction-related interfaces.
-| return code | description |
-| -------------------------------------------------- ----------- | -------------------------------------- ---------------------- |
+| Return Code | Description |
+| ----------- | ----------- |
 | base-argument-unsupported | A parameter is not supported, please check the parameter |
 | base-system-error | System error, if the order is canceled: the order status cannot be found in the cache, the order cannot be canceled; if the order is placed: the order failed to enter the cache, please try again |
-| login-required | There is no Signature parameter in the url or the user cannot be found (the key does not correspond to the account id, etc.) |
+| login-required | There is no Signature parameter in the URL or the user cannot be found (the key does not correspond to the account ID, etc.) |
 | parameter-required | Take Profit Stop Loss order lacks parameter stop-price or operator |
 | base-record-invalid | No data found yet, please try again later |
-| order-amount-over-limit | order quantity over limit |
+| order-amount-over-limit | Order quantity over limit |
 | base-symbol-trade-disabled | The trading pair is disabled |
 | base-operation-forbidden | The user is not in the whitelist or the currency does not allow OTC transactions and other prohibited actions |
 | account-get-accounts-inexistent-error | The account does not exist under the user |
@@ -3131,17 +3165,17 @@ The following are the return codes and descriptions returned by transaction-rela
 | order-marketorder-amount-sell-max-error | The sell amount of a market order cannot be higher than the specified amount |
 | order-holding-limit-failed | The order exceeds the position limit of the currency |
 | order-type-invalid | Invalid order type |
-| order-orderstate-error | order state error |
+| order-orderstate-error | Order state error |
 | order-date-limit-error | The query time cannot exceed the system limit |
 | order-source-invalid | Invalid order source |
-| order-update-error | update data error |
+| order-update-error | Update data error |
 | order-user-cancel-forbidden | The order type is IOC and cancellation is not allowed |
 | order-price-greater-than-limit | The order price is higher than the order limit price before the opening, please place a new order |
 | order-price-less-than-limit | The order price is lower than the order limit price before the opening, please place a new order |
 | order-stop-order-hit-trigger | The stop loss order is triggered by the current price |
 | market-orders-not-support-during-limit-price-trading | Market orders are not supported for time-limited orders |
 | price-exceeds-the-protective-price-during-limit-price-trading | The price exceeds the protective price during the price limit |
-| invalid-client-order-id | client order id duplicated |
+| invalid-client-order-id | Client order ID duplicated |
 | invalid-interval | Query start and end window settings are wrong |
 | invalid-start-date | The query start date contains an invalid value |
 | invalid-end-date | The query start date contains an invalid value |
@@ -3149,7 +3183,7 @@ The following are the return codes and descriptions returned by transaction-rela
 | invalid-end-time | Query start time contains invalid value |
 | validation-constraints-required | Specified required parameter is missing |
 | not-found | The order does not exist when canceling the order |
-| base-not-found | Invalid clientorderid canceled too many orders, try again after an hour |
+| base-not-found | Invalid client order ID canceled too many orders, try again after an hour |
 
 ## place an order
 
@@ -3177,18 +3211,18 @@ Send a new order for matching.
 ```
 
 ### Request parameters
+| Parameter Name | Data Type | Required | Default Value | Description |
+| -------------- | --------- | -------- | ------------- | ----------- |
+| account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
+| symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
+| type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
+| amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
+| price | string | false | NA | Order price (not applicable for market orders) |
+| source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
+| client-order-id | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
+| stop-price | string | false | NA | Trigger price for stop-loss order |
+| operator | string | false | NA | Operator for take profit stop loss order trigger price: gte (greater than or equal to), lte (less than or equal to) |
 
-| parameter name | data type | required | default value | description |
-| --------------- | -------- | -------- | -------- | ------ -------------------------------------------------- ---- |
-| account-id | string | true | NA | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account |
-| symbol | string | true | NA | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
-| type | string | true | NA | order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker (description see below), buy-stop-limit, sell-stop-limit |
-| amount | string | true | NA | Order volume (buy order at market price is the order volume) |
-| price | string | false | NA | order price (invalid for market orders) |
-| source | string | false | spot-api | Fill in "spot-api" for spot transactions |
-| client-order-id | string | false | NA | User-made order number (maximum length 64 characters, must be unique within 24 hours) |
-| stop-price | string | false | NA | trigger price of stop-loss order |
-| operator | string | false | NA | Take profit stop loss order trigger price operator gte – greater than and equal (>=), lte – less than and equal (<=) |
 
 
 **buy-limit-maker**
@@ -3252,18 +3286,18 @@ A batch of up to 10 orders
 ```
 
 ### Request parameters
+| Parameter Name | Data Type | Required | Default Value | Description |
+| -------------- | --------- | -------- | ------------- | ----------- |
+| account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
+| symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
+| type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
+| amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
+| price | string | false | NA | Order price (not applicable for market orders) |
+| source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
+| client-order-id | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
+| stop-price | string | false | NA | Trigger price for stop-loss order |
+| operator | string | false | NA | Operator for take profit stop loss order trigger price: gte (greater than or equal to), lte (less than or equal to) |
 
-| parameter name | data type | required | default value | description |
-| --------------- | -------- | -------- | -------- | ------ -------------------------------------------------- ---- |
-| [{ account-id | string | true | NA | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account; |
-| symbol | string | true | NA | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
-| type | string | true | NA | order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker (description see below), buy-stop-limit, sell-stop-limit |
-| amount | string | true | NA | Order volume (buy order at market price is the order volume) |
-| price | string | false | NA | order price (invalid for market orders) |
-| source | string | false | spot-api | Fill in "spot-api" for spot transactions |
-| client-order-id | string | false | NA | User-made order number (maximum length 64 characters, must be unique within 24 hours) |
-| stop-price | string | false | NA | trigger price of stop-loss order |
-| operator }] | string | false | NA | Take profit stop order trigger price operator gte – greater than and equal (>=), lte – less than and equal (<=) |
 
 **buy-limit-maker**
 
@@ -3297,12 +3331,13 @@ When the "order price" > "the highest buying price in the market", the order wil
 
 ### Response data
 
-| Field Name | Data Type | Description |
-| --------------- | -------- | --------------------- ------------ |
-| [{ order-id | integer | order number |
-| client-order-id | string | User-made order number (if any) |
-| err-code | string | Order rejection error code (only valid for rejected orders) |
-| err-msg }] | string | Order rejection error message (only valid for rejected orders) |
+| Field Name     | Data Type | Description                                                  |
+| -------------- | --------- | ------------------------------------------------------------ |
+| [{ order-id    | integer   | Order ID                                                     |
+| client-order-id | string    | User-defined order ID (if provided)                           |
+| err-code       | string    | Error code for rejected orders (only applicable to rejected orders) |
+| err-msg }]     | string    | Error message for rejected orders (only applicable to rejected orders) |
+
 
 If the client order ID is reused (within 24 hours), the node returns the order ID and client order ID of the previous order.
 
@@ -3322,9 +3357,10 @@ This interface sends a request to cancel an order.
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ------ | ------------------ | ----- - | -------- |
-| order-id | true | string | order ID, fill in the path | | |
+| Parameter name | Required | Data type | Description | Default value | Value range |
+| -------------- | -------- | --------- | ----------- | ------------- | ----------- |
+| order-id       | true     | string    | Order ID, to be filled in the path |               |             |
+
 
 
 > Success response:
@@ -3355,12 +3391,13 @@ The returned master data object is a string corresponding to the order number.
 In the returned field list, the possible values of order-state include -
 
 | order-state | Description |
-| ----------- | -------------------------------------- ----------------------- |
-| -1 | order was already closed in the long past (order state = canceled, partial-canceled, filled, partial-filled) |
-| 5 | partial-canceled |
-| 6 | filled |
-| 7 | canceled |
-| 10 | canceling |
+| ----------- | ------------------------------------------------------ |
+| -1          | The order was already closed in the distant past          |
+| 5           | Partially canceled                                      |
+| 6           | Filled                                                  |
+| 7           | Canceled                                                |
+| 10          | Canceling                                               |
+
 
 ## Cancel order (based on client order ID)
 
@@ -3385,9 +3422,10 @@ This interface sends a request to cancel an order.
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| --------------- | -------- | ------ | -------------- | -- ---- | -------- |
-| client-order-id | true | string | user-defined order number | | |
+| Parameter name   | Required | Type   | Description              | Default value | Value range |
+| ---------------- | -------- | ------ | ------------------------ | ------------- | ----------- |
+| client-order-id  | true     | string | User-defined order number |               |             |
+
 
 
 > Response:
@@ -3400,18 +3438,18 @@ This interface sends a request to cancel an order.
 
 ### Response data
 
-| Field Name | Data Type | Description |
-| -------- | -------- | ---------- |
-| data | integer | order cancellation status code |
+| Field Name | Data Type | Description                              |
+| ---------- | --------- | ---------------------------------------- |
+| data       | integer   | Order cancellation status code            |
 
-| Status Code | Description |
-| ----------- | -------------------------------------- ----------------------- |
-| -1 | order was already closed in the long past (order state = canceled, partial-canceled, filled, partial-filled) |
-| 0 | client-order-id not found |
-| 5 | partial-canceled |
-| 6 | filled |
-| 7 | canceled |
-| 10 | canceling |
+| Status Code | Description                                                     |
+| ----------- | --------------------------------------------------------------- |
+| -1          | Order was already closed in the long past (order state = canceled, partial-canceled, filled, partial-filled) |
+| 0           | client-order-id not found                                       |
+| 5           | Partial-canceled                                                |
+| 6           | Filled                                                          |
+| 7           | Canceled                                                        |
+| 10          | Canceling                                                       |
 
 
 ## Query current unfilled orders
@@ -3437,14 +3475,15 @@ Query the orders that have been submitted but have not been fully executed or ca
 
 ### Request parameters
 
-| parameter name | data type | required | default value | description |
-| ---------- | -------- | ----------------------------- ------------------- | ------ | ----------------------- ----------------------------------------- |
-| account-id | string | true | NA | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account |
-| symbol | string | ture | NA | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
-| side | string | false | both | Specify to only return orders in one direction, possible values are: buy, sell. By default, both directions are returned. |
-| from | string | false | | query starting ID |
-| direct | string | false (if the field 'from' is set, the field 'direct' is required) | | query direction, prev means forward; next means backward |
-| size | int | false | 100 | Return the quantity of the order, the maximum value is 500. |
+| Parameter Name | Data Type | Required | Default Value | Description |
+| -------------- | --------- | -------- | ------------- | ----------- |
+| account-id     | string    | true     | NA            | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account |
+| symbol         | string    | true     | NA            | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| side           | string    | false    | both          | Specify to only return orders in one direction, possible values are: buy, sell. By default, both directions are returned. |
+| from           | string    | false    |               | Query starting ID |
+| direct         | string    | false    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
+| size           | int       | false    | 100           | Return the quantity of the order, the maximum value is 500. |
+
 
 > Response:
 
@@ -3471,21 +3510,22 @@ Query the orders that have been submitted but have not been fully executed or ca
 
 ### Response data
 
-| Field Name | Data Type | Description |
-| ------------------ | -------- | --------------------- ------------------------------------------ |
-| id | integer | order id, no order of size, can be used as the from field of the next page turning query request |
-| client-order-id | string | User-made order number (all open orders can return client-order-id) |
-| symbol | string | trading pair, such as btcusdt, ethbtc |
-| price | string | transaction price of limit order |
-| created-at | int | Timestamp of order creation adjusted to Singapore time, in milliseconds |
-| type | string | order type |
-| filled-amount | string | Amount of the filled part of the order |
-| filled-cash-amount | string | The total price of the filled portion of the order |
-| filled-fees | string | Total transaction fees paid |
-| source | string | Fill in "api" for spot transactions |
-| state | string | order status, including submitted, partial-filled, canceling, created |
-| stop-price | string | trigger price of stop loss order |
-| operator | string | The trigger price operator for stop loss orders |
+| Field Name         | Data Type | Description                                                   |
+| ------------------ | --------- | ------------------------------------------------------------- |
+| id                 | integer   | Order ID, can be used as the 'from' field for the next page turning query request |
+| client-order-id    | string    | User-defined order number (available for all open orders)      |
+| symbol             | string    | Trading pair, such as btcusdt, ethbtc                          |
+| price              | string    | Transaction price of limit order                              |
+| created-at         | int       | Timestamp of order creation adjusted to Singapore time, in milliseconds |
+| type               | string    | Order type                                                    |
+| filled-amount      | string    | Amount of the filled part of the order                         |
+| filled-cash-amount | string    | The total price of the filled portion of the order             |
+| filled-fees        | string    | Total transaction fees paid                                   |
+| source             | string    | Fill in "api" for spot transactions                           |
+| state              | string    | Order status, including submitted, partial-filled, canceling, created |
+| stop-price         | string    | Trigger price of stop loss order                              |
+| operator           | string    | The trigger price operator for stop loss orders                |
+
 
 ## Cancel orders in batches (open orders)
 
@@ -3503,12 +3543,13 @@ This interface sends a request to cancel orders in batches.
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ---------- | -------- | ------ | ------------------- ----------------------------------------- | ------ | ---- ------------------------------------------------ |
-| account-id | false | string | account ID, refer to `GET /v1/account/accounts` | | |
-| symbol | false | string | list of transaction symbols (up to 10 symbols, multiple transaction symbols separated by commas), btcusdt, ethbtc... (refer to `/v1/common/symbols` for values) | all | |
-| side | false | string | Active trading direction | | "buy" or "sell", by default all orders that meet the conditions and have not been executed will be returned |
-| size | false | int | number of records to be returned | 100 | [0,100] |
+| Parameter Name | Required | Type   | Description                                                                                                                                 | Default Value | Value Range   |
+| -------------- | -------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------- |
+| account-id     | false    | string | Account ID, refer to `GET /v1/account/accounts` for available values. If not provided, orders from all accounts will be returned.            |               |               |
+| symbol         | false    | string | List of trading symbols (up to 10 symbols, multiple symbols separated by commas). If not provided, orders for all symbols will be returned. | all           |               |
+| side           | false    | string | Trading direction. If not provided, all orders that meet the conditions and have not been executed will be returned.                        |               | "buy" or "sell" |
+| size           | false    | int    | Number of records to be returned.                                                                                                           | 100           | [0, 100]      |
+
 
 
 > Response:
@@ -3527,12 +3568,12 @@ This interface sends a request to cancel orders in batches.
 
 ### Response data
 
+| Parameter Name | Required | Data Type | Description                                                       | Value Range |
+| -------------- | -------- | --------- | ----------------------------------------------------------------- | ----------- |
+| success-count  | true     | int       | Number of successfully canceled orders                             |             |
+| failed-count   | true     | int       | Number of failed orders                                            |             |
+| next-id        | true     | long      | Next order ID that meets the cancellation criteria for continuation |             |
 
-| Parameter name | Required | Data type | Description | Value range |
-| ------------- | -------- | -------- | ----------------- --------- | -------- |
-| success-count | true | int | number of successfully canceled orders | |
-| failed-count | true | int | number of failed orders | |
-| next-id | true | long | the next order number that meets the cancellation criteria | |
 
 ## Cancel orders in bulk
 
@@ -3557,10 +3598,10 @@ This interface sends cancellation requests for multiple orders (based on id) at 
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ---------------- | -------- | -------- | -------------- ------------------------------------------------- | --- --- | ------------------ |
-| order-ids | false | string[] | order ID list (order-ids and client-order-ids must and can only be filled in, no more than 50 orders) | | no more than 50 orders at a time |
-| client-order-ids | false | string[] | A list of user-made order numbers (order-ids and client-order-ids must be selected and filled in, and no more than 50 orders) | | No more than 50 single orders orders |
+| Parameter Name    | Required | Data Type  | Description                                                                                                           | Default Value | Value Range                                        |
+| ----------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------- |
+| order-ids         | false    | string[]   | List of order IDs (either `order-ids` or `client-order-ids` must be provided, and the list should not exceed 50 orders) |               | Maximum 50 order IDs at a time                     |
+| client-order-ids  | false    | string[]   | List of user-made order numbers (either `order-ids` or `client-order-ids` must be provided, and the list should not exceed 50 orders) |               | Maximum 50 client order IDs at a time              |
 
 > Response:
 
@@ -3599,30 +3640,30 @@ This interface sends cancellation requests for multiple orders (based on id) at 
 
 ### Response data
 
-| Field Name | Data Type | Description |
-| --------- | -------- | --------------------------- --------------------------------- |
-| { success | string[] | List of successfully canceled orders (can be order-id list or client-order-id list, subject to user request) |
-| failed } | string[] | List of failed orders (can be order-id list or client-order-id list, subject to user request) |
+| Field Name      | Data Type | Description                                                                                           |
+| --------------- | --------- | ----------------------------------------------------------------------------------------------------- |
+| success         | string[]  | List of successfully canceled orders (can be order ID list or client order ID list as per user request) |
+| failed          | string[]  | List of failed orders (can be order ID list or client order ID list as per user request)               |
 
-Cancellation failed order list -
+Failed order list:
 
-| Field Name | Data Type | Description |
-| --------------- | -------- | --------------------- --------------------------------------- |
-| [{ order-id | string | order number (if the user includes order-id when creating an order, this field must also be included in the return) |
-| client-order-id | string | User-made order number (if the user includes client-order-id when creating an order, this field must also be included in the return) |
-| err-code | string | Order rejection error code (only valid for rejected orders) |
-| err-msg | string | Order rejected error message (only valid for rejected orders) |
-| order-state }] | string | current order state (if any) |
+| Field Name      | Data Type | Description                                                                                           |
+| --------------- | --------- | ----------------------------------------------------------------------------------------------------- |
+| [{ order-id     | string    | Order number (if the user includes order ID when creating an order, this field must also be included) |
+| client-order-id | string    | User-made order number (if the user includes client order ID when creating an order, this field must also be included) |
+| err-code        | string    | Order rejection error code (only valid for rejected orders)                                           |
+| err-msg         | string    | Order rejection error message (only valid for rejected orders)                                        |
+| order-state     | string    | Current order state (if applicable)                                                                    |
 
-In the returned field list, the possible values of order-state include -
+Possible values for order-state:
 
-| order-state | Description |
-| ----------- | -------------------------------------- ----------------------- |
-| -1 | order was already closed in the long past (order state = canceled, partial-canceled, filled, partial-filled) |
-| 5 | partial-canceled |
-| 6 | filled |
-| 7 | canceled |
-| 10 | canceling |
+| order-state | Description                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| -1          | Order was already closed in the past (order state = canceled, partial-canceled, filled, partial-filled) |
+| 5           | Partially canceled                                                                                    |
+| 6           | Filled                                                                                                |
+| 7           | Canceled                                                                                              |
+| 10          | Canceling                                                                                             |
 
 ## Query order details
 
@@ -3638,9 +3679,10 @@ This interface returns the latest status and details of the specified order. Ord
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ------ | ------------------ | ----- - | -------- |
-| order-id | true | string | order ID, fill in the path | | |
+| Parameter name | Required | Data Type | Description | Default value | Value range |
+| -------------- | -------- | --------- | ----------- | ------------- | ----------- |
+| order-id       | true     | string    | Order ID     |               |             |
+
 
 > Response:
 
@@ -3669,25 +3711,30 @@ This interface returns the latest status and details of the specified order. Ord
 
 ### Response data
 
-| Field name | Required | Data type | Description | Value range |
-| ----------------- | -------- | -------- | ------------- -------------------------------------------------- | -- -------------------------------------------------- -------- |
-| account-id | true | long | account ID | |
-| amount | true | string | order quantity | |
-| canceled-at | false | long | order cancellation time | |
-| created-at | true | long | order creation time | |
-| field-amount | true | string | Transaction amount | |
-| field-cash-amount | true | string | total transaction amount | |
-| field-fees | true | string | transaction fee (buy for coins, sell for money) | |
-| finished-at | false | long | The time when the order becomes finalized, not the transaction time, including the "cancelled" status | |
-| id | true | long | order ID | |
-| client-order-id | false | string | user-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time) (state <> canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time) can return client-order-id (if any) | |
-| price | true | string | order price | |
-| source | true | string | order source | api |
-| state | true | string | order status | submitted, partial-filled, partially-canceled, partially-canceled, filled, canceled, created |
-| symbol | true | string | trading pair | btcusdt, ethbtc, rcneth ... |
-| type | true | string | order type | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc : IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| stop-price | false | string | trigger price of stop-loss order | |
-| operator | false | string | stop loss order trigger price operator | gte,lte |
+| Field name         | Required | Data type | Description                                                                                      | Value range                                                                                         |
+| ------------------ | -------- | --------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| account-id         | true     | long      | Account ID                                                                                       |                                                                                                    |
+| amount             | true     | string    | Order quantity                                                                                   |                                                                                                    |
+| canceled-at        | false    | long      | Order cancellation time                                                                          |                                                                                                    |
+| created-at         | true     | long      | Order creation time                                                                              |                                                                                                    |
+| field-amount       | true     | string    | Transaction amount                                                                               |                                                                                                    |
+| field-cash-amount  | true     | string    | Total transaction amount                                                                         |                                                                                                    |
+| field-fees         | true     | string    | Transaction fee (buy for coins, sell for money)                                                  |                                                                                                    |
+| finished-at        | false    | long      | The time when the order becomes finalized, not the transaction time, including the "cancelled" status |                                                                                                    |
+| id                 | true     | long      | Order ID                                                                                         |                                                                                                    |
+| client-order-id    | false    | string    | User-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time)                   |
+|                    |          |           | (state <> canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time)                    |
+|                    |          |           | can return client-order-id (if any)                                                              |                                                                                                    |
+| price              | true     | string    | Order price                                                                                      |                                                                                                    |
+| source             | true     | string    | Order source                                                                                     | api                                                                                                |
+| state              | true     | string    | Order status                                                                                     | submitted, partial-filled, partially-canceled, filled, canceled, created                            |
+| symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, rcneth ...                                                                         |
+| type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, |
+|                    |          |           | sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, |
+|                    |          |           | sell-limit-maker, buy-stop-limit, sell-stop-limit                                                 |                                                                                                    |
+| stop-price         | false    | string    | Trigger price of stop-loss order                                                                 |                                                                                                    |
+| operator           | false    | string    | Stop loss order trigger price operator                                                          | gte,lte                                                                                            |
+
 
 
 ## Query order details (based on client order ID)
@@ -3702,10 +3749,10 @@ This interface returns the latest order status and details of the specified user
 - GET `/v1/order/orders/getClientOrder`
 
 ### Request parameters
+| Parameter name  | Required | Type   | Description                     | Default value |
+| --------------- | -------- | ------ | ------------------------------- | ------------- |
+| clientOrderId   | true     | string | User-defined order number        |               |
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ------------- | -------- | ------ | -------------- | ---- -- | -------- |
-| clientOrderId | true | string | user-defined order number | | |
 
 > Response:
 
@@ -3733,25 +3780,26 @@ This interface returns the latest order status and details of the specified user
 ```
 ### Response data
 
-| Field name | Required | Data type | Description | Value range |
-| ----------------- | -------- | -------- | ------------- -------------------------------------------------- | -- -------------------------------------------------- -------- |
-| account-id | true | long | account ID | |
-| amount | true | string | order quantity | |
-| canceled-at | false | long | order cancellation time | |
-| created-at | true | long | order creation time | |
-| field-amount | true | string | Transaction amount | |
-| field-cash-amount | true | string | total transaction amount | |
-| field-fees | true | string | transaction fee (buy for coins, sell for money) | |
-| finished-at | false | long | The time when the order becomes finalized, not the transaction time, including the "cancelled" status | |
-| id | true | long | order ID | |
-| client-order-id | false | string | user-defined order number (only orders within 24 hours (based on order creation time) can be queried.) | |
-| price | true | string | order price | |
-| source | true | string | order source | api |
-| state | true | string | order status | submitted, partial-filled, partially-canceled, partially-canceled, filled, canceled, created |
-| symbol | true | string | trading pair | btcusdt, ethbtc, rcneth ... |
-| type | true | string | order type | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc : IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| stop-price | false | string | trigger price of stop-loss order | |
-| operator | false | string | stop loss order trigger price operator | gte,lte |
+| Field name         | Required | Data type | Description                                                                                    | Value range |
+| ------------------ | -------- | --------- | ---------------------------------------------------------------------------------------------- | ----------- |
+| account-id         | true     | long      | Account ID                                                                                     |             |
+| amount             | true     | string    | Order quantity                                                                                 |             |
+| canceled-at        | false    | long      | Order cancellation time                                                                        |             |
+| created-at         | true     | long      | Order creation time                                                                            |             |
+| field-amount       | true     | string    | Transaction amount                                                                             |             |
+| field-cash-amount  | true     | string    | Total transaction amount                                                                       |             |
+| field-fees         | true     | string    | Transaction fee (buy for coins, sell for money)                                                |             |
+| finished-at        | false    | long      | The time when the order becomes finalized, including the "cancelled" status                   |             |
+| id                 | true     | long      | Order ID                                                                                       |             |
+| client-order-id    | false    | string    | User-defined order number (Only orders within 24 hours (based on order creation time) can be queried) |             |
+| price              | true     | string    | Order price                                                                                    |             |
+| source             | true     | string    | Order source                                                                                   | api         |
+| state              | true     | string    | Order status                                                                                   |             |
+| symbol             | true     | string    | Trading pair                                                                                   |             |
+| type               | true     | string    | Order type                                                                                     |             |
+| stop-price         | false    | string    | Trigger price of stop-loss order                                                               |             |
+| operator           | false    | string    | Stop loss order trigger price operator                                                        | gte, lte    |
+
 
 If the client order ID does not exist, the following error message will be returned
 {
@@ -3773,10 +3821,10 @@ This interface returns the transaction details of the specified order.
 - GET `/v1/order/orders/{order-id}/matchresults`
 
 ### Request parameters
+| Parameter name | Required | Type  | Description                        | Default value |
+| -------------- | -------- | ------| ---------------------------------- | ------------- |
+| order-id       | true     | string| Order ID, fill in the path         |               |
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| -------- | -------- | ------ | ------------------ | ----- - | -------- |
-| order-id | true | string | order ID, fill in the path | | |
 
 
 > Response:
@@ -3809,24 +3857,25 @@ This interface returns the transaction details of the specified order.
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
-| Field name | Required | Data type | Description | Value range |
-| ------------------- | -------- | -------- | ----------- -------------------------------------------------- | -------------------------------------------------- ---------- |
-| created-at | true | long | transaction timestamp timestamp | |
-| filled-amount | true | string | filled amount | |
-| filled-fees | true | string | transaction fee (positive value) or transaction rebate (negative value) | |
-| fee-currency | true | string | transaction fee or transaction rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the pricing currency; the transaction rebate currency for buy orders is the pricing currency, and the transaction rebate currency of the sell order is the base currency) | |
-| id | true | long | order transaction record ID | |
-| match-id | true | long | Matching ID, the order ID of order execution in matching | |
-| order-id | true | long | order ID, the ID of the order to which the transaction belongs | |
-| trade-id | false | integer | Unique trade ID (NEW) Unique trade ID, the unique ID generated at the time of trade | |
-| price | true | string | transaction price | |
-| source | true | string | order source | api |
-| symbol | true | string | trading pair | btcusdt, ethbtc, rcneth ... |
-| type | true | string | order type | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc : IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| role | true | string | transaction role | maker,taker |
-| filled-points | true | string | deduction amount (can be ht or hbpoint) | |
-| fee-deduct-currency | true | string | deduction type | If it is empty, it means that the deduction fee is the original currency; it means that the deduction fee is the deduction asset |
-| fee-deduct-state | true | string | deduction status | deduction in progress: ongoing, deduction completed: done |
+| Field name         | Required | Data type | Description                                             | Value range  |
+| ------------------ | -------- | --------- | ------------------------------------------------------- | ------------ |
+| created-at         | true     | long      | Transaction timestamp                                   |              |
+| filled-amount      | true     | string    | Filled amount                                           |              |
+| filled-fees        | true     | string    | Transaction fee (positive value) or transaction rebate (negative value) |              |
+| fee-currency       | true     | string    | Transaction fee or rebate currency                       |              |
+| id                 | true     | long      | Order transaction record ID                              |              |
+| match-id           | true     | long      | Matching ID                                             |              |
+| order-id           | true     | long      | Order ID                                                |              |
+| trade-id           | false    | integer   | Unique trade ID                                         |              |
+| price              | true     | string    | Transaction price                                       |              |
+| source             | true     | string    | Order source                                            | api          |
+| symbol             | true     | string    | Trading pair                                            | btcusdt, ethbtc, rcneth, ... |
+| type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| role               | true     | string    | Transaction role                                        | maker, taker |
+| filled-points      | true     | string    | Deduction amount                                        |              |
+| fee-deduct-currency| true     | string    | Deduction type                                          |              |
+| fee-deduct-state   | true     | string    | Deduction status                                        | deduction in progress, deduction completed |
+
 
 Note: <br>
 
@@ -3869,19 +3918,18 @@ It is recommended that users query historical orders by "time range".
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ---------- | -------- | ------ | ------------------- ----------------------------------------- | ----------- ---------------- | --------------------------------- ------------------------------ |
-| symbol | true | string | trading pair | | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
-| types | false | string | Combinations of order types to query, separated by commas | | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy- ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| start-time | false | long | query start time, the time format is UTC time in millisecond. Query based on order generation time | -48h 48 hours before the query end time | Value range [((end-time) – 48h), (end-time)], the maximum query window is 48 hours, and the window translation range is the nearest For 180 days, the translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state="canceled") |
-| end-time | false | long | Query end time, the time format is UTC time in millisecond. Query based on order generation time | present | value range [(present-179d), present], the maximum query window is 48 hours, the window translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state="canceled") |
-| start-date | false | string | query start date, date format yyyy-mm-dd. Query based on the order generation time | -1d 1 day before the query end date | Value range [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the nearest For 180 days, the translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state="canceled") |
-| end-date | false | string | Query end date, date format yyyy-mm-dd. Query based on order generation time | today | value range [(today-179), today], the maximum query window is 2 days, the window translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state="canceled") |
-| states | true | string | Combination of order states to query, separated by ',' |
-| from | false | string | Query start ID | | If it is a backward query, it will be assigned the last id obtained in the last query result; if it is a forward query, it will be assigned the first id obtained in the last query result an id |
-| direct | false | string | query direction | | prev forward; next backward |
-| size | false | string | query record size | 100 | [1, 100] |
-
+| Parameter name | Required | Type   | Description                                                                                                           | Default value                            | Value range                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| -------------- | -------- | ------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| symbol         | true     | string | Trading pair                                                                                                          |                                          | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                                                                                                                                                                                                                                                                             |
+| types          | false    | string | Combinations of order types to query, separated by commas                                                              |                                          | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit                                                                                                                                                                  |
+| start-time     | false    | long   | Query start time, the time format is UTC time in milliseconds. Query based on order generation time                  | -48h                                     | Value range [((end-time) – 48h), (end-time)], the maximum query window is 48 hours, and the translation range is the nearest for 180 days. The translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state="canceled").                                                                                                                   |
+| end-time       | false    | long   | Query end time, the time format is UTC time in milliseconds. Query based on order generation time                    | present                                  | Value range [(present-179d), present], the maximum query window is 48 hours, the translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state="canceled").                                                                                                                                                       |
+| start-date     | false    | string | Query start date, date format yyyy-mm-dd. Query based on the order generation time                                      | -1d                                      | Value range [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the translation range is the nearest for 180 days. The translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state="canceled").                                                                                                                         |
+| end-date       | false    | string | Query end date, date format yyyy-mm-dd. Query based on order generation time                                          | today                                    | Value range [(today-179), today], the maximum query window is 2 days, the translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state="canceled").                                                                                                                                                             |
+| states         | true     | string | Combination of order states to query, separated by ','.                                                               |                                          |                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| from           | false    | string | Query start ID                                                                                                        |                                          | If it is a backward query, it will be assigned the last ID obtained in the last query result; if it is a forward query, it will be assigned the first ID obtained in the last query result.                                                                                                                                                                                                                               |
+| direct         | false    | string | Query direction                                                                                                       |                                          | prev forward; next backward                                                                                                                                                                                                                                                                                                                                                                                                |
+| size           | false    | string | Query record size                                                                                                     | 100                                      | [1, 100]                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 > Response:
 
@@ -3912,33 +3960,33 @@ It is recommended that users query historical orders by "time range".
 
 ### Response data
 
-| Parameter name | Required | Data type | Description | Value range |
-| ----------------- | -------- | -------- | ------------- -------------------------------------------------- | -- -------------------------------------------------- -------- |
-| account-id | true | long | account ID | |
-| amount | true | string | order quantity | |
-| canceled-at | false | long | The time when the cancellation request was received | |
-| created-at | true | long | order creation time | |
-| field-amount | true | string | Transaction amount | |
-| field-cash-amount | true | string | total transaction amount | |
-| field-fees | true | string | transaction fee (buying is base currency, selling is price currency) | |
-| finished-at | false | long | Last transaction time | |
-| id | true | long | order ID, no order of size, can be used as the from field of the next page turning query request | |
-| client-order-id | false | string | user-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time) (state <> canceled) Can return client-order-id (if any); only closed orders (state = canceled) within 24 hours (based on order creation time) can be queried) | |
-| price | true | string | order price | |
-| source | true | string | order source | api |
-| state | true | string | order status | submitted, partial-filled, partially-canceled, partially-canceled, filled, canceled, created |
-| symbol | true | string | trading pair | btcusdt, ethbtc, rcneth ... |
-| type | true | string | order type| submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| stop-price | false | string | trigger price of stop-loss order | |
-| operator | false | string | stop loss order trigger price operator | gte,lte |
+| Parameter name   | Required | Data type | Description                                                                                                                                                                                                                                                                                                                                                                         | Value range                                                                                                                                                        |
+| ---------------- | -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| account-id       | true     | long      | Account ID                                                                                                                                                                                                                                                                                                                                                                           |                                                                                                                                                                    |
+| amount           | true     | string    | Order quantity                                                                                                                                                                                                                                                                                                                                                                       |                                                                                                                                                                    |
+| canceled-at      | false    | long      | The time when the cancellation request was received                                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
+| created-at       | true     | long      | Order creation time                                                                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
+| field-amount     | true     | string    | Transaction amount                                                                                                                                                                                                                                                                                                                                                                   |                                                                                                                                                                    |
+| field-cash-amount | true     | string    | Total transaction amount                                                                                                                                                                                                                                                                                                                                                             |                                                                                                                                                                    |
+| field-fees       | true     | string    | Transaction fee (buying is base currency, selling is price currency)                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
+| finished-at      | false    | long      | Last transaction time                                                                                                                                                                                                                                                                                                                                                               |                                                                                                                                                                    |
+| id               | true     | long      | Order ID, no order of size, can be used as the 'from' field of the next page turning query request                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
+| client-order-id  | false    | string    | User-defined order number (all open orders can return 'client-order-id' (if any); only closed orders within 7 days (based on order creation time) (state <> canceled) can return 'client-order-id' (if any); only closed orders (state = canceled) within 24 hours (based on order creation time) can be queried)                                                          |                                                                                                                                                                    |
+| price            | true     | string    | Order price                                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                    |
+| source           | true     | string    | Order source                                                                                                                                                                                                                                                                                                                                                                         | api                                                                                                |
+| state            | true     | string    | Order status                                                                                                                                                                                                                                                                                                                                                                         | submitted, partial-filled, partially-canceled, partially-canceled, filled, canceled, created                                                                    |
+| symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, rcneth ...                                                                         |
+| type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| stop-price       | false    | string    | Trigger price of stop-loss order                                                                                                                                                                                                                                                                                                                                                    |                                                                                                                                                                    |
+| operator         | false    | string    | Stop-loss order trigger price operator                                                                                                                                                                                                                                                                                                                                              | gte, lte                                                                                            |
 
-### start-date, end-date related error codes
+### Error codes related to start-date and end-date:
 
-| Error code | Corresponding error scenario |
-| ------------------ | ------------------------------ --------------------------------- |
-| invalid_interval | start date is less than end date; or the time interval between start date and end date is greater than 2 days |
-| invalid_start_date | start date is a date 180 days ago; or start date is a date in the future |
-| invalid_end_date | end date is a date 180 days ago; or end date is a date in the future |
+| Error code          | Corresponding error scenario                                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------------------------------- |
+| invalid_interval    | Start date is less than end date; or the time interval between start date and end date is greater than 2 days   |
+| invalid_start_date  | Start date is a date 180 days ago; or start date is a date in the future                                         |
+| invalid_end_date    | End date is a date 180 days ago; or end date is a date in the future                                             |
 
 ## Search historical orders within the last 48 hours
 
@@ -3965,14 +4013,13 @@ This interface queries historical orders within the last 48 hours based on searc
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ---------- | -------- | ------ | ------------------- ----------------------------------------- | ----------- --- | ---------------------------------------------- -------- |
-| symbol | false | string | trading pair | all | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
-| start-time | false | long | query start time (inclusive) | time 48 hours ago | UTC time in millisecond |
-| end-time | false | long | query end time (inclusive) | query time | UTC time in millisecond |
-| direct | false | string | order query direction (Note: it only works when the total number of retrieved items exceeds the limit of the size field; if the total number of retrieved items is within the limit of the size field, the direct field does not work.) | next | prev forward, next backward |
-| size | false | int | number of items returned each time | 100 | [10,1000] |
-
+| Parameter name | Required | Type   | Description                                                                                                              | Default value               | Value range                                                  |
+| -------------- | -------- | ------ | ------------------------------------------------------------------------------------------------------------------------ | --------------------------- | ------------------------------------------------------------ |
+| symbol         | false    | string | Trading pair                                                                                                             | all                         | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| start-time     | false    | long   | Query start time (inclusive)                                                                                             | Time 48 hours ago            | UTC time in milliseconds                                     |
+| end-time       | false    | long   | Query end time (inclusive)                                                                                               | Query time                   | UTC time in milliseconds                                     |
+| direct         | false    | string | Order query direction (Note: it only works when the total number of retrieved items exceeds the limit of the size field) | next                        | prev (forward), next (backward)                              |
+| size           | false    | int    | Number of items returned each time                                                                                        | 100                         | [10, 1000]                                                   |
 
 > Response:
 
@@ -4001,26 +4048,27 @@ This interface queries historical orders within the last 48 hours based on searc
 ```
 ### Response data
 
-| Parameter name | Required | Data type | Description | Value range |
-| ----------------- | -------- | -------- | ------------- -------------------------------------------------- | -- -------------------------------------------------- -------- |
-| {account-id | true | long | account ID | |
-| amount | true | string | order quantity | |
-| canceled-at | false | long | The time when the cancellation request was received | |
-| created-at | true | long | order creation time | |
-| field-amount | true | string | Transaction amount | |
-| field-cash-amount | true | string | total transaction amount | |
-| field-fees | true | string | transaction fee (buying is base currency, selling is price currency) | |
-| finished-at | false | long | Last transaction time | |
-| id | true | long | order ID, no size order | |
-| client-order-id | false | string | user-defined order number (only closed orders (state <> canceled) within 48 hours (based on order creation time) can return client-order-id (if any); only 24 Closed orders (state = canceled) within hours (based on order creation time) can be queried) | |
-| price | true | string | order price | |
-| source | true | string | order source | api |
-| state | true | string | order status | partial-canceled partially cancelled, filled completely completed, canceled canceled |
-| symbol | true | string | trading pair | btcusdt, ethbtc, rcneth ... |
-| stop-price | false | string | trigger price of stop-loss order | |
-| operator | false | string | stop loss order trigger price operator | gte,lte |
-| type} | true | string | order type | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell- ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-limit-maker, sell-limit-maker |
-| next-time | false | long | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next"). Note: This return field exists only when the total number of items retrieved exceeds the limit of the size field. | UTC time in milliseconds |
+| Parameter name     | Required | Data type | Description                                                                                                                                                                         | Value range                                                             |
+| ------------------ | -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| account-id         | true     | long      | Account ID                                                                                                                                                                          |                                                                         |
+| amount             | true     | string    | Order quantity                                                                                                                                                                      |                                                                         |
+| canceled-at        | false    | long      | The time when the cancellation request was received                                                                                                                                  |                                                                         |
+| created-at         | true     | long      | Order creation time                                                                                                                                                                 |                                                                         |
+| field-amount       | true     | string    | Transaction amount                                                                                                                                                                  |                                                                         |
+| field-cash-amount  | true     | string    | Total transaction amount                                                                                                                                                            |                                                                         |
+| field-fees         | true     | string    | Transaction fee (buying is base currency, selling is price currency)                                                                                                                |                                                                         |
+| finished-at        | false    | long      | Last transaction time                                                                                                                                                               |                                                                         |
+| id                 | true     | long      | Order ID, no size order                                                                                                                                                             |                                                                         |
+| client-order-id    | false    | string    | User-defined order number (only closed orders (state <> canceled) within 48 hours (based on order creation time) can return client-order-id (if any); only 24 hours (state = canceled) | can be queried)                                                        |
+| price              | true     | string    | Order price                                                                                                                                                                         |                                                                         |
+| source             | true     | string    | Order source                                                                                                                                                                        | api                                                                     |
+| state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
+| symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, rcneth, etc.                                            |
+| stop-price         | false    | string    | Trigger price of stop-loss order                                                                                                                                                    |                                                                         |
+| operator           | false    | string    | Stop-loss order trigger price operator                                                                                                                                              | gte, lte                                                                |
+| type               | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, etc. |
+| next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next")                                       | UTC time in milliseconds                                                |
+
 ## Current and historical transactions
 
 API Key Permission: Read<br>
@@ -4035,15 +4083,15 @@ This interface queries current and historical transaction records based on searc
 
 ### Request parameters
 
-| Parameter name | Required | Type | Description | Default value | Value range |
-| ---------- | -------- | ------ | ------------------- ------------------------ | ----------------------- | - -------------------------------------------------- --------- |
-| symbol | true | string | trading pair | N/A | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
-| types | false | string | Combination of order types to query, separated by ',' | all | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price , buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| start-date | false | string | Query start date (Singapore time zone) date format yyyy-mm-dd | -1d 1 day before the query end date | Range of values [((end-date) – 1), (end -date)] , the maximum query window is 2 days, and the window translation range is the last 61 days. |
-| end-date | false | string | query end date (Singapore time zone), date format yyyy-mm-dd | today | value range [(today-60), today], the maximum query window is 2 days, and the window translation range for the last 61 days |
-| from | false | string | Query start ID | N/A | If it is a backward query, it will be assigned the last id (not trade-id) obtained in the last query result; if it is a forward query, it will be assigned It is the first id (not trade-id) obtained in the last query result |
-| direct | false | string | query direction | next | prev forward; next backward |
-| size | false | string | query record size | 100 | [1, 500] |
+| Parameter name | Required | Type   | Description                                                 | Default value | Value range                                                                                                                                                        |
+| -------------- | -------- | ------ | ----------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| symbol         | true     | string | Trading pair                                                | N/A           | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                      |
+| types          | false    | string | Combination of order types to query, separated by ','        | all           | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker |
+| start-date     | false    | string | Query start date (Singapore time zone), date format yyyy-mm-dd | -1d           | Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.                          |
+| end-date       | false    | string | Query end date (Singapore time zone), date format yyyy-mm-dd   | today         | Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.                                          |
+| from           | false    | string | Query start ID                                               | N/A           | If it is a backward query, it will be assigned the last ID (not trade-id) obtained in the last query result; if it is a forward query, it will be assigned the first ID (not trade-id) obtained in the last query result. |
+| direct         | false    | string | Query direction                                              | next          | prev (forward), next (backward)                                                                                                                                   |
+| size           | false    | string | Query record size                                            | 100           | [1, 500]                                                                                                                                                          |
 
 > Response:
 
@@ -4075,35 +4123,37 @@ This interface queries current and historical transaction records based on searc
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
-| Parameter name | Required | Data type | Description | Value range |
-| ------------------- | -------- | -------- | ----------- -------------------------------------------------- | -------------------------------------------------- ---------- |
-| created-at | true | long | transaction timestamp timestamp | |
-| filled-amount | true | string | filled amount | |
-| filled-fees | true | string | transaction fee (positive value) or transaction rebate (negative value) | |
-| fee-currency | true | string | transaction fee or transaction rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the pricing currency; the transaction rebate currency for buy orders is the pricing currency, and the transaction rebate currency of the sell order is the base currency) | |
-| id | true | long | order transaction record ID, no order of size, can be used as the from field of the next page turning query request | |
-| match-id | true | long | matching ID | |
-| order-id | true | long | order ID | |
-| trade-id | false | integer | unique transaction ID | |
-| price | true | string | transaction price | |
-| source | true | string | order source | api |
-| symbol | true | string | trading pair | btcusdt, ethbtc, rcneth ... |
-| type | true | string | order type | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc : IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| role | true | string | transaction role | maker,taker |
-| filled-points | true | string | deduction amount (can be ht or hbpoint) | |
-| fee-deduct-currency | true | string | deduction type | |
-| fee-deduct-state | true | string | deduction status | deduction in progress: ongoing, deduction completed: done |
+| Parameter name        | Required | Data type | Description                                                                                                                                                                                                                                                            | Value range                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| --------------------- | -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| created-at            | true     | long      | Transaction timestamp.                                                                                                                                                                                                                                                |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| filled-amount         | true     | string    | Filled amount.                                                                                                                                                                                                                                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| filled-fees           | true     | string    | Transaction fee (positive value) or transaction rebate (negative value).                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| fee-currency          | true     | string    | Transaction fee or transaction rebate currency. The transaction fee currency for buy orders is the base currency, and the transaction fee currency for sell orders is the pricing currency. The transaction rebate currency for buy orders is the pricing currency, and the transaction rebate currency for sell orders is the base currency. |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| id                    | true     | long      | Order transaction record ID. It is not the order ID of size and can be used as the "from" field for the next page-turning query request.                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| match-id              | true     | long      | Matching ID.                                                                                                                                                                                                                                                           |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| order-id              | true     | long      | Order ID.                                                                                                                                                                                                                                                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| trade-id              | false    | integer   | Unique trade ID.                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| price                 | true     | string    | Transaction price.                                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| source                | true     | string    | Order source.                                                                                                                                                                                                                                                          | api                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethbtc, rcneth ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| type                  | true     | string    | Order type.                                                                                                                                                                                                                                                            | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit                                                                                                                                                                                                                                                   |
+| role                  | true     | string    | Transaction role.                                                                                                                                                                                                                                                      | maker, taker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| filled-points         | true     | string    | Deduction amount .                                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| fee-deduct-currency   | true     | string    | Deduction type.                                                                                                                                                                                                                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| fee-deduct-state      | true     | string    | Deduction status.                                                                                                                                                                                                                                                      | deduction in progress: ongoing, deduction completed: done                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+
 
 Note: <br>
 
 - The transaction rebate amount in filled-fees may not arrive in real time;<br>
 ### start-date, end-date related error codes
 
-| Error code | Corresponding error scenario |
-| ------------------ | ------------------------------ --------------------------------- |
-| invalid_interval | start date is less than end date; or the time interval between start date and end date is greater than 2 days |
-| invalid_start_date | start date is a date 61 days ago; or start date is a date in the future |
-| invalid_end_date | end date is a date 61 days ago; or end date is a date in the future |
+| Error code           | Corresponding error scenario                                                                                 |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| invalid_interval     | The start date is greater than the end date, or the time interval between the start and end dates is > 2 days. |
+| invalid_start_date   | The start date is 61 days ago or in the future.                                                            |
+| invalid_end_date     | The end date is 61 days ago or in the future.                                                              |
+
 
 
 ## Get the user's current transaction fee rate
@@ -4122,9 +4172,10 @@ curl "https://api.bitv.com/v2/reference/transact-fee-rate?symbols=btcusdt,ethusd
 
 ### Request parameters
 
-| parameter | data type | required | default value | description | value range |
-| ------- | -------- | -------- | ------ | ---------------- -------- | ----------------------------------------- -------------- |
-| symbols | string | true | NA | Trading pairs, multiple fields are allowed, separated by commas | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for values) > |
+| Parameter      | Data Type | Required | Default Value | Description                                             | Value Range                                             |
+| -------------- | --------- | -------- | ------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| symbols        | string    | true     | NA            | Trading pairs, multiple fields are allowed, separated by commas | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for values) |
+
 
 
 > Response:
@@ -4159,16 +4210,17 @@ curl "https://api.bitv.com/v2/reference/transact-fee-rate?symbols=btcusdt,ethusd
 ```
 ### Response data
 
-| Field Name | Data Type | Description |
-| ----------------- | -------- | ---------------------- ----------------------------------------- |
-| code | integer | status code |
-| message | string | error description (if any) |
-| data | object | |
-| { symbol | string | transaction code |
-| makerFeeRate | string | Base fee rate - passive party, if transaction fee rebate is applicable, return rebate rate (negative value) |
-| takerFeeRate | string | base fee rate - active side |
-| actualMakerRate | string | Fee rate after deduction - passive party, if the deduction is not applicable or deduction is not enabled, return the basic rate; if the transaction fee rebate is applicable, return the rebate rate (negative value) |
-| actualTakerRate } | string | Rate after deduction – the active party, if the deduction is not applicable or deduction is not enabled, the basic rate will be returned |
+| Field Name        | Data Type | Description                                                                 |
+| ----------------- | --------- | --------------------------------------------------------------------------- |
+| code              | integer   | Status code                                                                 |
+| message           | string    | Error description (if any)                                                  |
+| data              | object    |                                                                             |
+| symbol            | string    | Transaction code                                                            |
+| makerFeeRate      | string    | Base fee rate for the passive party. If a transaction fee rebate is applicable, the rebate rate (negative value) will be returned |
+| takerFeeRate      | string    | Base fee rate for the active side                                            |
+| actualMakerRate   | string    | Fee rate after deduction for the passive party. If no deduction is applicable or deduction is not enabled, the base rate will be returned. If a transaction fee rebate is applicable, the rebate rate (negative value) will be returned |
+| actualTakerRate   | string    | Fee rate after deduction for the active party. If no deduction is applicable or deduction is not enabled, the base rate will be returned |
+
 
 Note: <br>
 
@@ -4291,16 +4343,17 @@ Every two requests for a single connection cannot be less than 100ms.
 
 The following are the error codes, error messages and descriptions of the WebSocket market interface.
 
-| Error Code | Error Message | Description |
-| ----------- | -------------------------------------- - | ------------------------ |
-| bad-request | invalid topic | topic error |
-| bad-request | invalid symbol | symbol error |
-| bad-request | symbol trade not open now | The trading pair has not yet started trading |
-| bad-request | 429 too many request | req request is too frequent |
-| bad-request | unsub with not subbed topic |
-| bad-request | not json string | The request sent is not in JSON format |
-| 1008 | header required correct cloud-exchange | exchangeCode parameter error |
-| bad-request | request timeout | request timeout |
+| Error Code | Error Message                           | Description                             |
+| ---------- | --------------------------------------- | --------------------------------------- |
+| bad-request | invalid topic                           | Topic error                             |
+| bad-request | invalid symbol                          | Symbol error                            |
+| bad-request | symbol trade not open now                | The trading pair is not currently open   |
+| bad-request | 429 too many request                     | Too many requests                       |
+| bad-request | unsub with not subbed topic              | Attempt to unsubscribe from an unsubscribed topic |
+| bad-request | not json string                         | Invalid JSON format in the request       |
+| 1008       | header required correct cloud-exchange   | Incorrect exchangeCode parameter        |
+| bad-request | request timeout                         | Request timeout                         |
+
 
 ## K line data
 
@@ -4317,10 +4370,11 @@ Once the K-line data is generated, the Websocket server will push it to the clie
    "sub": "market.ethbtc.kline.1min",
    "id": "id1"
 }
-```### parameters
+```
+### parameters
 
 | parameter | data type | required | description | value range |
-| ------ | -------- | -------- | -------- | --------------- ------------------------------------------------ |
+| ------ | -------- | -------- | -------- | --------------------------------------------------------------- |
 | symbol | string | true | transaction code | btcusdt, ethbtc...etc. |
 | period | string | true | K-line period | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 
@@ -4353,10 +4407,11 @@ Once the K-line data is generated, the Websocket server will push it to the clie
     "vol": 0.0
   }
 }
-```### Data update field list
+```
+### Data update field list
 
 | Field | Data Type | Description |
-| ------ | -------- | ------------------------------ ---------- |
+| ------ | -------- | ---------------------------------------- |
 | id | integer | unix time, also used as K line ID |
 | amount | float | volume |
 | count | integer | transaction count |
@@ -4380,11 +4435,11 @@ To obtain K-line data at one time by request, the following parameters need to b
    "to": "to time in epoch seconds"
 }
 ```
+| Parameter   | Data Type | Required | Default Value                                     | Description                                             | Value Range                                                    |
+| ----------- | --------- | -------- | ------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
+| from        | integer   | false    | 1501174800 (2017-07-28T00:00:00+08:00)             | Start time (Epoch time in seconds)                       | [1501174800, 2556115200]                                       |
+| to          | integer   | false    | 2556115200 (2050-01-01T00:00:00+08:00)             | End time (Epoch time in seconds)                         | [1501174800, 2556115200] or ($from, 2556115200] if "from" is set |
 
-| parameter | data type | required | default value | description | value range |
-| ---- | -------- | -------- | -------------------------- ----------- | -------------------------------- | ------ -------------------------------------------------- ---- |
-| from | integer | false | 1501174800(2017-07-28T00:00:00+08:00) | start time (epoch time in second) | [1501174800, 2556115200] |
-| to | integer | false | 2556115200(2050-01-01T00:00:00+08:00) | end time (epoch time in second) | [1501174800, 2556115200] or ($from, 2556115200] if "from" is set |
 ## Depth of market market data
 
 This topic sends the latest Depth of Market snapshot. The snapshot frequency is 1 time per second.
@@ -4403,13 +4458,12 @@ This topic sends the latest Depth of Market snapshot. The snapshot frequency is 
 ```
 
 ### parameters
-
 | parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ------------ | ---- -------------------------------------------------- |
+| ------ | -------- | -------- | ------ | ------------ | ------------------------------------------------------ |
 | symbol | string | true | NA | transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
 | type | string | true | step0 | merge depth type | step0, step1, step2, step3, step4, step5 |
-**"type" merge depth type**
 
+**"type" merge depth type**
 | Value | Description |
 | ----- | ------------------------------------ |
 | step0 | Do not merge depth |
@@ -4457,13 +4511,13 @@ When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default 
 ### Data update field list
 
 <aside class="notice">Display the depth list of buying and selling orders under the 'tick' object</aside>
+| Field   | Data Type | Description                              |
+| ------- | -------- | ---------------------------------------- |
+| bids    | object   | All current bids [price, size]            |
+| asks    | object   | All current ask orders [price, size]      |
+| version | integer  | Internal field                            |
+| ts      | integer  | Timestamp of Singapore time in milliseconds |
 
-| Field | Data Type | Description |
-| ------- | -------- | ---------------------------- |
-| bids | object | all current bids [price, size] |
-| asks | object | all current ask orders [price, size] |
-| version | integer | internal field |
-| ts | integer | Timestamp of Singapore time in milliseconds |
 
 <aside class="notice">When symbol is set to "hb10", amount, count, vol are all zero values </aside>
 
@@ -4531,7 +4585,8 @@ When the 150-level order book only has a unilateral market change, the increment
     }
 }
 
-```In the future, the data behavior of the 150-level incremental push will be consistent with that of the 5-level/20-level increment, that is, when the unilateral market depth changes, the push message will not include the other side's market depth;<br>
+```
+In the future, the data behavior of the 150-level incremental push will be consistent with that of the 5-level/20-level increment, that is, when the unilateral market depth changes, the push message will not include the other side's market depth;<br>
 4) When the 150 order books have not changed within the 100 millisecond interval, the incremental push contains bids and asks empty arrays;<br>
 
 ```json
@@ -4546,7 +4601,8 @@ When the 150-level order book only has a unilateral market change, the increment
     }
 }
 
-```However, the 5-level/20-level MBP is incremented one by one, and no data is pushed when the order book does not change;<br>
+```
+However, the 5-level/20-level MBP is incremented one by one, and no data is pushed when the order book does not change;<br>
 In the future, the data behavior of 150 increments will be consistent with that of 5 increments, that is, when the order book has not changed, empty messages will no longer be pushed;<br>
 5) Only some trading pairs (btcusdt, ethusdt, xrpusdt, eosusdt, ltcusdt, etcusdt, adausdt, dashusdt, bsvusdt) are supported in the 5-level/20-level incremental market, and 150-level snapshot increments support all trading pairs. <br>
 
@@ -4578,11 +4634,11 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
 }
 ```
 ### parameters
-
 | parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ----------------- ----------- | -----------------------------------|
-| symbol | string | true | NA | transaction code (wildcards are not supported) | |
-| levels | integer | true | NA | depth level (value: 5, 20, 150) | currently only supports 5 levels, 20 levels, or 150 levels of depth |
+| --------- | --------- | -------- | ------------- | ----------- | ----------- |
+| symbol    | string    | true     | NA            | transaction code (wildcards are not supported) | |
+| levels    | integer   | true     | NA            | depth level (value: 5, 20, 150) | currently only supports 5 levels, 20 levels, or 150 levels of depth |
+
 
 > Response (incremental subscription)
 
@@ -4638,13 +4694,13 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
 }
 ```
 ### Data update field list
+| Field       | Data Type | Description                                          |
+| ----------- | --------- | ---------------------------------------------------- |
+| seqNum      | integer   | message sequence number                               |
+| prevSeqNum  | integer   | sequence number of the previous message               |
+| bids        | object    | bids, sorted by price in descending order, ["price","size"] |
+| asks        | object    | Ask orders, sorted by price in ascending order, ["price","size"] |
 
-| Field | Data Type | Description |
-| ---------- | -------- | ----------------------------- ---------- |
-| seqNum | integer | message sequence number |
-| prevSeqNum | integer | sequence number of the previous message |
-| bids | object | bids, sorted by price in descending order, ["price","size"] |
-| asks | object | Ask orders, sorted by price in ascending order, ["price","size"] |
 
 ## Market depth MBP market data (full push)
 
@@ -4664,11 +4720,11 @@ Users can subscribe to this channel to receive the full data push of the latest 
 ```
 
 ### parameters
-
 | parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ----------------- ------- | -------- |
-| symbol | string | true | NA | transaction code (wildcards are not supported) | |
-| levels | integer | true | NA | depth level | 5,10,20 |
+| --------- | --------- | -------- | ------------- | ------------ | ----------- |
+| symbol    | string    | true     | NA            | transaction code (wildcards are not supported) | |
+| levels    | integer   | true     | NA            | depth level | 5, 10, 20 |
+
 
 > Response
 
@@ -4708,12 +4764,11 @@ Users can subscribe to this channel to receive the full data push of the latest 
 }
 ```
 ### Data update field list
-
-| Field | Data Type | Description |
-| ------ | -------- | ------------------------------ ------ |
-| seqNum | integer | message sequence number |
-| bids | object | bids, sorted by price in descending order, ["price","size"] |
-| asks | object | Ask orders, sorted by price in ascending order, ["price","size"] |
+| Field  | Data Type | Description                                      |
+| ------ | --------- | ------------------------------------------------ |
+| seqNum | integer   | message sequence number                          |
+| bids   | object    | bids, sorted by price in descending order: ["price","size"] |
+| asks   | object    | Ask orders, sorted by price in ascending order: ["price","size"] |
 
 
 ## Buy one sell one tick by tick
@@ -4734,10 +4789,9 @@ When any of the data of the first price of buying, the first amount of buying, t
 ```
 
 ### parameters
-
-| parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | -------- | -------- ---------------------------------------------- |
-| symbol | string | true | NA | transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| Parameter name | Data Type | Required | Default Value | Description | Value Range |
+| -------------- | --------- | -------- | ------------- | ----------- | ----------- |
+| symbol         | string    | true     | NA            | Transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
 
 > Response
 
@@ -4768,15 +4822,14 @@ When any of the data of the first price of buying, the first amount of buying, t
 }
 ```
 ### Data update field list
-
 | Field | Data Type | Description |
-| --------- | -------- | ------------ |
+| ------ | -------- | ------------------ |
 | symbol | string | transaction code |
 | quoteTime | long | Handicap update time |
 | bid | float | buy price |
-| bidSize | float | buy a quantity |
-| ask | float | Ask price |
-| askSize | float | sell a quantity |
+| bidSize | float | buy quantity |
+| ask | float | ask price |
+| askSize | float | sell quantity |
 | seqId | int | message sequence number |
 
 
@@ -4798,10 +4851,9 @@ This topic provides a tick-by-tick breakdown of the latest transactions in the m
 ```
 
 ### parameters
-
-| parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | -------- | -------- ---------------------------------------------- |
-| symbol | string | true | NA | transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| Parameter | Data Type | Required | Default Value | Description | Value Range |
+| --------- | --------- | -------- | ------------- | ----------- | ----------- |
+| symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for values) |
 
 > Response
 
@@ -4838,15 +4890,15 @@ This topic provides a tick-by-tick breakdown of the latest transactions in the m
 }
 ```
 ### Data update field list
-
 | Field | Data Type | Description |
-| --------- | -------- | --------------------------- ---------------- |
-| id | integer | unique transaction ID (will be discarded) |
-| tradeId | integer | unique transaction ID (NEW) |
-| amount | float | volume (buy or sell side) |
-| price | float | transaction price |
-| ts | integer | transaction time (UNIX epoch time in millisecond) |
+| ------ | -------- | ---------------------------------------------- |
+| id | integer | Unique transaction ID (will be discarded) |
+| tradeId | integer | Unique transaction ID (NEW) |
+| amount | float | Volume (buy or sell side) |
+| price | float | Transaction price |
+| ts | integer | Transaction time (UNIX epoch time in millisecond) |
 | direction | string | Active transaction party (order direction of taker): 'buy' or 'sell' |
+
 
 ### Data Request
 
@@ -4877,10 +4929,10 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
 ```
 
 ### parameters
+| Parameter | Data Type | Required | Default Value | Description | Value Range |
+| --------- | -------- | -------- | ------------- | ----------- | ----------- |
+| symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc, etc. (value reference `GET /v1/common/symbols`) |
 
-| parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | -------- | -------- ------------ |
-| symbol | string | true | NA | transaction symbol | btcusdt, ethbtc...etc. |
 
 > Response
 
@@ -4912,15 +4964,14 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
 }
 ```
 ### Data update field list
-
 | Field | Data Type | Description |
 | ------ | -------- | ------------------------ |
-| id | integer | unix time, also used as message ID |
+| id | integer | Unix time, also used as message ID |
 | amount | float | 24-hour trading volume |
 | count | integer | Number of transactions in 24 hours |
 | open | float | 24-hour opening price |
-| close | float | Latest Price |
-| low | float | 24 hours lowest price |
+| close | float | Latest price |
+| low | float | 24-hour lowest price |
 | high | float | 24-hour highest price |
 | vol | float | 24-hour turnover |
 
@@ -4978,12 +5029,11 @@ When the user's Websocket client receives this heartbeat message, it should retu
 ```
 
 ### Valid values for `action`
-
 | Valid Values | Value Description |
 | ---------- | ------------------------------------ |
-| sub | Subscription Data |
-| req | data request |
-| ping, pong | heartbeat data |
+| sub | Subscription data |
+| req | Data request |
+| ping, pong | Heartbeat data |
 | push | Push data, the data type sent from the server to the client |
 
 ### Frequency Limit
@@ -5025,17 +5075,18 @@ After successful authentication, the returned data format is as follows:
 ```
 
 Parameter Description
+| field            | required | data type | description                                                                                       |
+| ---------------- | -------- | --------- | ------------------------------------------------------------------------------------------------- |
+| action           | true     | string    | Websocket data operation type, the fixed value for authentication is req                         |
+| ch               | true     | string    | Request subject, the fixed value for authentication is auth                                      |
+| authType         | true     | string    | Authentication type, the fixed value for authentication is api. Note that this parameter is not included in the signature calculation. |
+| accessKey        | true     | string    | AccessKey in the API Key you applied for                                                          |
+| signatureMethod  | true     | string    | Signature method, the protocol for users to calculate the signature message hash, the fixed value is HmacSHA256 |
+| signatureVersion | true     | string    | Signature protocol version, the fixed value is 2.1                                               |
+| timestamp        | true     | string    | Timestamp, the time (UTC time) when you make the request. Including this value in the query request helps prevent third parties from intercepting your request. Format: 2017-05-11T16:22:06 (in UTC time zone) |
+| signature        | true     | string    | Signature, a computed value used to ensure that the signature is valid and has not been tampered with |
 
-| field | required | data type | description |
-| ---------------- | -------- | -------- | -------------- ---------------------------------------------- |
-| action | true | string | Websocket data operation type, the authentication fixed value is req |
-| ch | true | string | request subject, the fixed value of authentication is auth |
-| authType | true | string | Authentication type, the fixed value of authentication is api. Note that this parameter is not included in the signature calculation. |
-| accessKey | true | string | AccessKey in the API Key you applied for |
-| signatureMethod | true | string | signature method, the protocol for users to calculate the signature message hash, the fixed value is HmacSHA256 |
-| signatureVersion | true | string | Signature protocol version, the fixed value is 2.1 |
-| timestamp | true | string | Timestamp, the time (UTC time) when you make the request. Including this value in the query request helps prevent third parties from intercepting your request. Such as: 2017-05-11T16:22:06. Again yes (UTC time zone) |
-| signature | true | string | signature, a computed value used to ensure that the signature is valid and has not been tampered with |
+
 
 ### Signature steps
 
@@ -5090,28 +5141,29 @@ After the request is successful, the Websocket client will receive the following
 ### error code
 
 The following are the error codes, error messages, and descriptions of the WebSocket asset and order interfaces.
+| Error Code | Error Message        | Description                                                             |
+| ---------- | -------------------- | ----------------------------------------------------------------------- |
+| 200        | True                 | True returns                                                            |
+| 100        | timeout off          | Timeout off                                                             |
+| 400        | Bad Request          | Bad request                                                             |
+| 404        | Not Found            | Service not found                                                       |
+| 429        | Too Many Requests    | Exceeded the maximum number of connections for a single server or exceeded the maximum number of connections for a single IP |
+| 500        | System exception     | System error                                                            |
+| 2000       | invalid.ip           | Invalid IP                                                              |
+| 2001       | invalid.json         | Invalid request JSON                                                    |
+| 2001       | invalid.authType     | Signature verification method error                                      |
+| 2001       | invalid.action       | Invalid subscription event                                              |
+| 2001       | invalid.symbol       | Invalid trading pair                                                    |
+| 2001       | invalid.ch           | Invalid subscription                                                    |
+| 2001       | invalid.exchange     | Invalid exchange code                                                   |
+| 2001       | missing.param.auth   | Missing signature verification parameters                               |
+| 2002       | invalid.auth.state   | Authentication failed                                                   |
+| 2002       | auth.fail            | Signature verification failed                                           |
+| 2003       | query.account.list.error | Failed to query account list                                          |
+| 4000       | too.many.request     | Client uplink request frequency limit                                    |
+| 4000       | too.many.connection | Number of connections with the same key                                  |
 
-| Error Code | Error Message | Description |
-| ------ | ------------------------ | ----------------- ------------------------------ |
-| 200 | True | True returns |
-| 100 | timeout off | timeout off |
-| 400 | Bad Request | Bad request |
-| 404 | Not Found | Service not found |
-| 429 | Too Many Requests | Exceeded the maximum number of connections for a single server or exceeded the maximum number of connections for a single IP |
-| 500 | System exception | System error |
-| 2000 | invalid.ip | invalid ip |
-| 2001 | nvalid.json | invalid request json |
-| 2001 | invalid.authType | Signature verification method error |
-| 2001 | invalid.action | Invalid subscription event |
-| 2001 | invalid.symbol | invalid trading pair |
-| 2001 | invalid.ch | invalid subscription |
-| 2001 | invalid.exchange | Invalid exchange code |
-| 2001 | missing.param.auth | missing signature verification parameters |
-| 2002 | invalid.auth.state | Authentication failed |
-| 2002 | auth.fail | Signature verification failed |
-| 2003 | query.account.list.error | Failed to query account list |
-| 4000 | too.many.request | Client uplink request frequency limit |
-| 4000 | too.many.connection | Number of connections with the same key |
+
 
 ## Subscribe to order updates
 
@@ -5184,16 +5236,17 @@ In the messages pushed by different event types, the list of fields is slightly 
 ```
 When the planning order/tracking order trigger fails –
 
-| Field | Data Type | Description |
-| ------------- | -------- | -------------------------- ------------------------------------- |
-| eventType | string | event type, valid value: trigger (this event is only valid for plan order/track order) |
-| symbol | string | transaction code |
-| clientOrderId | string | User-defined order number |
-| orderSide | string | order direction, valid values: buy, sell |
-| orderStatus | string | order status, valid value: rejected |
-| errCode | int | Order trigger failure error code |
-| errMessage | string | Error message for order trigger failure |
-| lastActTime | long | Order trigger failure time |
+| Field         | Data Type | Description                                                                 |
+| ------------- | --------- | --------------------------------------------------------------------------- |
+| eventType     | string    | Event type, valid value: trigger (this event is only valid for plan order/track order) |
+| symbol        | string    | Transaction code                                                             |
+| clientOrderId | string    | User-defined order number                                                    |
+| orderSide     | string    | Order direction, valid values: buy, sell                                     |
+| orderStatus   | string    | Order status, valid value: rejected                                          |
+| errCode       | int       | Order trigger failure error code                                             |
+| errMessage    | string    | Error message for order trigger failure                                      |
+| lastActTime   | long      | Order trigger failure time                                                   |
+
 
 > Update example
 
@@ -5215,14 +5268,15 @@ When the planning order/tracking order trigger fails –
 
 When a planning order/tracking order is canceled before triggering –
 
-| Field | Data Type | Description |
-| ------------- | -------- | -------------------------- ------------------------------------- |
-| eventType | string | Event type, valid value: deletion (this event is only valid for plan order/tracking order) |
-| symbol | string | transaction code |
-| clientOrderId | string | User-defined order number |
-| orderSide | string | order direction, valid values: buy, sell |
-| orderStatus | string | order status, valid value: canceled |
-| lastActTime | long | order cancellation time |
+| Field         | Data Type | Description                                                                 |
+| ------------- | --------- | --------------------------------------------------------------------------- |
+| eventType     | string    | Event type, valid value: deletion (this event is only valid for plan order/tracking order) |
+| symbol        | string    | Transaction code                                                             |
+| clientOrderId | string    | User-defined order number                                                    |
+| orderSide     | string    | Order direction, valid values: buy, sell                                     |
+| orderStatus   | string    | Order status, valid value: canceled                                          |
+| lastActTime   | long      | Order cancellation time                                                      |
+
 
 > Update example
 
@@ -5247,20 +5301,19 @@ When a planning order/tracking order is canceled before triggering –
 
 ```
 When an order is placed –
-
-| Field | Data Type | Description |
-| --------------- | -------- | --------------------- --------------------------------------- |
-| eventType | string | event type, valid value: creation |
-| symbol | string | transaction code |
-| accountId | long | account ID |
-| orderId | long | order ID |
-| clientOrderId | string | User-made order number (if any) |
-| orderPrice | string | order price |
-| orderSize | string | order size (invalid for market buy orders) |
-| orderValue | string | order amount (only valid for market buy orders) |
-| type | string | order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
-| orderStatus | string | order status, valid value: submitted |
-| orderCreateTime | long | order creation time |
+| Field           | Data Type | Description                                                                 |
+| --------------- | --------- | --------------------------------------------------------------------------- |
+| eventType       | string    | Event type, valid value: creation                                            |
+| symbol          | string    | Transaction code                                                             |
+| accountId       | long      | Account ID                                                                   |
+| orderId         | long      | Order ID                                                                     |
+| clientOrderId   | string    | User-made order number (if any)                                              |
+| orderPrice      | string    | Order price                                                                  |
+| orderSize       | string    | Order size (invalid for market buy orders)                                   |
+| orderValue      | string    | Order amount (only valid for market buy orders)                              |
+| type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
+| orderStatus     | string    | Order status, valid value: submitted                                         |
+| orderCreateTime | long      | Order creation time                                                          |
 
 Note: <BR>
 
@@ -5293,21 +5346,21 @@ Note: <BR>
 ```
 
 When the order is filled –
+| Field       | Data Type | Description                                                                      |
+| ------------| --------- | -------------------------------------------------------------------------------- |
+| eventType   | string    | Event type, valid value: trade                                                  |
+| symbol      | string    | Transaction code                                                                 |
+| tradePrice  | string    | Traded price                                                                    |
+| tradeVolume | string    | Trade volume                                                                    |
+| orderId     | long      | Order ID                                                                         |
+| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
+| clientOrderId | string  | User-made order number (if any)                                                  |
+| tradeId     | long      | Trade ID                                                                         |
+| tradeTime   | long      | Trade time                                                                       |
+| aggressor   | bool      | Whether to be the active party of the transaction, valid values: true (taker), false (maker) |
+| orderStatus | string    | Order status, valid values: partial-filled, filled                               |
+| remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
 
-| Field | Data Type | Description |
-| ------------- | -------- | -------------------------- ------------------------------------- |
-| eventType | string | event type, valid value: trade |
-| symbol | string | transaction code |
-| tradePrice | string | traded price |
-| tradeVolume | string | trade volume |
-| orderId | long | order ID |
-| type | string | order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
-| clientOrderId | string | User-made order number (if any) |
-| tradeId | long | trade ID |
-| tradeTime | long | trade time |
-| aggressor | bool | Whether to be the active party of the transaction, valid values: true (taker), false (maker) |
-| orderStatus | string | order status, valid values: partial-filled, filled |
-| remainAmt | string | unexecuted quantity (buy order at market price is the unexecuted amount) |
 Note: <BR>
 
 - The order type of the stop loss order is no longer the original order type "buy-stop-limit" or "sell-stop-limit", but becomes "buy-limit" or "sell-limit". <BR>
@@ -5334,17 +5387,16 @@ Note: <BR>
 ```
 
 When an order is canceled -
-
-| Field | Data Type | Description |
-| ------------- | -------- | -------------------------- ------------------------------------- |
-| eventType | string | event type, valid value: cancellation |
-| symbol | string | transaction code |
-| orderId | long | order ID |
-| type | string | order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
-| clientOrderId | string | User-made order number (if any) |
-| orderStatus | string | order status, valid values: partial-canceled, canceled |
-| remainAmt | string | unexecuted quantity (buy order at market price is the unexecuted amount) |
-| lastActTime | long | Last update time of the order |
+| Field       | Data Type | Description                                                                      |
+| ------------| --------- | -------------------------------------------------------------------------------- |
+| eventType   | string    | Event type, valid value: cancellation                                             |
+| symbol      | string    | Transaction code                                                                 |
+| orderId     | long      | Order ID                                                                         |
+| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
+| clientOrderId | string  | User-made order number (if any)                                                  |
+| orderStatus | string    | Order status, valid values: partial-canceled, canceled                            |
+| remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
+| lastActTime | long      | Last update time of the order                                                     |
 
 Note: <BR>
 
@@ -5363,11 +5415,11 @@ If the user needs to get order updates updated sequentially, it is recommended t
 `trade.clearing#${symbol}#${mode}`
 
 ### Subscription parameters
-
 | parameter | data type | required | description |
-| ------ | -------- | -------- | ------------------------ --------------------------------------- |
-| symbol | string | TRUE | transaction code (support wildcard * ) |
-| mode | int | FALSE | push mode (0 - push only when the order is completed; 1 - push both when the order is completed and canceled; default value: 0) |
+| --------- | --------- | -------- | ----------- |
+| symbol    | string    | TRUE     | Transaction code (supports wildcard *) |
+| mode      | int       | FALSE    | Push mode (0 - push only when the order is completed; 1 - push both when the order is completed and canceled; default value: 0) |
+
 
 Note: <br>
 Optional subscription parameter mode, if not filled or filled with 0, only transaction events will be pushed; if 1 is filled, transaction and cancellation events will be pushed. <br>
@@ -5423,58 +5475,57 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 }
 ```
 ### Data update field list (when the order is completed)
-
 | Field | Data Type | Description |
-| --------------- | -------- | --------------------- --------------------------------------- |
-| eventType | string | event type (trade) |
-| symbol | string | transaction code |
-| orderId | long | order ID |
-| tradePrice | string | traded price |
-| tradeVolume | string | trade volume |
-| orderSide | string | order direction, valid values: buy, sell |
-| orderType | string | order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop -limit,sell-stop-limit |
-| aggressor | bool | Whether to be the active party of the transaction, valid values: true, false |
-| tradeId | long | trade ID |
-| tradeTime | long | trade time, unix time in millisecond |
+| --------------- | -------- | ------------------------------------------------------------ |
+| eventType | string | Event type (trade) |
+| symbol | string | Transaction code |
+| orderId | long | Order ID |
+| tradePrice | string | Traded price |
+| tradeVolume | string | Trade volume |
+| orderSide | string | Order direction, valid values: buy, sell |
+| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| aggressor | bool | Whether the trade was initiated by the active party, valid values: true, false |
+| tradeId | long | Trade ID |
+| tradeTime | long | Trade time (Unix time in milliseconds) |
 | transactFee | string | Transaction fee (positive value) or transaction fee rebate (negative value) |
-| feeCurrency | string | Transaction fee or transaction fee rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the pricing currency; the transaction fee rebate currency for buy orders is the denominated currency, and the transaction fee rebate currency for the sell order is the base currency) |
+| feeCurrency | string | Transaction fee or transaction fee rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the quote currency; the transaction fee rebate currency for buy orders is the denominated currency, and the transaction fee rebate currency for sell orders is the base currency) |
 | feeDeduct | string | Transaction fee deduction |
-| feeDeductType | string | transaction fee deduction type, valid values: ht, point |
+| feeDeductType | string | Transaction fee deduction type, valid values: ht, point |
 | accountId | long | Account ID |
-| source | string | order source |
-| orderPrice | string | order price (the market price order does not have this field) |
-| orderSize | string | order quantity (the market price buy order does not have this field) |
-| orderValue | string | order amount (only market buy orders have this field) |
+| source | string | Order source |
+| orderPrice | string | Order price (not applicable for market orders) |
+| orderSize | string | Order quantity (not applicable for market buy orders) |
+| orderValue | string | Order amount (only applicable for market buy orders) |
 | clientOrderId | string | User-defined order number |
-| stopPrice | string | Order trigger price (this field is only available for stop-loss orders) |
-| operator | string | order trigger direction (only take profit and stop loss orders have this field) |
-| orderCreateTime | long | order creation time |
-| orderStatus | string | order status, valid values: filled, partial-filled |
+| stopPrice | string | Order trigger price (only available for stop-loss orders) |
+| operator | string | Order trigger direction (only applicable for take profit and stop-loss orders) |
+| orderCreateTime | long | Order creation time |
+| orderStatus | string | Order status, valid values: filled, partial-filled |
 
 Note: <br>
 
 - The transaction rebate amount in transactFee may not arrive in real time;<br>
 
 ### Data update field list (when the order is canceled)
-
 | Field | Data Type | Description |
-| --------------- | -------- | --------------------- --------------------------------------- |
-| eventType | string | event type (cancellation) |
-| symbol | string | transaction code |
-| orderId | long | order ID |
-| orderSide | string | order direction, valid values: buy, sell |
-| orderType | string | order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop -limit,sell-stop-limit |
+| --------------- | -------- | ------------------------------------------------------------ |
+| eventType | string | Event type (cancellation) |
+| symbol | string | Transaction code |
+| orderId | long | Order ID |
+| orderSide | string | Order direction, valid values: buy, sell |
+| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
 | accountId | long | Account ID |
-| source | string | order source |
-| orderPrice | string | order price (the market price order does not have this field) |
-| orderSize | string | order quantity (the market price buy order does not have this field) |
-| orderValue | string | order amount (only market buy orders have this field) |
+| source | string | Order source |
+| orderPrice | string | Order price (not applicable for market orders) |
+| orderSize | string | Order quantity (not applicable for market buy orders) |
+| orderValue | string | Order amount (only applicable for market buy orders) |
 | clientOrderId | string | User-defined order number |
-| stopPrice | string | Order trigger price (this field is only available for stop-loss orders) |
-| operator | string | order trigger direction (only take profit and stop loss orders have this field) |
-| orderCreateTime | long | order creation time |
-| remainAmt | string | open volume (for market buy orders, this field is defined as unfilled volume) |
-| orderStatus | string | order status, valid values: canceled, partial-canceled |
+| stopPrice | string | Order trigger price (only available for stop-loss orders) |
+| operator | string | Order trigger direction (only applicable for take profit and stop-loss orders) |
+| orderCreateTime | long | Order creation time |
+| remainAmt | string | Open volume (for market buy orders, this field is defined as unfilled volume) |
+| orderStatus | string | Order status, valid values: canceled, partial-canceled |
+
 
 ## Subscribe account changes
 
@@ -5576,16 +5627,16 @@ accounts.update#1:
 }
 ```
 ### Data update field list
-
 | Field | Data Type | Description |
-| ----------- | -------- | ---------------------------- ----------------------------------- |
-| currency | string | currency |
-| accountId | long | account ID |
-| balance | string | account balance (only pushed when the account balance changes) |
-| available | string | available balance (only pushed when the available balance changes) |
-| changeType | string | Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee- refund (deduct transaction fee) |
-| accountType | string | account type, valid values: trade, frozen, loan, interest |
-| changeTime | long | balance change time, unix time in millisecond |
+| ----------- | -------- | --------------------------------------------------------------- |
+| currency | string | Currency |
+| accountId | long | Account ID |
+| balance | string | Account balance (only pushed when the account balance changes) |
+| available | string | Available balance (only pushed when the available balance changes) |
+| changeType | string | Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee-refund (deduct transaction fee) |
+| accountType | string | Account type, valid values: trade, frozen, loan, interest |
+| changeTime | long | Balance change time, UNIX time in milliseconds |
+
 
 Note: <br>
 The account update pushes the amount received, and multiple transaction rebates generated by multiple transactions may be combined into the account.

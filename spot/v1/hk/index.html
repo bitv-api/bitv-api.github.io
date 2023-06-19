@@ -460,6 +460,9 @@
                     <a href="#e79a4ea7a9" class="toc-h2 toc-link" data-title="子用戶餘額（匯總）">子用戶餘額（匯總）</a>
                   </li>
                   <li>
+                    <a href="#data" class="toc-h2 toc-link" data-title="- data ">- data </a>
+                  </li>
+                  <li>
                     <a href="#c50ffb93dd" class="toc-h2 toc-link" data-title="子用戶餘額">子用戶餘額</a>
                   </li>
               </ul>
@@ -642,7 +645,7 @@
 
 <p><strong>Websocket Feed（資產和訂單）</strong></p>
 
-<p>*<em><code>wss://api.bitv.com/ws/v2</code></em>  </p>
+<p><strong><code>wss://api.bitv.com/ws/v2</code></strong>  </p>
 <h2 id='2d855262bd'>簽名認證</h2><h3 id='1e987d3751'>簽名說明</h3>
 <p>API 請求在通過 internet 傳輸的過程中極有可能被篡改，為了確保請求未被更改，除公共接口（基礎信息，行情數據）外的私有接口均必須使用您的 API Key 做簽名認證，以校驗參數或參數值在傳輸途中是否發生了更改。<br>
 每一個API Key需要有適當的權限才能訪問相應的接口，每個新創建的API Key都需要分配權限。在使用接口前，請查看每個接口的權限類型，並確認你的API Key有相應的權限。</p>
@@ -3079,7 +3082,7 @@
 <td>timestamp</td>
 <td>true</td>
 <td>long</td>
-<td>數據返回時間，為unix time in millisecond</td>
+<td>數據返回時間，為 UNIX 時間戳（毫秒級）</td>
 </tr>
 </tbody></table>
 <h2 id='7ac872b776'>資產划轉</h2>
@@ -6473,11 +6476,7 @@ endTime缺省值：當前時間<br></p>
 <td>-</td>
 </tr>
 </tbody></table>
-
-<ul>
-<li>data </li>
-</ul>
-
+<h2 id='data'>- data </h2>
 <table><thead>
 <tr>
 <th>參數</th>
@@ -6502,7 +6501,7 @@ endTime缺省值：當前時間<br></p>
 <td>string</td>
 <td>-</td>
 <td>賬戶類型</td>
-<td>spot：現貨賬戶</td>
+<td>spot: 現貨賬戶</td>
 </tr>
 <tr>
 <td>balance</td>
@@ -6626,7 +6625,7 @@ endTime缺省值：當前時間<br></p>
 </thead><tbody>
 <tr>
 <td>currency</td>
-<td>-</td>
+<td>是</td>
 <td>string</td>
 <td>-</td>
 <td>幣種</td>
@@ -6634,15 +6633,15 @@ endTime缺省值：當前時間<br></p>
 </tr>
 <tr>
 <td>type</td>
-<td>-</td>
+<td>是</td>
 <td>string</td>
 <td>-</td>
 <td>賬戶類型</td>
-<td>trade：交易賬戶，frozen：凍結賬戶</td>
+<td>trade: 交易賬戶, frozen: 凍結賬戶</td>
 </tr>
 <tr>
 <td>balance</td>
-<td>-</td>
+<td>是</td>
 <td>decimal</td>
 <td>-</td>
 <td>賬戶餘額</td>
@@ -8272,7 +8271,7 @@ endTime缺省值：當前時間<br></p>
 <td>filled-points</td>
 <td>true</td>
 <td>string</td>
-<td>抵扣數量（可為ht或hbpoint）</td>
+<td>抵扣數量</td>
 <td></td>
 </tr>
 <tr>
@@ -9038,7 +9037,7 @@ endTime缺省值：當前時間<br></p>
 <td>filled-points</td>
 <td>true</td>
 <td>string</td>
-<td>抵扣數量（可為ht或hbpoint）</td>
+<td>抵扣數量</td>
 <td></td>
 </tr>
 <tr>

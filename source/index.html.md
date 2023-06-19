@@ -765,16 +765,17 @@ This interface does not accept any parameters.
 
 ### return fields
 
-| name | type | required | description |
-| ----------------- | ------- | -------- | -------------- ---------------------------------------------- |
-| code | integer | TRUE | status code |
-| message | string | FALSE | error description (if any) |
-| data | object | TRUE | |
-| { marketStatus | integer | TRUE | market status (1=normal, 2=halted, 3=cancel-only) |
-| haltStartTime | long | FALSE | market pause start time (unix time in millisecond), only valid for marketStatus=halted or cancel-only |
-| haltEndTime | long | FALSE | The expected end time of market suspension (unix time in millisecond), only valid for marketStatus=halted or cancel-only; if this field is not returned when marketStatus=halted or cancel-only, it means that the market suspension is over The time is temporarily unpredictable |
-| haltReason | integer | FALSE | Reason for market suspension (2=emergency-maintenance, 3=scheduled-maintenance), only valid for marketStatus=halted or cancel-only |
-| affectedSymbols } | string | FALSE | A list of trading pairs affected by market suspension, separated by commas, if all trading pairs are affected, return "all", only valid for marketStatus=halted or cancel-only |
+| Name             | Type    | Required | Description                                                                                           |
+| -----------------| ------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| code             | integer | TRUE     | Status code                                                                                            |
+| message          | string  | FALSE    | Error description (if any)                                                                             |
+| data             | object  | TRUE     |                                                                                                       |
+| marketStatus     | integer | TRUE     | Market status (1=normal, 2=halted, 3=cancel-only)                                                      |
+| haltStartTime    | long    | FALSE    | Market pause start time (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only |
+| haltEndTime      | long    | FALSE    | Expected end time of market suspension (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only. If not returned, the end time is temporarily unpredictable. |
+| haltReason       | integer | FALSE    | Reason for market suspension (2=emergency maintenance, 3=scheduled maintenance), valid only for marketStatus=halted or cancel-only |
+| affectedSymbols  | string  | FALSE    | A list of trading pairs affected by market suspension, separated by commas. If all trading pairs are affected, return "all". Valid only for marketStatus=halted or cancel-only. |
+
 
 ## Get all trading pairs
 
@@ -828,26 +829,26 @@ This interface does not accept any parameters.
 
 ### return fields
 
-| field name | required | data type | description |
-| -------------------------- | -------- | -------- | ---- -------------------------------------------------- ------ |
-| base-currency | true | string | base currency in the transaction pair |
-| quote-currency | true | string | quote currency in the trading pair |
-| price-precision | true | integer | The precision of the trading pair quotation (digits after the decimal point) |
-| amount-precision | true | integer | trading pair base currency counting precision (digits after the decimal point) |
-| symbol-partition | true | string | transaction partition, possible values: [main, innovation] |
-| symbol | true | string | trading pair |
-| state | true | string | trading pair status; possible values: [online, offline,suspend] online - online; offline - trading pair is offline and cannot be traded; suspend - trading is suspended; pre-online - coming soon |
-| value-precision | true | integer | The precision of the transaction amount of the transaction pair (digits after the decimal point) |
-| min-order-amt | true | float | The minimum order size of a limit order for a trading pair, in the base currency (to be obsolete) |
-| max-order-amt | true | float | The maximum order size of a limit order for a trading pair, in the base currency (to be obsolete soon) |
-| limit-order-min-order-amt | true | float | The minimum order size of a limit order for a trading pair, in base currency (NEW) |
-| limit-order-max-order-amt | true | float | The maximum order size of a limit order for a trading pair, in base currency (NEW) |
-| sell-market-min-order-amt | true | float | The minimum order size of a market sell order for a trading pair, in base currency (NEW) |
-| sell-market-max-order-amt | true | float | The maximum order size of a market sell order for a trading pair, in base currency (NEW) |
-| buy-market-max-order-value | true | float | The maximum order value of a buy order at the market price of the trading pair, in the unit of pricing currency (NEW) |
-| min-order-value | true | float | The minimum order amount for a limit order and a market buy order for a trading pair, in the pricing currency |
-| max-order-value | false | float | The maximum order amount of a limit order and a market buy order for a trading pair, in converted USDT (NEW) |
-| api-trading | true | string | API trading enable flag (valid value: enabled, disabled) |
+| Field Name               | Required | Data Type | Description                                                                                            |
+| ------------------------ | -------- | --------- | ------------------------------------------------------------------------------------------------------ |
+| base-currency            | true     | string    | Base currency in the transaction pair                                                                 |
+| quote-currency           | true     | string    | Quote currency in the trading pair                                                                    |
+| price-precision          | true     | integer   | Precision of the trading pair quotation (digits after the decimal point)                                |
+| amount-precision         | true     | integer   | Precision of the trading pair base currency counting (digits after the decimal point)                  |
+| symbol-partition         | true     | string    | Transaction partition; possible values: [main, innovation]                                            |
+| symbol                   | true     | string    | Trading pair                                                                                          |
+| state                    | true     | string    | Trading pair status; possible values: [online, offline, suspend, pre-online]                          |
+| value-precision          | true     | integer   | Precision of the transaction amount of the trading pair (digits after the decimal point)               |
+| min-order-amt            | true     | float     | Minimum order size of a limit order for the trading pair, in the base currency (to be obsolete)       |
+| max-order-amt            | true     | float     | Maximum order size of a limit order for the trading pair, in the base currency (to be obsolete soon)  |
+| limit-order-min-order-amt | true     | float     | Minimum order size of a limit order for the trading pair, in the base currency (NEW)                   |
+| limit-order-max-order-amt | true     | float     | Maximum order size of a limit order for the trading pair, in the base currency (NEW)                   |
+| sell-market-min-order-amt | true     | float     | Minimum order size of a market sell order for the trading pair, in the base currency (NEW)             |
+| sell-market-max-order-amt | true     | float     | Maximum order size of a market sell order for the trading pair, in the base currency (NEW)             |
+| buy-market-max-order-value| true     | float     | Maximum order value of a buy order at the market price of the trading pair, in the unit of pricing currency (NEW) |
+| min-order-value          | true     | float     | Minimum order amount for a limit order and a market buy order for the trading pair, in the pricing currency |
+| max-order-value          | false    | float     | Maximum order amount of a limit order and a market buy order for the trading pair, in converted USDT (NEW) |
+| api-trading              | true     | string    | API trading enable flag (valid value: enabled, disabled)                                              |
 
 ## Get all currencies
 
@@ -897,10 +898,11 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 
 ### Request parameters
 
-| field name | required | type | field description | value range |
-| -------------- | -------- | ------- | ---------- | -------------------------------------------------- ---- |
-| currency | false | string | currency | btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys`) |
-| authorizedUser | false | boolean | authenticated user | true or false (if not filled, the default is true) |
+| Field Name      | Required | Type    | Field Description     | Value Range                                            |
+| --------------- | -------- | ------- | --------------------- | ------------------------------------------------------ |
+| currency        | false    | string  | Currency              | btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys`) |
+| authorizedUser  | false    | boolean | Authenticated User    | true or false (default: true if not filled)             |
+
 
 > Response:
 

@@ -984,44 +984,45 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 
 ### Response data
 
+| field name            | required | data type | field description                                                                                       | value range |
+|-----------------------|----------|-----------|---------------------------------------------------------------------------------------------------------|-------------|
+| code                  | true     | int       | status code                                                                                             |             |
+| message               | false    | string    | error description (if any)                                                                              |             |
+| data                  | true     | object    |                                                                                                         |             |
+| currency              | true     | string    | currency                                                                                                |             |
+| chains                | true     | object    |                                                                                                         |             |
+| chain                 | true     | string    | chain name                                                                                              |             |
+| displayName           | true     | string    | chain display name                                                                                      |             |
+| baseChain             | false    | string    | underlying chain name                                                                                   |             |
+| baseChainProtocol     | false    | string    | underlying chain protocol                                                                               |             |
+| isDynamic             | false    | boolean   | Whether dynamic fee (only valid for fixed type, withdrawFeeType=fixed)                                 | true, false |
+| numOfConfirmations    | true     | int       | The number of confirmations required for secure account login (coin withdrawals are allowed after reaching the number of confirmations) |             |
+| numOfFastConfirmations| true     | int       | The number of confirmations required for fast account transfer (transactions are allowed but withdrawals are not allowed after reaching the number of confirmations) |             |
+| minDepositAmt         | true     | string    | minimum deposit amount                                                                                  |             |
+| depositStatus         | true     | string    | deposit status                                                                                          | allowed, prohibited |
+| minWithdrawAmt        | true     | string    | minimum withdrawal amount                                                                               |             |
+| maxWithdrawAmt        | true     | string    | single maximum withdrawal amount                                                                        |             |
+| withdrawQuotaPerDay   | true     | string    | Daily withdrawal quota (Singapore time zone)                                                            |             |
+| withdrawQuotaPerYear  | true     | string    | withdrawal quota for the year                                                                           |             |
+| withdrawQuotaTotal    | true     | string    | total withdrawal quota                                                                                  |             |
+| withdrawPrecision     | true     | int       | withdrawal precision                                                                                    |             |
+| withdrawFeeType       | true     | string    | Withdrawal fee type (the type of withdrawal fee for a specific currency on a specific chain is unique) | fixed, circulated, ratio |
+| transactFeeWithdraw   | false    | string    | single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)                               |             |
+| minTransactFeeWithdraw| false    | string    | Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio) |             |
+| maxTransactFeeWithdraw| false    | string    | Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio) |             |
+| transactFeeRateWithdraw| false   | string    | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio)       |             |
+| withdrawStatus        | true     | string    | withdrawal status                                                                                       | allowed, prohibited |
+| instStatus            | true     | string    | currency status                                                                                         | normal, delisted |
 
-| field name | required | data type | field description | value range |
-| ----------------------- | -------- | -------- | ------- -------------------------------------------------- --- | ---------------------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| { currency | true | string | currency | |
-| { chains | true | object | | |
-| chain | true | string | chain name | |
-| displayName | true | string | chain display name | |
-| baseChain | false | string | underlying chain name | |
-| baseChainProtocol | false | string | underlying chain protocol | |
-| isDynamic | false | boolean | Whether dynamic fee (only valid for fixed type, withdrawFeeType=fixed) | true, false |
-| numOfConfirmations | true | int | The number of confirmations required for secure account login (coin withdrawals are allowed after reaching the number of confirmations) | |
-| numOfFastConfirmations | true | int | The number of confirmations required for fast account transfer (transactions are allowed but withdrawals are not allowed after reaching the number of confirmations) | |
-| minDepositAmt | true | string | minimum deposit amount | |
-| depositStatus | true | string | deposit status | allowed,prohibited |
-| minWithdrawAmt | true | string | minimum withdrawal amount | |
-| maxWithdrawAmt | true | string | single maximum withdrawal amount | |
-| withdrawQuotaPerDay | true | string | Daily withdrawal quota (Singapore time zone) | |
-| withdrawQuotaPerYear | true | string | withdrawal quota for the year | |
-| withdrawQuotaTotal | true | string | total withdrawal quota | |
-| withdrawPrecision | true | int | withdrawal precision | |
-| withdrawFeeType | true | string | Withdrawal fee type (the type of withdrawal fee for a specific currency on a specific chain is unique) | fixed,circulated,ratio |
-| transactFeeWithdraw | false | string | single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed) | |
-| minTransactFeeWithdraw | false | string | Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio) | |
-| maxTransactFeeWithdraw | false | string | Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio) | |
-| transactFeeRateWithdraw | false | string | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio) | |
-| withdrawStatus} | true | string | withdrawal status | allowed,prohibited |
-| instStatus } | true | string | currency status | normal,delisted |
 
 ### status code
 
-| Status Code | Error Message | Error Scenario Description |
-| ------ | -------------------------------------- | ------ ------ |
-| 200 | success | Request succeeded |
-| 500 | error | System error |
-| 2002 | invalid field value in "field name" | illegal field value |
+| Status Code | Error Message                        | Error Scenario Description |
+|-------------|--------------------------------------|----------------------------|
+| 200         | success                              | Request succeeded          |
+| 500         | error                                | System error               |
+| 2002        | invalid field value in "field name" | Illegal field value        |
+
 
 ## Get the current system timestamp
 
@@ -1053,15 +1054,16 @@ The market data interface provides market data such as various K-lines, depth an
 
 The following are the error codes, error messages and descriptions returned by the market data interface.
 
-| Error Code | Error Message | Description |
-| ----------------- | -------------------------------- ---- | ----------------------- |
-| invalid-parameter | invalid symbol | invalid trading pair |
-| invalid-parameter | invalid period | request K line, period parameter is wrong |
-| invalid-parameter | invalid depth | Incorrect depth parameter |
-| invalid-parameter | invalid type | Depth type parameter error |
-| invalid-parameter | invalid size | wrong size parameter |
-| invalid-parameter | invalid size,valid range: [1, 2000] | wrong size parameter |
-| invalid-parameter | request timeout | request timeout |
+| Error Code         | Error Message                | Description                              |
+| ------------------ | ---------------------------- | ---------------------------------------- |
+| invalid-parameter  | invalid symbol               | Invalid trading pair                      |
+| invalid-parameter  | invalid period               | Incorrect period parameter for K-line request |
+| invalid-parameter  | invalid depth                | Incorrect depth parameter                 |
+| invalid-parameter  | invalid type                 | Depth type parameter error                |
+| invalid-parameter  | invalid size                 | Incorrect size parameter                  |
+| invalid-parameter  | invalid size, valid range: [1, 2000] | Incorrect size parameter, valid range: [1, 2000] |
+| invalid-parameter  | request timeout              | Request timeout                           |
+
 
 
 ## K-line data (candle chart)
@@ -1077,12 +1079,12 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 - GET `/market/history/kline`
 
 ### Request parameters
-
 | parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ----------------- ------------------------- | ------------------------ --------------------------------------- |
-| symbol | string | true | NA | trading pair | btcusdt, ethbtc, etc. |
-| period | string | true | NA | Return data time granularity, that is, the time interval of each candle | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
-| size | integer | false | 150 | Return the number of K-line data | [1, 2000] |
+| --------- | --------- | -------- | ------------- | ----------- | ----------- |
+| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc, etc. |
+| period    | string    | true     | NA            | Return data time granularity, i.e., the time interval of each candle | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
+| size      | integer   | false    | 150           | Number of K-line data to return | [1, 2000] |
+
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
 <aside class="notice">When obtaining hb10 net worth, please fill in "hb10" for symbol. </aside>
@@ -1106,17 +1108,17 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 ```
 
 ### Response data
-
 | Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- ------------------------ |
-| id | long | The time stamp adjusted to Singapore time, in seconds, and used as the id of this K-line column |
-| amount | float | transaction amount in base currency |
-| count | integer | transaction count |
-| open | float | the opening price of this stage |
-| close | float | the closing price of this stage |
-| low | float | the lowest price in this stage |
-| high | float | the highest price at this stage |
-| vol | float | volume in quote currency |
+| ---------- | --------- | ----------- |
+| id         | long      | The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick |
+| amount     | float     | Transaction amount in base currency |
+| count      | integer   | Transaction count |
+| open       | float     | Opening price of this candlestick |
+| close      | float     | Closing price of this candlestick |
+| low        | float     | Lowest price in this candlestick |
+| high       | float     | Highest price in this candlestick |
+| vol        | float     | Volume in quote currency |
+
 
 ## Aggregation Quotes (Ticker)
 
@@ -1132,9 +1134,10 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 
 ### Request parameters
 
-| parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ------ | ---------- ----------------------------------------------- |
-| symbol | string | true | NA | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| Parameter | Data Type | Required | Default Value | Description | Value Range |
+| --------- | --------- | -------- | ------------- | ----------- | ----------- |
+| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+
 
 > Response:
 
@@ -1155,19 +1158,19 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 ```
 
 ### Response data
-
 | Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --------- |
-| id | long | NA |
-| amount | float | transaction volume in base currency (rolling 24 hours) |
-| count | integer | number of transactions (according to rolling 24 hours) |
-| open | float | Opening price of this stage (according to rolling 24 hours) |
-| close | float | The latest price at this stage (according to rolling 24 hours) |
-| low | float | The lowest price of this stage (according to rolling 24 hours) |
-| high | float | The highest price of this stage (according to rolling 24 hours) |
-| vol | float | volume in quote currency (rolling 24 hours) |
-| bid | object | current highest bid price [price, size] |
-| ask | object | current minimum ask price [price, size] |
+| ---------- | --------- | ----------- |
+| id         | long      | NA |
+| amount     | float     | Transaction volume in base currency (rolling 24 hours) |
+| count      | integer   | Number of transactions (rolling 24 hours) |
+| open       | float     | Opening price of this stage (rolling 24 hours) |
+| close      | float     | The latest price at this stage (rolling 24 hours) |
+| low        | float     | The lowest price of this stage (rolling 24 hours) |
+| high       | float     | The highest price of this stage (rolling 24 hours) |
+| vol        | float     | Volume in quote currency (rolling 24 hours) |
+| bid        | object    | Current highest bid price [price, size] |
+| ask        | object    | Current minimum ask price [price, size] |
+
 
 ## Latest Tickers for all trading pairs
 
@@ -1227,19 +1230,20 @@ This interface does not accept any parameters.
 The core response data is an object column, each object contains the following fields
 
 | Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --------- |
-| amount | float | transaction volume in base currency (rolling 24 hours) |
-| count | integer | Number of transactions (according to rolling 24 hours) |
-| open | float | Opening price (calculated in natural days in Singapore time) |
-| close | float | Latest Price (Singapore Time Natural Day) |
-| low | float | Lowest price (in Singapore time calendar days) |
-| high | float | Highest price (in Singapore time natural day) |
-| vol | float | volume in quote currency (rolling 24 hours) |
-| symbol | string | trading pair, such as btcusdt, ethbtc |
-| bid | float | buy price |
-| bidSize | float | buy a quantity |
-| ask | float | Ask price |
-| askSize | float | sell a quantity |
+| ---------- | --------- | ----------- |
+| amount     | float     | Transaction volume in base currency (rolling 24 hours) |
+| count      | integer   | Number of transactions (according to rolling 24 hours) |
+| open       | float     | Opening price (calculated in natural days in Singapore time) |
+| close      | float     | Latest price (Singapore Time Natural Day) |
+| low        | float     | Lowest price (in Singapore time calendar days) |
+| high       | float     | Highest price (in Singapore time natural day) |
+| vol        | float     | Volume in quote currency (rolling 24 hours) |
+| symbol     | string    | Trading pair, such as btcusdt, ethbtc |
+| bid        | float     | Buy price |
+| bidSize    | float     | Buy quantity |
+| ask        | float     | Ask price |
+| askSize    | float     | Sell quantity |
+
 
 ## Depth of Market Data
 
@@ -1254,24 +1258,24 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 - GET `/market/depth`
 
 ### Request parameters
-
 | parameter | data type | required | default value | description | value range |
-| ------ | -------- | ----- | ------ | ----------------- ------------ | ------------------------------------- ----------------- |
-| symbol | string | true | NA | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
-| depth | integer | false | 20 | number of depths to return | 5, 10, 20 |
-| type | string | true | step0 | In-depth price aggregation, see below for details | step0, step1, step2, step3, step4, step5 |
+| --------- | --------- | -------- | ------------- | ------------ | ------------------------------------------- |
+| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| depth     | integer   | false    | 20            | Number of depths to return | 5, 10, 20 |
+| type      | string    | true     | step0         | Price aggregation level, see details below | step0, step1, step2, step3, step4, step5 |
 
-<aside class="notice">When the type value is 'step0', the default value of 'depth' is 150 instead of 20. </aside>
+<aside class="notice">When the type value is 'step0', the default value of 'depth' is 150 instead of 20.</aside>
 
-**Description of each value of parameter type**
+**Description of each value for parameter type**
 
-| Value | Description |
-| ----- | --------------------- |
-| step0 | no aggregation |
-| step1 | Aggregation degree is quote precision*10 |
-| step2 | Aggregation degree is quote precision*100 |
-| step3 | Aggregation degree is quote precision * 500 |
-| step4 | Aggregation degree is quote precision * 1000 |
+| Value  | Description                               |
+| ------ | ----------------------------------------- |
+| step0  | No aggregation                            |
+| step1  | Aggregation level: quote precision * 10    |
+| step2  | Aggregation level: quote precision * 100   |
+| step3  | Aggregation level: quote precision * 500   |
+| step4  | Aggregation level: quote precision * 1000  |
+
 
 > Response:
 
@@ -1303,11 +1307,12 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
 | Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --- |
-| ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
-| version | integer | internal field |
-| bids | object | all current bids [price, size] |
-| asks | object | all current ask orders [price, size] |
+| ---------- | --------- | ----------- |
+| ts         | integer   | Timestamp adjusted to Singapore time, in milliseconds |
+| version    | integer   | Internal field |
+| bids       | object    | All current bids [price, size] |
+| asks       | object    | All current ask orders [price, size] |
+
 
 ## Recent market transaction records
 
@@ -1323,9 +1328,10 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 
 ### Request parameters
 
-| parameter | data type | required | default value | description |
-| ------ | -------- | -------- | ------ | ----------------- ----------------------------------------- |
-| symbol | string | true | NA | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| Parameter | Data Type | Required | Default Value | Description |
+| --------- | --------- | -------- | ------------- | ----------- |
+| symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+
 
 > Response:
 
@@ -1349,15 +1355,14 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 ### Response data
 
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
-
 | Field Name | Data Type | Description |
-| --------- | -------- | --------------------------- -------------------- |
-| id | integer | unique transaction id (will be discarded) |
-| trade-id | integer | unique transaction ID (NEW) |
-| amount | float | transaction amount in base currency |
-| price | float | transaction price in quote currency |
-| ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
-| direction | string | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
+| ---------- | --------- | ----------- |
+| id         | integer   | unique transaction id (will be discarded) |
+| trade-id   | integer   | unique transaction ID (NEW) |
+| amount     | float     | transaction amount in base currency |
+| price      | float     | transaction price in quote currency |
+| ts         | integer   | Timestamp adjusted to Singapore time, in milliseconds |
+| direction  | string    | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
 
 ## Get recent transaction records
 
@@ -1372,11 +1377,10 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 - GET `/market/history/trade`
 
 ### Request parameters
-
 | parameter | data type | required | default value | description |
-| ------ | -------- | -------- | ------ | ----------------- ----------------------------------------- |
-| symbol | string | true | NA | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
-| size | integer | false | 1 | the number of transaction records to return, the maximum value is 2000 |
+| --------- | --------- | -------- | ------------- | ----------- |
+| symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| size      | integer   | false    | 1             | the number of transaction records to return, the maximum value is 2000 |
 
 > Response:
 
@@ -1426,13 +1430,14 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 <aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to Singapore time, and these transaction records are presented in the form of an array. </aside>
 
 | Parameter | Data Type | Description |
-| --------- | -------- | --------------------------- -------------------- |
+| --------- | -------- | --------------------------- |
 | id | integer | unique transaction id (will be discarded) |
 | trade-id | integer | unique transaction ID (NEW) |
 | amount | float | transaction amount in base currency |
 | price | float | transaction price in quote currency |
 | ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
 | direction | string | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
+
 
 ## Last 24 hours market data
 

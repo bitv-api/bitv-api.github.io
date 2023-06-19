@@ -214,6 +214,7 @@
       <div style="flex-grow: 1;">
         <a href="/docs/spot/v1/en/" class="lang" id="lang_box_en" style="float: right; margin-left: 5px;">English</a>
         <a href="/docs/spot/v1/cn/" class="lang" id="lang_box_zn" style="float: right; margin-left: 5px;">简体中文</a>
+        <a href="/docs/spot/v1/cn/" class="lang" id="lang_box_zn" style="float: right; margin-left: 5px;">繁体中文</a>
       </div>
     </header>
     <div class="toc-wrapper">
@@ -11448,25 +11449,38 @@ accounts.update#1<br>
       </div>
     </div>
     <script>
-      const lang_btn_en = document.getElementById('lang_box_en');
-      const lang_btn_cn = document.getElementById('lang_box_zn');
-      const url = GetUrlRelativePath();
-      if(url.indexOf('cn') != -1){
-        //如果是中文环境
-        lang_btn_cn.innerHTML = 'Korean';
-        lang_btn_cn.href = url.replace('cn/', 'kr/');
+const lang_btn_en = document.getElementById('lang_box_en');
+const lang_btn_cn = document.getElementById('lang_box_zn');
+const lang_btn_hk = document.getElementById('lang_box_hk');
+const url = GetUrlRelativePath();
 
-        lang_btn_en.href = url.replace('cn/', 'en/');
-      }else if(url.indexOf('en') != -1){
-        //如果是英文环境
-        lang_btn_en.innerHTML = 'Korean';
-        lang_btn_en.href = url.replace('en/', 'kr/');
+if (url.indexOf('cn') !== -1) {
+  // 如果是简体中文环境
+  lang_btn_cn.innerHTML = '简体中文';
+  lang_btn_cn.href = url.replace('cn/', 'en/');
+  lang_btn_en.href = url.replace('cn/', 'hk/');
+  lang_btn_hk.href = url.replace('cn/', 'en/');
 
-        lang_btn_cn.href = url.replace('en/', 'cn/');
-      } 
-      //显示语言切换按钮
-      lang_btn_cn.style.display = 'block';
-      lang_btn_en.style.display = 'block';
+} else if (url.indexOf('hk') !== -1) {
+  // 如果是繁体中文环境
+  lang_btn_hk.innerHTML = '繁体中文';
+  lang_btn_hk.href = url.replace('hk/', 'cn/');
+  lang_btn_en.href = url.replace('hk/', 'cn/');
+  lang_btn_cn.href = url.replace('hk/', 'cn/');
+
+} else {
+  // 默认为繁体中文环境
+  lang_btn_hk.innerHTML = '繁体中文';
+  lang_btn_hk.href = url.replace('en/', 'cn/');
+  lang_btn_en.href = url.replace('en/', 'hk/');
+  lang_btn_cn.href = url.replace('en/', 'cn/');
+}
+
+// 显示语言切换按钮
+lang_btn_cn.style.display = 'block';
+lang_btn_en.style.display = 'block';
+lang_btn_hk.style.display = 'block';
+
       function GetUrlRelativePath(){
         let url = document.location.toString();
         let arrUrl = url.split("//");

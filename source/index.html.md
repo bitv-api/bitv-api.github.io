@@ -4511,6 +4511,7 @@ When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default 
 ### Data update field list
 
 <aside class="notice">Display the depth list of buying and selling orders under the 'tick' object</aside>
+
 | Field   | Data Type | Description                              |
 | ------- | -------- | ---------------------------------------- |
 | bids    | object   | All current bids [price, size]            |
@@ -4694,6 +4695,7 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
 }
 ```
 ### Data update field list
+
 | Field       | Data Type | Description                                          |
 | ----------- | --------- | ---------------------------------------------------- |
 | seqNum      | integer   | message sequence number                               |
@@ -4764,6 +4766,7 @@ Users can subscribe to this channel to receive the full data push of the latest 
 }
 ```
 ### Data update field list
+
 | Field  | Data Type | Description                                      |
 | ------ | --------- | ------------------------------------------------ |
 | seqNum | integer   | message sequence number                          |

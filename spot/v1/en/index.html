@@ -1705,41 +1705,229 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='response-data'>Response data</h3>
-<p>| field name | required | data type | field description | value range |
-| ----------------------- | -------- | -------- | ------- -------------------------------------------------- --- | ---------------------- |
-| code | true | int | status code | |
-| message | false | string | error description (if any) | |
-| data | true | object | | |
-| { currency | true | string | currency | |
-| { chains | true | object | | |
-| chain | true | string | chain name | |
-| displayName | true | string | chain display name | |
-| baseChain | false | string | underlying chain name | |
-| baseChainProtocol | false | string | underlying chain protocol | |
-| isDynamic | false | boolean | Whether dynamic fee (only valid for fixed type, withdrawFeeType=fixed) | true, false |
-| numOfConfirmations | true | int | The number of confirmations required for secure account login (coin withdrawals are allowed after reaching the number of confirmations) | |
-| numOfFastConfirmations | true | int | The number of confirmations required for fast account transfer (transactions are allowed but withdrawals are not allowed after reaching the number of confirmations) | |
-| minDepositAmt | true | string | minimum deposit amount | |
-| depositStatus | true | string | deposit status | allowed,prohibited |
-| minWithdrawAmt | true | string | minimum withdrawal amount | |
-| maxWithdrawAmt | true | string | single maximum withdrawal amount | |
-| withdrawQuotaPerDay | true | string | Daily withdrawal quota (Singapore time zone) | |
-| withdrawQuotaPerYear | true | string | withdrawal quota for the year | |
-| withdrawQuotaTotal | true | string | total withdrawal quota | |
-| withdrawPrecision | true | int | withdrawal precision | |
-| withdrawFeeType | true | string | Withdrawal fee type (the type of withdrawal fee for a specific currency on a specific chain is unique) | fixed,circulated,ratio |
-| transactFeeWithdraw | false | string | single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed) | |
-| minTransactFeeWithdraw | false | string | Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio) | |
-| maxTransactFeeWithdraw | false | string | Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio) | |
-| transactFeeRateWithdraw | false | string | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio) | |
-| withdrawStatus} | true | string | withdrawal status | allowed,prohibited |
-| instStatus } | true | string | currency status | normal,delisted |</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>required</th>
+<th>data type</th>
+<th>field description</th>
+<th>value range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td>true</td>
+<td>int</td>
+<td>status code</td>
+<td></td>
+</tr>
+<tr>
+<td>message</td>
+<td>false</td>
+<td>string</td>
+<td>error description (if any)</td>
+<td></td>
+</tr>
+<tr>
+<td>data</td>
+<td>true</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>currency</td>
+<td>true</td>
+<td>string</td>
+<td>currency</td>
+<td></td>
+</tr>
+<tr>
+<td>chains</td>
+<td>true</td>
+<td>object</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>chain</td>
+<td>true</td>
+<td>string</td>
+<td>chain name</td>
+<td></td>
+</tr>
+<tr>
+<td>displayName</td>
+<td>true</td>
+<td>string</td>
+<td>chain display name</td>
+<td></td>
+</tr>
+<tr>
+<td>baseChain</td>
+<td>false</td>
+<td>string</td>
+<td>underlying chain name</td>
+<td></td>
+</tr>
+<tr>
+<td>baseChainProtocol</td>
+<td>false</td>
+<td>string</td>
+<td>underlying chain protocol</td>
+<td></td>
+</tr>
+<tr>
+<td>isDynamic</td>
+<td>false</td>
+<td>boolean</td>
+<td>Whether dynamic fee (only valid for fixed type, withdrawFeeType=fixed)</td>
+<td>true, false</td>
+</tr>
+<tr>
+<td>numOfConfirmations</td>
+<td>true</td>
+<td>int</td>
+<td>The number of confirmations required for secure account login (coin withdrawals are allowed after reaching the number of confirmations)</td>
+<td></td>
+</tr>
+<tr>
+<td>numOfFastConfirmations</td>
+<td>true</td>
+<td>int</td>
+<td>The number of confirmations required for fast account transfer (transactions are allowed but withdrawals are not allowed after reaching the number of confirmations)</td>
+<td></td>
+</tr>
+<tr>
+<td>minDepositAmt</td>
+<td>true</td>
+<td>string</td>
+<td>minimum deposit amount</td>
+<td></td>
+</tr>
+<tr>
+<td>depositStatus</td>
+<td>true</td>
+<td>string</td>
+<td>deposit status</td>
+<td>allowed, prohibited</td>
+</tr>
+<tr>
+<td>minWithdrawAmt</td>
+<td>true</td>
+<td>string</td>
+<td>minimum withdrawal amount</td>
+<td></td>
+</tr>
+<tr>
+<td>maxWithdrawAmt</td>
+<td>true</td>
+<td>string</td>
+<td>single maximum withdrawal amount</td>
+<td></td>
+</tr>
+<tr>
+<td>withdrawQuotaPerDay</td>
+<td>true</td>
+<td>string</td>
+<td>Daily withdrawal quota (Singapore time zone)</td>
+<td></td>
+</tr>
+<tr>
+<td>withdrawQuotaPerYear</td>
+<td>true</td>
+<td>string</td>
+<td>withdrawal quota for the year</td>
+<td></td>
+</tr>
+<tr>
+<td>withdrawQuotaTotal</td>
+<td>true</td>
+<td>string</td>
+<td>total withdrawal quota</td>
+<td></td>
+</tr>
+<tr>
+<td>withdrawPrecision</td>
+<td>true</td>
+<td>int</td>
+<td>withdrawal precision</td>
+<td></td>
+</tr>
+<tr>
+<td>withdrawFeeType</td>
+<td>true</td>
+<td>string</td>
+<td>Withdrawal fee type (the type of withdrawal fee for a specific currency on a specific chain is unique)</td>
+<td>fixed, circulated, ratio</td>
+</tr>
+<tr>
+<td>transactFeeWithdraw</td>
+<td>false</td>
+<td>string</td>
+<td>single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)</td>
+<td></td>
+</tr>
+<tr>
+<td>minTransactFeeWithdraw</td>
+<td>false</td>
+<td>string</td>
+<td>Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio)</td>
+<td></td>
+</tr>
+<tr>
+<td>maxTransactFeeWithdraw</td>
+<td>false</td>
+<td>string</td>
+<td>Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio)</td>
+<td></td>
+</tr>
+<tr>
+<td>transactFeeRateWithdraw</td>
+<td>false</td>
+<td>string</td>
+<td>transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio)</td>
+<td></td>
+</tr>
+<tr>
+<td>withdrawStatus</td>
+<td>true</td>
+<td>string</td>
+<td>withdrawal status</td>
+<td>allowed, prohibited</td>
+</tr>
+<tr>
+<td>instStatus</td>
+<td>true</td>
+<td>string</td>
+<td>currency status</td>
+<td>normal, delisted</td>
+</tr>
+</tbody></table>
 <h3 id='status-code'>status code</h3>
-<p>| Status Code | Error Message | Error Scenario Description |
-| ------ | -------------------------------------- | ------ ------ |
-| 200 | success | Request succeeded |
-| 500 | error | System error |
-| 2002 | invalid field value in &quot;field name&quot; | illegal field value |</p>
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Error Message</th>
+<th>Error Scenario Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>success</td>
+<td>Request succeeded</td>
+</tr>
+<tr>
+<td>500</td>
+<td>error</td>
+<td>System error</td>
+</tr>
+<tr>
+<td>2002</td>
+<td>invalid field value in &quot;field name&quot;</td>
+<td>Illegal field value</td>
+</tr>
+</tbody></table>
 <h2 id='get-the-current-system-timestamp'>Get the current system timestamp</h2>
 <p>This interface returns the current system timestamp, that is, the total <strong>milliseconds</strong> from <strong>UTC</strong> January 1, 1970 0:00:00:00 milliseconds to the present.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/timestamp"</span>
@@ -1759,15 +1947,49 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <p>The following are the error codes, error messages and descriptions returned by the market data interface.</p>
 
-<p>| Error Code | Error Message | Description |
-| ----------------- | -------------------------------- ---- | ----------------------- |
-| invalid-parameter | invalid symbol | invalid trading pair |
-| invalid-parameter | invalid period | request K line, period parameter is wrong |
-| invalid-parameter | invalid depth | Incorrect depth parameter |
-| invalid-parameter | invalid type | Depth type parameter error |
-| invalid-parameter | invalid size | wrong size parameter |
-| invalid-parameter | invalid size,valid range: [1, 2000] | wrong size parameter |
-| invalid-parameter | request timeout | request timeout |</p>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Error Message</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>invalid-parameter</td>
+<td>invalid symbol</td>
+<td>Invalid trading pair</td>
+</tr>
+<tr>
+<td>invalid-parameter</td>
+<td>invalid period</td>
+<td>Incorrect period parameter for K-line request</td>
+</tr>
+<tr>
+<td>invalid-parameter</td>
+<td>invalid depth</td>
+<td>Incorrect depth parameter</td>
+</tr>
+<tr>
+<td>invalid-parameter</td>
+<td>invalid type</td>
+<td>Depth type parameter error</td>
+</tr>
+<tr>
+<td>invalid-parameter</td>
+<td>invalid size</td>
+<td>Incorrect size parameter</td>
+</tr>
+<tr>
+<td>invalid-parameter</td>
+<td>invalid size, valid range: [1, 2000]</td>
+<td>Incorrect size parameter, valid range: [1, 2000]</td>
+</tr>
+<tr>
+<td>invalid-parameter</td>
+<td>request timeout</td>
+<td>Request timeout</td>
+</tr>
+</tbody></table>
 <h2 id='k-line-data-candle-chart'>K-line data (candle chart)</h2>
 <p>This interface returns historical K-line data.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/history/kline?period=1day&amp;size=200&amp;symbol=btcusdt"</span>
@@ -1776,11 +1998,41 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 <li>GET <code>/market/history/kline</code></li>
 </ul>
 <h3 id='request-parameters-6'>Request parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ----------------- ------------------------- | ------------------------ --------------------------------------- |
-| symbol | string | true | NA | trading pair | btcusdt, ethbtc, etc. |
-| period | string | true | NA | Return data time granularity, that is, the time interval of each candle | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
-| size | integer | false | 150 | Return the number of K-line data | [1, 2000] |</p>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>data type</th>
+<th>required</th>
+<th>default value</th>
+<th>description</th>
+<th>value range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>true</td>
+<td>NA</td>
+<td>Trading pair</td>
+<td>btcusdt, ethbtc, etc.</td>
+</tr>
+<tr>
+<td>period</td>
+<td>string</td>
+<td>true</td>
+<td>NA</td>
+<td>Return data time granularity, i.e., the time interval of each candle</td>
+<td>1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year</td>
+</tr>
+<tr>
+<td>size</td>
+<td>integer</td>
+<td>false</td>
+<td>150</td>
+<td>Number of K-line data to return</td>
+<td>[1, 2000]</td>
+</tr>
+</tbody></table>
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
 
@@ -1804,16 +2056,54 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
    </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre><h3 id='response-data-2'>Response data</h3>
-<p>| Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- ------------------------ |
-| id | long | The time stamp adjusted to Singapore time, in seconds, and used as the id of this K-line column |
-| amount | float | transaction amount in base currency |
-| count | integer | transaction count |
-| open | float | the opening price of this stage |
-| close | float | the closing price of this stage |
-| low | float | the lowest price in this stage |
-| high | float | the highest price at this stage |
-| vol | float | volume in quote currency |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>long</td>
+<td>The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>float</td>
+<td>Transaction amount in base currency</td>
+</tr>
+<tr>
+<td>count</td>
+<td>integer</td>
+<td>Transaction count</td>
+</tr>
+<tr>
+<td>open</td>
+<td>float</td>
+<td>Opening price of this candlestick</td>
+</tr>
+<tr>
+<td>close</td>
+<td>float</td>
+<td>Closing price of this candlestick</td>
+</tr>
+<tr>
+<td>low</td>
+<td>float</td>
+<td>Lowest price in this candlestick</td>
+</tr>
+<tr>
+<td>high</td>
+<td>float</td>
+<td>Highest price in this candlestick</td>
+</tr>
+<tr>
+<td>vol</td>
+<td>float</td>
+<td>Volume in quote currency</td>
+</tr>
+</tbody></table>
 <h2 id='aggregation-quotes-ticker'>Aggregation Quotes (Ticker)</h2>
 <p>This interface obtains ticker information and provides transaction aggregation information in the last 24 hours.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/detail/merged?symbol=ethusdt"</span>
@@ -1822,9 +2112,25 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 <li>GET <code>/market/detail/merged</code></li>
 </ul>
 <h3 id='request-parameters-7'>Request parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ------ | -------- | -------- | ------ | ------ | ---------- ----------------------------------------------- |
-| symbol | string | true | NA | Trading pair | btcusdt, ethbtc... (refer to <code>GET /v1/common/symbols</code> for value) |</p>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Required</th>
+<th>Default Value</th>
+<th>Description</th>
+<th>Value Range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>true</td>
+<td>NA</td>
+<td>Trading pair</td>
+<td>btcusdt, ethbtc... (refer to <code>GET /v1/common/symbols</code> for value)</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p>Response:</p>
@@ -1843,18 +2149,64 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
    </span><span class="s2">"bid"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1884.0000</span><span class="p">,</span><span class="mf">1.6702</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='response-data-3'>Response data</h3>
-<p>| Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --------- |
-| id | long | NA |
-| amount | float | transaction volume in base currency (rolling 24 hours) |
-| count | integer | number of transactions (according to rolling 24 hours) |
-| open | float | Opening price of this stage (according to rolling 24 hours) |
-| close | float | The latest price at this stage (according to rolling 24 hours) |
-| low | float | The lowest price of this stage (according to rolling 24 hours) |
-| high | float | The highest price of this stage (according to rolling 24 hours) |
-| vol | float | volume in quote currency (rolling 24 hours) |
-| bid | object | current highest bid price [price, size] |
-| ask | object | current minimum ask price [price, size] |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>long</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>float</td>
+<td>Transaction volume in base currency (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>count</td>
+<td>integer</td>
+<td>Number of transactions (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>open</td>
+<td>float</td>
+<td>Opening price of this stage (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>close</td>
+<td>float</td>
+<td>The latest price at this stage (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>low</td>
+<td>float</td>
+<td>The lowest price of this stage (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>high</td>
+<td>float</td>
+<td>The highest price of this stage (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>vol</td>
+<td>float</td>
+<td>Volume in quote currency (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>bid</td>
+<td>object</td>
+<td>Current highest bid price [price, size]</td>
+</tr>
+<tr>
+<td>ask</td>
+<td>object</td>
+<td>Current minimum ask price [price, size]</td>
+</tr>
+</tbody></table>
 <h2 id='latest-tickers-for-all-trading-pairs'>Latest Tickers for all trading pairs</h2>
 <p>Get tickers for all trading pairs.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/tickers"</span>
@@ -1903,20 +2255,74 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </span></code></pre><h3 id='response-data-4'>Response data</h3>
 <p>The core response data is an object column, each object contains the following fields</p>
 
-<p>| Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --------- |
-| amount | float | transaction volume in base currency (rolling 24 hours) |
-| count | integer | Number of transactions (according to rolling 24 hours) |
-| open | float | Opening price (calculated in natural days in Singapore time) |
-| close | float | Latest Price (Singapore Time Natural Day) |
-| low | float | Lowest price (in Singapore time calendar days) |
-| high | float | Highest price (in Singapore time natural day) |
-| vol | float | volume in quote currency (rolling 24 hours) |
-| symbol | string | trading pair, such as btcusdt, ethbtc |
-| bid | float | buy price |
-| bidSize | float | buy a quantity |
-| ask | float | Ask price |
-| askSize | float | sell a quantity |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>float</td>
+<td>Transaction volume in base currency (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>count</td>
+<td>integer</td>
+<td>Number of transactions (according to rolling 24 hours)</td>
+</tr>
+<tr>
+<td>open</td>
+<td>float</td>
+<td>Opening price (calculated in natural days in Singapore time)</td>
+</tr>
+<tr>
+<td>close</td>
+<td>float</td>
+<td>Latest price (Singapore Time Natural Day)</td>
+</tr>
+<tr>
+<td>low</td>
+<td>float</td>
+<td>Lowest price (in Singapore time calendar days)</td>
+</tr>
+<tr>
+<td>high</td>
+<td>float</td>
+<td>Highest price (in Singapore time natural day)</td>
+</tr>
+<tr>
+<td>vol</td>
+<td>float</td>
+<td>Volume in quote currency (rolling 24 hours)</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>Trading pair, such as btcusdt, ethbtc</td>
+</tr>
+<tr>
+<td>bid</td>
+<td>float</td>
+<td>Buy price</td>
+</tr>
+<tr>
+<td>bidSize</td>
+<td>float</td>
+<td>Buy quantity</td>
+</tr>
+<tr>
+<td>ask</td>
+<td>float</td>
+<td>Ask price</td>
+</tr>
+<tr>
+<td>askSize</td>
+<td>float</td>
+<td>Sell quantity</td>
+</tr>
+</tbody></table>
 <h2 id='depth-of-market-data'>Depth of Market Data</h2>
 <p>This interface returns the current market depth data for the specified trading pair.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/depth?symbol=btcusdt&amp;type=step2"</span>
@@ -1925,15 +2331,45 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 <li>GET <code>/market/depth</code></li>
 </ul>
 <h3 id='request-parameters-9'>Request parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ------ | -------- | ----- | ------ | ----------------- ------------ | ------------------------------------- ----------------- |
-| symbol | string | true | NA | Trading pair | btcusdt, ethbtc... (refer to <code>GET /v1/common/symbols</code> for value) |
-| depth | integer | false | 20 | number of depths to return | 5, 10, 20 |
-| type | string | true | step0 | In-depth price aggregation, see below for details | step0, step1, step2, step3, step4, step5 |</p>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>data type</th>
+<th>required</th>
+<th>default value</th>
+<th>description</th>
+<th>value range</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>true</td>
+<td>NA</td>
+<td>Trading pair</td>
+<td>btcusdt, ethbtc... (refer to <code>GET /v1/common/symbols</code> for value)</td>
+</tr>
+<tr>
+<td>depth</td>
+<td>integer</td>
+<td>false</td>
+<td>20</td>
+<td>Number of depths to return</td>
+<td>5, 10, 20</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>true</td>
+<td>step0</td>
+<td>Price aggregation level, see details below</td>
+<td>step0, step1, step2, step3, step4, step5</td>
+</tr>
+</tbody></table>
 
-<aside class="notice">When the type value is 'step0', the default value of 'depth' is 150 instead of 20. </aside>
+<aside class="notice">When the type value is 'step0', the default value of 'depth' is 150 instead of 20.</aside>
 
-<p><strong>Description of each value of parameter type</strong></p>
+<p><strong>Description of each value for parameter type</strong></p>
 
 <table><thead>
 <tr>
@@ -1943,23 +2379,23 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </thead><tbody>
 <tr>
 <td>step0</td>
-<td>no aggregation</td>
+<td>No aggregation</td>
 </tr>
 <tr>
 <td>step1</td>
-<td>Aggregation degree is quote precision*10</td>
+<td>Aggregation level: quote precision * 10</td>
 </tr>
 <tr>
 <td>step2</td>
-<td>Aggregation degree is quote precision*100</td>
+<td>Aggregation level: quote precision * 100</td>
 </tr>
 <tr>
 <td>step3</td>
-<td>Aggregation degree is quote precision * 500</td>
+<td>Aggregation level: quote precision * 500</td>
 </tr>
 <tr>
 <td>step4</td>
-<td>Aggregation degree is quote precision * 1000</td>
+<td>Aggregation level: quote precision * 1000</td>
 </tr>
 </tbody></table>
 
@@ -1989,12 +2425,34 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </span></code></pre><h3 id='response-data-5'>Response data</h3>
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
-<p>| Field Name | Data Type | Description |
-| -------- | -------- | ------------------------------- --- |
-| ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
-| version | integer | internal field |
-| bids | object | all current bids [price, size] |
-| asks | object | all current ask orders [price, size] |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ts</td>
+<td>integer</td>
+<td>Timestamp adjusted to Singapore time, in milliseconds</td>
+</tr>
+<tr>
+<td>version</td>
+<td>integer</td>
+<td>Internal field</td>
+</tr>
+<tr>
+<td>bids</td>
+<td>object</td>
+<td>All current bids [price, size]</td>
+</tr>
+<tr>
+<td>asks</td>
+<td>object</td>
+<td>All current ask orders [price, size]</td>
+</tr>
+</tbody></table>
 <h2 id='recent-market-transaction-records'>Recent market transaction records</h2>
 <p>This interface returns the latest transaction record of the specified trading pair.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/trade?symbol=ethusdt"</span>
@@ -2003,9 +2461,23 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 <li>GET <code>/market/trade</code></li>
 </ul>
 <h3 id='request-parameters-10'>Request parameters</h3>
-<p>| parameter | data type | required | default value | description |
-| ------ | -------- | -------- | ------ | ----------------- ----------------------------------------- |
-| symbol | string | true | NA | btcusdt, ethbtc... (value reference <code>GET /v1/common/symbols</code>) |</p>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Required</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>true</td>
+<td>NA</td>
+<td>btcusdt, ethbtc... (value reference <code>GET /v1/common/symbols</code>)</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p>Response:</p>
@@ -2027,14 +2499,44 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </span></code></pre><h3 id='response-data-6'>Response data</h3>
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
-<p>| Field Name | Data Type | Description |
-| --------- | -------- | --------------------------- -------------------- |
-| id | integer | unique transaction id (will be discarded) |
-| trade-id | integer | unique transaction ID (NEW) |
-| amount | float | transaction amount in base currency |
-| price | float | transaction price in quote currency |
-| ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
-| direction | string | Transaction direction: &quot;buy&quot; or &quot;sell&quot;, &quot;buy&quot; means to buy, &quot;sell&quot; means to sell |</p>
+<table><thead>
+<tr>
+<th>Field Name</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>unique transaction id (will be discarded)</td>
+</tr>
+<tr>
+<td>trade-id</td>
+<td>integer</td>
+<td>unique transaction ID (NEW)</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>float</td>
+<td>transaction amount in base currency</td>
+</tr>
+<tr>
+<td>price</td>
+<td>float</td>
+<td>transaction price in quote currency</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>integer</td>
+<td>Timestamp adjusted to Singapore time, in milliseconds</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>string</td>
+<td>Transaction direction: &quot;buy&quot; or &quot;sell&quot;, &quot;buy&quot; means to buy, &quot;sell&quot; means to sell</td>
+</tr>
+</tbody></table>
 <h2 id='get-recent-transaction-records'>Get recent transaction records</h2>
 <p>This interface returns all recent transaction records of the specified trading pair.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/history/trade?symbol=ethusdt&amp;size=2"</span>
@@ -2043,10 +2545,30 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 <li>GET <code>/market/history/trade</code></li>
 </ul>
 <h3 id='request-parameters-11'>Request parameters</h3>
-<p>| parameter | data type | required | default value | description |
-| ------ | -------- | -------- | ------ | ----------------- ----------------------------------------- |
-| symbol | string | true | NA | btcusdt, ethbtc... (value reference <code>GET /v1/common/symbols</code>) |
-| size | integer | false | 1 | the number of transaction records to return, the maximum value is 2000 |</p>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>data type</th>
+<th>required</th>
+<th>default value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>true</td>
+<td>NA</td>
+<td>btcusdt, ethbtc... (value reference <code>GET /v1/common/symbols</code>)</td>
+</tr>
+<tr>
+<td>size</td>
+<td>integer</td>
+<td>false</td>
+<td>1</td>
+<td>the number of transaction records to return, the maximum value is 2000</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p>Response:</p>
@@ -2092,14 +2614,44 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 </span></code></pre><h3 id='response-data-7'>Response data</h3>
 <aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to Singapore time, and these transaction records are presented in the form of an array. </aside>
 
-<p>| Parameter | Data Type | Description |
-| --------- | -------- | --------------------------- -------------------- |
-| id | integer | unique transaction id (will be discarded) |
-| trade-id | integer | unique transaction ID (NEW) |
-| amount | float | transaction amount in base currency |
-| price | float | transaction price in quote currency |
-| ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
-| direction | string | Transaction direction: &quot;buy&quot; or &quot;sell&quot;, &quot;buy&quot; means to buy, &quot;sell&quot; means to sell |</p>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>unique transaction id (will be discarded)</td>
+</tr>
+<tr>
+<td>trade-id</td>
+<td>integer</td>
+<td>unique transaction ID (NEW)</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>float</td>
+<td>transaction amount in base currency</td>
+</tr>
+<tr>
+<td>price</td>
+<td>float</td>
+<td>transaction price in quote currency</td>
+</tr>
+<tr>
+<td>ts</td>
+<td>integer</td>
+<td>Timestamp adjusted to Singapore time, in milliseconds</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>string</td>
+<td>Transaction direction: &quot;buy&quot; or &quot;sell&quot;, &quot;buy&quot; means to buy, &quot;sell&quot; means to sell</td>
+</tr>
+</tbody></table>
 <h2 id='last-24-hours-market-data'>Last 24 hours market data</h2>
 <p>This interface returns the summary of market data in the last 24 hours.</p>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/detail?symbol=ethusdt"</span>

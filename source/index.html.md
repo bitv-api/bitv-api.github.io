@@ -5,7 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - json
 
 toc_footers:
-  - <a href='https://www.bitv.com/api/'>创建 API Key </a>
+  - <a href='https://www.bitv.com/api/'> creat API Key </a>
 includes:
 
 search: false
@@ -5490,7 +5490,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 | transactFee | string | Transaction fee (positive value) or transaction fee rebate (negative value) |
 | feeCurrency | string | Transaction fee or transaction fee rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the quote currency; the transaction fee rebate currency for buy orders is the denominated currency, and the transaction fee rebate currency for sell orders is the base currency) |
 | feeDeduct | string | Transaction fee deduction |
-| feeDeductType | string | Transaction fee deduction type, valid values: ht, point |
+| feeDeductType | string | Transaction fee deduction type |
 | accountId | long | Account ID |
 | source | string | Order source |
 | orderPrice | string | Order price (not applicable for market orders) |

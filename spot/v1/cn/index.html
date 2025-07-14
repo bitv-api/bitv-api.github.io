@@ -372,16 +372,16 @@
                   <li>
                     <a href="#c5034eb6d0" class="toc-h2 toc-link" data-title="获取账户资产估值">获取账户资产估值</a>
                   </li>
-                  <li>
+<!--                   <li>
                     <a href="#0d3c2e7382" class="toc-h2 toc-link" data-title="资产划转">资产划转</a>
                   </li>
-                  <li>
+ -->                  <li>
                     <a href="#84f1b5486d" class="toc-h2 toc-link" data-title="账户流水">账户流水</a>
                   </li>
-                  <li>
+<!--                   <li>
                     <a href="#2f6797c498" class="toc-h2 toc-link" data-title="财务流水">财务流水</a>
                   </li>
-              </ul>
+ -->              </ul>
           </li>
           <li>
             <a href="#3a8e02ba8f" class="toc-h1 toc-link" data-title="钱包（充提相关）">钱包（充提相关）</a>
@@ -409,7 +409,7 @@
                   </li>
               </ul>
           </li>
-          <li>
+<!--           <li>
             <a href="#3782ccc3ed" class="toc-h1 toc-link" data-title="子用户管理">子用户管理</a>
               <ul class="toc-list-h2">
                   <li>
@@ -464,7 +464,7 @@
                     <a href="#3b93ccb738" class="toc-h2 toc-link" data-title="子用户余额">子用户余额</a>
                   </li>
               </ul>
-          </li>
+          </li> -->
           <li>
             <a href="#57aa173947" class="toc-h1 toc-link" data-title="现货交易">现货交易</a>
               <ul class="toc-list-h2">
@@ -861,18 +861,18 @@
 <td><a href="#870c0ab88b">GET /v1/account/accounts/{account-id}/balance</a></td>
 <td>查询指定账户的余额</td>
 </tr>
-<tr>
+<!-- <tr>
 <td><a href="#84f1b5486d">GET /v1/account/history</a></td>
 <td>查询账户流水</td>
-</tr>
+</tr> -->
 <tr>
 <td><a href="#2f6797c498">GET /v2/account/ledger</a></td>
 <td>查询财务流水</td>
 </tr>
-<tr>
+<!-- <tr>
 <td><a href="#0d3c2e7382">POST /v1/account/transfer</a></td>
 <td>资产划转</td>
-</tr>
+</tr> -->
 </tbody></table>
 
 <aside class="notice">
@@ -3083,7 +3083,7 @@
 <td>数据返回时间，为 UNIX 时间戳（毫秒级）</td>
 </tr>
 </tbody></table>
-<h2 id='0d3c2e7382'>资产划转</h2>
+<!-- <h2 id='0d3c2e7382'>资产划转</h2>
 <p>API Key 权限：交易<br></p>
 
 <p>该节点为母用户和子用户进行资产划转的通用接口。<br></p>
@@ -3217,7 +3217,7 @@
 <td>交易时间</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody></table> -->
 <h2 id='84f1b5486d'>账户流水</h2>
 <p>API Key 权限：读取<br>
 限频值（NEW）：5次/2s</p>
@@ -3408,7 +3408,7 @@
 <td></td>
 </tr>
 </tbody></table>
-<h2 id='2f6797c498'>财务流水</h2>
+<!-- <h2 id='2f6797c498'>财务流水</h2>
 <p>API Key 权限：读取</p>
 
 <p>该节点基于用户账户ID返回财务流水。<br>
@@ -3624,7 +3624,7 @@ endTime缺省值：当前时间</p>
 仅当用户请求查询的时间范围内的数据条目超出单页限制（由“limit“字段设定）时，服务器才返回”nextId“字段。用户收到服务器返回的”nextId“后 –<br>
 1）    须知晓后续仍有数据未能在本页返回；<br>
 2）    如需继续查询下页数据，应再次请求查询并将服务器返回的“nextId”作为“fromId“，其它请求参数不变。<br>
-3）    作为数据库记录ID，“nextId”和“fromId”除了用来翻页查询外，无其它业务含义。<br></p>
+3）    作为数据库记录ID，“nextId”和“fromId”除了用来翻页查询外，无其它业务含义。<br></p> -->
 <h1 id='3a8e02ba8f'>钱包（充提相关）</h1><h2 id='5ea2e0cde2-5'>简介</h2>
 <p>充提相关接口提供了充币地址、提币地址、提币额度、充提记录等查询，以及提币、取消提币等功能。</p>
 
@@ -4601,7 +4601,7 @@ endTime缺省值：当前时间</p>
 <td>已撤销</td>
 </tr>
 </tbody></table>
-<h1 id='3782ccc3ed'>子用户管理</h1><h2 id='5ea2e0cde2-6'>简介</h2>
+<!-- <h1 id='3782ccc3ed'>子用户管理</h1><h2 id='5ea2e0cde2-6'>简介</h2>
 <p>子用户管理接口了子用户的创建、查询、权限设置、转账，子用户API Key的创建、修改、查询、删除，子用户充提地址、余额的查询等功能。</p>
 
 <aside class="notice">访问子用户管理的相关接口需要进行签名认证。</aside>
@@ -6649,7 +6649,7 @@ endTime缺省值：当前时间<br></p>
 <td>账户余额</td>
 <td>-</td>
 </tr>
-</tbody></table>
+</tbody></table> -->
 <h1 id='57aa173947'>现货交易</h1><h2 id='5ea2e0cde2-7'>简介</h2>
 <p>现货交易接口提供了下单、撤单、订单查询、成交查询、手续费率查询等功能。</p>
 

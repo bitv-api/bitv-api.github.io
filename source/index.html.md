@@ -260,40 +260,6 @@ API 请求在通过 internet 传输的过程中极有可能被篡改，为了确
 }
 `
 
-## 子用户
-
-子用户可以用来隔离资产与交易，资产可以在母子用户之间划转；子用户只能在子用户内进行交易，并且子用户之间资产不能直接划转，只有母用户有划转权限。  
-
-子用户拥有独立的登录账号密码和 API Key，均由母用户在网页端进行管理。 
-
-每个母用户可创建200个子用户，每个子用户可创建5组Api Key，每个Api Key可对应设置读取、交易两种权限。
-
-子用户的 API Key 也可绑定 IP 地址, 有效期的限制与母用户的API Key一致。
-
-子用户可以访问所有公共接口，包括基本信息和市场行情，子用户可以访问的私有接口如下：
-
-| 接口                                                         | 说明                            |
-| ------------------------------------------------------------ | ------------------------------- |
-| [POST /v1/order/orders/place](#fd6ce2a756)                   | 创建并执行订单                  |
-| [POST /v1/order/orders/{order-id}/submitcancel](#4e53c0fccd) | 撤销一个订单                    |
-| [POST /v1/order/orders/submitCancelClientOrder](#client-order-id) | 撤销订单（基于client order ID） |
-| [POST /v1/order/orders/batchcancel](#ad00632ed5)             | 批量撤销订单                    |
-| [POST /v1/order/orders/batchCancelOpenOrders](#open-orders)  | 撤销当前委托订单                |
-| [GET /v1/order/orders/{order-id}](#92d59b6aad)               | 查询一个订单详情                |
-| [GET /v1/order/orders](#d72a5b49e7)                          | 查询当前委托、历史委托          |
-| [GET /v1/order/openOrders](#95f2078356)                      | 查询当前委托订单                |
-| [GET /v1/order/matchresults](#0fa6055598)                    | 查询成交                        |
-| [GET /v1/order/orders/{order-id}/matchresults](#56c6c47284)  | 查询某个订单的成交明细          |
-| [GET /v1/account/accounts](#bd9157656f)                      | 查询当前用户的所有账户          |
-| [GET /v1/account/accounts/{account-id}/balance](#870c0ab88b) | 查询指定账户的余额              |
-| [GET /v1/account/history](#84f1b5486d)                       | 查询账户流水                    |
-| [GET /v2/account/ledger](#2f6797c498)                        | 查询财务流水                    |
-| [POST /v1/account/transfer](#0d3c2e7382)                     | 资产划转                        |
-
-<aside class="notice">
-其他接口子用户不可访问，如果尝试访问，系统会返回 “error-code 403”。
-</aside>
-
 
 ## 业务字典
 

@@ -2041,7 +2041,7 @@ API Key 权限：读取<br>
 | 参数名称    | 是否必须 | 数据类型 | 描述                                                         | 取值范围                                 |
 | ----------- | -------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |
 | id          | true     | long     | 充币订单id                                                   |                                          |
-| type        | true     | string   | 类型                                                         | 'deposit', 'withdraw', 子用户仅有deposit |
+| type        | true     | string   | 类型                                                         | 'deposit', 'withdraw' |
 | currency    | true     | string   | 币种                                                         |                                          |
 | tx-hash     | true     | string   | 交易哈希                                                     |                                          |
 | chain       | true     | string   | 链名称                                                       |                                          |

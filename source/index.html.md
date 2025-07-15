@@ -2007,7 +2007,7 @@ API Key 权限：读取<br>
 | 参数名称 | 是否必须 | 类型   | 描述             | 默认值                                                       | 取值范围                                                     |
 | -------- | -------- | ------ | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | currency | false    | string | 币种             |                                                              | btc, ltc, bch, eth, etc ...(取值参考`GET /v1/common/currencys`) |
-| type     | true     | string | 充值或提币       |                                                              | deposit 或 withdraw,子用户仅可用deposit                      |
+| type     | true     | string | 充值或提币       |                                                              | deposit 或 withdraw|
 | from     | false    | string | 查询起始 ID      | 缺省时，默认值direct相关。当direct为‘prev’时，from 为1 ，从旧到新升序返回；当direct为’next‘时，from为最新的一条记录的ID，从新到旧降序返回 |                                                              |
 | size     | false    | string | 查询记录大小     | 100                                                          | 1-500                                                        |
 | direct   | false    | string | 返回记录排序方向 | 缺省时，默认为“prev” （升序）                                | “prev” （升序）or “next” （降序）                            |

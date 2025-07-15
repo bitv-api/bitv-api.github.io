@@ -28,7 +28,7 @@ run_build() {
     build_dir=$build_directory/dm/v1/$language
   fi
   echo "build_dir="$build_dir
-  bundle exec middleman build --clean --build-dir $build_dir
+  bundle exec middleman build --clean --verbose --build-dir $build_dir
 }
 
 parse_args() {

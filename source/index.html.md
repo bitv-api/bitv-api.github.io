@@ -1585,7 +1585,7 @@ spot: spot account
        {
          "currency": "usdt",
          "type": "trade",
-         "balance": "5007.4362872650"
+         "balance": "5007.4362812650"
        },
        {
          "currency": "usdt",

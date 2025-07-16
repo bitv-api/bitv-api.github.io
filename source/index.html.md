@@ -1711,7 +1711,7 @@ API Key 權限：讀取<br>
         {
             "account-id": 5260185,
             "currency": "btc",
-            "transact-amt": "0.002393000000000323",
+            "transact-amt": "0.002393000000000344",
             "transact-type": "transfer",
             "record-id": 89373333576,
             "avail-balance": "0.002393000000000000",

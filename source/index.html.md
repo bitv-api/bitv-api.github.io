@@ -260,41 +260,6 @@ API 請求在通過 internet 傳輸的過程中極有可能被篡改，為了確
 }
 `
 
-## 子用戶
-
-子用戶可以用來隔離資產與交易，資產可以在母子用戶之間划轉；子用戶只能在子用戶內進行交易，並且子用戶之間資產不能直接划轉，只有母用戶有划轉權限。  
-
-子用戶擁有獨立的登錄賬號密碼和 API Key，均由母用戶在網頁端進行管理。 
-
-每個母用戶可創建200個子用戶，每個子用戶可創建5組Api Key，每個Api Key可對應設置讀取、交易兩種權限。
-
-子用戶的 API Key 也可綁定 IP 地址, 有效期的限制與母用戶的API Key一致。
-
-子用戶可以訪問所有公共接口，包括基本信息和市場行情，子用戶可以訪問的私有接口如下：
-
-| 接口                                                         | 說明                            |
-| ------------------------------------------------------------ | ------------------------------- |
-| [POST /v1/order/orders/place](#fd6ce2a756)                   | 創建並執行訂單                  |
-| [POST /v1/order/orders/{order-id}/submitcancel](#4e53c0fccd) | 撤銷一個訂單                    |
-| [POST /v1/order/orders/submitCancelClientOrder](#client-order-id) | 撤銷訂單（基於client order ID） |
-| [POST /v1/order/orders/batchcancel](#ad00632ed5)             | 批量撤銷訂單                    |
-| [POST /v1/order/orders/batchCancelOpenOrders](#open-orders)  | 撤銷當前委託訂單                |
-| [GET /v1/order/orders/{order-id}](#92d59b6aad)               | 查詢一個訂單詳情                |
-| [GET /v1/order/orders](#d72a5b49e7)                          | 查詢當前委託、歷史委託          |
-| [GET /v1/order/openOrders](#95f2078356)                      | 查詢當前委託訂單                |
-| [GET /v1/order/matchresults](#0fa6055598)                    | 查詢成交                        |
-| [GET /v1/order/orders/{order-id}/matchresults](#56c6c47284)  | 查詢某個訂單的成交明細          |
-| [GET /v1/account/accounts](#bd9157656f)                      | 查詢當前用戶的所有賬戶          |
-| [GET /v1/account/accounts/{account-id}/balance](#870c0ab88b) | 查詢指定賬戶的餘額              |
-| [GET /v1/account/history](#84f1b5486d)                       | 查詢賬戶流水                    |
-| [GET /v2/account/ledger](#2f6797c498)                        | 查詢財務流水                    |
-| [POST /v1/account/transfer](#0d3c2e7382)                     | 資產划轉                        |
-
-<aside class="notice">
-其他接口子用戶不可訪問，如果嘗試訪問，系統會返回 「error-code 403」。
-</aside>
-
-
 ## 業務字典
 
 ### 交易對

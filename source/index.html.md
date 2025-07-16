@@ -1608,7 +1608,7 @@ API Key 权限：读取
     "code": 200,
     "data": {
         "balance": "34.75",
-        "timestamp": 15949813354399
+        "timestamp": 15949813354299
     },
     "ok": true
 }

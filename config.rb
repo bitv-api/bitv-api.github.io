@@ -70,3 +70,12 @@ SassC.load_paths.unshift File.expand_path('source/stylesheets', __dir__)
 #    SassC::Script::Value::String.new("url(#{path})")
 #  end
 #end
+
+require 'middleman-core/renderers/redcarpet'
+
+# 禁用 Redcarpet，改用 Kramdown
+set :markdown_engine, :kramdown
+set :markdown,
+    input: 'GFM',
+    hard_wrap: false,
+    syntax_highlighter: :rouge

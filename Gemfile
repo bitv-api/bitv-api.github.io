@@ -15,3 +15,5 @@ gem 'mini_racer',           '~> 0.12'
 # gem 'mini_racer'
 
 gem 'padrino-helpers', '~> 0.15.0'   # 与 middleman 4.x 官方匹配
+
+gem "kramdown-parser-gfm", "~> 1.1"

@@ -1590,7 +1590,7 @@ spot: spot account
        {
          "currency": "usdt",
          "type": "frozen",
-         "balance": "348.1199920000"
+         "balance": "348.11999203300"
        }
      ]
    }

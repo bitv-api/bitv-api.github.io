@@ -1591,7 +1591,7 @@ spot：現貨賬戶
       {
         "currency": "usdt",
         "type": "frozen",
-        "balance": "348.1199920000"
+        "balance": "348.1199920020"
       }
     ]
   }

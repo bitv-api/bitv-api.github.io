@@ -1280,7 +1280,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 ```json
 {
-     "version": 31615842081,
+     "version": 31615843081,
      "ts": 1489464585407,
      "bids": [
        [7964, 0.0678], // [price, size]

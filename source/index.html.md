@@ -3367,7 +3367,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 ```json
 {
   "ch": "market.htusdt.depth.step0",
-  "ts": 1572362902028, //system update time
+  "ts": 1572362902033, //system update time
   "tick": {
     "bids": [
       [3.7721, 344.86],// [price, size]

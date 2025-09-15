@@ -711,50 +711,6 @@ A：请参考/v2/account/withdraw/quota接口返回值，返回信息中包含�
 
 基础信息Rest接口提供了市场状态、交易对信息、币种信息、币链信息、服务器时间戳等公共参考信息。
 
-## 获取当前市场状态
-
-此节点返回当前最新市场状态。<br>
-状态枚举值包括: 1 - 正常（可下单可撤单），2 - 挂起（不可下单不可撤单），3 - 仅撤单（不可下单可撤单）。<br>
-挂起原因枚举值包括: 2 - 紧急维护，3 - 计划维护。<br>
-
-```shell
-curl "https://api.bitv.com/v2/market-status"
-```
-
-
-### HTTP 请求
-
-- GET `/v2/market-status`
-
-### 请求参数
-
-此接口不接受任何参数。
-
-> Responds:
-
-```json
-{
-    "code": 200,
-    "message": "success",
-    "data": {
-        "marketStatus": 1
-    }
-}
-```
-
-### 返回字段
-
-| 名称              | 类型    | 是否必需 | 描述                                                         |
-| ----------------- | ------- | -------- | ------------------------------------------------------------ |
-| code              | integer | TRUE     | 状态码                                                       |
-| message           | string  | FALSE    | 错误描述（如有）                                             |
-| data              | object  | TRUE     |                                                              |
-| { marketStatus    | integer | TRUE     | 市场状态（1=normal, 2=halted, 3=cancel-only）                |
-| haltStartTime     | long    | FALSE    | 市场暂停开始时间（unix time in millisecond），仅对marketStatus=halted或cancel-only有效 |
-| haltEndTime       | long    | FALSE    | 市场暂停预计结束时间（unix time in millisecond），仅对marketStatus=halted或cancel-only有效；如在marketStatus=halted或cancel-only时未返回此字段，意味着市场暂停结束时间暂时无法预计 |
-| haltReason        | integer | FALSE    | 市场暂停原因（2=emergency-maintenance, 3=scheduled-maintenance），仅对marketStatus=halted或cancel-only有效 |
-| affectedSymbols } | string  | FALSE    | 市场暂停影响的交易对列表，以逗号分隔，如影响所有交易对返回"all"，仅对marketStatus=halted或cancel-only有效 |
-
 ## 获取所有交易对
 
 此接口返回所有支持的交易对。
@@ -1146,78 +1102,6 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 | bid      | object   | 当前的最高买价 [price, size]             |
 | ask      | object   | 当前的最低卖价 [price, size]             |
 
-## 所有交易对的最新 Tickers
-
-获得所有交易对的 tickers。
-
-```shell
-curl "https://api.bitv.com/market/tickers"
-```
-
-<aside class="notice">此接口返回所有交易对的 ticker，因此数据量较大。</aside>
-
-### HTTP 请求
-
-- GET `/market/tickers`
-
-### 请求参数
-
-此接口不接受任何参数。
-
-> Response:
-
-```json
-[  
-    {  
-        "open":0.044297,      // 开盘价
-        "close":0.042178,     // 收盘价
-        "low":0.040110,       // 最低价
-        "high":0.045255,      // 最高价
-        "amount":12880.8510,  
-        "count":12838,
-        "vol":563.0388715740,
-        "symbol":"ethbtc",
-        "bid":0.007545,
-        "bidSize":0.008,
-        "ask":0.008088,
-        "askSize":0.009
-    },
-    {  
-        "open":0.008545,
-        "close":0.008656,
-        "low":0.008088,
-        "high":0.009388,
-        "amount":88056.1860,
-        "count":16077,
-        "vol":771.7975953754,
-        "symbol":"ltcbtc",
-        "bid":0.007545,
-        "bidSize":0.008,
-        "ask":0.008088,
-        "askSize":0.009
-    }
-]
-```
-
-### 响应数据
-
-核心响应数据为一个对象列，每个对象包含下面的字段
-
-| 字段名称 | 数据类型 | 描述                                     |
-| -------- | -------- | ---------------------------------------- |
-| amount   | float    | 以基础币种计量的交易量（以滚动24小时计） |
-| count    | integer  | 交易笔数（以滚动24小时计）               |
-| open     | float    | 开盘价（以新加坡时间自然日计）           |
-| close    | float    | 最新价（以新加坡时间自然日计）           |
-| low      | float    | 最低价（以新加坡时间自然日计）           |
-| high     | float    | 最高价（以新加坡时间自然日计）           |
-| vol      | float    | 以报价币种计量的交易量（以滚动24小时计） |
-| symbol   | string   | 交易对，例如btcusdt, ethbtc              |
-| bid      | float    | 买一价                                   |
-| bidSize  | float    | 买一量                                   |
-| ask      | float    | 卖一价                                   |
-| askSize  | float    | 卖一量                                   |
-
 ## 市场深度数据
 
 此接口返回指定交易对的当前市场深度数据。
@@ -1580,47 +1464,6 @@ list字段说明
 | balance  | true     | string   | 余额 |                                   |
 | currency | true     | string   | 币种 |                                   |
 | type     | true     | string   | 类型 | trade: 交易余额，frozen: 冻结余额 |
-
-## 获取账户资产估值
-
-API Key 权限：读取
-
-限频值（NEW）：100次/2s
-
-按照BTC或法币计价单位，获取指定账户的总资产估值。
-
-### HTTP 请求
-
-- GET `/v2/account/asset-valuation`
-
-### 请求参数
-
-| 参数              | 是否必填 | 数据类型 | 描述                                                      | 默认值 | 取值范围                           |
-| ----------------- | -------- | -------- | --------------------------------------------------------- | ------ | ---------------------------------- |
-| accountType       | true     | string   | 账户类型                                                  | NA     | spot：现货账户                     |
-| valuationCurrency | false    | string   | 资产估值法币，即资产按哪个法币为单位进行估值。            | BTC    | 可选法币有：BTC、USD（大小写敏感） |
-| subUid            | false    | long     | 子用户的 UID，若不填，则返回API key所属用户的账户资产估值 | NA     |                                    |
-
-> Responds:
-
-```json
-{
-    "code": 200,
-    "data": {
-        "balance": "34.75",
-        "timestamp": 15949813354299
-    },
-    "ok": true
-}
-```
-
-### 返回字段
-	
-| 参数       | 是否必须 | 数据类型 | 说明                                        |
-| ---------- | -------- | -------- | ------------------------------------------- |
-| balance    | true     | string   | 按照某一个法币为单位的总资产估值            |
-| timestamp  | true     | long     | 数据返回时间，为 UNIX 时间戳（毫秒级）       |
-
 
 ## 账户流水
 
@@ -3105,77 +2948,6 @@ API Key 权限：读取<br>
 | invalid_interval   | start date小于end date; 或者 start date 与end date之间的时间间隔大于2天 |
 | invalid_start_date | start date是一个61天之前的日期；或者start date是一个未来的日期 |
 | invalid_end_date   | end date 是一个61天之前的日期；或者end date是一个未来的日期  |
-
-
-## 获取用户当前手续费率
-
-Api用户查询交易对费率，一次限制最多查10个交易对
-
-API Key 权限：读取
-
-```shell
-curl "https://api.bitv.com/v2/reference/transact-fee-rate?symbols=btcusdt,ethusdt,ltcusdt"
-```
-
-### HTTP 请求
-
-- GET `/v2/reference/transact-fee-rate`
-
-### 请求参数
-
-| 参数    | 数据类型 | 是否必须 | 默认值 | 描述                     | 取值范围                                                |
-| ------- | -------- | -------- | ------ | ------------------------ | ------------------------------------------------------- |
-| symbols | string   | true     | NA     | 交易对，可多填，逗号分隔 | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`）> |
-
-> Response:
-
-```json
-{
-  "code": "200",
-  "data": [
-     {
-        "symbol": "btcusdt",
-        "makerFeeRate":"0.002",
-        "takerFeeRate":"0.002",
-        "actualMakerRate": "0.002",
-        "actualTakerRate":"0.002
-     },
-     {
-        "symbol": "ethusdt",
-        "makerFeeRate":"0.002",
-        "takerFeeRate":"0.002",
-        "actualMakerRate": "0.002",
-        "actualTakerRate":"0.002
-    },
-     {
-        "symbol": "ltcusdt",
-        "makerFeeRate":"0.002",
-        "takerFeeRate":"0.002",
-        "actualMakerRate": "0.002",
-        "actualTakerRate":"0.002
-    }
-  ]
-}
-```
-
-### 响应数据
-
-| 字段名称          | 数据类型 | 描述                                                         |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| code              | integer  | 状态码                                                       |
-| message           | string   | 错误描述（如有）                                             |
-| data              | object   |                                                              |
-| { symbol          | string   | 交易代码                                                     |
-| makerFeeRate      | string   | 基础费率 - 被动方，如适用交易手续费返佣，返回返佣费率（负值） |
-| takerFeeRate      | string   | 基础费率 - 主动方                                            |
-| actualMakerRate   | string   | 抵扣后费率 - 被动方，如不适用抵扣或未启用抵扣，返回基础费率；如适用交易手续费返佣，返回返佣费率（负值） |
-| actualTakerRate } | string   | 抵扣后费率 – 主动方，如不适用抵扣或未启用抵扣，返回基础费率  |
-
-注：<br>
-
-- 如makerFeeRate/actualMakerRate为正值，该字段意为交易手续费率；<br>
-- 如makerFeeRate/actualMakerRate为负值，该字段意为交易返佣费率。<br>
-
 
 # Websocket行情数据
 

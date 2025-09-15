@@ -3218,7 +3218,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 ```json
 {
   "ch": "market.htusdt.depth.step0",
-  "ts": 1572362902027, //system update time
+  "ts": 1572362902028, //system update time
   "tick": {
     "bids": [
       [3.7721, 344.86],// [price, size]

@@ -997,7 +997,7 @@ This interface does not accept any parameters.
 > Response:
 
 ```json
-   "data": 1494900087028
+   "data": 1494900087038
 ```
 
 # market data

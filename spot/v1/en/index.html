@@ -323,9 +323,6 @@
                     <a href="#introduction-1" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
                   </li>
                   <li>
-                    <a href="#get-the-current-market-status" class="toc-h2 toc-link" data-title="Get the current market status">Get the current market status</a>
-                  </li>
-                  <li>
                     <a href="#get-all-trading-pairs" class="toc-h2 toc-link" data-title="Get all trading pairs">Get all trading pairs</a>
                   </li>
                   <li>
@@ -352,9 +349,6 @@
                     <a href="#aggregation-quotes-ticker" class="toc-h2 toc-link" data-title="Aggregation Quotes (Ticker)">Aggregation Quotes (Ticker)</a>
                   </li>
                   <li>
-                    <a href="#latest-tickers-for-all-trading-pairs" class="toc-h2 toc-link" data-title="Latest Tickers for all trading pairs">Latest Tickers for all trading pairs</a>
-                  </li>
-                  <li>
                     <a href="#depth-of-market-data" class="toc-h2 toc-link" data-title="Depth of Market Data">Depth of Market Data</a>
                   </li>
                   <li>
@@ -379,9 +373,6 @@
                   </li>
                   <li>
                     <a href="#account-balance" class="toc-h2 toc-link" data-title="Account Balance">Account Balance</a>
-                  </li>
-                  <li>
-                    <a href="#get-account-asset-valuation" class="toc-h2 toc-link" data-title="Get account asset valuation">Get account asset valuation</a>
                   </li>
                   <li>
                     <a href="#asset-transfer" class="toc-h2 toc-link" data-title="Asset transfer">Asset transfer</a>
@@ -517,9 +508,6 @@
                   </li>
                   <li>
                     <a href="#current-and-historical-transactions" class="toc-h2 toc-link" data-title="Current and historical transactions">Current and historical transactions</a>
-                  </li>
-                  <li>
-                    <a href="#get-the-users-current-transaction-fee-rate" class="toc-h2 toc-link" data-title="Get the user’s current transaction fee rate">Get the user’s current transaction fee rate</a>
                   </li>
               </ul>
           </li>
@@ -1537,112 +1525,19 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 
 <p>The basic information Rest interface provides public reference information such as market status, transaction pair information, currency information, currency chain information, and server timestamp.</p>
 
-<h2 id="get-the-current-market-status">Get the current market status</h2>
-
-<p>This node returns the current latest market state. <br />
-Status enumeration values include: 1 - Normal (Orders can be placed and canceled), 2 - Pending (Orders cannot be placed and canceled), 3 - Cancellation only (Orders cannot be placed and canceled). <br />
-Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planned maintenance. <br /></p>
-
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/market-status"</span>
-</code></pre></div>
-<h3 id="http-requests">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v2/market-status</code></li>
-</ul>
-
-<h3 id="request-parameters">Request parameters</h3>
-
-<p>This interface does not accept any parameters.</p>
-
-<blockquote>
-  <p>Responses:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-     </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-         </span><span class="nl">"marketStatus"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-     </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="return-fields">return fields</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>code</td>
-      <td>integer</td>
-      <td>TRUE</td>
-      <td>Status code</td>
-    </tr>
-    <tr>
-      <td>message</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>Error description (if any)</td>
-    </tr>
-    <tr>
-      <td>data</td>
-      <td>object</td>
-      <td>TRUE</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>marketStatus</td>
-      <td>integer</td>
-      <td>TRUE</td>
-      <td>Market status (1=normal, 2=halted, 3=cancel-only)</td>
-    </tr>
-    <tr>
-      <td>haltStartTime</td>
-      <td>long</td>
-      <td>FALSE</td>
-      <td>Market pause start time (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only</td>
-    </tr>
-    <tr>
-      <td>haltEndTime</td>
-      <td>long</td>
-      <td>FALSE</td>
-      <td>Expected end time of market suspension (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only. If not returned, the end time is temporarily unpredictable.</td>
-    </tr>
-    <tr>
-      <td>haltReason</td>
-      <td>integer</td>
-      <td>FALSE</td>
-      <td>Reason for market suspension (2=emergency maintenance, 3=scheduled maintenance), valid only for marketStatus=halted or cancel-only</td>
-    </tr>
-    <tr>
-      <td>affectedSymbols</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>A list of trading pairs affected by market suspension, separated by commas. If all trading pairs are affected, return “all”. Valid only for marketStatus=halted or cancel-only.</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="get-all-trading-pairs">Get all trading pairs</h2>
 
 <p>This interface returns all supported trading pairs.</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/symbols"</span>
 </code></pre></div>
-<h3 id="http-requests-1">HTTP requests</h3>
+<h3 id="http-requests">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/common/symbols</code></li>
 </ul>
 
-<h3 id="request-parameters-1">Request parameters</h3>
+<h3 id="request-parameters">Request parameters</h3>
 
 <p>This interface does not accept any parameters.</p>
 
@@ -1679,7 +1574,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="return-fields-1">return fields</h3>
+<h3 id="return-fields">return fields</h3>
 
 <table>
   <thead>
@@ -1808,13 +1703,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/currencys"</span>
 </code></pre></div>
-<h3 id="http-requests-2">HTTP requests</h3>
+<h3 id="http-requests-1">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/common/currencys</code></li>
 </ul>
 
-<h3 id="request-parameters-2">Request parameters</h3>
+<h3 id="request-parameters-1">Request parameters</h3>
 
 <p>This interface does not accept any parameters.</p>
 
@@ -1828,7 +1723,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
      </span><span class="s2">"etc"</span><span class="w">
    </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="return-fields-2">return fields</h3>
+<h3 id="return-fields-1">return fields</h3>
 
 <aside class="notice">The returned "data" object is an array of strings, and each string represents a supported currency. </aside>
 
@@ -1836,7 +1731,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <p>This node is used to query the static reference information (public data) of each currency and its blockchain</p>
 
-<h3 id="http-requests-3">HTTP requests</h3>
+<h3 id="http-requests-2">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/reference/currencies</code></li>
@@ -1844,7 +1739,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/reference/currencies?currency=usdt"</span>
 </code></pre></div>
-<h3 id="request-parameters-3">Request parameters</h3>
+<h3 id="request-parameters-2">Request parameters</h3>
 
 <table>
   <thead>
@@ -2192,13 +2087,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/timestamp"</span>
 </code></pre></div>
-<h3 id="http-requests-4">HTTP requests</h3>
+<h3 id="http-requests-3">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/common/timestamp</code></li>
 </ul>
 
-<h3 id="request-parameters-4">Request parameters</h3>
+<h3 id="request-parameters-3">Request parameters</h3>
 
 <p>This interface does not accept any parameters.</p>
 
@@ -2206,7 +2101,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
   <p>Response:</p>
 </blockquote>
 
-<div class="highlight"><pre class="highlight json"><code><span class="w">   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494900087029</span><span class="w">
+<div class="highlight"><pre class="highlight json"><code><span class="w">   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494900087028</span><span class="w">
 </span></code></pre></div>
 <h1 id="market-data-1">market data</h1>
 
@@ -2269,13 +2164,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/history/kline?period=1day&amp;size=200&amp;symbol=btcusdt"</span>
 </code></pre></div>
-<h3 id="http-requests-5">HTTP requests</h3>
+<h3 id="http-requests-4">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/market/history/kline</code></li>
 </ul>
 
-<h3 id="request-parameters-5">Request parameters</h3>
+<h3 id="request-parameters-4">Request parameters</h3>
 <p>| parameter | data type | required | default value | description | value range |
 | ——— | ——— | ——– | ————- | ———– | ———– |
 | symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc, etc. |
@@ -2321,13 +2216,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/detail/merged?symbol=ethusdt"</span>
 </code></pre></div>
-<h3 id="http-requests-6">HTTP requests</h3>
+<h3 id="http-requests-5">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/market/detail/merged</code></li>
 </ul>
 
-<h3 id="request-parameters-6">Request parameters</h3>
+<h3 id="request-parameters-5">Request parameters</h3>
 
 <table>
   <thead>
@@ -2384,148 +2279,19 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 | bid        | object    | Current highest bid price [price, size] |
 | ask        | object    | Current minimum ask price [price, size] |</p>
 
-<h2 id="latest-tickers-for-all-trading-pairs">Latest Tickers for all trading pairs</h2>
-
-<p>Get tickers for all trading pairs.</p>
-
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/tickers"</span>
-</code></pre></div>
-<aside class="notice">This interface returns the tickers of all trading pairs, so the amount of data is large. </aside>
-
-<h3 id="http-requests-7">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/market/tickers</code></li>
-</ul>
-
-<h3 id="request-parameters-7">Request parameters</h3>
-
-<p>This interface does not accept any parameters.</p>
-
-<blockquote>
-  <p>Response:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">[</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-         </span><span class="nl">"open"</span><span class="p">:</span><span class="mf">0.044297</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">opening</span><span class="w"> </span><span class="err">price</span><span class="w">
-         </span><span class="nl">"close"</span><span class="p">:</span><span class="mf">0.042178</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">closing</span><span class="w"> </span><span class="err">price</span><span class="w">
-         </span><span class="nl">"low"</span><span class="p">:</span><span class="mf">0.040110</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">lowest</span><span class="w"> </span><span class="err">price</span><span class="w">
-         </span><span class="nl">"high"</span><span class="p">:</span><span class="mf">0.045255</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">highest</span><span class="w"> </span><span class="err">price</span><span class="w">
-         </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">12880.8510</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">12838</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">563.0388715740</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethbtc"</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"bid"</span><span class="p">:</span><span class="mf">0.007545</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.008</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"ask"</span><span class="p">:</span><span class="mf">0.008088</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.009</span><span class="w">
-     </span><span class="p">},</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-         </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.008545</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.008656</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.008088</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.009388</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">88056.1860</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">16077</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">771.7975953754</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ltcbtc"</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"bid"</span><span class="p">:</span><span class="mf">0.007545</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.008</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"ask"</span><span class="p">:</span><span class="mf">0.008088</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.009</span><span class="w">
-     </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-3">Response data</h3>
-
-<p>The core response data is an object column, each object contains the following fields</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Field Name</th>
-      <th>Data Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>amount</td>
-      <td>float</td>
-      <td>Transaction volume in base currency (rolling 24 hours)</td>
-    </tr>
-    <tr>
-      <td>count</td>
-      <td>integer</td>
-      <td>Number of transactions (according to rolling 24 hours)</td>
-    </tr>
-    <tr>
-      <td>open</td>
-      <td>float</td>
-      <td>Opening price (calculated in natural days in Singapore time)</td>
-    </tr>
-    <tr>
-      <td>close</td>
-      <td>float</td>
-      <td>Latest price (Singapore Time Natural Day)</td>
-    </tr>
-    <tr>
-      <td>low</td>
-      <td>float</td>
-      <td>Lowest price (in Singapore time calendar days)</td>
-    </tr>
-    <tr>
-      <td>high</td>
-      <td>float</td>
-      <td>Highest price (in Singapore time natural day)</td>
-    </tr>
-    <tr>
-      <td>vol</td>
-      <td>float</td>
-      <td>Volume in quote currency (rolling 24 hours)</td>
-    </tr>
-    <tr>
-      <td>symbol</td>
-      <td>string</td>
-      <td>Trading pair, such as btcusdt, ethbtc</td>
-    </tr>
-    <tr>
-      <td>bid</td>
-      <td>float</td>
-      <td>Buy price</td>
-    </tr>
-    <tr>
-      <td>bidSize</td>
-      <td>float</td>
-      <td>Buy quantity</td>
-    </tr>
-    <tr>
-      <td>ask</td>
-      <td>float</td>
-      <td>Ask price</td>
-    </tr>
-    <tr>
-      <td>askSize</td>
-      <td>float</td>
-      <td>Sell quantity</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="depth-of-market-data">Depth of Market Data</h2>
 
 <p>This interface returns the current market depth data for the specified trading pair.</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/depth?symbol=btcusdt&amp;type=step2"</span>
 </code></pre></div>
-<h3 id="http-requests-8">HTTP requests</h3>
+<h3 id="http-requests-6">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/market/depth</code></li>
 </ul>
 
-<h3 id="request-parameters-8">Request parameters</h3>
+<h3 id="request-parameters-6">Request parameters</h3>
 <p>| parameter | data type | required | default value | description | value range |
 | ——— | ——— | ——– | ————- | ———— | ——————————————- |
 | symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc… (refer to <code>GET /v1/common/symbols</code> for value) |
@@ -2592,7 +2358,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
      </span><span class="p">]</span><span class="w">
    </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-4">Response data</h3>
+<h3 id="response-data-3">Response data</h3>
 
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
@@ -2634,13 +2400,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/trade?symbol=ethusdt"</span>
 </code></pre></div>
-<h3 id="http-requests-9">HTTP requests</h3>
+<h3 id="http-requests-7">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/market/trade</code></li>
 </ul>
 
-<h3 id="request-parameters-9">Request parameters</h3>
+<h3 id="request-parameters-7">Request parameters</h3>
 <p>| Parameter | Data Type | Required | Default Value | Description |
 | ——— | ——— | ——– | ————- | ———– |
 | symbol    | string    | true     | NA            | btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>) |</p>
@@ -2664,7 +2430,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-5">Response data</h3>
+<h3 id="response-data-4">Response data</h3>
 
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
@@ -2716,13 +2482,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/history/trade?symbol=ethusdt&amp;size=2"</span>
 </code></pre></div>
-<h3 id="http-requests-10">HTTP requests</h3>
+<h3 id="http-requests-8">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/market/history/trade</code></li>
 </ul>
 
-<h3 id="request-parameters-10">Request parameters</h3>
+<h3 id="request-parameters-8">Request parameters</h3>
 <p>| parameter | data type | required | default value | description |
 | ——— | ——— | ——– | ————- | ———– |
 | symbol    | string    | true     | NA            | btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>) |
@@ -2771,7 +2537,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
     </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-6">Response data</h3>
+<h3 id="response-data-5">Response data</h3>
 
 <aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to Singapore time, and these transaction records are presented in the form of an array. </aside>
 
@@ -2823,13 +2589,13 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/detail?symbol=ethusdt"</span>
 </code></pre></div>
-<h3 id="http-requests-11">HTTP requests</h3>
+<h3 id="http-requests-9">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/market/detail</code></li>
 </ul>
 
-<h3 id="request-parameters-11">Request parameters</h3>
+<h3 id="request-parameters-9">Request parameters</h3>
 
 <table>
   <thead>
@@ -2868,7 +2634,7 @@ Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planne
     </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">5.6617373443873316E7</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-7">Response data</h3>
+<h3 id="response-data-6">Response data</h3>
 
 <aside class="notice">The returned JSON top-level data object is named 'tick' instead of the usual 'data'. </aside>
 
@@ -3003,13 +2769,13 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <p>Query all account ID <code>account-id</code> and related information of the current user</p>
 
-<h3 id="http-requests-12">HTTP requests</h3>
+<h3 id="http-requests-10">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/account/accounts</code></li>
 </ul>
 
-<h3 id="request-parameters-12">Request parameters</h3>
+<h3 id="request-parameters-10">Request parameters</h3>
 
 <p>none</p>
 
@@ -3028,7 +2794,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-8">Response data</h3>
+<h3 id="response-data-7">Response data</h3>
 <p>| Parameter name | Required | Data type | Description | Value range |
 | ————– | ——– | ——— | ———– | ———– |
 | id | true | long | account-id | |
@@ -3044,13 +2810,13 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <p>spot: spot account</p>
 
-<h3 id="http-requests-13">HTTP requests</h3>
+<h3 id="http-requests-11">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/account/accounts/{account-id}/balance</code></li>
 </ul>
 
-<h3 id="request-parameters-13">Request parameters</h3>
+<h3 id="request-parameters-11">Request parameters</h3>
 
 <table>
   <thead>
@@ -3099,7 +2865,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-9">Response data</h3>
+<h3 id="response-data-8">Response data</h3>
 <p>| Parameter name | Required | Data type | Description | Value range |
 | ————– | ——– | ——— | ———– | ———– |
 | id | true | long | Account ID | |
@@ -3144,101 +2910,6 @@ Frequency limit value (NEW): 100 times/2s</p>
   </tbody>
 </table>
 
-<h2 id="get-account-asset-valuation">Get account asset valuation</h2>
-
-<p>API Key permission: read</p>
-
-<p>Frequency limit value (NEW): 100 times/2s</p>
-
-<p>According to BTC or fiat currency denomination unit, obtain the total asset valuation of the specified account.</p>
-
-<h3 id="http-requests-14">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v2/account/asset-valuation</code></li>
-</ul>
-
-<h3 id="request-parameters-14">Request parameters</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Required</th>
-      <th>Data Type</th>
-      <th>Description</th>
-      <th>Default Value</th>
-      <th>Value Range</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>accountType</td>
-      <td>true</td>
-      <td>string</td>
-      <td>The type of the account</td>
-      <td>NA</td>
-      <td>spot: spot account</td>
-    </tr>
-    <tr>
-      <td>valuationCurrency</td>
-      <td>false</td>
-      <td>string</td>
-      <td>The fiat currency used for asset valuation</td>
-      <td>BTC</td>
-      <td>Available legal currencies: BTC, USD (case sensitive)</td>
-    </tr>
-    <tr>
-      <td>subUid</td>
-      <td>false</td>
-      <td>long</td>
-      <td>The UID of the sub-user. If not provided, the account asset valuation of the user associated with the API key is returned</td>
-      <td>NA</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>Responses:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-     </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-         </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34.75"</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594901254363</span><span class="w">
-     </span><span class="p">},</span><span class="w">
-     </span><span class="nl">"ok"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="return-fields-3">return fields</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Required</th>
-      <th>Data Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>balance</td>
-      <td>true</td>
-      <td>string</td>
-      <td>Total asset valuation based on a certain fiat currency</td>
-    </tr>
-    <tr>
-      <td>timestamp</td>
-      <td>true</td>
-      <td>long</td>
-      <td>Data return time, represented in Unix time (milliseconds)</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="asset-transfer">Asset transfer</h2>
 
 <p>API Key Permissions: Transaction<br /></p>
@@ -3259,13 +2930,13 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <p>Other transfer functions will be launched gradually, so stay tuned. <br /></p>
 
-<h3 id="http-requests-15">HTTP requests</h3>
+<h3 id="http-requests-12">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/account/transfer</code></li>
 </ul>
 
-<h3 id="request-parameters-15">Request parameters</h3>
+<h3 id="request-parameters-12">Request parameters</h3>
 
 <table>
   <thead>
@@ -3349,7 +3020,7 @@ Frequency limit value (NEW): 100 times/2s</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-10">Response data</h3>
+<h3 id="response-data-9">Response data</h3>
 
 <table>
   <thead>
@@ -3406,7 +3077,7 @@ Frequency limit value (NEW): 5 times/2s</p>
   <li>GET <code>/v1/account/history</code></li>
 </ul>
 
-<h3 id="request-parameters-16">Request parameters</h3>
+<h3 id="request-parameters-13">Request parameters</h3>
 
 <table>
   <thead>
@@ -3517,7 +3188,7 @@ Frequency limit value (NEW): 5 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-11">Response data</h3>
+<h3 id="response-data-10">Response data</h3>
 
 <table>
   <thead>
@@ -3613,7 +3284,7 @@ The query window can be shifted within the range of the last 180 days, that is, 
   <li>GET <code>/v2/account/ledger</code></li>
 </ul>
 
-<h3 id="request-parameters-17">Request parameters</h3>
+<h3 id="request-parameters-14">Request parameters</h3>
 <p>| Parameter Name | Data Type | Required | Description |
 | ————– | ——— | ——– | ———– |
 | accountId      | string    | TRUE     | Account ID |
@@ -3666,7 +3337,7 @@ endTime default value: current time</p>
 </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-12">Response data</h3>
+<h3 id="response-data-11">Response data</h3>
 
 <table>
   <thead>
@@ -3815,13 +3486,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/account/deposit/address?currency=btc"</span>
 </code></pre></div>
-<h3 id="http-requests-16">HTTP requests</h3>
+<h3 id="http-requests-13">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/account/deposit/address</code></li>
 </ul>
 
-<h3 id="request-parameters-18">Request parameters</h3>
+<h3 id="request-parameters-15">Request parameters</h3>
 
 <table>
   <thead>
@@ -3860,7 +3531,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-13">Response data</h3>
+<h3 id="response-data-12">Response data</h3>
 
 <table>
   <thead>
@@ -3978,13 +3649,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/account/withdraw/quota?currency=btc"</span>
 </code></pre></div>
-<h3 id="http-requests-17">HTTP requests</h3>
+<h3 id="http-requests-14">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/account/withdraw/quota</code></li>
 </ul>
 
-<h3 id="request-parameters-19">Request parameters</h3>
+<h3 id="request-parameters-16">Request parameters</h3>
 
 <table>
   <thead>
@@ -4031,7 +3702,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-14">Response data</h3>
+<h3 id="response-data-13">Response data</h3>
 
 <table>
   <thead>
@@ -4183,13 +3854,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>This node is used to query the withdrawal addresses available for the API key, and is only available to parent users. <br /></p>
 
-<h3 id="http-requests-18">HTTP requests</h3>
+<h3 id="http-requests-15">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/account/withdraw/address</code></li>
 </ul>
 
-<h3 id="request-parameters-20">Request parameters</h3>
+<h3 id="request-parameters-17">Request parameters</h3>
 
 <table>
   <thead>
@@ -4263,7 +3934,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-15">Response data</h3>
+<h3 id="response-data-14">Response data</h3>
 
 <table>
   <thead>
@@ -4358,7 +4029,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 <aside class="notice">If the user has set priority to use the fast withdrawal channel in the personal settings &lt;/a&gt;, the withdrawal initiated through the API will also give priority to the fast withdrawal channel. Quick coin withdrawal means that when the target address of the coin withdrawal is the internal user address of the platform, the coin withdrawal will go through the fast channel inside the platform instead of the blockchain. </aside>
 <aside class="notice">API withdrawal only supports the addresses in the user withdrawal address list&lt;/a&gt;. The IOTA one-time withdrawal address cannot be set as a common address, so IOTA withdrawal through API is not supported. </aside>
 
-<h3 id="http-requests-19">HTTP requests</h3>
+<h3 id="http-requests-16">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/dw/withdraw/api/create</code></li>
@@ -4375,7 +4046,7 @@ Frequency limit value (NEW): 20 times/2s</p>
    </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-21">Request parameters</h3>
+<h3 id="request-parameters-18">Request parameters</h3>
 
 <table>
   <thead>
@@ -4441,7 +4112,7 @@ Frequency limit value (NEW): 20 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">700</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-16">Response data</h3>
+<h3 id="response-data-15">Response data</h3>
 
 <table>
   <thead>
@@ -4471,13 +4142,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 <p>API Key Permission: Withdrawal<br />
 Frequency limit value (NEW): 20 times/2s</p>
 
-<h3 id="http-requests-20">HTTP requests</h3>
+<h3 id="http-requests-17">HTTP requests</h3>
 
 <ul>
   <li>POST ` /v1/dw/withdraw-virtual/{withdraw-id}/cancel`</li>
 </ul>
 
-<h3 id="request-parameters-22">Request parameters</h3>
+<h3 id="request-parameters-19">Request parameters</h3>
 
 <table>
   <thead>
@@ -4506,7 +4177,7 @@ Frequency limit value (NEW): 20 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">700</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-17">Response data</h3>
+<h3 id="response-data-16">Response data</h3>
 
 <table>
   <thead>
@@ -4534,13 +4205,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 <p>API Key Permission: Read<br />
 Frequency limit value (NEW): 20 times/2s</p>
 
-<h3 id="http-requests-21">HTTP requests</h3>
+<h3 id="http-requests-18">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/query/deposit-withdraw</code></li>
 </ul>
 
-<h3 id="request-parameters-23">Request parameters</h3>
+<h3 id="request-parameters-20">Request parameters</h3>
 <p>| Parameter name | Required | Data type | Description | Default value | Value range |
 | ————– | ——– | ——— | ———– | ————- | ———– |
 | currency       | false    | string    | Currency    |               | btc, ltc, bch, eth, etc … (Refer to <code>GET /v1/common/currencys</code>) |
@@ -4573,7 +4244,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-18">Response data</h3>
+<h3 id="response-data-17">Response data</h3>
 <p>| Parameter name | Required | Data type | Description | Value range |
 | ————– | ——– | ——— | ———– | ———– |
 | id             | true     | long      | Deposit order ID | |
@@ -4717,7 +4388,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>API Key Permissions: Transactions</p>
 
-<h3 id="http-requests-22">HTTP requests</h3>
+<h3 id="http-requests-19">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v2/sub-user/creation</code></li>
@@ -4741,7 +4412,7 @@ Frequency limit value (NEW): 20 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-24">Request parameters</h3>
+<h3 id="request-parameters-21">Request parameters</h3>
 
 <table>
   <thead>
@@ -4803,7 +4474,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-19">Response data</h3>
+<h3 id="response-data-18">Response data</h3>
 <p>| Parameter name | Required | Data type | Description | Value range |
 | ————– | ——– | ——– | ———– | ———– |
 | code | true | int | Status code | |
@@ -4821,13 +4492,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>API Key permission: read</p>
 
-<h3 id="http-requests-23">HTTP requests</h3>
+<h3 id="http-requests-20">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/sub-user/user-list</code></li>
 </ul>
 
-<h3 id="request-parameters-25">Request parameters</h3>
+<h3 id="request-parameters-22">Request parameters</h3>
 
 <table>
   <thead>
@@ -4870,7 +4541,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-20">Response data</h3>
+<h3 id="response-data-19">Response data</h3>
 
 <table>
   <thead>
@@ -4941,7 +4612,7 @@ Frequency limit value (NEW): 20 times/2s</p>
   <li>POST <code>/v2/sub-user/management</code></li>
 </ul>
 
-<h3 id="request-parameters-26">Request parameters</h3>
+<h3 id="request-parameters-23">Request parameters</h3>
 
 <table>
   <thead>
@@ -4985,7 +4656,7 @@ Frequency limit value (NEW): 20 times/2s</p>
       </span><span class="nl">"userState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lock"</span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-21">Response data</h3>
+<h3 id="response-data-20">Response data</h3>
 
 <table>
   <thead>
@@ -5024,13 +4695,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>API Key permission: read</p>
 
-<h3 id="http-requests-24">HTTP requests</h3>
+<h3 id="http-requests-21">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/sub-user/user-state</code></li>
 </ul>
 
-<h3 id="request-parameters-27">Request parameters</h3>
+<h3 id="request-parameters-24">Request parameters</h3>
 
 <table>
   <thead>
@@ -5067,7 +4738,7 @@ Frequency limit value (NEW): 20 times/2s</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-22">Response data</h3>
+<h3 id="response-data-21">Response data</h3>
 <p>| Parameter name | Required | Data type | Description | Value range |
 | ————– | ——– | ——— | ———– | ———– |
 | code           | TRUE     | int       | status code |             |
@@ -5089,7 +4760,7 @@ The sub-user’s spot trading authority is enabled by default and does not need 
   <li>POST <code>/v2/sub-user/tradable-market</code></li>
 </ul>
 
-<h3 id="request-parameters-28">Request parameters</h3>
+<h3 id="request-parameters-25">Request parameters</h3>
 
 <table>
   <thead>
@@ -5145,7 +4816,7 @@ The sub-user’s spot trading authority is enabled by default and does not need 
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-23">Response data</h3>
+<h3 id="response-data-22">Response data</h3>
 
 <table>
   <thead>
@@ -5244,7 +4915,7 @@ Sub-user’s fund transfer authority includes:</p>
   <li>POST <code>/v2/sub-user/transferability</code></li>
 </ul>
 
-<h3 id="request-parameters-29">Request parameters</h3>
+<h3 id="request-parameters-26">Request parameters</h3>
 <p>| Parameter     | Required | Data Type | Length | Description                                                          | Value Range                     |
 | ————- | ——– | ——— | —— | ——————————————————————– | ——————————- |
 | subUids       | true     | string    | -      | Sub-user UID list (multiple values are supported, up to 50)          | -                               |
@@ -5266,7 +4937,7 @@ Sub-user’s fund transfer authority includes:</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-24">Response data</h3>
+<h3 id="response-data-23">Response data</h3>
 <p>| Parameter     | Required | Data Type | Length | Description                                                          | Value Range                     |
 | ————- | ——– | ——— | —— | ——————————————————————– | ——————————- |
 | code          | true     | int       | -      | Status code                                                          |                                 |
@@ -5284,13 +4955,13 @@ Sub-user’s fund transfer authority includes:</p>
 
 <p>API Key permission: read</p>
 
-<h3 id="http-requests-25">HTTP requests</h3>
+<h3 id="http-requests-22">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/sub-user/account-list</code></li>
 </ul>
 
-<h3 id="request-parameters-30">Request parameters</h3>
+<h3 id="request-parameters-27">Request parameters</h3>
 <p>| Parameter name | Required | Type | Description | Default value | Value range |
 | ————– | ——– | —- | ———– | ————- | ———– |
 | subUid         | TRUE     | long | Sub-user UID |               |             |</p>
@@ -5327,7 +4998,7 @@ Sub-user’s fund transfer authority includes:</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-25">Response data</h3>
+<h3 id="response-data-24">Response data</h3>
 
 <table>
   <thead>
@@ -5433,13 +5104,13 @@ Sub-user’s fund transfer authority includes:</p>
 
 <p>API Key Permissions: Transactions</p>
 
-<h3 id="http-requests-26">HTTP requests</h3>
+<h3 id="http-requests-23">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v2/sub-user/api-key-generation</code></li>
 </ul>
 
-<h3 id="request-parameters-31">Request parameters</h3>
+<h3 id="request-parameters-28">Request parameters</h3>
 
 <table>
   <thead>
@@ -5510,7 +5181,7 @@ Sub-user’s fund transfer authority includes:</p>
          </span><span class="nl">"ipAddresses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1,1.1.1.2"</span><span class="w">
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-26">Response data</h3>
+</span></code></pre></div><h3 id="response-data-25">Response data</h3>
 <p>| Parameter name | Required | Data type | Description                              | Value range |
 | ————– | ——– | ——— | —————————————- | ———– |
 | code           | true     | int       | Status code                              |             |
@@ -5528,13 +5199,13 @@ Sub-user’s fund transfer authority includes:</p>
 
 <p>API Key permission: read</p>
 
-<h3 id="http-requests-27">HTTP requests</h3>
+<h3 id="http-requests-24">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/user/api-key</code></li>
 </ul>
 
-<h3 id="request-parameters-32">Request parameters</h3>
+<h3 id="request-parameters-29">Request parameters</h3>
 
 <table>
   <thead>
@@ -5587,7 +5258,7 @@ Sub-user’s fund transfer authority includes:</p>
          </span><span class="p">}</span><span class="w">
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-27">Response data</h3>
+</span></code></pre></div><h3 id="response-data-26">Response data</h3>
 <p>| Parameter name | Required | Data type | Description                              | Value range                      |
 | ————– | ——– | ——— | —————————————- | ——————————– |
 | code           | true     | int       | Status code                              |                                  |
@@ -5609,13 +5280,13 @@ Sub-user’s fund transfer authority includes:</p>
 
 <p>API Key Permissions: Transactions</p>
 
-<h3 id="http-requests-28">HTTP requests</h3>
+<h3 id="http-requests-25">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v2/sub-user/api-key-modification</code></li>
 </ul>
 
-<h3 id="request-parameters-33">Request parameters</h3>
+<h3 id="request-parameters-30">Request parameters</h3>
 
 <table>
   <thead>
@@ -5685,7 +5356,7 @@ Sub-user’s fund transfer authority includes:</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-28">Response data</h3>
+<h3 id="response-data-27">Response data</h3>
 <p>| Parameter name | Required | Data type | Description                     | Value range |
 | ————– | ——– | ——— | ——————————- | ———– |
 | code           | true     | int       | Status code                     |             |
@@ -5701,13 +5372,13 @@ Sub-user’s fund transfer authority includes:</p>
 
 <p>API Key Permissions: Transactions</p>
 
-<h3 id="http-requests-29">HTTP requests</h3>
+<h3 id="http-requests-26">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v2/sub-user/api-key-deletion</code></li>
 </ul>
 
-<h3 id="request-parameters-34">Request parameters</h3>
+<h3 id="request-parameters-31">Request parameters</h3>
 
 <table>
   <thead>
@@ -5749,7 +5420,7 @@ Sub-user’s fund transfer authority includes:</p>
      </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-29">Response data</h3>
+<h3 id="response-data-28">Response data</h3>
 
 <table>
   <thead>
@@ -5786,13 +5457,13 @@ Frequency limit value (NEW): 2 times/2s</p>
 
 <p>The parent user executes the transfer between the parent and child users</p>
 
-<h3 id="http-requests-30">HTTP requests</h3>
+<h3 id="http-requests-27">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/subuser/transfer</code></li>
 </ul>
 
-<h3 id="request-parameters-35">Request parameters</h3>
+<h3 id="request-parameters-32">Request parameters</h3>
 
 <table>
   <thead>
@@ -5845,7 +5516,7 @@ Frequency limit value (NEW): 2 times/2s</p>
    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-30">Response data</h3>
+<h3 id="response-data-29">Response data</h3>
 
 <table>
   <thead>
@@ -5908,13 +5579,13 @@ Frequency limit value (NEW): 2 times/2s</p>
 
 <p>API Key permission: read</p>
 
-<h3 id="http-requests-31">HTTP requests</h3>
+<h3 id="http-requests-28">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/sub-user/deposit-address</code></li>
 </ul>
 
-<h3 id="request-parameters-36">Request parameters</h3>
+<h3 id="request-parameters-33">Request parameters</h3>
 
 <table>
   <thead>
@@ -5963,7 +5634,7 @@ Frequency limit value (NEW): 2 times/2s</p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-31">Response data</h3>
+<h3 id="response-data-30">Response data</h3>
 
 <table>
   <thead>
@@ -6034,13 +5705,13 @@ Frequency limit value (NEW): 2 times/2s</p>
 
 <p>API Key permission: read</p>
 
-<h3 id="http-requests-32">HTTP requests</h3>
+<h3 id="http-requests-29">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v2/sub-user/query-deposit</code></li>
 </ul>
 
-<h3 id="request-parameters-37">Request parameters</h3>
+<h3 id="request-parameters-34">Request parameters</h3>
 
 <table>
   <thead>
@@ -6133,7 +5804,7 @@ The server returns the “nextId” field only if the data entries in the time r
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-32">Response data</h3>
+<h3 id="response-data-31">Response data</h3>
 
 <table>
   <thead>
@@ -6289,13 +5960,13 @@ Frequency limit value (NEW): 2 times/2s</p>
 
 <p>The parent user queries the summary balance of each currency of all sub-users under it</p>
 
-<h3 id="http-requests-33">HTTP requests</h3>
+<h3 id="http-requests-30">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/subuser/aggregate-balance</code></li>
 </ul>
 
-<h3 id="request-parameters-38">Request parameters</h3>
+<h3 id="request-parameters-35">Request parameters</h3>
 
 <p>none</p>
 
@@ -6324,7 +5995,7 @@ Frequency limit value (NEW): 2 times/2s</p>
        </span><span class="err">...</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-33">Response data</h3>
+</span></code></pre></div><h3 id="response-data-32">Response data</h3>
 <p>| Parameter | Required | Data Type | Length | Description | Value Range |
 | ——— | ——– | ——— | —— | ———– | ———– |
 | status | true | - | - | Status | “OK” or “Error” |
@@ -6380,13 +6051,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>The parent user queries the balance of each currency account of the sub-user</p>
 
-<h3 id="http-requests-34">HTTP requests</h3>
+<h3 id="http-requests-31">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/account/accounts/{sub-uid}</code></li>
 </ul>
 
-<h3 id="request-parameters-39">Request parameters</h3>
+<h3 id="request-parameters-36">Request parameters</h3>
 
 <table>
   <thead>
@@ -6443,7 +6114,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-34">Response data</h3>
+<h3 id="response-data-33">Response data</h3>
 
 <table>
   <thead>
@@ -6741,7 +6412,7 @@ Frequency limit value; 100 times/2s</p>
 
 <p>Send a new order for matching.</p>
 
-<h3 id="http-requests-35">HTTP requests</h3>
+<h3 id="http-requests-32">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/place</code></li>
@@ -6761,7 +6432,7 @@ Frequency limit value; 100 times/2s</p>
    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-40">Request parameters</h3>
+<h3 id="request-parameters-37">Request parameters</h3>
 <p>| Parameter Name | Data Type | Required | Default Value | Description |
 | ————– | ——— | ——– | ————- | ———– |
 | account-id | string | true | NA | Account ID. Refer to <code>GET /v1/account/accounts</code> for valid values. For spot transactions, use the account ID of the ‘spot’ account. |
@@ -6794,7 +6465,7 @@ Frequency limit value; 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-35">Response data</h3>
+<h3 id="response-data-34">Response data</h3>
 
 <p>The returned master data object is a string corresponding to the order number.</p>
 
@@ -6807,7 +6478,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
 
 <p>A batch of up to 10 orders</p>
 
-<h3 id="http-requests-36">HTTP requests</h3>
+<h3 id="http-requests-33">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/batch-orders</code></li>
@@ -6836,7 +6507,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
 </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-41">Request parameters</h3>
+<h3 id="request-parameters-38">Request parameters</h3>
 <p>| Parameter Name | Data Type | Required | Default Value | Description |
 | ————– | ——— | ——– | ————- | ———– |
 | account-id | string | true | NA | Account ID. Refer to <code>GET /v1/account/accounts</code> for valid values. For spot transactions, use the account ID of the ‘spot’ account. |
@@ -6879,7 +6550,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-36">Response data</h3>
+<h3 id="response-data-35">Response data</h3>
 
 <table>
   <thead>
@@ -6924,13 +6595,13 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <aside class="warning">This interface only submits cancellation requests, and the actual cancellation results need to be confirmed through interfaces such as order status and matching status. </aside>
 
-<h3 id="http-requests-37">HTTP requests</h3>
+<h3 id="http-requests-34">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
 
-<h3 id="request-parameters-42">Request parameters</h3>
+<h3 id="request-parameters-39">Request parameters</h3>
 
 <table>
   <thead>
@@ -6963,7 +6634,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-37">Response data</h3>
+<h3 id="response-data-36">Response data</h3>
 
 <p>The returned master data object is a string corresponding to the order number.</p>
 
@@ -7022,7 +6693,7 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <aside class="warning">This interface only submits cancellation requests, and the actual cancellation results need to be confirmed through interfaces such as order status and matching status. </aside>
 
-<h3 id="http-requests-38">HTTP requests</h3>
+<h3 id="http-requests-35">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
@@ -7036,7 +6707,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-43">Request parameters</h3>
+<h3 id="request-parameters-40">Request parameters</h3>
 
 <table>
   <thead>
@@ -7069,7 +6740,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-38">Response data</h3>
+<h3 id="response-data-37">Response data</h3>
 
 <table>
   <thead>
@@ -7130,7 +6801,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>Query the orders that have been submitted but have not been fully executed or canceled.</p>
 
-<h3 id="http-requests-39">HTTP requests</h3>
+<h3 id="http-requests-36">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/openOrders</code></li>
@@ -7146,7 +6817,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-44">Request parameters</h3>
+<h3 id="request-parameters-41">Request parameters</h3>
 
 <table>
   <thead>
@@ -7227,7 +6898,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-39">Response data</h3>
+<h3 id="response-data-38">Response data</h3>
 
 <table>
   <thead>
@@ -7315,13 +6986,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <aside class="warning">This interface only submits cancellation requests, and the actual cancellation results need to be confirmed through interfaces such as order status and matching status. </aside>
 
-<h3 id="http-requests-40">HTTP requests</h3>
+<h3 id="http-requests-37">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
 </ul>
 
-<h3 id="request-parameters-45">Request parameters</h3>
+<h3 id="request-parameters-42">Request parameters</h3>
 
 <table>
   <thead>
@@ -7383,7 +7054,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-40">Response data</h3>
+<h3 id="response-data-39">Response data</h3>
 
 <table>
   <thead>
@@ -7427,7 +7098,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface sends cancellation requests for multiple orders (based on id) at the same time.</p>
 
-<h3 id="http-requests-41">HTTP requests</h3>
+<h3 id="http-requests-38">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchcancel</code></li>
@@ -7443,7 +7114,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-46">Request parameters</h3>
+<h3 id="request-parameters-43">Request parameters</h3>
 
 <table>
   <thead>
@@ -7511,7 +7182,7 @@ Frequency limit value (NEW): 50 times/2s</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-41">Response data</h3>
+<h3 id="response-data-40">Response data</h3>
 
 <table>
   <thead>
@@ -7614,13 +7285,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface returns the latest status and details of the specified order. Orders created through the API cannot be queried after being canceled for more than 2 hours.</p>
 
-<h3 id="http-requests-42">HTTP requests</h3>
+<h3 id="http-requests-39">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
 
-<h3 id="request-parameters-47">Request parameters</h3>
+<h3 id="request-parameters-44">Request parameters</h3>
 
 <table>
   <thead>
@@ -7670,7 +7341,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-42">Response data</h3>
+<h3 id="response-data-41">Response data</h3>
 
 <table>
   <thead>
@@ -7840,13 +7511,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface returns the latest order status and details of the specified user-defined order number (within 24 hours). Orders created through the API cannot be queried after being canceled for more than 2 hours.</p>
 
-<h3 id="http-requests-43">HTTP requests</h3>
+<h3 id="http-requests-40">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/getClientOrder</code></li>
 </ul>
 
-<h3 id="request-parameters-48">Request parameters</h3>
+<h3 id="request-parameters-45">Request parameters</h3>
 <p>| Parameter name  | Required | Type   | Description                     | Default value |
 | ————— | ——– | —— | ——————————- | ————- |
 | clientOrderId   | true     | string | User-defined order number        |               |</p>
@@ -7875,7 +7546,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-43">Response data</h3>
+</span></code></pre></div><h3 id="response-data-42">Response data</h3>
 
 <table>
   <thead>
@@ -8025,13 +7696,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface returns the transaction details of the specified order.</p>
 
-<h3 id="http-requests-44">HTTP requests</h3>
+<h3 id="http-requests-41">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
 
-<h3 id="request-parameters-49">Request parameters</h3>
+<h3 id="request-parameters-46">Request parameters</h3>
 <p>| Parameter name | Required | Type  | Description                        | Default value |
 | ————– | ——– | ——| ———————————- | ————- |
 | order-id       | true     | string| Order ID, fill in the path         |               |</p>
@@ -8062,7 +7733,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-44">Response data</h3>
+<h3 id="response-data-43">Response data</h3>
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
@@ -8221,7 +7892,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>It is recommended that users query historical orders by “time range”.</p>
 
-<h3 id="http-requests-45">HTTP requests</h3>
+<h3 id="http-requests-42">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders</code></li>
@@ -8240,7 +7911,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-50">Request parameters</h3>
+<h3 id="request-parameters-47">Request parameters</h3>
 
 <table>
   <thead>
@@ -8364,7 +8035,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-45">Response data</h3>
+<h3 id="response-data-44">Response data</h3>
 
 <table>
   <thead>
@@ -8531,7 +8202,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>This interface queries historical orders within the last 48 hours based on search criteria. Orders created through the API cannot be queried after being canceled for more than 2 hours.</p>
 
-<h3 id="http-requests-46">HTTP requests</h3>
+<h3 id="http-requests-43">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/history</code></li>
@@ -8549,7 +8220,7 @@ Frequency limit value (NEW): 20 times/2s</p>
     </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-51">Request parameters</h3>
+<h3 id="request-parameters-48">Request parameters</h3>
 
 <table>
   <thead>
@@ -8631,7 +8302,7 @@ Frequency limit value (NEW): 20 times/2s</p>
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-46">Response data</h3>
+</span></code></pre></div><h3 id="response-data-45">Response data</h3>
 
 <table>
   <thead>
@@ -8780,13 +8451,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>This interface queries current and historical transaction records based on search criteria.</p>
 
-<h3 id="http-requests-47">HTTP requests</h3>
+<h3 id="http-requests-44">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
 
-<h3 id="request-parameters-52">Request parameters</h3>
+<h3 id="request-parameters-49">Request parameters</h3>
 
 <table>
   <thead>
@@ -8885,7 +8556,7 @@ Frequency limit value (NEW): 20 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-47">Response data</h3>
+<h3 id="response-data-46">Response data</h3>
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
@@ -9045,136 +8716,6 @@ Frequency limit value (NEW): 20 times/2s</p>
     </tr>
   </tbody>
 </table>
-
-<h2 id="get-the-users-current-transaction-fee-rate">Get the user’s current transaction fee rate</h2>
-
-<p>Api users can query the transaction pair rate, and there is a limit of 10 transaction pairs at a time, and the rate of sub-users is consistent with that of the parent user</p>
-
-<p>API Key permission: read</p>
-
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/reference/transact-fee-rate?symbols=btcusdt,ethusdt,ltcusdt"</span>
-</code></pre></div>
-<h3 id="http-requests-48">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v2/reference/transact-fee-rate</code></li>
-</ul>
-
-<h3 id="request-parameters-53">Request parameters</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Data Type</th>
-      <th>Required</th>
-      <th>Default Value</th>
-      <th>Description</th>
-      <th>Value Range</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>symbols</td>
-      <td>string</td>
-      <td>true</td>
-      <td>NA</td>
-      <td>Trading pairs, multiple fields are allowed, separated by commas</td>
-      <td>btcusdt, ethbtc… (refer to <code>GET /v1/common/symbols</code> for values)</td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>Response:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"makerFeeRate"</span><span class="p">:</span><span class="s2">"0.002"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"takerFeeRate"</span><span class="p">:</span><span class="s2">"0.002"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"actualMakerRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.002"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"actualTakerRate"</span><span class="p">:</span><span class="s2">"0.002
-     },
-     {
-        "</span><span class="err">symbol</span><span class="s2">": "</span><span class="err">ethusdt</span><span class="s2">",
-        "</span><span class="err">makerFeeRate</span><span class="s2">":"</span><span class="mf">0.002</span><span class="s2">",
-        "</span><span class="err">takerFeeRate</span><span class="s2">":"</span><span class="mf">0.002</span><span class="s2">",
-        "</span><span class="err">actualMakerRate</span><span class="s2">": "</span><span class="mf">0.002</span><span class="s2">",
-        "</span><span class="err">actualTakerRate</span><span class="s2">":"</span><span class="mf">0.002</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-     </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ltcusdt"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"makerFeeRate"</span><span class="p">:</span><span class="s2">"0.002"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"takerFeeRate"</span><span class="p">:</span><span class="s2">"0.002"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"actualMakerRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.002"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"actualTakerRate"</span><span class="p">:</span><span class="s2">"0.002
-    }
-  ]
-}
-</span></code></pre></div><h3 id="response-data-48">Response data</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Field Name</th>
-      <th>Data Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>code</td>
-      <td>integer</td>
-      <td>Status code</td>
-    </tr>
-    <tr>
-      <td>message</td>
-      <td>string</td>
-      <td>Error description (if any)</td>
-    </tr>
-    <tr>
-      <td>data</td>
-      <td>object</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>symbol</td>
-      <td>string</td>
-      <td>Transaction code</td>
-    </tr>
-    <tr>
-      <td>makerFeeRate</td>
-      <td>string</td>
-      <td>Base fee rate for the passive party. If a transaction fee rebate is applicable, the rebate rate (negative value) will be returned</td>
-    </tr>
-    <tr>
-      <td>takerFeeRate</td>
-      <td>string</td>
-      <td>Base fee rate for the active side</td>
-    </tr>
-    <tr>
-      <td>actualMakerRate</td>
-      <td>string</td>
-      <td>Fee rate after deduction for the passive party. If no deduction is applicable or deduction is not enabled, the base rate will be returned. If a transaction fee rebate is applicable, the rebate rate (negative value) will be returned</td>
-    </tr>
-    <tr>
-      <td>actualTakerRate</td>
-      <td>string</td>
-      <td>Fee rate after deduction for the active party. If no deduction is applicable or deduction is not enabled, the base rate will be returned</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>Note: <br /></p>
-
-<ul>
-  <li>If makerFeeRate/actualMakerRate is a positive value, this field means the transaction fee rate;<br /></li>
-  <li>If makerFeeRate/actualMakerRate is negative, this field means the transaction rebate rate. <br /></li>
-</ul>
 
 <h1 id="websocket-market-data">Websocket market data</h1>
 

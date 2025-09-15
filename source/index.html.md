@@ -731,51 +731,6 @@ Remarks: If you have a large amount of withdrawal needs, and the withdrawal amou
 
 The basic information Rest interface provides public reference information such as market status, transaction pair information, currency information, currency chain information, and server timestamp.
 
-## Get the current market status
-
-This node returns the current latest market state. <br>
-Status enumeration values include: 1 - Normal (Orders can be placed and canceled), 2 - Pending (Orders cannot be placed and canceled), 3 - Cancellation only (Orders cannot be placed and canceled). <br>
-Suspend reason enumeration values include: 2 - emergency maintenance, 3 - planned maintenance. <br>
-
-```shell
-curl "https://api.bitv.com/v2/market-status"
-```
-
-
-### HTTP requests
-
-- GET `/v2/market-status`
-
-### Request parameters
-
-This interface does not accept any parameters.
-
-> Responses:
-
-```json
-{
-     "code": 200,
-     "message": "success",
-     "data": {
-         "marketStatus": 1
-     }
-}
-```
-
-### return fields
-
-| Name             | Type    | Required | Description                                                                                           |
-| -----------------| ------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| code             | integer | TRUE     | Status code                                                                                            |
-| message          | string  | FALSE    | Error description (if any)                                                                             |
-| data             | object  | TRUE     |                                                                                                       |
-| marketStatus     | integer | TRUE     | Market status (1=normal, 2=halted, 3=cancel-only)                                                      |
-| haltStartTime    | long    | FALSE    | Market pause start time (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only |
-| haltEndTime      | long    | FALSE    | Expected end time of market suspension (Unix time in milliseconds), valid only for marketStatus=halted or cancel-only. If not returned, the end time is temporarily unpredictable. |
-| haltReason       | integer | FALSE    | Reason for market suspension (2=emergency maintenance, 3=scheduled maintenance), valid only for marketStatus=halted or cancel-only |
-| affectedSymbols  | string  | FALSE    | A list of trading pairs affected by market suspension, separated by commas. If all trading pairs are affected, return "all". Valid only for marketStatus=halted or cancel-only. |
-
-
 ## Get all trading pairs
 
 This interface returns all supported trading pairs.
@@ -1170,80 +1125,6 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 | bid        | object    | Current highest bid price [price, size] |
 | ask        | object    | Current minimum ask price [price, size] |
 
-
-## Latest Tickers for all trading pairs
-
-Get tickers for all trading pairs.
-
-```shell
-curl "https://api.bitv.com/market/tickers"
-```
-
-<aside class="notice">This interface returns the tickers of all trading pairs, so the amount of data is large. </aside>
-
-### HTTP requests
-
-- GET `/market/tickers`
-
-### Request parameters
-
-This interface does not accept any parameters.
-
-> Response:
-
-```json
-[
-     {
-         "open":0.044297, // opening price
-         "close":0.042178, // closing price
-         "low":0.040110, // the lowest price
-         "high":0.045255, // the highest price
-         "amount": 12880.8510,
-         "count": 12838,
-         "vol":563.0388715740,
-         "symbol": "ethbtc",
-         "bid":0.007545,
-         "bidSize": 0.008,
-         "ask":0.008088,
-         "askSize": 0.009
-     },
-     {
-         "open": 0.008545,
-         "close": 0.008656,
-         "low": 0.008088,
-         "high": 0.009388,
-         "amount":88056.1860,
-         "count": 16077,
-         "vol":771.7975953754,
-         "symbol": "ltcbtc",
-         "bid":0.007545,
-         "bidSize": 0.008,
-         "ask":0.008088,
-         "askSize": 0.009
-     }
-]
-```
-
-### Response data
-
-The core response data is an object column, each object contains the following fields
-
-| Field Name | Data Type | Description |
-| ---------- | --------- | ----------- |
-| amount     | float     | Transaction volume in base currency (rolling 24 hours) |
-| count      | integer   | Number of transactions (according to rolling 24 hours) |
-| open       | float     | Opening price (calculated in natural days in Singapore time) |
-| close      | float     | Latest price (Singapore Time Natural Day) |
-| low        | float     | Lowest price (in Singapore time calendar days) |
-| high       | float     | Highest price (in Singapore time natural day) |
-| vol        | float     | Volume in quote currency (rolling 24 hours) |
-| symbol     | string    | Trading pair, such as btcusdt, ethbtc |
-| bid        | float     | Buy price |
-| bidSize    | float     | Buy quantity |
-| ask        | float     | Ask price |
-| askSize    | float     | Sell quantity |
-
-
 ## Depth of Market Data
 
 This interface returns the current market depth data for the specified trading pair.
@@ -1611,51 +1492,6 @@ spot: spot account
 | balance | true | string | Balance | |
 | currency | true | string | Currency | |
 | type | true | string | Type | trade: trade balance, frozen: frozen balance |
-
-
-## Get account asset valuation
-
-API Key permission: read
-
-Frequency limit value (NEW): 100 times/2s
-
-According to BTC or fiat currency denomination unit, obtain the total asset valuation of the specified account.
-
-### HTTP requests
-
-- GET `/v2/account/asset-valuation`
-
-### Request parameters
-
-
-| Parameter          | Required | Data Type | Description                                                                                                      | Default Value | Value Range                                         |
-| ------------------ | -------- | --------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------- |
-| accountType        | true     | string    | The type of the account                                                                                          | NA            | spot: spot account                                  |
-| valuationCurrency  | false    | string    | The fiat currency used for asset valuation                                                                       | BTC           | Available legal currencies: BTC, USD (case sensitive) |
-| subUid             | false    | long      | The UID of the sub-user. If not provided, the account asset valuation of the user associated with the API key is returned | NA            |                                                     |
-
-
-> Responses:
-
-```json
-{
-     "code": 200,
-     "data": {
-         "balance": "34.75",
-         "timestamp": 1594901254363
-     },
-     "ok": true
-}
-```
-
-### return fields
-
-| Parameter | Required | Data Type | Description                                                |
-| --------- | -------- | --------- | ---------------------------------------------------------- |
-| balance   | true     | string    | Total asset valuation based on a certain fiat currency      |
-| timestamp | true     | long      | Data return time, represented in Unix time (milliseconds)   |
-
-
 
 ## Asset transfer
 
@@ -4152,80 +3988,6 @@ Note: <br>
 | invalid_interval     | The start date is greater than the end date, or the time interval between the start and end dates is > 2 days. |
 | invalid_start_date   | The start date is 61 days ago or in the future.                                                            |
 | invalid_end_date     | The end date is 61 days ago or in the future.                                                              |
-
-
-
-## Get the user's current transaction fee rate
-
-Api users can query the transaction pair rate, and there is a limit of 10 transaction pairs at a time, and the rate of sub-users is consistent with that of the parent user
-
-API Key permission: read
-
-```shell
-curl "https://api.bitv.com/v2/reference/transact-fee-rate?symbols=btcusdt,ethusdt,ltcusdt"
-```
-
-### HTTP requests
-
-- GET `/v2/reference/transact-fee-rate`
-
-### Request parameters
-
-| Parameter      | Data Type | Required | Default Value | Description                                             | Value Range                                             |
-| -------------- | --------- | -------- | ------------- | ------------------------------------------------------- | ------------------------------------------------------- |
-| symbols        | string    | true     | NA            | Trading pairs, multiple fields are allowed, separated by commas | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for values) |
-
-
-
-> Response:
-
-```json
-{
-  "code": "200",
-  "data": [
-     {
-        "symbol": "btcusdt",
-        "makerFeeRate":"0.002",
-        "takerFeeRate":"0.002",
-        "actualMakerRate": "0.002",
-        "actualTakerRate":"0.002
-     },
-     {
-        "symbol": "ethusdt",
-        "makerFeeRate":"0.002",
-        "takerFeeRate":"0.002",
-        "actualMakerRate": "0.002",
-        "actualTakerRate":"0.002
-    },
-     {
-        "symbol": "ltcusdt",
-        "makerFeeRate":"0.002",
-        "takerFeeRate":"0.002",
-        "actualMakerRate": "0.002",
-        "actualTakerRate":"0.002
-    }
-  ]
-}
-```
-### Response data
-
-| Field Name        | Data Type | Description                                                                 |
-| ----------------- | --------- | --------------------------------------------------------------------------- |
-| code              | integer   | Status code                                                                 |
-| message           | string    | Error description (if any)                                                  |
-| data              | object    |                                                                             |
-| symbol            | string    | Transaction code                                                            |
-| makerFeeRate      | string    | Base fee rate for the passive party. If a transaction fee rebate is applicable, the rebate rate (negative value) will be returned |
-| takerFeeRate      | string    | Base fee rate for the active side                                            |
-| actualMakerRate   | string    | Fee rate after deduction for the passive party. If no deduction is applicable or deduction is not enabled, the base rate will be returned. If a transaction fee rebate is applicable, the rebate rate (negative value) will be returned |
-| actualTakerRate   | string    | Fee rate after deduction for the active party. If no deduction is applicable or deduction is not enabled, the base rate will be returned |
-
-
-Note: <br>
-
-- If makerFeeRate/actualMakerRate is a positive value, this field means the transaction fee rate;<br>
-- If makerFeeRate/actualMakerRate is negative, this field means the transaction rebate rate. <br>
-
 
 # Websocket market data
 

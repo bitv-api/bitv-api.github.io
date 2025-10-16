@@ -3373,7 +3373,7 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
    "id": "id1",
    "status": "ok",
    "subbed": "market.btcusdt.mbp.5",
-   "ts": 1489474081631 //system response time
+   "ts": 1489474081633 //system response time
 }
 ```
 

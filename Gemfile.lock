@@ -179,8 +179,9 @@ DEPENDENCIES
   middleman-autoprefixer (~> 3.0)
   middleman-sprockets (~> 4.1)
   middleman-syntax (~> 3.4)
-  mini_racer (~> 0.9)
+  mini_racer (~> 0.12)
   nokogiri (~> 1.15)
+  padrino-helpers (~> 0.15.0)
   redcarpet (~> 3.6)
   rouge (~> 3.30)
 

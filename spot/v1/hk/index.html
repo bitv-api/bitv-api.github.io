@@ -2059,8 +2059,8 @@
     <tr>
       <td>period</td>
       <td>string</td>
-      <td>true</td>
-      <td>NA</td>
+      <td>false</td>
+      <td>1min</td>
       <td>返回數據時間粒度，也就是每根蠟燭的時間區間</td>
       <td>1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year</td>
     </tr>
@@ -2083,18 +2083,23 @@
   <p>Response:</p>
 </blockquote>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1499184000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">37593.0266</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">1935.2000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">1879.0000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">1856.0000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">1940.0000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">71031537.97866500</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.kline.1day"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761127929978</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1499184000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">37593.0266</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">1935.2000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">1879.0000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">1856.0000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">1940.0000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">71031537.97866500</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-1">響應數據</h3>
 
@@ -2192,17 +2197,22 @@
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1499225271</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1499225271000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"close"</span><span class="p">:</span><span class="mf">1885.0000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"open"</span><span class="p">:</span><span class="mf">1960.0000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"high"</span><span class="p">:</span><span class="mf">1985.0000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"low"</span><span class="p">:</span><span class="mf">1856.0000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">81486.2926</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"count"</span><span class="p">:</span><span class="mi">42122</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">157052744.85708200</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"ask"</span><span class="p">:[</span><span class="mf">1885.0000</span><span class="p">,</span><span class="mf">21.8804</span><span class="p">],</span><span class="w">
-  </span><span class="nl">"bid"</span><span class="p">:[</span><span class="mf">1884.0000</span><span class="p">,</span><span class="mf">1.6702</span><span class="p">]</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.ethhkd.detail.merged"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761185653396</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">1499225271</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1499225271000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"close"</span><span class="p">:</span><span class="mf">1885.0000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"open"</span><span class="p">:</span><span class="mf">1960.0000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"high"</span><span class="p">:</span><span class="mf">1985.0000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"low"</span><span class="p">:</span><span class="mf">1856.0000</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">81486.2926</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"count"</span><span class="p">:</span><span class="mi">42122</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">157052744.85708200</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ask"</span><span class="p">:[</span><span class="mf">1885.0000</span><span class="p">,</span><span class="mf">21.8804</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"bid"</span><span class="p">:[</span><span class="mf">1884.0000</span><span class="p">,</span><span class="mf">1.6702</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-2">響應數據</h3>
@@ -2362,25 +2372,30 @@
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">31615843081</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489464585407</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7964</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0678</span><span class="p">],</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="p">[</span><span class="err">price</span><span class="p">,</span><span class="w"> </span><span class="err">size</span><span class="p">]</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7963</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9162</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7961</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7960</span><span class="p">,</span><span class="w"> </span><span class="mf">12.8898</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7958</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">],</span><span class="w">
-      </span><span class="err">...</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7979</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0736</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7980</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0292</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7981</span><span class="p">,</span><span class="w"> </span><span class="mf">5.5652</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7986</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2416</span><span class="p">],</span><span class="w">
-      </span><span class="p">[</span><span class="mi">7990</span><span class="p">,</span><span class="w"> </span><span class="mf">1.9970</span><span class="p">],</span><span class="w">
-      </span><span class="err">...</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.ethhkd.depth.step2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761186823791</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">31615843081</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489464585407</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7964</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0678</span><span class="p">],</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="p">[</span><span class="err">price</span><span class="p">,</span><span class="w"> </span><span class="err">size</span><span class="p">]</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7963</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9162</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7961</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7960</span><span class="p">,</span><span class="w"> </span><span class="mf">12.8898</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7958</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">],</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"asks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7979</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0736</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7980</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0292</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7981</span><span class="p">,</span><span class="w"> </span><span class="mf">5.5652</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7986</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2416</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="mi">7990</span><span class="p">,</span><span class="w"> </span><span class="mf">1.9970</span><span class="p">],</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-3">響應數據</h3>
 
@@ -2458,18 +2473,23 @@
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">600848670</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489464451000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.ethhkd.trade.detail"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761187323300</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">600848670</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043494568</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">7962.62</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0122</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489464451000</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+        </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489464451000</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">600848670</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043494568</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">7962.62</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0122</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489464451000</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-4">響應數據</h3>
@@ -2564,44 +2584,49 @@
   <p>Response:</p>
 </blockquote>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">[</span><span class="w">  
-   </span><span class="p">{</span><span class="w">  
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">31618787514</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390317905</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">  
-         </span><span class="p">{</span><span class="w">  
-            </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">9.000000000000000000</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390317905</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043483472</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">3161878751418918529341</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"price"</span><span class="p">:</span><span class="mf">94.690000000000000000</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"direction"</span><span class="p">:</span><span class="s2">"sell"</span><span class="w">
-         </span><span class="p">},</span><span class="w">
-         </span><span class="p">{</span><span class="w">  
-            </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">73.771000000000000000</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390317905</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043483473</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">3161878751418918532514</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"price"</span><span class="p">:</span><span class="mf">94.660000000000000000</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"direction"</span><span class="p">:</span><span class="s2">"sell"</span><span class="w">
-         </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-   </span><span class="p">},</span><span class="w">
-   </span><span class="p">{</span><span class="w">  
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">31618776989</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390311353</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">  
-         </span><span class="p">{</span><span class="w">  
-            </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">1.000000000000000000</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390311353</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043494568</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">3161877698918918522622</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"price"</span><span class="p">:</span><span class="mf">94.710000000000000000</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"direction"</span><span class="p">:</span><span class="s2">"buy"</span><span class="w">
-         </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-   </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.ethhkd.trade.detail"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761187576005</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">  
+       </span><span class="p">{</span><span class="w">  
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">31618787514</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390317905</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">  
+             </span><span class="p">{</span><span class="w">  
+                </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">9.000000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390317905</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043483472</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">3161878751418918529341</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"price"</span><span class="p">:</span><span class="mf">94.690000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"direction"</span><span class="p">:</span><span class="s2">"sell"</span><span class="w">
+             </span><span class="p">},</span><span class="w">
+             </span><span class="p">{</span><span class="w">  
+                </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">73.771000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390317905</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043483473</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">3161878751418918532514</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"price"</span><span class="p">:</span><span class="mf">94.660000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"direction"</span><span class="p">:</span><span class="s2">"sell"</span><span class="w">
+             </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+       </span><span class="p">},</span><span class="w">
+       </span><span class="p">{</span><span class="w">  
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">31618776989</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390311353</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">  
+             </span><span class="p">{</span><span class="w">  
+                </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">1.000000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1544390311353</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">102043494568</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">3161877698918918522622</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"price"</span><span class="p">:</span><span class="mf">94.710000000000000000</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"direction"</span><span class="p">:</span><span class="s2">"buy"</span><span class="w">
+             </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-5">響應數據</h3>
 
@@ -2688,16 +2713,21 @@
   <p>Response:</p>
 </blockquote>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">  
-   </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">613071.438479561</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"open"</span><span class="p">:</span><span class="mf">86.21</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"close"</span><span class="p">:</span><span class="mf">94.35</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"high"</span><span class="p">:</span><span class="mf">98.7</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">31619471534</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"count"</span><span class="p">:</span><span class="mi">138909</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"low"</span><span class="p">:</span><span class="mf">84.63</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"version"</span><span class="p">:</span><span class="mi">31619471534</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">5.6617373443873316E7</span><span class="w">
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.ethhkd.detail"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761188787410</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">  
+       </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">613071.438479561</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"open"</span><span class="p">:</span><span class="mf">86.21</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"close"</span><span class="p">:</span><span class="mf">94.35</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"high"</span><span class="p">:</span><span class="mf">98.7</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">31619471534</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"count"</span><span class="p">:</span><span class="mi">138909</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"low"</span><span class="p">:</span><span class="mf">84.63</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"version"</span><span class="p">:</span><span class="mi">31619471534</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"vol"</span><span class="p">:</span><span class="mf">5.6617373443873316E7</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-6">響應數據</h3>

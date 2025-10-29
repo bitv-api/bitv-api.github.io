@@ -753,7 +753,15 @@ curl "https://api.bitv.com/v1/common/symbols"
             "leverage-ratio": 5,
             "super-margin-leverage-ratio": 3,
             "funding-leverage-ratio": 3,
-            "api-trading": "enabled"
+            "api-trading": "enabled",
+            "limit-order-max-buy-amt": 50,
+            "limit-order-max-sell-amt": 50,
+            "buy-limit-must-less-than": 1.3,
+            "sell-limit-must-greater-than": 0.7,
+            "market-sell-order-rate-must-less-than": 0.05,
+            "market-buy-order-rate-must-less-than": 0.05,
+            "max-order-value": 3000000,
+            "tags": ""
         },
     ......
     ]
@@ -805,11 +813,14 @@ curl "https://api.bitv.com/v1/common/currencys"
 > Response:
 
 ```json
+  {
+  "status": "ok",
   "data": [
     "usdt",
     "eth",
     "etc"
   ]
+}
 ```
 
 ### 返回字段
@@ -847,6 +858,7 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                 {
                     "chain":"trc20usdt",
                     "displayName":"",
+                    "fullName":"",
                     "baseChain": "TRX",
                     "baseChainProtocol": "TRC20",
                     "isDynamic": false,
@@ -863,11 +875,15 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawQuotaPerDay":"280000.00000000",
                     "withdrawQuotaPerYear":"2800000.00000000",
                     "withdrawQuotaTotal":"2800000.00000000",
-                    "withdrawStatus":"allowed"
+                    "withdrawStatus":"allowed",
+                    "transactFeeWithdraw":"",
+                    "addrWithTag": false,
+                    "addrDepositTag": false
                 },
                 {
                     "chain":"usdt",
                     "displayName":"",
+                    "fullName":"",
                     "baseChain": "BTC",
                     "baseChainProtocol": "OMNI",
                     "isDynamic": false,
@@ -883,7 +899,10 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawQuotaPerDay":"90000.00000000",
                     "withdrawQuotaPerYear":"111000.00000000",
                     "withdrawQuotaTotal":"1110000.00000000",
-                    "withdrawStatus":"allowed"
+                    "withdrawStatus":"allowed",
+                    "transactFeeWithdraw":"",
+                    "addrWithTag": false,
+                    "addrDepositTag": false
                 },
                 {
                     "chain":"usdterc20",
@@ -903,10 +922,14 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawQuotaPerDay":"180000.00000000",
                     "withdrawQuotaPerYear":"200000.00000000",
                     "withdrawQuotaTotal":"300000.00000000",
-                    "withdrawStatus":"allowed"
+                    "withdrawStatus":"allowed",
+                    "transactFeeWithdraw":"",
+                    "addrWithTag": false,
+                    "addrDepositTag": false
                 }
             ],
             "currency":"usdt",
+            "assetType": 1,
             "instStatus":"normal"
         }
         ]
@@ -936,8 +959,8 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | minWithdrawAmt          | true     | string   | 單次最小提幣金額                                             |                        |
 | maxWithdrawAmt          | true     | string   | 單次最大提幣金額                                             |                        |
 | withdrawQuotaPerDay     | true     | string   | 當日提幣額度（新加坡時區）                                   |                        |
-| withdrawQuotaPerYear    | true     | string   | 當年提幣額度                                                 |                        |
-| withdrawQuotaTotal      | true     | string   | 總提幣額度                                                   |                        |
+| withdrawQuotaPerYear    | false     | string   | 當年提幣額度                                                 |                        |
+| withdrawQuotaTotal      | false     | string   | 總提幣額度                                                   |                        |
 | withdrawPrecision       | true     | int      | 提幣精度                                                     |                        |
 | withdrawFeeType         | true     | string   | 提幣手續費類型（特定幣種在特定鏈上的提幣手續費類型唯一）     | fixed,circulated,ratio |
 | transactFeeWithdraw     | false    | string   | 單次提幣手續費（僅對固定類型有效，withdrawFeeType=fixed）    |                        |
@@ -974,7 +997,10 @@ curl "https://api.bitv.com/v1/common/timestamp"
 > Response:
 
 ```json
+ {
+  "status": "ok", 
   "data": 1494900087029
+}
 ```
 
 # 行情數據
@@ -1415,6 +1441,7 @@ API Key 權限：讀取<br>
 
 ```json
 {
+  "status": "ok",
   "data": [
     {
       "id": 100001,
@@ -1457,6 +1484,7 @@ spot：現貨賬戶
 
 ```json
 {
+  "status": "ok",
   "data": {
     "id": 100009,
     "type": "spot",
@@ -1465,12 +1493,18 @@ spot：現貨賬戶
       {
         "currency": "usdt",
         "type": "trade",
-        "balance": "5007.4362872650"
+        "balance": "5007.4362872650",
+        "available": "0",
+        "debt": "0",
+        "seq-num": "0"
       },
       {
         "currency": "usdt",
         "type": "frozen",
-        "balance": "348.1199920020"
+        "balance": "348.1199920020",
+        "available": "0",
+        "debt": "0",
+        "seq-num": "0"
       }
     ]
   }
@@ -2224,6 +2258,7 @@ API Key 權限：交易
 
 ```json
 {  
+  "status": "ok",
   "data": "59378"
 }
 ```
@@ -2348,6 +2383,7 @@ API Key 權限：交易<br>
 
 ```json
 {  
+  "status": "ok",
   "data": "59378"
 }
 ```
@@ -2664,6 +2700,7 @@ API Key 權限：讀取<br>
 
 ```json
 {  
+  "status": "ok",
   "data": 
   {
     "id": 59378,
@@ -2677,10 +2714,10 @@ API Key 權限：讀取<br>
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "user-id": 1000,
     "source": "api",
     "state": "filled",
-    "canceled-at": 0
+    "canceled-at": 0,
+    "client-order-id": ""
   }
 }
 ```
@@ -2729,6 +2766,7 @@ API Key 權限：讀取<br>
 
 ```json
 {  
+  "status": "ok",
   "data": 
   {
     "id": 59378,
@@ -2742,10 +2780,10 @@ API Key 權限：讀取<br>
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "user-id": 1000,
     "source": "api",
     "state": "filled",
-    "canceled-at": 0
+    "canceled-at": 0,
+    "client-order-id": ""
   }
 }
 ```
@@ -2802,6 +2840,7 @@ API Key 權限：讀取<br>
 
 ```json
 {  
+  "status": "ok",
   "data": [
     {
       "id": 29553,
@@ -2817,7 +2856,9 @@ API Key 權限：讀取<br>
       "created-at": 1494901400435,
       "role": "maker",
       "filled-points": "0.0",
-      "fee-deduct-currency": ""
+      "fee-deduct-currency": "",
+      "fee-currency": "usdt",
+      "fee-deduct-state": "done"
     }
     ...
   ]
@@ -2907,6 +2948,7 @@ API Key 權限：讀取<br>
 
 ```json
 {  
+  "status": "ok",
   "data": [
     {
       "id": 59378,

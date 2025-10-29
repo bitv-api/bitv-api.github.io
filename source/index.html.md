@@ -741,7 +741,15 @@ This interface does not accept any parameters.
              "leverage-ratio": 5,
              "super-margin-leverage-ratio": 3,
              "funding-leverage-ratio": 3,
-             "api-trading": "enabled"
+             "api-trading": "enabled",
+             "limit-order-max-buy-amt": 50,
+             "limit-order-max-sell-amt": 50,
+             "buy-limit-must-less-than": 1.3,
+             "sell-limit-must-greater-than": 0.7,
+             "market-sell-order-rate-must-less-than": 0.05,
+             "market-buy-order-rate-must-less-than": 0.05,
+             "max-order-value": 3000000,
+             "tags": ""
          },
       …
      ]
@@ -793,11 +801,14 @@ This interface does not accept any parameters.
 > Response:
 
 ```json
-   "data": [
-     "usdt",
-     "eth",
-     "etc"
-   ]
+  {
+    "status": "ok",
+     "data": [
+       "usdt",
+       "eth",
+       "etc"
+     ]
+  }
 ```
 
 ### return fields
@@ -836,6 +847,7 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                  {
                      "chain": "trc20usdt",
                      "displayName": "",
+                     "fullName":"",
                      "baseChain": "TRX",
                      "baseChainProtocol": "TRC20",
                      "isDynamic": false,
@@ -852,11 +864,15 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                      "withdrawQuotaPerDay": "280000.00000000",
                      "withdrawQuotaPerYear": "2800000.00000000",
                      "withdrawQuotaTotal": "2800000.00000000",
-                     "withdrawStatus": "allowed"
+                     "withdrawStatus": "allowed",
+                     "transactFeeWithdraw":"",
+                     "addrWithTag": false,
+                     "addrDepositTag": false
                  },
                  {
                      "chain": "usdt",
                      "displayName": "",
+                     "fullName":"",
                      "baseChain": "BTC",
                      "baseChainProtocol": "OMNI",
                      "isDynamic": false,
@@ -872,11 +888,15 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                      "withdrawQuotaPerDay": "90000.00000000",
                      "withdrawQuotaPerYear": "111000.00000000",
                      "withdrawQuotaTotal": "1110000.00000000",
-                     "withdrawStatus": "allowed"
+                     "withdrawStatus": "allowed",
+                     "transactFeeWithdraw":"",
+                     "addrWithTag": false,
+                     "addrDepositTag": false
                  },
                  {
                      "chain": "usdterc20",
                      "displayName": "",
+                     "fullName":"",
                      "baseChain": "ETH",
                      "baseChainProtocol": "ERC20",
                      "isDynamic": false,
@@ -892,10 +912,14 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                      "withdrawQuotaPerDay": "180000.00000000",
                      "withdrawQuotaPerYear": "200000.00000000",
                      "withdrawQuotaTotal": "300000.00000000",
-                     "withdrawStatus": "allowed"
+                     "withdrawStatus": "allowed",
+                     "transactFeeWithdraw":"",
+                     "addrWithTag": false,
+                     "addrDepositTag": false
                  }
              ],
              "currency": "usdt",
+             "assetType": 1,
              "instStatus": "normal"
          }
          ]
@@ -924,8 +948,8 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | minWithdrawAmt        | true     | string    | minimum withdrawal amount                                                                               |             |
 | maxWithdrawAmt        | true     | string    | single maximum withdrawal amount                                                                        |             |
 | withdrawQuotaPerDay   | true     | string    | Daily withdrawal quota (Singapore time zone)                                                            |             |
-| withdrawQuotaPerYear  | true     | string    | withdrawal quota for the year                                                                           |             |
-| withdrawQuotaTotal    | true     | string    | total withdrawal quota                                                                                  |             |
+| withdrawQuotaPerYear  | false     | string    | withdrawal quota for the year                                                                           |             |
+| withdrawQuotaTotal    | false     | string    | total withdrawal quota                                                                                  |             |
 | withdrawPrecision     | true     | int       | withdrawal precision                                                                                    |             |
 | withdrawFeeType       | true     | string    | Withdrawal fee type (the type of withdrawal fee for a specific currency on a specific chain is unique) | fixed, circulated, ratio |
 | transactFeeWithdraw   | false    | string    | single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)                               |             |
@@ -964,7 +988,10 @@ This interface does not accept any parameters.
 > Response:
 
 ```json
-   "data": 1494900087022
+  {
+    "status": "ok",
+    "data": 1494900087022
+  }
 ```
 
 # market data
@@ -1411,6 +1438,7 @@ none
 
 ```json
 {
+   "status": "ok",
    "data": [
      {
        "id": 100001,
@@ -1454,6 +1482,7 @@ spot: spot account
 
 ```json
 {
+   "status": "ok",
    "data": {
      "id": 100009,
      "type": "spot",
@@ -1462,12 +1491,18 @@ spot: spot account
        {
          "currency": "usdt",
          "type": "trade",
-         "balance": "5007.4362812650"
+         "balance": "5007.4362812650",
+         "available": "0",
+         "debt": "0",
+         "seq-num": "0"
        },
        {
          "currency": "usdt",
          "type": "frozen",
-         "balance": "348.11999203300"
+         "balance": "348.11999203300",
+         "available": "0",
+         "debt": "0",
+         "seq-num": "0"
        }
      ]
    }
@@ -2070,6 +2105,7 @@ When the "order price" > "the highest buying price in the market", the order wil
 
 ```json
 {
+   "status": "ok",
    "data": "59378"
 }
 ```
@@ -2196,6 +2232,7 @@ This interface sends a request to cancel an order.
 
 ```json
 {
+   "status": "ok",
    "data": "59378"
 }
 ```
@@ -2517,6 +2554,7 @@ This interface returns the latest status and details of the specified order. Ord
 
 ```json
 {  
+  "status": "ok",
   "data": 
   {
     "id": 59378,
@@ -2530,10 +2568,10 @@ This interface returns the latest status and details of the specified order. Ord
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "user-id": 1000,
     "source": "api",
     "state": "filled",
-    "canceled-at": 0
+    "canceled-at": 0,
+    "client-order-id": ""
   }
 }
 ```
@@ -2587,6 +2625,7 @@ This interface returns the latest order status and details of the specified user
 
 ```json
 {  
+  "status": "ok",
   "data": 
   {
     "id": 59378,
@@ -2603,7 +2642,8 @@ This interface returns the latest order status and details of the specified user
     "user-id": 1000,
     "source": "api",
     "state": "filled",
-    "canceled-at": 0
+    "canceled-at": 0,
+    "client-order-id": ""
   }
 }
 ```
@@ -2660,6 +2700,7 @@ This interface returns the transaction details of the specified order.
 
 ```json
 {  
+  "status": "ok",
   "data": [
     {
       "id": 29553,
@@ -2675,7 +2716,9 @@ This interface returns the transaction details of the specified order.
       "created-at": 1494901400435,
       "role": "maker",
       "filled-points": "0.0",
-      "fee-deduct-currency": ""
+      "fee-deduct-currency": "",
+      "fee-currency": "usdt",
+      "fee-deduct-state": "done"
     }
     ...
   ]
@@ -2764,6 +2807,7 @@ It is recommended that users query historical orders by "time range".
 
 ```json
 {  
+  "status": "ok",
   "data": [
     {
       "id": 59378,

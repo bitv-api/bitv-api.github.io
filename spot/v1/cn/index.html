@@ -1235,7 +1235,15 @@
             </span><span class="nl">"leverage-ratio"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
             </span><span class="nl">"super-margin-leverage-ratio"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
             </span><span class="nl">"funding-leverage-ratio"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"api-trading"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="w">
+            </span><span class="nl">"api-trading"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"limit-order-max-buy-amt"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"limit-order-max-sell-amt"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"buy-limit-must-less-than"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"sell-limit-must-greater-than"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"market-sell-order-rate-must-less-than"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"market-buy-order-rate-must-less-than"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"max-order-value"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000000</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
         </span><span class="p">},</span><span class="w">
     </span><span class="err">......</span><span class="w">
     </span><span class="p">]</span><span class="w">
@@ -1371,11 +1379,14 @@
 <blockquote>
 <p>Response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"eth"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"etc"</span><span class="w">
-  </span><span class="p">]</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"eth"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"etc"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='aceee0d936-2'>返回字段</h3>
 <aside class="notice">返回的“data”对象是一个字符串数组，每一个字符串代表一个支持的币种。</aside>
 <h2 id='apiv2'>APIv2 币链参考信息</h2>
@@ -1422,6 +1433,7 @@
                 </span><span class="p">{</span><span class="w">
                     </span><span class="nl">"chain"</span><span class="p">:</span><span class="s2">"trc20usdt"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"displayName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"baseChain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRX"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"baseChainProtocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRC20"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"isDynamic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -1438,11 +1450,15 @@
                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"280000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaPerYear"</span><span class="p">:</span><span class="s2">"2800000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaTotal"</span><span class="p">:</span><span class="s2">"2800000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="w">
+                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"addrDepositTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
                 </span><span class="p">},</span><span class="w">
                 </span><span class="p">{</span><span class="w">
                     </span><span class="nl">"chain"</span><span class="p">:</span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"displayName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"baseChain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"baseChainProtocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OMNI"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"isDynamic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -1458,11 +1474,15 @@
                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"90000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaPerYear"</span><span class="p">:</span><span class="s2">"111000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaTotal"</span><span class="p">:</span><span class="s2">"1110000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="w">
+                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"addrDepositTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
                 </span><span class="p">},</span><span class="w">
                 </span><span class="p">{</span><span class="w">
                     </span><span class="nl">"chain"</span><span class="p">:</span><span class="s2">"usdterc20"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"displayName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"baseChain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"baseChainProtocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ERC20"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"isDynamic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -1478,10 +1498,14 @@
                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"180000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaPerYear"</span><span class="p">:</span><span class="s2">"200000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaTotal"</span><span class="p">:</span><span class="s2">"300000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="w">
+                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"addrDepositTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">],</span><span class="w">
             </span><span class="nl">"currency"</span><span class="p">:</span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"assetType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
             </span><span class="nl">"instStatus"</span><span class="p">:</span><span class="s2">"normal"</span><span class="w">
         </span><span class="p">}</span><span class="w">
         </span><span class="p">]</span><span class="w">
@@ -1618,14 +1642,14 @@
 </tr>
 <tr>
 <td>withdrawQuotaPerYear</td>
-<td>true</td>
+<td>false</td>
 <td>string</td>
 <td>当年提币额度</td>
 <td></td>
 </tr>
 <tr>
 <td>withdrawQuotaTotal</td>
-<td>true</td>
+<td>false</td>
 <td>string</td>
 <td>总提币额度</td>
 <td></td>
@@ -1724,7 +1748,10 @@
 <blockquote>
 <p>Response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494900087029</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494900087029</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='d9d514d202'>行情数据</h1><h2 id='5ea2e0cde2-3'>简介</h2>
 <p>行情数据接口提供了多种K线、深度以及最新成交记录等行情数据。</p>
 
@@ -2521,6 +2548,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100001</span><span class="p">,</span><span class="w">
@@ -2598,6 +2626,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100009</span><span class="p">,</span><span class="w">
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot"</span><span class="p">,</span><span class="w">
@@ -2606,12 +2635,18 @@
       </span><span class="p">{</span><span class="w">
         </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5007.4362872650"</span><span class="w">
+        </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5007.4362872650"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"debt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"seq-num"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"frozen"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"348.1199920000"</span><span class="w">
+        </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"348.1199920000"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"debt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"seq-num"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -4170,6 +4205,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-17'>响应数据</h3>
@@ -4377,6 +4413,7 @@
 <p>Success response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-19'>响应数据</h3>
@@ -4977,6 +5014,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> 
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">59378</span><span class="p">,</span><span class="w">
@@ -4990,10 +5028,10 @@
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"user-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-24'>响应数据</h3>
@@ -5160,6 +5198,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> 
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">59378</span><span class="p">,</span><span class="w">
@@ -5173,10 +5212,10 @@
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"user-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-25'>响应数据</h3>
@@ -5351,6 +5390,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">29553</span><span class="p">,</span><span class="w">
@@ -5366,7 +5406,9 @@
       </span><span class="nl">"created-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400435</span><span class="p">,</span><span class="w">
       </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"maker"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-points"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"fee-deduct-currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+      </span><span class="nl">"fee-deduct-currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fee-currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fee-deduct-state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="w">
     </span><span class="p">}</span><span class="w">
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -5630,6 +5672,7 @@
 <p>Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">59378</span><span class="p">,</span><span class="w">
@@ -8475,7 +8518,7 @@ accounts.update#1<br>
         </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065.100267619837209301"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
             </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385122</span><span class="w">
+        </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385121</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='7bf990a9a9-9'>数据更新字段列表</h3>

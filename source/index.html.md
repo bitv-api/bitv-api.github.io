@@ -1496,7 +1496,6 @@ spot：现货账户
         "currency": "usdt",
         "type": "trade",
         "balance": "5007.4362872650",
-        "balance": "0",
         "available": "0",
         "debt": "0",
         "seq-num": "0"
@@ -1505,7 +1504,6 @@ spot：现货账户
         "currency": "usdt",
         "type": "frozen",
         "balance": "348.1199920000",
-        "balance": "0",
         "available": "0",
         "debt": "0",
         "seq-num": "0"
@@ -2571,7 +2569,7 @@ API Key 权限：读取<br>
     "source": "api",
     "state": "filled",
     "canceled-at": 0,
-    "client-order-id": "",
+    "client-order-id": ""
   }
 }
 ```

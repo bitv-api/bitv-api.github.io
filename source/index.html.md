@@ -57,7 +57,7 @@ API 使用中如有疑问或咨询事项，请参考`咨询事项 Q&A`进行咨�
 - `Secret Key`  签名认证加密所使用的密钥（仅申请时可见）
 
 <aside class="notice">
-每个 API Key 最多可绑定 20个IP 地址(主机地址或网络地址)，未绑定 IP 地址的 API Key 有效期为90天。出于安全考虑，强烈建议您绑定 IP 地址。
+每个 API Key 最多可绑定 10个IP 地址(主机地址或网络地址)。出于安全考虑，强烈建议您绑定 IP 地址。
 </aside>
 <aside class="warning">
 <red><b>风险提示</b></red>：这两个密钥与账号安全紧密相关，无论何时都请勿将二者<b>同时</b>向其它人透露。API Key的泄露可能会造成您的资产损失（即使未开通提币权限），若发现API Key泄露请尽快删除该API Key。
@@ -411,7 +411,7 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 
 ###安全类
 
-- 强烈建议：在申请API Key时，请绑定您的IP地址，以此来保证您的API Key仅能在您自己的IP上使用。另外，在API Key未绑定IP时，有效期为90天，绑定IP后，则永远不会过期。
+- 强烈建议：在申请API Key时，请绑定您的IP地址，以此来保证您的API Key仅能在您自己的IP上使用。
 - 强烈建议：不要将API Key暴露给任何人（包括第三方软件或机构），API Key代表了您的账户权限，API Key的暴露可能会对您的信息、资金造成损失，若API Key泄露，请尽快删除并重新创建。
 
 ###公共类
@@ -3612,17 +3612,18 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
 
 ```json
 {
-  "ch": "market.btcusdt.bbo",
-  "ts": 1489474082831, //system update time
-  "tick": {
-    "symbol": "btcusdt",
-    "quoteTime": "1489474082811",
-    "bid": "10008.31",
-    "bidSize": "0.01",
-    "ask": "10009.54",
-    "askSize": "0.3",
-    "seqId":"10242474683"
-  }
+    "ch": "market.btcusdt.bbo",
+    "ts": 1761731251360,
+    "tick":
+    {
+        "seqId": 63536598,
+        "ask": 0.03553,
+        "askSize": 0.0399,
+        "bid": 0.03549,
+        "bidSize": 0.0155,
+        "quoteTime": 1761731251358,
+        "symbol": "btcusdt"
+    }
 }
 ```
 
@@ -4104,7 +4105,8 @@ API Key 权限：读取
 		"clientOrderId":"abc123",
 		"orderStatus":"submitted",
 		"symbol":"btcusdt",
-		"eventType":"creation"
+		"eventType":"creation",
+    "orderSource":"web"
 	}
 }
 
@@ -4119,7 +4121,7 @@ API Key 权限：读取
 | accountId       | long     | 账户ID                                                       |
 | orderId         | long     | 订单ID                                                       |
 | clientOrderId   | string   | 用户自编订单号（如有）                                       |
-| orderPrice      | string   | 订单价格                                                     |
+| orderPrice      | string   | 订单价格 （市价单无此字段）                                  |
 | orderSize       | string   | 订单数量（对市价买单无效）                                   |
 | orderValue      | string   | 订单金额（仅对市价买单有效）                                 |
 | type            | string   | 订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
@@ -4151,7 +4153,9 @@ API Key 权限：读取
 		"clientOrderId":"abc123",
 		"orderStatus":"filled",
 		"symbol":"btcusdt",
-		"eventType":"trade"
+		"eventType":"trade",
+    "orderSource":"web",
+    "execAmt":"0.0006"
 	}
 }
 ```
@@ -4172,6 +4176,9 @@ API Key 权限：读取
 | aggressor     | bool     | 是否交易主动方，有效值： true (taker), false (maker)         |
 | orderStatus   | string   | 订单状态，有效值：partial-filled, filled                     |
 | remainAmt     | string   | 未成交数量（市价买单为未成交金额）                           |
+| orderSize     | string   | 订单数量（市价买单无此字段 ）                               |
+| orderValue    | string   | 订单金额（仅市价买单有此字段）                               |
+| orderPrice    | string   | 订单价格 （市价单无此字段）                                 |
 
 注：<BR>
 
@@ -4193,7 +4200,11 @@ API Key 权限：读取
 		"clientOrderId":"abc123",
 		"orderStatus":"canceled",
 		"symbol":"btcusdt",
-		"eventType":"cancellation"
+		"eventType":"cancellation",
+    "orderSource": "web",
+    "orderPrice": "0.01",
+    "orderSize": "0.02",
+    "execAmt":0
 	}
 }
 ```
@@ -4410,7 +4421,7 @@ accounts.update#0：
 		"accountId": 123456,
 		"balance": "23.111",
 		"changeType": "transfer",
-           	"accountType":"trade",
+    "accountType":"trade",
 		"changeTime": 1568601800000
 	}
 }
@@ -4424,7 +4435,7 @@ accounts.update#1：
 		"accountId": 33385,
 		"available": "2028.699426619837209087",
 		"changeType": "order.match",
-         		"accountType":"trade",
+    "accountType":"trade",
 		"changeTime": 1574393385167
 	}
 }
@@ -4436,7 +4447,7 @@ accounts.update#1：
 		"accountId": 33385,
 		"balance": "2065.100267619837209301",
 		"changeType": "order.match",
-           	"accountType":"trade",
+    "accountType":"trade",
 		"changeTime": 1574393385121
 	}
 }

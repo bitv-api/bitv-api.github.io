@@ -550,7 +550,7 @@
 </ul>
 
 <aside class="notice">
-Each API Key can be bound to a maximum of 20 IP addresses (host or network addresses), and API Keys that are not bound to IP addresses are valid for 90 days. For security reasons, it is strongly recommended that you bind an IP address.
+Each API Key can be bound to a maximum of 10 IP addresses (host or network addresses). For security reasons, it is strongly recommended that you bind an IP address.
 </aside>
 <aside class="warning"> 
  <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets (even if you do not open withdrawal privileges), if you find API Key leakage, please delete the API Key as soon as possible.
@@ -983,7 +983,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 <h3 id="security">Security</h3>
 
 <ul>
-  <li>Strongly recommended: When applying for an API Key, bind it to your IP address to ensure that your API Key can only be used from your own IP. Additionally, an API Key without an IP binding is valid for 90 days, while an IP-bound API Key will never expire.</li>
+  <li>Strongly recommended: When applying for an API Key, bind it to your IP address to ensure that your API Key can only be used from your own IP.</li>
   <li>Strongly recommended: Do not expose your API Key to anyone, including third-party software or organizations. The API Key represents your account privileges, and its exposure may result in loss of information and funds. If your API Key is compromised, please delete it promptly and create a new one.</li>
 </ul>
 
@@ -7238,17 +7238,18 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-   </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.bbo"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489474082831</span><span class="p">,</span><span class="w"> </span><span class="err">//system</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">time</span><span class="w">
-   </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-     </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"quoteTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1489474082811"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10008.31"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10009.54"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3"</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"seqId"</span><span class="p">:</span><span class="s2">"10242474683"</span><span class="w">
-   </span><span class="p">}</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.bbo"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761731251360</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tick"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"seqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">63536598</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03553</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0399</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03549</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0155</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quoteTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761731251358</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id="data-update-field-list-4">Data update field list</h3>
 <p>| Field | Data Type | Description |
@@ -7788,7 +7789,8 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"submitted"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"creation"</span><span class="w">
+</span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"creation"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"orderSource"</span><span class="p">:</span><span class="s2">"web"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -7800,7 +7802,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
 | accountId       | long      | Account ID                                                                   |
 | orderId         | long      | Order ID                                                                     |
 | clientOrderId   | string    | User-made order number (if any)                                              |
-| orderPrice      | string    | Order price                                                                  |
+| orderPrice      | string    | Order price (not applicable for market orders)                               |
 | orderSize       | string    | Order size (invalid for market buy orders)                                   |
 | orderValue      | string    | Order amount (only valid for market buy orders)                              |
 | type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
@@ -7835,7 +7837,9 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="w">
+</span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"orderSource"</span><span class="p">:</span><span class="s2">"web"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"execAmt"</span><span class="p">:</span><span class="s2">"0.0006"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -7853,7 +7857,10 @@ In the future, the data behavior of 150 increments will be consistent with that 
 | tradeTime   | long      | Trade time                                                                       |
 | aggressor   | bool      | Whether to be the active party of the transaction, valid values: true (taker), false (maker) |
 | orderStatus | string    | Order status, valid values: partial-filled, filled                               |
-| remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |</p>
+| remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
+| orderSize   | string    | Order quantity (not applicable for market buy orders)                             |
+| orderValue  | string    | Order amount (only applicable for market buy orders)                              |
+| orderPrice  | string    | Order price (not applicable for market orders)                                    |</p>
 
 <p>Note: <br /></p>
 
@@ -7878,7 +7885,11 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"canceled"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancellation"</span><span class="w">
+</span><span class="nl">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancellation"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"orderSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"orderPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"orderSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.02"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"execAmt"</span><span class="p">:</span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -8108,13 +8119,13 @@ When the account balance changes or the available balance changes, both push and
 <div class="highlight"><pre class="highlight json"><code><span class="err">accounts.update#</span><span class="mi">0</span><span class="err">:</span><span class="w">
 </span><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"push"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update#0"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update#0"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="p">,</span><span class="w">
 </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23.111"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1568601800000</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -8122,25 +8133,25 @@ When the account balance changes or the available balance changes, both push and
 </span><span class="err">accounts.update#</span><span class="mi">1</span><span class="err">:</span><span class="w">
 </span><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"push"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update#1"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update#1"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
 </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2028.699426619837209087"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order. match"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385167</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"push"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update#1"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update#1"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
 </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065.100267619837209301"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order. match"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385122</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">

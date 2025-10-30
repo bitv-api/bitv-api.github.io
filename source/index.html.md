@@ -54,7 +54,7 @@ After successful creation, please make sure to remember the following informatio
 - `Secret Key` The key used for signature authentication encryption (only visible when applying)
 
 <aside class="notice">
-Each API Key can be bound to a maximum of 20 IP addresses (host or network addresses), and API Keys that are not bound to IP addresses are valid for 90 days. For security reasons, it is strongly recommended that you bind an IP address.
+Each API Key can be bound to a maximum of 10 IP addresses (host or network addresses). For security reasons, it is strongly recommended that you bind an IP address.
 </aside>
 <aside class="warning"> 
  <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets (even if you do not open withdrawal privileges), if you find API Key leakage, please delete the API Key as soon as possible.
@@ -397,7 +397,7 @@ This document describes the conventions for data types in the JSON format:
 
 ### Security
 
-- Strongly recommended: When applying for an API Key, bind it to your IP address to ensure that your API Key can only be used from your own IP. Additionally, an API Key without an IP binding is valid for 90 days, while an IP-bound API Key will never expire.
+- Strongly recommended: When applying for an API Key, bind it to your IP address to ensure that your API Key can only be used from your own IP. 
 - Strongly recommended: Do not expose your API Key to anyone, including third-party software or organizations. The API Key represents your account privileges, and its exposure may result in loss of information and funds. If your API Key is compromised, please delete it promptly and create a new one.
 
 ### Public
@@ -3610,17 +3610,18 @@ When any of the data of the first price of buying, the first amount of buying, t
 
 ```json
 {
-   "ch": "market.btcusdt.bbo",
-   "ts": 1489474082831, //system update time
-   "tick": {
-     "symbol": "btcusdt",
-     "quoteTime": "1489474082811",
-     "bid": "10008.31",
-     "bidSize": "0.01",
-     "ask": "10009.54",
-     "askSize": "0.3",
-     "seqId":"10242474683"
-   }
+    "ch": "market.btcusdt.bbo",
+    "ts": 1761731251360,
+    "tick":
+    {
+        "seqId": 63536598,
+        "ask": 0.03553,
+        "askSize": 0.0399,
+        "bid": 0.03549,
+        "bidSize": 0.0155,
+        "quoteTime": 1761731251358,
+        "symbol": "btcusdt"
+    }
 }
 ```
 ### Data update field list
@@ -4097,7 +4098,8 @@ When a planning order/tracking order is canceled before triggering –
 "clientOrderId": "abc123",
 "orderStatus": "submitted",
 "symbol": "btcusdt",
-"eventType": "creation"
+"eventType": "creation",
+"orderSource":"web"
 }
 }
 
@@ -4110,7 +4112,7 @@ When an order is placed –
 | accountId       | long      | Account ID                                                                   |
 | orderId         | long      | Order ID                                                                     |
 | clientOrderId   | string    | User-made order number (if any)                                              |
-| orderPrice      | string    | Order price                                                                  |
+| orderPrice      | string    | Order price (not applicable for market orders)                               |
 | orderSize       | string    | Order size (invalid for market buy orders)                                   |
 | orderValue      | string    | Order amount (only valid for market buy orders)                              |
 | type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
@@ -4142,7 +4144,9 @@ Note: <BR>
 "clientOrderId": "abc123",
 "orderStatus": "filled",
 "symbol": "btcusdt",
-"eventType": "trade"
+"eventType": "trade",
+"orderSource":"web",
+"execAmt":"0.0006"
 }
 }
 ```
@@ -4162,6 +4166,9 @@ When the order is filled –
 | aggressor   | bool      | Whether to be the active party of the transaction, valid values: true (taker), false (maker) |
 | orderStatus | string    | Order status, valid values: partial-filled, filled                               |
 | remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
+| orderSize   | string    | Order quantity (not applicable for market buy orders)                             |
+| orderValue  | string    | Order amount (only applicable for market buy orders)                              |
+| orderPrice  | string    | Order price (not applicable for market orders)                                    |
 
 Note: <BR>
 
@@ -4183,7 +4190,11 @@ Note: <BR>
 "clientOrderId": "abc123",
 "orderStatus": "canceled",
 "symbol": "btcusdt",
-"eventType": "cancellation"
+"eventType": "cancellation",
+"orderSource": "web",
+"orderPrice": "0.01",
+"orderSize": "0.02",
+"execAmt":0
 }
 }
 ```
@@ -4391,13 +4402,13 @@ Note: No matter which subscription mode the user adopts, after the subscription 
 accounts.update#0:
 {
 "action": "push",
-"ch": "accounts. update#0",
+"ch": "accounts.update#0",
 "data": {
 "currency": "btc",
 "accountId": 123456,
 "balance": "23.111",
 "changeType": "transfer",
-            "accountType": "trade",
+"accountType": "trade",
 "changeTime": 1568601800000
 }
 }
@@ -4405,25 +4416,25 @@ accounts.update#0:
 accounts.update#1:
 {
 "action": "push",
-"ch": "accounts. update#1",
+"ch": "accounts.update#1",
 "data": {
 "currency": "btc",
 "accountId": 33385,
 "available": "2028.699426619837209087",
 "changeType": "order. match",
-          "accountType": "trade",
+"accountType": "trade",
 "changeTime": 1574393385167
 }
 }
 {
 "action": "push",
-"ch": "accounts. update#1",
+"ch": "accounts.update#1",
 "data": {
 "currency": "btc",
 "accountId": 33385,
 "balance": "2065.100267619837209301",
 "changeType": "order. match",
-            "accountType": "trade",
+"accountType": "trade",
 "changeTime": 1574393385122
 }
 }

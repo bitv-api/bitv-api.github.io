@@ -538,7 +538,7 @@
 </ul>
 
 <aside class="notice">
-每个 API Key 最多可绑定 20个IP 地址(主机地址或网络地址)，未绑定 IP 地址的 API Key 有效期为90天。出于安全考虑，强烈建议您绑定 IP 地址。
+每个 API Key 最多可绑定 10个IP 地址(主机地址或网络地址)。出于安全考虑，强烈建议您绑定 IP 地址。
 </aside>
 
 <aside class="warning">
@@ -926,7 +926,7 @@
 </ul>
 <h2 id='e01e16de50'>最佳实践</h2><h3 id='9f100d1da9'>安全类</h3>
 <ul>
-<li>强烈建议：在申请API Key时，请绑定您的IP地址，以此来保证您的API Key仅能在您自己的IP上使用。另外，在API Key未绑定IP时，有效期为90天，绑定IP后，则永远不会过期。</li>
+<li>强烈建议：在申请API Key时，请绑定您的IP地址，以此来保证您的API Key仅能在您自己的IP上使用。</li>
 <li>强烈建议：不要将API Key暴露给任何人（包括第三方软件或机构），API Key代表了您的账户权限，API Key的暴露可能会对您的信息、资金造成损失，若API Key泄露，请尽快删除并重新创建。</li>
 </ul>
 <h3 id='7312d1c8d6'>公共类</h3>
@@ -7104,17 +7104,18 @@
 <p>Update example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.bbo"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1489474082831</span><span class="p">,</span><span class="w"> </span><span class="err">//system</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">time</span><span class="w">
-  </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"quoteTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1489474082811"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10008.31"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10009.54"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"seqId"</span><span class="p">:</span><span class="s2">"10242474683"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+    </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.bbo"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761731251360</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tick"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"seqId"</span><span class="p">:</span><span class="w"> </span><span class="mi">63536598</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03553</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0399</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03549</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0155</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quoteTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761731251358</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='7bf990a9a9-5'>数据更新字段列表</h3>
 <table><thead>
@@ -7860,7 +7861,8 @@
         </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="s2">"submitted"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"symbol"</span><span class="p">:</span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"eventType"</span><span class="p">:</span><span class="s2">"creation"</span><span class="w">
+        </span><span class="nl">"eventType"</span><span class="p">:</span><span class="s2">"creation"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderSource"</span><span class="p">:</span><span class="s2">"web"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -7902,7 +7904,7 @@
 <tr>
 <td>orderPrice</td>
 <td>string</td>
-<td>订单价格</td>
+<td>订单价格 （市价单无此字段）</td>
 </tr>
 <tr>
 <td>orderSize</td>
@@ -7958,7 +7960,9 @@
         </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"symbol"</span><span class="p">:</span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"eventType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="w">
+        </span><span class="nl">"eventType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderSource"</span><span class="p">:</span><span class="s2">"web"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"execAmt"</span><span class="p">:</span><span class="s2">"0.0006"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -8031,6 +8035,21 @@
 <td>string</td>
 <td>未成交数量（市价买单为未成交金额）</td>
 </tr>
+<tr>
+<td>orderSize</td>
+<td>string</td>
+<td>订单数量（市价买单无此字段 ）</td>
+</tr>
+<tr>
+<td>orderValue</td>
+<td>string</td>
+<td>订单金额（仅市价买单有此字段）</td>
+</tr>
+<tr>
+<td>orderPrice</td>
+<td>string</td>
+<td>订单价格 （市价单无此字段）</td>
+</tr>
 </tbody></table>
 
 <p>注：<BR></p>
@@ -8055,7 +8074,11 @@
         </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="s2">"canceled"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"symbol"</span><span class="p">:</span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"eventType"</span><span class="p">:</span><span class="s2">"cancellation"</span><span class="w">
+        </span><span class="nl">"eventType"</span><span class="p">:</span><span class="s2">"cancellation"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"orderSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.02"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"execAmt"</span><span class="p">:</span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -8491,7 +8514,7 @@ accounts.update#1<br>
         </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="p">,</span><span class="w">
         </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23.111"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1568601800000</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -8505,7 +8528,7 @@ accounts.update#1<br>
         </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
         </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2028.699426619837209087"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
-                </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385167</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -8517,7 +8540,7 @@ accounts.update#1<br>
         </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
         </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065.100267619837209301"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"accountType"</span><span class="p">:</span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385121</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">

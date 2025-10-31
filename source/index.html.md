@@ -1101,7 +1101,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
     "ts": 1761185653396,
     "tick": {
        "id": 1499225271,
-       "ts":1499225271000,
+       "version":5104471,
        "close": 1885.0000,
        "open": 1960.0000,
        "high": 1985.0000,
@@ -1119,6 +1119,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
 | id         | long      | NA |
+| version    | long      | Internal field |
 | amount     | float     | Transaction volume in base currency (rolling 24 hours) |
 | count      | integer   | Number of transactions (rolling 24 hours) |
 | open       | float     | Opening price of this stage (rolling 24 hours) |
@@ -2958,7 +2959,7 @@ This interface queries current and historical transaction records based on searc
 
 | Parameter name | Required | Type   | Description                                                 | Default value | Value range                                                                                                                                                        |
 | -------------- | -------- | ------ | ----------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| symbol         | true     | string | Trading pair                                                | N/A           | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                      |
+| symbols         | false     | string | Trading pair                                                | N/A           | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                      |
 | types          | false    | string | Combination of order types to query, separated by ','        | all           | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker |
 | start-date     | false    | string | Query start date (Singapore time zone), date format yyyy-mm-dd | -1d           | Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.                          |
 | end-date       | false    | string | Query end date (Singapore time zone), date format yyyy-mm-dd   | today         | Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.                                          |

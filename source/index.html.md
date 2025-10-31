@@ -1129,7 +1129,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 | 字段名称 | 数据类型 | 描述                                     |
 | -------- | -------- | ---------------------------------------- |
 | id       | long     | NA                                       |
-| id       | long     | 内部字段                                  |
+| version  | long     | 内部字段                                  |
 | amount   | float    | 以基础币种计量的交易量（以滚动24小时计） |
 | count    | integer  | 交易次数（以滚动24小时计）               |
 | open     | float    | 本阶段开盘价（以滚动24小时计）           |

@@ -2141,7 +2141,7 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
     </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1761185653396</span><span class="p">,</span><span class="w">
     </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
        </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1499225271</span><span class="p">,</span><span class="w">
-       </span><span class="nl">"ts"</span><span class="p">:</span><span class="mi">1499225271000</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"version"</span><span class="p">:</span><span class="mi">5104471</span><span class="p">,</span><span class="w">
        </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">1885.0000</span><span class="p">,</span><span class="w">
        </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">1960.0000</span><span class="p">,</span><span class="w">
        </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">1985.0000</span><span class="p">,</span><span class="w">
@@ -2158,6 +2158,7 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 <p>| Field Name | Data Type | Description |
 | ———- | ——— | ———– |
 | id         | long      | NA |
+| version    | long      | Internal field |
 | amount     | float     | Transaction volume in base currency (rolling 24 hours) |
 | count      | integer   | Number of transactions (rolling 24 hours) |
 | open       | float     | Opening price of this stage (rolling 24 hours) |
@@ -6256,8 +6257,8 @@ Frequency limit value (NEW): 20 times/2s</p>
   </thead>
   <tbody>
     <tr>
-      <td>symbol</td>
-      <td>true</td>
+      <td>symbols</td>
+      <td>false</td>
       <td>string</td>
       <td>Trading pair</td>
       <td>N/A</td>

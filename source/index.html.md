@@ -1108,7 +1108,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
     "ts": 1761185653396,
     "tick": {
       "id":1499225271,
-      "ts":1499225271000,
+      "version":5104471,
       "close":1885.0000,
       "open":1960.0000,
       "high":1985.0000,
@@ -1127,6 +1127,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 | 字段名稱 | 數據類型 | 描述                                     |
 | -------- | -------- | ---------------------------------------- |
 | id       | long     | NA                                       |
+| version  | long     | 內部字段                                  |
 | amount   | float    | 以基礎幣種計量的交易量（以滾動24小時計） |
 | count    | integer  | 交易次數（以滾動24小時計）               |
 | open     | float    | 本階段開盤價（以滾動24小時計）           |
@@ -3101,7 +3102,7 @@ API Key 權限：讀取<br>
 
 | 參數名稱   | 是否必須 | 類型   | 描述                                           | 默認值                  | 取值範圍                                                     |
 | ---------- | -------- | ------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
-| symbol     | true     | string | 交易對                                         | N/A                     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`）       |
+| symbols     | false    | string | 交易對                                         | N/A                     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查詢的訂單類型組合，使用','分割                | all                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
 | start-date | false    | string | 查詢開始日期（新加坡時區）日期格式yyyy-mm-dd   | -1d 查詢結束日期的前1天 | 取值範圍 [((end-date) – 1), (end-date)] ，查詢窗口最大為2天，窗口平移範圍為最近61天。 |
 | end-date   | false    | string | 查詢結束日期（新加坡時區）, 日期格式yyyy-mm-dd | today                   | 取值範圍 [(today-60), today] ，查詢窗口最大為2天，窗口平移範圍為最近61天 |

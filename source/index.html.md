@@ -1110,7 +1110,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
     "ts": 1761185653396,
     "tick": {
       "id":1499225271,
-      "ts":1499225271000,
+      "version": 5104471,
       "close":1885.0000,
       "open":1960.0000,
       "high":1985.0000,
@@ -1129,6 +1129,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 | 字段名称 | 数据类型 | 描述                                     |
 | -------- | -------- | ---------------------------------------- |
 | id       | long     | NA                                       |
+| id       | long     | 内部字段                                  |
 | amount   | float    | 以基础币种计量的交易量（以滚动24小时计） |
 | count    | integer  | 交易次数（以滚动24小时计）               |
 | open     | float    | 本阶段开盘价（以滚动24小时计）           |
@@ -2953,7 +2954,7 @@ API Key 权限：读取<br>
 
 | 参数名称   | 是否必须 | 类型   | 描述                                           | 默认值                  | 取值范围                                                     |
 | ---------- | -------- | ------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
-| symbol     | true     | string | 交易对                                         | N/A                     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`）       |
+| symbols     | false     | string | 交易对                                         | N/A                     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查询的订单类型组合，使用','分割                | all                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
 | start-date | false    | string | 查询开始日期（新加坡时区）日期格式yyyy-mm-dd   | -1d 查询结束日期的前1天 | 取值范围 [((end-date) – 1), (end-date)] ，查询窗口最大为2天，窗口平移范围为最近61天。 |
 | end-date   | false    | string | 查询结束日期（新加坡时区）, 日期格式yyyy-mm-dd | today                   | 取值范围 [(today-60), today] ，查询窗口最大为2天，窗口平移范围为最近61天 |

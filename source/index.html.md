@@ -4204,10 +4204,10 @@ API Key 权限：读取
 		"orderStatus":"canceled",
 		"symbol":"btcusdt",
 		"eventType":"cancellation",
-    "orderSource": "web",
-    "orderPrice": "0.01",
-    "orderSize": "0.02",
-    "execAmt":0
+        "orderSource": "web",
+        "orderPrice": "0.01",
+        "orderSize": "0.02",
+        "execAmt":0
 	}
 }
 ```
@@ -4416,7 +4416,7 @@ accounts.update#1
 > Update example
 
 ```json
-accounts.update#0：
+//accounts.update#0：
 {
 	"action": "push",
 	"ch": "accounts.update#0",
@@ -4425,12 +4425,12 @@ accounts.update#0：
 		"accountId": 123456,
 		"balance": "23.111",
 		"changeType": "transfer",
-            "accountType":"trade",
+    "accountType":"trade",
 		"changeTime": 1568601800000
 	}
 }
 
-accounts.update#1：
+//accounts.update#1：
 {
 	"action": "push",
 	"ch": "accounts.update#1",
@@ -4468,6 +4468,7 @@ accounts.update#1：
 | changeType  | string   | 余额变动类型，有效值：order-place(订单创建)，order-match(订单成交)，order-refund(订单成交退款)，order-cancel(订单撤销)，order-fee-refund(抵扣交易手续费) |
 | accountType | string   | 账户类型，有效值：trade, frozen, loan, interest              |
 | changeTime  | long     | 余额变动时间，unix time in millisecond                       |
+| seqNum      | long     | 消息序列号                       |
 
 注：<br>
 账户更新推送的是到账金额，多笔成交产生的多笔交易返佣可能会合并到帐。

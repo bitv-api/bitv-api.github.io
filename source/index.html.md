@@ -3763,7 +3763,8 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
      "id": 1494496390,
      "count": 15195,
      "low": 9657.00,
-     "vol": 121906001.754751
+     "vol": 121906001.754751,
+     "version": 126333992
    }
 }
 ```
@@ -3778,6 +3779,7 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
 | low | float | 24-hour lowest price |
 | high | float | 24-hour highest price |
 | vol | float | 24-hour turnover |
+| version | integer | Internal field |
 
 ### Data Request
 
@@ -4450,6 +4452,7 @@ accounts.update#1:
 | changeType | string | Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee-refund (deduct transaction fee) |
 | accountType | string | Account type, valid values: trade, frozen, loan, interest |
 | changeTime | long | Balance change time, UNIX time in milliseconds |
+| seqNum     | long | message sequence number |
 
 
 Note: <br>

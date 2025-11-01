@@ -1530,6 +1530,8 @@ list字段说明
 | balance  | true     | string   | 余额 |                                   |
 | currency | true     | string   | 币种 |                                   |
 | type     | true     | string   | 类型 | trade: 交易余额，frozen: 冻结余额 |
+| available| true     | string   | 余额 | 最大可用余额                     |
+| debt     | true     | string   | 余额 | 负债                            |
 
 ## 账户流水
 
@@ -2815,7 +2817,6 @@ API Key 权限：读取<br>
       "field-cash-amount": "1011.0100000000",
       "field-fees": "0.0202000000",
       "finished-at": 1494901400468,
-      "user-id": 1000,
       "source": "api",
       "state": "filled",
       "canceled-at": 0

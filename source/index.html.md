@@ -2778,19 +2778,6 @@ It is recommended that users query historical orders by "time range".
 
 - GET `/v1/order/orders`
 
-> Request:
-
-```json
-{
-   "account-id": "100009",
-   "amount": "10.1",
-   "price": "100.1",
-   "source": "api",
-   "symbol": "ethusdt",
-   "type": "buy-limit"
-}
-```
-
 ### Request parameters
 
 | Parameter name | Required | Type   | Description                                                                                                           | Default value                            | Value range                                                                                                                                                                                                                                                                                                                                                                                                                 |

@@ -4416,44 +4416,44 @@ accounts.update#1
 > Update example
 
 ```json
-//accounts.update#0：
+accounts.update#0:
 {
-	"action": "push",
-	"ch": "accounts.update#0",
-	"data": {
-		"currency": "btc",
-		"accountId": 123456,
-		"balance": "23.111",
-		"changeType": "transfer",
-    "accountType":"trade",
-		"changeTime": 1568601800000
-	}
+"action": "push",
+"ch": "accounts.update#0",
+"data": {
+"currency": "btc",
+"accountId": 123456,
+"balance": "23.111",
+"changeType": "transfer",
+"accountType": "trade",
+"changeTime": 1568601800000
+}
 }
 
-//accounts.update#1：
+accounts.update#1:
 {
-	"action": "push",
-	"ch": "accounts.update#1",
-	"data": {
-		"currency": "btc",
-		"accountId": 33385,
-		"available": "2028.699426619837209087",
-		"changeType": "order.match",
-            "accountType":"trade",
-		"changeTime": 1574393385167
-	}
+"action": "push",
+"ch": "accounts.update#1",
+"data": {
+"currency": "btc",
+"accountId": 33385,
+"available": "2028.699426619837209087",
+"changeType": "order. match",
+"accountType": "trade",
+"changeTime": 1574393385167
+}
 }
 {
-	"action": "push",
-	"ch": "accounts.update#1",
-	"data": {
-		"currency": "btc",
-		"accountId": 33385,
-		"balance": "2065.100267619837209301",
-		"changeType": "order.match",
-            "accountType":"trade",
-		"changeTime": 1574393385121
-	}
+"action": "push",
+"ch": "accounts.update#1",
+"data": {
+"currency": "btc",
+"accountId": 33385,
+"balance": "2065.100267619837209301",
+"changeType": "order. match",
+"accountType": "trade",
+"changeTime": 1574393385122
+}
 }
 ```
 

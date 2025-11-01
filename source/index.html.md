@@ -3769,7 +3769,8 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
     "id":     1494496390,
     "count":  15195,
     "low":    9657.00,
-    "vol":    121906001.754751
+    "vol":    121906001.754751,
+    "version": 126333992
   }
 }
 ```
@@ -3786,6 +3787,7 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
 | low    | float    | 24小时最低价             |
 | high   | float    | 24小时最高价             |
 | vol    | float    | 24小时成交额             |
+| version| long     | 内部字段                 |
 
 ### 数据请求
 
@@ -4107,7 +4109,7 @@ API Key 权限：读取
 		"orderStatus":"submitted",
 		"symbol":"btcusdt",
 		"eventType":"creation",
-    "orderSource":"web"
+        "orderSource":"web"
 	}
 }
 
@@ -4155,8 +4157,8 @@ API Key 权限：读取
 		"orderStatus":"filled",
 		"symbol":"btcusdt",
 		"eventType":"trade",
-    "orderSource":"web",
-    "execAmt":"0.0006"
+        "orderSource":"web",
+        "execAmt":"0.0006"
 	}
 }
 ```
@@ -4295,7 +4297,8 @@ API Key 权限：读取
          "orderSize": "1",
          "clientOrderId": "a001",
          "orderCreateTime": 998787897878,
-         "orderStatus": "partial-filled"
+         "orderStatus": "partial-filled",
+         "orderType": "buy-limit"
     }
 }
 ```
@@ -4422,7 +4425,7 @@ accounts.update#0：
 		"accountId": 123456,
 		"balance": "23.111",
 		"changeType": "transfer",
-    "accountType":"trade",
+            "accountType":"trade",
 		"changeTime": 1568601800000
 	}
 }
@@ -4436,7 +4439,7 @@ accounts.update#1：
 		"accountId": 33385,
 		"available": "2028.699426619837209087",
 		"changeType": "order.match",
-    "accountType":"trade",
+            "accountType":"trade",
 		"changeTime": 1574393385167
 	}
 }
@@ -4448,7 +4451,7 @@ accounts.update#1：
 		"accountId": 33385,
 		"balance": "2065.100267619837209301",
 		"changeType": "order.match",
-    "accountType":"trade",
+            "accountType":"trade",
 		"changeTime": 1574393385121
 	}
 }

@@ -1528,6 +1528,8 @@ list字段說明
 | balance  | true     | string   | 餘額 |                                   |
 | currency | true     | string   | 幣種 |                                   |
 | type     | true     | string   | 類型 | trade: 交易餘額，frozen: 凍結餘額 |
+| available| true     | string   | 餘額 | 最大可用餘額                     |
+| debt     | true     | string   | 餘額 | 負債                           |
 
 ## 資產划轉
 
@@ -2963,7 +2965,6 @@ API Key 權限：讀取<br>
       "field-cash-amount": "1011.0100000000",
       "field-fees": "0.0202000000",
       "finished-at": 1494901400468,
-      "user-id": 1000,
       "source": "api",
       "state": "filled",
       "canceled-at": 0

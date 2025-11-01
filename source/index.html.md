@@ -1525,6 +1525,8 @@ spot: spot account
 | balance | true | string | Balance | |
 | currency | true | string | Currency | |
 | type | true | string | Type | trade: trade balance, frozen: frozen balance |
+| available | true | string | Balance | Maximum Available Balance |
+| debt | true | string | Balance | Debt |
 
 ## Account History
 
@@ -2822,7 +2824,6 @@ It is recommended that users query historical orders by "time range".
       "field-cash-amount": "1011.0100000000",
       "field-fees": "0.0202000000",
       "finished-at": 1494901400468,
-      "user-id": 1000,
       "source": "api",
       "state": "filled",
       "canceled-at": 0

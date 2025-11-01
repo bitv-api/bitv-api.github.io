@@ -2769,20 +2769,6 @@ API Key 权限：读取<br>
 
 - GET `/v1/order/orders`
 
-> Request:
-
-```json
-{
-   "account-id": "100009",
-   "amount": "10.1",
-   "price": "100.1",
-   "source": "api",
-   "symbol": "ethusdt",
-   "type": "buy-limit"
-}
-```
-
-
 ### 请求参数
 
 | 参数名称   | 是否必须 | 类型   | 描述                                                         | 默认值                      | 取值范围                                                     |

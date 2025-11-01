@@ -3917,7 +3917,8 @@ REQ頻道支持5檔/20檔/150檔全量數據的獲取。<br>
     "id":     1494496390,
     "count":  15195,
     "low":    9657.00,
-    "vol":    121906001.754751
+    "vol":    121906001.754751,
+    "version":    126333992
   }
 }
 ```
@@ -3934,6 +3935,7 @@ REQ頻道支持5檔/20檔/150檔全量數據的獲取。<br>
 | low    | float    | 24小時最低價             |
 | high   | float    | 24小時最高價             |
 | vol    | float    | 24小時成交額             |
+| version| integer  | 內部字段                 |
 
 ### 數據請求
 
@@ -4255,7 +4257,7 @@ API Key 權限：讀取
 		"orderStatus":"submitted",
 		"symbol":"btcusdt",
 		"eventType":"creation",
-    "orderSource":"web"
+      "orderSource":"web"
 	}
 }
 
@@ -4303,8 +4305,8 @@ API Key 權限：讀取
 		"orderStatus":"filled",
 		"symbol":"btcusdt",
 		"eventType":"trade",
-    "orderSource":"web",
-    "execAmt":"0.0006"
+      "orderSource":"web",
+      "execAmt":"0.0006"
 	}
 }
 ```
@@ -4350,10 +4352,10 @@ API Key 權限：讀取
 		"orderStatus":"canceled",
 		"symbol":"btcusdt",
 		"eventType":"cancellation",
-    "orderSource": "web",
-    "orderPrice": "0.01",
-    "orderSize": "0.02",
-    "execAmt":0
+      "orderSource": "web",
+      "orderPrice": "0.01",
+      "orderSize": "0.02",
+      "execAmt":0
 	}
 }
 ```
@@ -4561,44 +4563,44 @@ accounts.update#1
 > Update example
 
 ```json
-accounts.update#0：
+accounts.update#0:
 {
-	"action": "push",
-	"ch": "accounts.update#0",
-	"data": {
-		"currency": "btc",
-		"accountId": 123456,
-		"balance": "23.111",
-		"changeType": "transfer",
-    "accountType":"trade",
-		"changeTime": 1568601800000
-	}
+"action": "push",
+"ch": "accounts.update#0",
+"data": {
+"currency": "btc",
+"accountId": 123456,
+"balance": "23.111",
+"changeType": "transfer",
+"accountType": "trade",
+"changeTime": 1568601800000
+}
 }
 
-accounts.update#1：
+accounts.update#1:
 {
-	"action": "push",
-	"ch": "accounts.update#1",
-	"data": {
-		"currency": "btc",
-		"accountId": 33385,
-		"available": "2028.699426619837209087",
-		"changeType": "order.match",
-    "accountType":"trade",
-		"changeTime": 1574393385167
-	}
+"action": "push",
+"ch": "accounts.update#1",
+"data": {
+"currency": "btc",
+"accountId": 33385,
+"available": "2028.699426619837209087",
+"changeType": "order. match",
+"accountType": "trade",
+"changeTime": 1574393385167
+}
 }
 {
-	"action": "push",
-	"ch": "accounts.update#1",
-	"data": {
-		"currency": "btc",
-		"accountId": 33385,
-		"balance": "2065.100267619837209301",
-		"changeType": "order.match",
-    "accountType":"trade",
-		"changeTime": 1574393385122
-	}
+"action": "push",
+"ch": "accounts.update#1",
+"data": {
+"currency": "btc",
+"accountId": 33385,
+"balance": "2065.100267619837209301",
+"changeType": "order. match",
+"accountType": "trade",
+"changeTime": 1574393385122
+}
 }
 ```
 
@@ -4613,6 +4615,7 @@ accounts.update#1：
 | changeType  | string   | 餘額變動類型，有效值：order-place(訂單創建)，order-match(訂單成交)，order-refund(訂單成交退款)，order-cancel(訂單撤銷)，order-fee-refund(抵扣交易手續費) |
 | accountType | string   | 賬戶類型，有效值：trade, frozen, loan, interest              |
 | changeTime  | long     | 餘額變動時間，unix time in millisecond                       |
+| seqNum      | long     | 消息序列號                                                   |
 
 注：<br>
 賬戶更新推送的是到賬金額，多筆成交產生的多筆交易返傭可能會合併到帳。

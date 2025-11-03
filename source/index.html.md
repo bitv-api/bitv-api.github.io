@@ -4265,6 +4265,7 @@ API Key 權限：讀取
 | type            | string   | 訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
 | orderStatus     | string   | 訂單狀態，有效值：submitted                                  |
 | orderCreateTime | long     | 訂單創建時間                                                 |
+| orderSource     | string   | 訂單來源                                                 |
 
 注：<BR>
 
@@ -4319,6 +4320,8 @@ API Key 權限：讀取
 | orderSize     | string   | 訂單數量（市價買單無此字段）                                |
 | orderValue    | string   | 訂單金額（僅市價買單有此字段）                              |
 | orderPrice    | string   | 訂單價格 （市價單無此字段）                                |
+| orderSource   | string   | 訂單來源                                                 |
+| execAmt       | string   | 累計成交量                                               |
 
 注：<BR>
 

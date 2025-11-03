@@ -1444,7 +1444,6 @@ none
      {
        "id": 100001,
        "type": "spot",
-       "subtype": "",
        "state": "working"
      }
    ]

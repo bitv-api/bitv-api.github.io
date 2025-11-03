@@ -1447,7 +1447,6 @@ API Key 權限：讀取<br>
     {
       "id": 100001,
       "type": "spot",
-      "subtype": "",
       "state": "working"
     }
   ]

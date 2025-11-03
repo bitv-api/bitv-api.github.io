@@ -1526,6 +1526,7 @@ spot: spot account
 | type | true | string | Type | trade: trade balance, frozen: frozen balance |
 | available | true | string | Balance | Maximum Available Balance |
 | debt | true | string | Balance | Debt |
+| seq-num | true | int | Version |  |
 
 ## Account History
 

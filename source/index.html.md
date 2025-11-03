@@ -4291,6 +4291,8 @@ API Key 權限：讀取
 		"clientOrderId":"abc123",
 		"orderStatus":"filled",
 		"symbol":"btcusdt",
+    "orderPrice": "76.000000000000000000",
+    "orderSize": "0.009",
 		"eventType":"trade",
       "orderSource":"web",
       "execAmt":"0.0006"

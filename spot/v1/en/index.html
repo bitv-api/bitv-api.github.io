@@ -7810,7 +7810,8 @@ In the future, the data behavior of 150 increments will be consistent with that 
 | orderValue      | string    | Order amount (only valid for market buy orders)                              |
 | type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
 | orderStatus     | string    | Order status, valid value: submitted                                         |
-| orderCreateTime | long      | Order creation time                                                          |</p>
+| orderCreateTime | long      | Order creation time                                                          |
+| orderSource     | string    | Order source                                                                 |</p>
 
 <p>Note: <br /></p>
 
@@ -7865,7 +7866,9 @@ In the future, the data behavior of 150 increments will be consistent with that 
 | remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
 | orderSize   | string    | Order quantity (not applicable for market buy orders)                             |
 | orderValue  | string    | Order amount (only applicable for market buy orders)                              |
-| orderPrice  | string    | Order price (not applicable for market orders)                                    |</p>
+| orderPrice  | string    | Order price (not applicable for market orders)                                    |
+| orderSource | string    | Order source                                                                      |
+| execAmt     | string    | Cumulative trading volume                                                         |</p>
 
 <p>Note: <br /></p>
 

@@ -1531,6 +1531,7 @@ list字段说明
 | type     | true     | string   | 类型 | trade: 交易余额，frozen: 冻结余额 |
 | available| true     | string   | 余额 | 最大可用余额                     |
 | debt     | true     | string   | 余额 | 负债                            |
+| seq-num     | true     | int   | 版本号 |                             |
 
 ## 账户流水
 

@@ -4117,6 +4117,7 @@ API Key 权限：读取
 | type            | string   | 订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
 | orderStatus     | string   | 订单状态，有效值：submitted                                  |
 | orderCreateTime | long     | 订单创建时间                                                 |
+| orderSource     | string   | 订单来源                                                 |
 
 注：<BR>
 
@@ -4171,6 +4172,8 @@ API Key 权限：读取
 | orderSize     | string   | 订单数量（市价买单无此字段 ）                               |
 | orderValue    | string   | 订单金额（仅市价买单有此字段）                               |
 | orderPrice    | string   | 订单价格 （市价单无此字段）                                 |
+| orderSource   | string   | 订单来源                                                 |
+| execAmt       | string   | 累计成交量                                                 |
 
 注：<BR>
 

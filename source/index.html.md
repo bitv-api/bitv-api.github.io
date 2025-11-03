@@ -4565,7 +4565,8 @@ accounts.update#0:
 "balance": "23.111",
 "changeType": "transfer",
 "accountType": "trade",
-"changeTime": 1568601800000
+"changeTime": 1568601800000,
+"seqNum":1
 }
 }
 
@@ -4579,7 +4580,8 @@ accounts.update#1:
 "available": "2028.699426619837209087",
 "changeType": "order. match",
 "accountType": "trade",
-"changeTime": 1574393385167
+"changeTime": 1574393385167,
+"seqNum":1
 }
 }
 {
@@ -4591,7 +4593,8 @@ accounts.update#1:
 "balance": "2065.100267619837209301",
 "changeType": "order. match",
 "accountType": "trade",
-"changeTime": 1574393385122
+"changeTime": 1574393385122,
+"seqNum":1
 }
 }
 ```

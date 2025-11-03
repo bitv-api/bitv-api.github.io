@@ -4109,6 +4109,7 @@ When an order is placed –
 | type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
 | orderStatus     | string    | Order status, valid value: submitted                                         |
 | orderCreateTime | long      | Order creation time                                                          |
+| orderSource     | string    | Order source                                                                 |
 
 Note: <BR>
 
@@ -4162,6 +4163,8 @@ When the order is filled –
 | orderSize   | string    | Order quantity (not applicable for market buy orders)                             |
 | orderValue  | string    | Order amount (only applicable for market buy orders)                              |
 | orderPrice  | string    | Order price (not applicable for market orders)                                    |
+| orderSource | string    | Order source                                                                      |
+| execAmt     | string    | Cumulative trading volume                                                         |
 
 Note: <BR>
 

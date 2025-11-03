@@ -4137,7 +4137,9 @@ Note: <BR>
 "symbol": "btcusdt",
 "eventType": "trade",
 "orderSource":"web",
-"execAmt":"0.0006"
+"execAmt":"0.0006",
+"orderPrice": "76.000000000000000000",
+"orderSize": "0.009"
 }
 }
 ```

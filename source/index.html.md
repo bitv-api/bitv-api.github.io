@@ -1856,7 +1856,8 @@ Frequency limit value (NEW): 20 times/2s
 
 ```json
 {
-   "data": 700
+    "status": "ok",
+    "data": 91934214
 }
 ```
 
@@ -1890,7 +1891,8 @@ Frequency limit value (NEW): 20 times/2s
 
 ```json
 {
-   "data": 700
+    "status": "ok",
+    "data": "91934217"
 }
 ```
 

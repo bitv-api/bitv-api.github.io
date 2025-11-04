@@ -1718,11 +1718,7 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
                      "chain": "btc",
                      "maxWithdrawAmt": "200.00000000",
                      "withdrawQuotaPerDay": "200.00000000",
-                     "remainWithdrawQuotaPerDay": "200.000000000000000000",
-                     "withdrawQuotaPerYear": "700000.00000000",
-                     "remainWithdrawQuotaPerYear": "700000.000000000000000000",
-                     "withdrawQuotaTotal": "7000000.00000000",
-                     "remainWithdrawQuotaTotal": "7000000.000000000000000000"
+                     "remainWithdrawQuotaPerDay": "200.000000000000000000"
                  }
          }
      ]
@@ -1741,11 +1737,8 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
 | { chain                    | true     | string    | Chain name                        |                                                                                                  |
 | maxWithdrawAmt             | true     | string    | Single maximum withdrawal amount  |                                                                                                  |
 | withdrawQuotaPerDay        | true     | string    | Daily withdrawal quota            |                                                                                                  |
-| remainWithdrawQuotaPerDay  | true     | string    | Remaining withdrawal quota for the day  |                                                                                              |
-| withdrawQuotaPerYear       | true     | string    | Withdrawal quota for the year     |                                                                                                  |
-| remainWithdrawQuotaPerYear | true     | string    | Remaining withdrawal quota for the year  |                                                                                              |
-| withdrawQuotaTotal         | true     | string    | Total withdrawal quota            |                                                                                                  |
-| remainWithdrawQuotaTotal   | true     | string    | Remaining withdrawal quota        |                                                                                                  |
+| remainWithdrawQuotaPerDay} | true     | string    | Remaining withdrawal quota for the day  |                                                                                              |
+
 
 ### Status Code
 

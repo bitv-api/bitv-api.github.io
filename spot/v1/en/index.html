@@ -5719,22 +5719,6 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>Value range [(present-179d), present], the maximum query window is 48 hours, the translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state=”canceled”).</td>
     </tr>
     <tr>
-      <td>start-date</td>
-      <td>false</td>
-      <td>string</td>
-      <td>Query start date, date format yyyy-mm-dd. Query based on the order generation time</td>
-      <td>-1d</td>
-      <td>Value range [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the translation range is the nearest for 180 days. The translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state=”canceled”).</td>
-    </tr>
-    <tr>
-      <td>end-date</td>
-      <td>false</td>
-      <td>string</td>
-      <td>Query end date, date format yyyy-mm-dd. Query based on order generation time</td>
-      <td>today</td>
-      <td>Value range [(today-179), today], the maximum query window is 2 days, the translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state=”canceled”).</td>
-    </tr>
-    <tr>
       <td>states</td>
       <td>true</td>
       <td>string</td>

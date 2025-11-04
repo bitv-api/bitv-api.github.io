@@ -2943,6 +2943,7 @@ API Key 權限：讀取<br>
       "id": 59378,
       "symbol": "ethusdt",
       "account-id": 100009,
+      "client-order-id": "",
       "amount": "10.1000000000",
       "price": "100.1000000000",
       "created-at": 1494901162595,

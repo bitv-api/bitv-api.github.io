@@ -2921,7 +2921,7 @@ API Key 權限：讀取<br>
 | end-time   | false    | long   | 查詢結束時間, 時間格式UTC time in millisecond。 以訂單生成時間進行查詢 | present                     | 取值範圍 [(present-179d), present] ，查詢窗口最大為48小時，窗口平移範圍為最近180天，已完全撤銷的歷史訂單的查詢窗口平移範圍只有最近2小時(state="canceled") |
 | start-date | false    | string | 查詢開始日期, 日期格式yyyy-mm-dd。 以訂單生成時間進行查詢    | -1d 查詢結束日期的前1天     | 取值範圍 [((end-date) – 1), (end-date)] ，查詢窗口最大為2天，窗口平移範圍為最近180天，已完全撤銷的歷史訂單的查詢窗口平移範圍只有最近2小時(state="canceled") |
 | end-date   | false    | string | 查詢結束日期, 日期格式yyyy-mm-dd。 以訂單生成時間進行查詢    | today                       | 取值範圍 [(today-179), today] ，查詢窗口最大為2天，窗口平移範圍為最近180天，已完全撤銷的歷史訂單的查詢窗口平移範圍只有最近2小時(state="canceled") |
-| states     | true     | string | 查詢的訂單狀態組合，使用','分割                              |                             | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created |
+| states     | true     | string | 查詢的訂單狀態組合，使用','分割                              |                             | partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷 |
 | from       | false    | string | 查詢起始 ID                                                  |                             | 如果是向後查詢，則賦值為上一次查詢結果中得到的最後一條id ；如果是向前查詢，則賦值為上一次查詢結果中得到的第一條id |
 | direct     | false    | string | 查詢方向                                                     |                             | prev 向前；next 向後                                         |
 | size       | false    | string | 查詢記錄大小                                                 | 100                         | [1, 100]                                                     |

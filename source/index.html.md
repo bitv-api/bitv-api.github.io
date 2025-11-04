@@ -2001,7 +2001,8 @@ API Key 權限：提幣<br>
 
 ```json
 {
-  "data": 700
+    "status": "ok",
+    "data": 91934214
 }
 ```
 
@@ -2035,7 +2036,8 @@ API Key 權限：提幣<br>
 
 ```json
 {
-  "data": 700
+    "status": "ok",
+    "data": "91934217"
 }
 ```
 

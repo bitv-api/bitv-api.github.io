@@ -1883,7 +1883,7 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
 | { chain                    | true     | string   | 鏈名稱           |          |
 | maxWithdrawAmt             | true     | string   | 單次最大提幣金額 |          |
 | withdrawQuotaPerDay        | true     | string   | 當日提幣額度     |          |
-| remainWithdrawQuotaPerDay  | true     | string   | 當日提幣剩餘額度 |          |
+| remainWithdrawQuotaPerDay} | true     | string   | 當日提幣剩餘額度 |          |
 
 ### 狀態碼
 

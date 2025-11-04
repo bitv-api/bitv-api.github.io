@@ -5602,22 +5602,6 @@
 <td>取值范围 [(present-179d), present] ，查询窗口最大为48小时，窗口平移范围为最近180天，已完全撤销的历史订单的查询窗口平移范围只有最近2小时(state=&quot;canceled&quot;)</td>
 </tr>
 <tr>
-<td>start-date</td>
-<td>false</td>
-<td>string</td>
-<td>查询开始日期, 日期格式yyyy-mm-dd。 以订单生成时间进行查询</td>
-<td>-1d 查询结束日期的前1天</td>
-<td>取值范围 [((end-date) – 1), (end-date)] ，查询窗口最大为2天，窗口平移范围为最近180天，已完全撤销的历史订单的查询窗口平移范围只有最近2小时(state=&quot;canceled&quot;)</td>
-</tr>
-<tr>
-<td>end-date</td>
-<td>false</td>
-<td>string</td>
-<td>查询结束日期, 日期格式yyyy-mm-dd。 以订单生成时间进行查询</td>
-<td>today</td>
-<td>取值范围 [(today-179), today] ，查询窗口最大为2天，窗口平移范围为最近180天，已完全撤销的历史订单的查询窗口平移范围只有最近2小时(state=&quot;canceled&quot;)</td>
-</tr>
-<tr>
 <td>states</td>
 <td>true</td>
 <td>string</td>

@@ -1864,11 +1864,7 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
                     "chain": "btc",
                     "maxWithdrawAmt": "200.00000000",
                     "withdrawQuotaPerDay": "200.00000000",
-                    "remainWithdrawQuotaPerDay": "200.000000000000000000",
-                    "withdrawQuotaPerYear": "700000.00000000",
-                    "remainWithdrawQuotaPerYear": "700000.000000000000000000",
-                    "withdrawQuotaTotal": "7000000.00000000",
-                    "remainWithdrawQuotaTotal": "7000000.000000000000000000"
+                    "remainWithdrawQuotaPerDay": "200.000000000000000000"
                 }
         }
     ]
@@ -1888,10 +1884,6 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
 | maxWithdrawAmt             | true     | string   | 單次最大提幣金額 |          |
 | withdrawQuotaPerDay        | true     | string   | 當日提幣額度     |          |
 | remainWithdrawQuotaPerDay  | true     | string   | 當日提幣剩餘額度 |          |
-| withdrawQuotaPerYear       | true     | string   | 當年提幣額度     |          |
-| remainWithdrawQuotaPerYear | true     | string   | 當年提幣剩餘額度 |          |
-| withdrawQuotaTotal         | true     | string   | 總提幣額度       |          |
-| remainWithdrawQuotaTotal } | true     | string   | 總提幣剩餘額度   |          |
 
 ### 狀態碼
 

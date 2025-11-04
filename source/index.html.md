@@ -2886,6 +2886,7 @@ API Key 权限：读取<br>
             "id": 31215214553,
             "symbol": "btcusdt",
             "account-id": 4717043,
+            "client-order-id": "",
             "amount": "1.000000000000000000",
             "price": "1.000000000000000000",
             "created-at": 1556533539282,

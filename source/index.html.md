@@ -1167,8 +1167,9 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 | step0 | 無聚合                |
 | step1 | 聚合度為報價精度*10   |
 | step2 | 聚合度為報價精度*100  |
-| step3 | 聚合度為報價精度*500  |
-| step4 | 聚合度為報價精度*1000 |
+| step3 | 聚合度為報價精度*1000  |
+| step4 | 聚合度為報價精度*5000 |
+| step5 | 聚合度為報價精度*10000 |
 
 > Response:
 
@@ -3399,8 +3400,8 @@ Websocket服務器同時支持一次性請求數據（pull）。
 | step1 | Aggregation level = precision*10     |
 | step2 | Aggregation level = precision*100    |
 | step3 | Aggregation level = precision*1000   |
-| step4 | Aggregation level = precision*10000  |
-| step5 | Aggregation level = precision*100000 |
+| step4 | Aggregation level = precision*5000  |
+| step5 | Aggregation level = precision*10000 |
 
 當type值為‘step0’時，默認深度為150檔;
 當type值為‘step1’,‘step2’,‘step3’,‘step4’,‘step5’時，默認深度為20檔。

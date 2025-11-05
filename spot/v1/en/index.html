@@ -2214,11 +2214,15 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
     </tr>
     <tr>
       <td>step3</td>
-      <td>Aggregation level: quote precision * 500</td>
+      <td>Aggregation level: quote precision * 1000</td>
     </tr>
     <tr>
       <td>step4</td>
-      <td>Aggregation level: quote precision * 1000</td>
+      <td>Aggregation level: quote precision * 5000</td>
+    </tr>
+    <tr>
+      <td>step5</td>
+      <td>Aggregation level: quote precision * 10000</td>
     </tr>
   </tbody>
 </table>
@@ -6802,8 +6806,8 @@ Frequency limit value (NEW): 20 times/2s</p>
 | step1 | Aggregation level = precision<em>10 |
 | step2 | Aggregation level = precision</em>100 |
 | step3 | Aggregation level = precision<em>1000 |
-| step4 | Aggregation level = precision</em>10000 |
-| step5 | Aggregation level = precision*100000 |</p>
+| step4 | Aggregation level = precision</em>5000 |
+| step5 | Aggregation level = precision*10000 |</p>
 
 <p>When the type value is ‘step0’, the default depth is 150 steps;
 When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘step5’, the default depth is 20 steps.</p>

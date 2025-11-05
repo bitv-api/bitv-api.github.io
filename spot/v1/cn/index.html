@@ -4211,20 +4211,6 @@
 <td>NA</td>
 <td>用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）</td>
 </tr>
-<tr>
-<td>stop-price</td>
-<td>string</td>
-<td>false</td>
-<td>NA</td>
-<td>止盈止损订单触发价格</td>
-</tr>
-<tr>
-<td>operator</td>
-<td>string</td>
-<td>false</td>
-<td>NA</td>
-<td>止盈止损订单触发价运算符 gte – greater than and equal (&gt;=), lte – less than and equal (&lt;=)</td>
-</tr>
 </tbody></table>
 
 <p><strong>buy-limit-maker</strong></p>
@@ -4334,25 +4320,11 @@
 <td>现货交易填写“spot-api”</td>
 </tr>
 <tr>
-<td>client-order-id</td>
+<td>client-order-id}]</td>
 <td>string</td>
 <td>false</td>
 <td>NA</td>
 <td>用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）</td>
-</tr>
-<tr>
-<td>stop-price</td>
-<td>string</td>
-<td>false</td>
-<td>NA</td>
-<td>止盈止损订单触发价格</td>
-</tr>
-<tr>
-<td>operator }]</td>
-<td>string</td>
-<td>false</td>
-<td>NA</td>
-<td>止盈止损订单触发价运算符 gte – greater than and equal (&gt;=), lte – less than and equal (&lt;=)</td>
 </tr>
 </tbody></table>
 
@@ -4745,16 +4717,6 @@
 <td>state</td>
 <td>string</td>
 <td>订单状态，包括submitted, partial-filled, cancelling, created</td>
-</tr>
-<tr>
-<td>stop-price</td>
-<td>string</td>
-<td>止盈止损订单触发价格</td>
-</tr>
-<tr>
-<td>operator</td>
-<td>string</td>
-<td>止盈止损订单触发价运算符</td>
 </tr>
 <tr>
 <td>account-id</td>
@@ -5200,20 +5162,6 @@
 <td>订单类型</td>
 <td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
 </tr>
-<tr>
-<td>stop-price</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价格</td>
-<td></td>
-</tr>
-<tr>
-<td>operator</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价运算符</td>
-<td>gte,lte</td>
-</tr>
 </tbody></table>
 <h2 id='client-order-id-2'>查询订单详情（基于client order ID）</h2>
 <p>API Key 权限：读取<br>
@@ -5383,20 +5331,6 @@
 <td>string</td>
 <td>订单类型</td>
 <td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
-</tr>
-<tr>
-<td>stop-price</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价格</td>
-<td></td>
-</tr>
-<tr>
-<td>operator</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价运算符</td>
-<td>gte,lte</td>
 </tr>
 </tbody></table>
 
@@ -5832,20 +5766,6 @@
 <td>订单类型</td>
 <td>submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
 </tr>
-<tr>
-<td>stop-price</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价格</td>
-<td></td>
-</tr>
-<tr>
-<td>operator</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价运算符</td>
-<td>gte,lte</td>
-</tr>
 </tbody></table>
 <h3 id='start-date-end-date'>start-date, end-date相关错误码</h3>
 <table><thead>
@@ -6072,20 +5992,6 @@
 <td>string</td>
 <td>交易对</td>
 <td>btcusdt, ethbtc, rcneth ...</td>
-</tr>
-<tr>
-<td>stop-price</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价格</td>
-<td></td>
-</tr>
-<tr>
-<td>operator</td>
-<td>false</td>
-<td>string</td>
-<td>止盈止损订单触发价运算符</td>
-<td>gte,lte</td>
 </tr>
 <tr>
 <td>type}</td>

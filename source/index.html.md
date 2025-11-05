@@ -2373,6 +2373,7 @@ Query the orders that have been submitted but have not been fully executed or ca
        "filled-cash-amount": "0.0",
        "filled-fees": "0.0",
        "source": "web",
+       "client-order-id": "",
        "state": "submitted"
      }
    ]
@@ -2396,6 +2397,8 @@ Query the orders that have been submitted but have not been fully executed or ca
 | state              | string    | Order status, including submitted, partial-filled, canceling, created |
 | stop-price         | string    | Trigger price of stop loss order                              |
 | operator           | string    | The trigger price operator for stop loss orders                |
+| account-id           | long    | Account ID                |
+| amount           | string    | Order quantity                |
 
 
 ## Cancel orders in batches (open orders)

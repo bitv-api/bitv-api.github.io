@@ -778,6 +778,13 @@ This interface does not accept any parameters.
 | min-order-value          | true     | float     | Minimum order amount for a limit order and a market buy order for the trading pair, in the pricing currency |
 | max-order-value          | false    | float     | Maximum order amount of a limit order and a market buy order for the trading pair, in converted USDT (NEW) |
 | api-trading              | true     | string    | API trading enable flag (valid value: enabled, disabled)                                              |
+| limit-order-max-buy-amt | true     | float   | max amount of limit price buy order, in the base currency     |
+| limit-order-max-sell-amt | true     | float   | max amount of limit price sell order, in the base currency       |
+| buy-limit-must-less-than | true     | float   | Buy limit must less than   |
+| sell-limit-must-greater-than | true     | float   | Sell limit must greater than |
+| market-sell-order-rate-must-less-than  | true     | float   | Market sell order rate must less than   |
+| market-buy-order-rate-must-less-than | true     | float   | Market buy order rate must less than   |
+| tags | false     | string   |  Tags, multiple tags are separated by commas, such as: st, hadax   |
 
 ## Get all currencies
 

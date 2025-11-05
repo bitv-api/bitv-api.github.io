@@ -5496,7 +5496,8 @@ endTime缺省值：當前時間</p>
   <p>Response:</p>
 </blockquote>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">  
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w"> 
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w"> 
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -5593,14 +5594,14 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>account-id</td>
       <td>string</td>
-      <td>true</td>
+      <td>false</td>
       <td>NA</td>
       <td>賬戶 ID，取值參考 <code>GET /v1/account/accounts</code>。現貨交易使用‘spot’賬戶的 account-id</td>
     </tr>
     <tr>
       <td>symbol</td>
       <td>string</td>
-      <td>ture</td>
+      <td>false</td>
       <td>NA</td>
       <td>交易對,即btcusdt, ethbtc…（取值參考<code>GET /v1/common/symbols</code>）</td>
     </tr>
@@ -5640,6 +5641,7 @@ endTime缺省值：當前時間</p>
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">  
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5454937</span><span class="p">,</span><span class="w">

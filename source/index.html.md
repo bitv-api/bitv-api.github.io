@@ -2083,13 +2083,10 @@ Send a new order for matching.
 | account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
 | symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
 | type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
-| amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
-| price | string | false | NA | Order price (not applicable for market orders) |
+| amount | string | true | NA | Order amount `for market orders, it represents the buying amount` |
+| price | string | false | NA | Order price `not applicable for market orders` |
 | source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
-| client-order-id | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
-| stop-price | string | false | NA | Trigger price for stop-loss order |
-| operator | string | false | NA | Operator for take profit stop loss order trigger price: gte (greater than or equal to), lte (less than or equal to) |
-
+| client-order-id | string | false | NA | User-defined order ID `maximum length of 64 characters, must be unique within 24 hours` |
 
 
 **buy-limit-maker**
@@ -2163,9 +2160,6 @@ A batch of up to 10 orders
 | price | string | false | NA | Order price (not applicable for market orders) |
 | source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
 | client-order-id | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
-| stop-price | string | false | NA | Trigger price for stop-loss order |
-| operator | string | false | NA | Operator for take profit stop loss order trigger price: gte (greater than or equal to), lte (less than or equal to) |
-
 
 **buy-limit-maker**
 
@@ -2395,8 +2389,6 @@ Query the orders that have been submitted but have not been fully executed or ca
 | filled-fees        | string    | Total transaction fees paid                                   |
 | source             | string    | Fill in "api" for spot transactions                           |
 | state              | string    | Order status, including submitted, partial-filled, canceling, created |
-| stop-price         | string    | Trigger price of stop loss order                              |
-| operator           | string    | The trigger price operator for stop loss orders                |
 | account-id           | long    | Account ID                |
 | amount           | string    | Order quantity                |
 
@@ -2607,9 +2599,6 @@ This interface returns the latest status and details of the specified order. Ord
 | type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, |
 |                    |          |           | sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, |
 |                    |          |           | sell-limit-maker, buy-stop-limit, sell-stop-limit                                                 |                                                                                                    |
-| stop-price         | false    | string    | Trigger price of stop-loss order                                                                 |                                                                                                    |
-| operator           | false    | string    | Stop loss order trigger price operator                                                          | gte,lte                                                                                            |
-
 
 
 ## Query order details (based on client order ID)
@@ -2674,8 +2663,6 @@ This interface returns the latest order status and details of the specified user
 | state              | true     | string    | Order status                                                                                   |             |
 | symbol             | true     | string    | Trading pair                                                                                   |             |
 | type               | true     | string    | Order type                                                                                     |             |
-| stop-price         | false    | string    | Trigger price of stop-loss order                                                               |             |
-| operator           | false    | string    | Stop loss order trigger price operator                                                        | gte, lte    |
 
 
 If the client order ID does not exist, the following error message will be returned
@@ -2843,8 +2830,6 @@ It is recommended that users query historical orders by "time range".
 | state            | true     | string    | Order status                                                                                                                                                                                                                                                                                                                                                                         | submitted, partial-filled, partially-canceled, partially-canceled, filled, canceled, created                                                                    |
 | symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, rcneth ...                                                                         |
 | type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| stop-price       | false    | string    | Trigger price of stop-loss order                                                                                                                                                                                                                                                                                                                                                    |                                                                                                                                                                    |
-| operator         | false    | string    | Stop-loss order trigger price operator                                                                                                                                                                                                                                                                                                                                              | gte, lte                                                                                            |
 
 ### Error codes related to start-date and end-date:
 
@@ -2931,8 +2916,6 @@ This interface queries historical orders within the last 48 hours based on searc
 | source             | true     | string    | Order source                                                                                                                                                                        | api                                                                     |
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
 | symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, rcneth, etc.                                            |
-| stop-price         | false    | string    | Trigger price of stop-loss order                                                                                                                                                    |                                                                         |
-| operator           | false    | string    | Stop-loss order trigger price operator                                                                                                                                              | gte, lte                                                                |
 | type               | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, etc. |
 | next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next")                                       | UTC time in milliseconds                                                |
 

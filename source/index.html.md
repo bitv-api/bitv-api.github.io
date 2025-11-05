@@ -2301,6 +2301,7 @@ This interface sends a request to cancel an order.
 
 ```json
 {
+   "status": "ok",
    "data": "10"
 }
 ```
@@ -2346,8 +2347,8 @@ Query the orders that have been submitted but have not been fully executed or ca
 
 | Parameter Name | Data Type | Required | Default Value | Description |
 | -------------- | --------- | -------- | ------------- | ----------- |
-| account-id     | string    | true     | NA            | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account |
-| symbol         | string    | true     | NA            | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| account-id     | string    | false     | NA            | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account |
+| symbol         | string    | false     | NA            | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
 | side           | string    | false    | both          | Specify to only return orders in one direction, possible values are: buy, sell. By default, both directions are returned. |
 | from           | string    | false    |               | Query starting ID |
 | direct         | string    | false    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
@@ -2358,6 +2359,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 
 ```json
 {
+   "status": "ok",
    "data": [
      {
        "id": 5454937,

@@ -2448,7 +2448,8 @@ API Key 權限：交易<br>
 > Response:
 
 ```json
-{  
+{ 
+  "status": "ok", 
   "data": "10"
 }
 ```
@@ -2494,8 +2495,8 @@ API Key 權限：讀取<br>
 
 | 參數名稱   | 數據類型 | 是否必需                                         | 默認值 | 描述                                                         |
 | ---------- | -------- | ------------------------------------------------ | ------ | ------------------------------------------------------------ |
-| account-id | string   | true                                             | NA     | 賬戶 ID，取值參考 `GET /v1/account/accounts`。現貨交易使用‘spot’賬戶的 account-id |
-| symbol     | string   | ture                                             | NA     | 交易對,即btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| account-id | string   | false                                             | NA     | 賬戶 ID，取值參考 `GET /v1/account/accounts`。現貨交易使用‘spot’賬戶的 account-id |
+| symbol     | string   | false                                             | NA     | 交易對,即btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
 | side       | string   | false                                            | both   | 指定只返回某一個方向的訂單，可能的值有: buy, sell. 默認兩個方向都返回。 |
 | from       | string   | false                                            |        | 查詢起始 ID                                                  |
 | direct     | string   | false (如字段'from'已設定，此字段'direct'為必填) |        | 查詢方向，prev 向前；next 向後                               |
@@ -2505,6 +2506,7 @@ API Key 權限：讀取<br>
 
 ```json
 {  
+  "status": "ok",
   "data": [
     {
       "id": 5454937,

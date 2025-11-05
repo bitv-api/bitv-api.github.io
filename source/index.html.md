@@ -2373,6 +2373,7 @@ API Key 权限：读取<br>
       "filled-cash-amount": "0.0",
       "filled-fees": "0.0",
       "source": "web",
+      "client-order-id": "",
       "state": "submitted"
     }
   ]
@@ -2396,6 +2397,8 @@ API Key 权限：读取<br>
 | state              | string   | 订单状态，包括submitted, partial-filled, cancelling, created |
 | stop-price         | string   | 止盈止损订单触发价格                                         |
 | operator           | string   | 止盈止损订单触发价运算符                                     |
+| account-id           | long   | 账户 ID                                        |
+| amount           | string   | 订单数量                                     |
 
 ## 批量撤销订单（open orders）
 

@@ -2078,15 +2078,15 @@ Send a new order for matching.
 ```
 
 ### Request parameters
-| Parameter Name | Data Type | Required | Default Value | Description |
-| -------------- | --------- | -------- | ------------- | ----------- |
-| account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
-| symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
-| type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
-| amount | string | true | NA | Order amount `for market orders, it represents the buying amount` |
-| price | string | false | NA | Order price `not applicable for market orders` |
-| source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
-| client-order-id | string | false | NA | User-defined order ID `maximum length of 64 characters, must be unique within 24 hours` |
+| Parameter Name   | Data Type | Required | Default Value | Description |
+|------------------|-----------|-----------|----------------|-------------|
+| account-id       | string    | true      | NA             | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
+| symbol           | string    | true      | NA             | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
+| type             | string    | true      | NA             | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
+| amount           | string    | true      | NA             | Order amount (for market orders, it represents the buying amount). |
+| price            | string    | false     | NA             | Order price (not applicable for market orders). |
+| source           | string    | false     | spot-api       | Order source. Use `"spot-api"` for spot transactions. |
+| client-order-id  | string    | false     | NA             | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours). |
 
 
 **buy-limit-maker**

@@ -2093,8 +2093,6 @@ API Key 权限：交易
 | price           | string   | false    | NA       | 订单价格（对市价单无效）                                     |
 | source          | string   | false    | spot-api | 现货交易填写“spot-api”                                       |
 | client-order-id | string   | false    | NA       | 用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）   |
-| stop-price      | string   | false    | NA       | 止盈止损订单触发价格                                         |
-| operator        | string   | false    | NA       | 止盈止损订单触发价运算符 gte – greater than and equal (>=), lte – less than and equal (<=) |
 
 
 **buy-limit-maker**
@@ -2168,9 +2166,7 @@ API Key 权限：交易<br>
 | amount          | string   | true     | NA       | 订单交易量（市价买单为订单交易额）                           |
 | price           | string   | false    | NA       | 订单价格（对市价单无效）                                     |
 | source          | string   | false    | spot-api | 现货交易填写“spot-api”                                       |
-| client-order-id | string   | false    | NA       | 用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）   |
-| stop-price      | string   | false    | NA       | 止盈止损订单触发价格                                         |
-| operator }]     | string   | false    | NA       | 止盈止损订单触发价运算符 gte – greater than and equal (>=), lte – less than and equal (<=) |
+| client-order-id}] | string   | false    | NA       | 用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）   |
 
 **buy-limit-maker**
 
@@ -2395,8 +2391,6 @@ API Key 权限：读取<br>
 | filled-fees        | string   | 已交交易手续费总额                                           |
 | source             | string   | 现货交易填写“api”                                            |
 | state              | string   | 订单状态，包括submitted, partial-filled, cancelling, created |
-| stop-price         | string   | 止盈止损订单触发价格                                         |
-| operator           | string   | 止盈止损订单触发价运算符                                     |
 | account-id           | long   | 账户 ID                                        |
 | amount           | string   | 订单数量                                     |
 
@@ -2601,8 +2595,6 @@ API Key 权限：读取<br>
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销， created |
 | symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type              | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
-| stop-price        | false    | string   | 止盈止损订单触发价格                                         |                                                              |
-| operator          | false    | string   | 止盈止损订单触发价运算符                                     | gte,lte                                                      |
 
 
 ## 查询订单详情（基于client order ID）
@@ -2667,8 +2659,6 @@ API Key 权限：读取<br>
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created |
 | symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type              | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
-| stop-price        | false    | string   | 止盈止损订单触发价格                                         |                                                              |
-| operator          | false    | string   | 止盈止损订单触发价运算符                                     | gte,lte                                                      |
 
 如client order ID不存在，返回如下错误信息 
 {
@@ -2835,8 +2825,6 @@ API Key 权限：读取<br>
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created |
 | symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type              | true     | string   | 订单类型                                                     | submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
-| stop-price        | false    | string   | 止盈止损订单触发价格                                         |                                                              |
-| operator          | false    | string   | 止盈止损订单触发价运算符                                     | gte,lte                                                      |
 
 ### start-date, end-date相关错误码
 
@@ -2924,8 +2912,6 @@ API Key 权限：读取<br>
 | source            | true     | string   | 订单来源                                                     | api                                                          |
 | state             | true     | string   | 订单状态                                                     | partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销 |
 | symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
-| stop-price        | false    | string   | 止盈止损订单触发价格                                         |                                                              |
-| operator          | false    | string   | 止盈止损订单触发价运算符                                     | gte,lte                                                      |
 | type}             | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单, buy-limit-maker, sell-limit-maker, buy-limit-maker, sell-limit-maker |
 | next-time         | false    | long     | 下一查询起始时间（当请求字段”direct”为”prev”时有效）, 下一查询结束时间（当请求字段”direct”为”next”时有效）。注：仅在检索出的总条目数量超出size字段限定时，此返回字段存在。 | UTC time in millisecond                                      |
 

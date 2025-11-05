@@ -1158,8 +1158,9 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 | step0  | No aggregation                            |
 | step1  | Aggregation level: quote precision * 10    |
 | step2  | Aggregation level: quote precision * 100   |
-| step3  | Aggregation level: quote precision * 500   |
-| step4  | Aggregation level: quote precision * 1000  |
+| step3  | Aggregation level: quote precision * 1000   |
+| step4  | Aggregation level: quote precision * 5000  |
+| step5  | Aggregation level: quote precision * 10000  |
 
 
 > Response:
@@ -3253,8 +3254,8 @@ This topic sends the latest Depth of Market snapshot. The snapshot frequency is 
 | step1 | Aggregation level = precision*10 |
 | step2 | Aggregation level = precision*100 |
 | step3 | Aggregation level = precision*1000 |
-| step4 | Aggregation level = precision*10000 |
-| step5 | Aggregation level = precision*100000 |
+| step4 | Aggregation level = precision*5000 |
+| step5 | Aggregation level = precision*10000 |
 
 When the type value is 'step0', the default depth is 150 steps;
 When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default depth is 20 steps.

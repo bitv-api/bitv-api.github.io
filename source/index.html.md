@@ -18,7 +18,7 @@ search: false
 ## API 简介
 
 欢迎使用BitV API！  
-
+/market/depth
 此文档是BitV的唯一官方API文档，提供的功能和服务会在此持续更新，请大家及时关注。  
 
 您可以通过点击上方菜单来切换获取不同业务的API，还可通过点击右上方的语言按钮来切换文档语言。  
@@ -1169,8 +1169,9 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 | step0 | 无聚合                |
 | step1 | 聚合度为报价精度*10   |
 | step2 | 聚合度为报价精度*100  |
-| step3 | 聚合度为报价精度*500  |
-| step4 | 聚合度为报价精度*1000 |
+| step3 | 聚合度为报价精度*1000  |
+| step4 | 聚合度为报价精度*5000 |
+| step5 | 聚合度为报价精度*10000 |
 
 > Response:
 
@@ -3251,8 +3252,8 @@ Websocket服务器同时支持一次性请求数据（pull）。
 | step1 | Aggregation level = precision*10     |
 | step2 | Aggregation level = precision*100    |
 | step3 | Aggregation level = precision*1000   |
-| step4 | Aggregation level = precision*10000  |
-| step5 | Aggregation level = precision*100000 |
+| step4 | Aggregation level = precision*5000  |
+| step5 | Aggregation level = precision*10000 |
 
 当type值为‘step0’时，默认深度为150档;
 当type值为‘step1’,‘step2’,‘step3’,‘step4’,‘step5’时，默认深度为20档。

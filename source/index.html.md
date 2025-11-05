@@ -2240,9 +2240,6 @@ API Key 權限：交易
 | price           | string   | false    | NA       | 訂單價格（對市價單無效）                                     |
 | source          | string   | false    | spot-api | 現貨交易填寫「spot-api」                                       |
 | client-order-id | string   | false    | NA       | 用戶自編訂單號（最大長度64個字符，須在24小時內保持唯一性）   |
-| stop-price      | string   | false    | NA       | 止盈止損訂單觸發價格                                         |
-| operator        | string   | false    | NA       | 止盈止損訂單觸發價運算符 gte – greater than and equal (>=), lte – less than and equal (<=) |
-
 
 **buy-limit-maker**
 
@@ -2315,9 +2312,7 @@ API Key 權限：交易<br>
 | amount          | string   | true     | NA       | 訂單交易量（市價買單為訂單交易額）                           |
 | price           | string   | false    | NA       | 訂單價格（對市價單無效）                                     |
 | source          | string   | false    | spot-api | 現貨交易填寫「spot-api」                                       |
-| client-order-id | string   | false    | NA       | 用戶自編訂單號（最大長度64個字符，須在24小時內保持唯一性）   |
-| stop-price      | string   | false    | NA       | 止盈止損訂單觸發價格                                         |
-| operator }]     | string   | false    | NA       | 止盈止損訂單觸發價運算符 gte – greater than and equal (>=), lte – less than and equal (<=) |
+| client-order-id}] | string   | false    | NA       | 用戶自編訂單號（最大長度64個字符，須在24小時內保持唯一性）   |
 
 **buy-limit-maker**
 
@@ -2542,8 +2537,6 @@ API Key 權限：讀取<br>
 | filled-fees        | string   | 已交交易手續費總額                                           |
 | source             | string   | 現貨交易填寫「api」                                            |
 | state              | string   | 訂單狀態，包括submitted, partial-filled, cancelling, created |
-| stop-price         | string   | 止盈止損訂單觸發價格                                         |
-| operator           | string   | 止盈止損訂單觸發價運算符                                     |
 | account-id           | long   | 賬戶 ID                                       |
 | amount           | string   | 訂單數量                                     |
 
@@ -2748,9 +2741,6 @@ API Key 權限：讀取<br>
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷， created |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type              | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
-| stop-price        | false    | string   | 止盈止損訂單觸發價格                                         |                                                              |
-| operator          | false    | string   | 止盈止損訂單觸發價運算符                                     | gte,lte                                                      |
-
 
 ## 查詢訂單詳情（基於client order ID）
 
@@ -2814,8 +2804,6 @@ API Key 權限：讀取<br>
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type              | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
-| stop-price        | false    | string   | 止盈止損訂單觸發價格                                         |                                                              |
-| operator          | false    | string   | 止盈止損訂單觸發價運算符                                     | gte,lte                                                      |
 
 如client order ID不存在，返回如下錯誤信息 
 {
@@ -2982,8 +2970,6 @@ API Key 權限：讀取<br>
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, rcneth ...                                  |
 | type              | true     | string   | 訂單類型                                                     | submit-cancel：已提交撤單申請  ,buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit |
-| stop-price        | false    | string   | 止盈止損訂單觸發價格                                         |                                                              |
-| operator          | false    | string   | 止盈止損訂單觸發價運算符                                     | gte,lte                                                      |
 
 ### start-date, end-date相關錯誤碼
 
@@ -3071,8 +3057,6 @@ API Key 權限：讀取<br>
 | source            | true     | string   | 訂單來源                                                     | api                                                          |
 | state             | true     | string   | 訂單狀態                                                     | partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷 |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, rcneth ...                                  |
-| stop-price        | false    | string   | 止盈止損訂單觸發價格                                         |                                                              |
-| operator          | false    | string   | 止盈止損訂單觸發價運算符                                     | gte,lte                                                      |
 | type}             | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單, buy-limit-maker, sell-limit-maker, buy-limit-maker, sell-limit-maker |
 | next-time         | false    | long     | 下一查詢起始時間（當請求字段」direct」為」prev」時有效）, 下一查詢結束時間（當請求字段」direct」為」next」時有效）。注：僅在檢索出的總條目數量超出size字段限定時，此返回字段存在。 | UTC time in millisecond                                      |
 

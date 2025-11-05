@@ -791,6 +791,14 @@ curl "https://api.bitv.com/v1/common/symbols"
 | min-order-value            | true     | float    | 交易对限价单和市价买单最小下单金额 ，以计价币种为单位        |
 | max-order-value            | false    | float    | 交易对限价单和市价买单最大下单金额 ，以折算后的USDT为单位（NEW） |
 | api-trading                | true     | string   | API交易使能标记（有效值：enabled, disabled）                 |
+| limit-order-max-buy-amt              | true     | float   | 现价买最大可买数量  |
+| limit-order-max-sell-amt              | true     | float   | 现价卖最大可买数量     |
+| buy-limit-must-less-than             | true     | float   |  限价单买入价格上限比例  |
+| sell-limit-must-greater-than              | true     | float   |  限价单卖出价格下限比例 |
+| market-sell-order-rate-must-less-than               | true     | float   | 市价单卖单价格上限比例     |
+| market-buy-order-rate-must-less-than              | true     | float   | 市价单买单价格上限比例   |
+| tags              | true     | string   |  标签，多个标签以逗号分隔，如：st,hadax     |
+
 
 ## 获取所有币种
 

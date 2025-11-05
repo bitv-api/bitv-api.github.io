@@ -2520,6 +2520,7 @@ API Key 權限：讀取<br>
       "filled-cash-amount": "0.0",
       "filled-fees": "0.0",
       "source": "web",
+      "client-order-id": "",
       "state": "submitted"
     }
   ]
@@ -2543,6 +2544,8 @@ API Key 權限：讀取<br>
 | state              | string   | 訂單狀態，包括submitted, partial-filled, cancelling, created |
 | stop-price         | string   | 止盈止損訂單觸發價格                                         |
 | operator           | string   | 止盈止損訂單觸發價運算符                                     |
+| account-id           | long   | 賬戶 ID                                       |
+| amount           | string   | 訂單數量                                     |
 
 ## 批量撤銷訂單（open orders）
 

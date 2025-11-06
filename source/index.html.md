@@ -4007,67 +4007,6 @@ API Key 权限：读取
 
 ### 数据更新字段列表
 
-> Update example
-
-```json
-{
-	"action":"push",
-	"ch":"orders#btcusdt",
-	"data":
-	{
-		"orderSide":"buy",
-		"lastActTime":1583853365586,
-		"clientOrderId":"abc123",
-		"orderStatus":"rejected",
-		"symbol":"btcusdt",
-		"eventType":"trigger",
-		"errCode": 2002,
-		"errMessage":"invalid.client.order.id (NT)"
-	}
-}
-```
-
-当计划委托/追踪委托触发失败后 –
-
-| 字段          | 数据类型 | 描述                                                         |
-| ------------- | -------- | ------------------------------------------------------------ |
-| eventType     | string   | 事件类型，有效值：trigger（本事件仅对计划委托/追踪委托有效） |
-| symbol        | string   | 交易代码                                                     |
-| clientOrderId | string   | 用户自编订单号                                               |
-| orderSide     | string   | 订单方向，有效值：buy,sell                                   |
-| orderStatus   | string   | 订单状态，有效值：rejected                                   |
-| errCode       | int      | 订单触发失败错误码                                           |
-| errMessage    | string   | 订单触发失败错误消息                                         |
-| lastActTime   | long     | 订单触发失败时间                                             |
-
-> Update example
-
-```json
-{
-	"action":"push",
-	"ch":"orders#btcusdt",
-	"data":
-	{
-		"orderSide":"buy",
-		"lastActTime":1583853365586,
-		"clientOrderId":"abc123",
-		"orderStatus":"canceled",
-		"symbol":"btcusdt",
-		"eventType":"deletion"
-	}
-}
-```
-
-当计划委托/追踪委托在触发前被撤销后 –
-
-| 字段          | 数据类型 | 描述                                                         |
-| ------------- | -------- | ------------------------------------------------------------ |
-| eventType     | string   | 事件类型，有效值：deletion（本事件仅对计划委托/追踪委托有效） |
-| symbol        | string   | 交易代码                                                     |
-| clientOrderId | string   | 用户自编订单号                                               |
-| orderSide     | string   | 订单方向，有效值：buy,sell                                   |
-| orderStatus   | string   | 订单状态，有效值：canceled                                   |
-| lastActTime   | long     | 订单撤销时间                                                 |
 
 > Update example
 

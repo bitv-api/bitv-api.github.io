@@ -2962,6 +2962,8 @@ This interface queries current and historical transaction records based on searc
       "trade-id": 100282808529,
       "role": taker,
       "filled-points": "0.0",
+      "fee-currency": "eth",
+      "fee-deduct-state": "done",
       "fee-deduct-currency": ""
     }
     ...

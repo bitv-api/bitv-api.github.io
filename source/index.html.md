@@ -3997,68 +3997,6 @@ In the messages pushed by different event types, the list of fields is slightly 
 
 ### Data update field list
 
-> Update example
-
-```json
-{
-"action": "push",
-"ch": "orders#btcusdt",
-"data":
-{
-"orderSide": "buy",
-"lastActTime": 1583853365586,
-"clientOrderId": "abc123",
-"orderStatus": "rejected",
-"symbol": "btcusdt",
-"eventType": "trigger",
-"errCode": 2002,
-"errMessage": "invalid.client.order.id (NT)"
-}
-}
-```
-When the planning order/tracking order trigger fails –
-
-| Field         | Data Type | Description                                                                 |
-| ------------- | --------- | --------------------------------------------------------------------------- |
-| eventType     | string    | Event type, valid value: trigger (this event is only valid for plan order/track order) |
-| symbol        | string    | Transaction code                                                             |
-| clientOrderId | string    | User-defined order number                                                    |
-| orderSide     | string    | Order direction, valid values: buy, sell                                     |
-| orderStatus   | string    | Order status, valid value: rejected                                          |
-| errCode       | int       | Order trigger failure error code                                             |
-| errMessage    | string    | Error message for order trigger failure                                      |
-| lastActTime   | long      | Order trigger failure time                                                   |
-
-
-> Update example
-
-```json
-{
-"action": "push",
-"ch": "orders#btcusdt",
-"data":
-{
-"orderSide": "buy",
-"lastActTime": 1583853365586,
-"clientOrderId": "abc123",
-"orderStatus": "canceled",
-"symbol": "btcusdt",
-"eventType": "deletion"
-}
-}
-```
-
-When a planning order/tracking order is canceled before triggering –
-
-| Field         | Data Type | Description                                                                 |
-| ------------- | --------- | --------------------------------------------------------------------------- |
-| eventType     | string    | Event type, valid value: deletion (this event is only valid for plan order/tracking order) |
-| symbol        | string    | Transaction code                                                             |
-| clientOrderId | string    | User-defined order number                                                    |
-| orderSide     | string    | Order direction, valid values: buy, sell                                     |
-| orderStatus   | string    | Order status, valid value: canceled                                          |
-| lastActTime   | long      | Order cancellation time                                                      |
-
 
 > Update example
 

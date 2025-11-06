@@ -6805,20 +6805,74 @@ Frequency limit value (NEW): 20 times/2s</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="parameters-1">parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| —— | ——– | ——– | —— | ———— | —————————————————— |
-| symbol | string | true | NA | transaction symbol | btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>) |
-| type | string | true | step0 | merge depth type | step0, step1, step2, step3, step4, step5 |</p>
 
-<p><strong>“type” merge depth type</strong>
-| Value | Description |
-| —– | ———————————— |
-| step0 | Do not merge depth |
-| step1 | Aggregation level = precision<em>10 |
-| step2 | Aggregation level = precision</em>100 |
-| step3 | Aggregation level = precision<em>1000 |
-| step4 | Aggregation level = precision</em>5000 |
-| step5 | Aggregation level = precision*10000 |</p>
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>default value</th>
+      <th>description</th>
+      <th>value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>transaction symbol</td>
+      <td>btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>)</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>true</td>
+      <td>step0</td>
+      <td>merge depth type</td>
+      <td>step0, step1, step2, step3, step4, step5</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>“type” merge depth type</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>step0</td>
+      <td>Do not merge depth</td>
+    </tr>
+    <tr>
+      <td>step1</td>
+      <td>Aggregation level = precision*10</td>
+    </tr>
+    <tr>
+      <td>step2</td>
+      <td>Aggregation level = precision*100</td>
+    </tr>
+    <tr>
+      <td>step3</td>
+      <td>Aggregation level = precision*1000</td>
+    </tr>
+    <tr>
+      <td>step4</td>
+      <td>Aggregation level = precision*5000</td>
+    </tr>
+    <tr>
+      <td>step5</td>
+      <td>Aggregation level = precision*10000</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>When the type value is ‘step0’, the default depth is 150 steps;
 When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘step5’, the default depth is 20 steps.</p>
@@ -6854,7 +6908,8 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
     </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1572362902012</span><span class="w"> </span><span class="err">//quote</span><span class="w"> </span><span class="err">time</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-1">Data update field list</h3>
+</span></code></pre></div>
+<h3 id="data-update-field-list-1">Data update field list</h3>
 
 <aside class="notice">Display the depth list of buying and selling orders under the 'tick' object</aside>
 
@@ -6965,7 +7020,8 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre></div><p>However, the 5-level/20-level MBP is incremented one by one, and no data is pushed when the order book does not change;<br />
+</span></code></pre></div>
+<p>However, the 5-level/20-level MBP is incremented one by one, and no data is pushed when the order book does not change;<br />
 In the future, the data behavior of 150 increments will be consistent with that of 5 increments, that is, when the order book has not changed, empty messages will no longer be pushed;<br />
 5) Only some trading pairs (btcusdt, ethusdt, xrpusdt, eosusdt, ltcusdt, etcusdt, adausdt, dashusdt, bsvusdt) are supported in the 5-level/20-level incremental market, and 150-level snapshot increments support all trading pairs. <br /></p>
 
@@ -6996,11 +7052,39 @@ In the future, the data behavior of 150 increments will be consistent with that 
    </span><span class="nl">"req"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.mbp.5"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id2"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="parameters-2">parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ——— | ——— | ——– | ————- | ———– | ———– |
-| symbol    | string    | true     | NA            | transaction code (wildcards are not supported) | |
-| levels    | integer   | true     | NA            | depth level (value: 5, 20, 150) | currently only supports 5 levels, 20 levels, or 150 levels of depth |</p>
+</span></code></pre></div>
+<h3 id="parameters-2">parameters</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>default value</th>
+      <th>description</th>
+      <th>value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>transaction code (wildcards are not supported)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>levels</td>
+      <td>integer</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>depth level (value: 5, 20, 150)</td>
+      <td>currently only supports 5 levels, 20 levels, or 150 levels of depth</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response (incremental subscription)</p>
@@ -7055,7 +7139,8 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-2">Data update field list</h3>
+</span></code></pre></div>
+<h3 id="data-update-field-list-2">Data update field list</h3>
 
 <table>
   <thead>
@@ -7107,10 +7192,37 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="parameters-3">parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ——— | ——— | ——– | ————- | ———— | ———– |
-| symbol    | string    | true     | NA            | transaction code (wildcards are not supported) | |
-| levels    | integer   | true     | NA            | depth level | 5, 10, 20 |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>default value</th>
+      <th>description</th>
+      <th>value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>transaction code (wildcards are not supported)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>levels</td>
+      <td>integer</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>depth level</td>
+      <td>5, 10, 20</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response</p>
@@ -7149,7 +7261,8 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-3">Data update field list</h3>
+</span></code></pre></div>
+<h3 id="data-update-field-list-3">Data update field list</h3>
 
 <table>
   <thead>
@@ -7229,16 +7342,55 @@ In the future, the data behavior of 150 increments will be consistent with that 
         </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-4">Data update field list</h3>
-<p>| Field | Data Type | Description |
-| —— | ——– | —————— |
-| symbol | string | transaction code |
-| quoteTime | long | Handicap update time |
-| bid | float | buy price |
-| bidSize | float | buy quantity |
-| ask | float | ask price |
-| askSize | float | sell quantity |
-| seqId | int | message sequence number |</p>
+</span></code></pre></div>
+<h3 id="data-update-field-list-4">Data update field list</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>transaction code</td>
+    </tr>
+    <tr>
+      <td>quoteTime</td>
+      <td>long</td>
+      <td>Handicap update time</td>
+    </tr>
+    <tr>
+      <td>bid</td>
+      <td>float</td>
+      <td>buy price</td>
+    </tr>
+    <tr>
+      <td>bidSize</td>
+      <td>float</td>
+      <td>buy quantity</td>
+    </tr>
+    <tr>
+      <td>ask</td>
+      <td>float</td>
+      <td>ask price</td>
+    </tr>
+    <tr>
+      <td>askSize</td>
+      <td>float</td>
+      <td>sell quantity</td>
+    </tr>
+    <tr>
+      <td>seqId</td>
+      <td>int</td>
+      <td>message sequence number</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="transaction-details-1">transaction details</h2>
 
@@ -7258,9 +7410,29 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="parameters-5">parameters</h3>
-<p>| Parameter | Data Type | Required | Default Value | Description | Value Range |
-| ——— | ——— | ——– | ————- | ———– | ———– |
-| symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc… (refer to <code>GET /v1/common/symbols</code> for values) |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+      <th>Value Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Transaction symbol</td>
+      <td>btcusdt, ethbtc… (refer to <code>GET /v1/common/symbols</code> for values)</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response</p>
@@ -7296,15 +7468,50 @@ In the future, the data behavior of 150 increments will be consistent with that 
          </span><span class="p">]</span><span class="w">
    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-5">Data update field list</h3>
-<p>| Field | Data Type | Description |
-| —— | ——– | ———————————————- |
-| id | integer | Unique transaction ID (will be discarded) |
-| tradeId | integer | Unique transaction ID (NEW) |
-| amount | float | Volume (buy or sell side) |
-| price | float | Transaction price |
-| ts | integer | Transaction time (UNIX epoch time in millisecond) |
-| direction | string | Active transaction party (order direction of taker): ‘buy’ or ‘sell’ |</p>
+</span></code></pre></div>
+<h3 id="data-update-field-list-5">Data update field list</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>integer</td>
+      <td>Unique transaction ID (will be discarded)</td>
+    </tr>
+    <tr>
+      <td>tradeId</td>
+      <td>integer</td>
+      <td>Unique transaction ID (NEW)</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>float</td>
+      <td>Volume (buy or sell side)</td>
+    </tr>
+    <tr>
+      <td>price</td>
+      <td>float</td>
+      <td>Transaction price</td>
+    </tr>
+    <tr>
+      <td>ts</td>
+      <td>integer</td>
+      <td>Transaction time (UNIX epoch time in millisecond)</td>
+    </tr>
+    <tr>
+      <td>direction</td>
+      <td>string</td>
+      <td>Active transaction party (order direction of taker): ‘buy’ or ‘sell’</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3 id="data-request-2">Data Request</h3>
 
@@ -7333,9 +7540,29 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="parameters-6">parameters</h3>
-<p>| Parameter | Data Type | Required | Default Value | Description | Value Range |
-| ——— | ——– | ——– | ————- | ———– | ———– |
-| symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc, etc. (value reference <code>GET /v1/common/symbols</code>) |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+      <th>Value Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Transaction symbol</td>
+      <td>btcusdt, ethbtc, etc. (value reference <code>GET /v1/common/symbols</code>)</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response</p>
@@ -7367,18 +7594,65 @@ In the future, the data behavior of 150 increments will be consistent with that 
      </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">126333992</span><span class="w">
    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-6">Data update field list</h3>
-<p>| Field | Data Type | Description |
-| —— | ——– | ———————— |
-| id | integer | Unix time, also used as message ID |
-| amount | float | 24-hour trading volume |
-| count | integer | Number of transactions in 24 hours |
-| open | float | 24-hour opening price |
-| close | float | Latest price |
-| low | float | 24-hour lowest price |
-| high | float | 24-hour highest price |
-| vol | float | 24-hour turnover |
-| version | integer | Internal field |</p>
+</span></code></pre></div>
+<h3 id="data-update-field-list-6">Data update field list</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>integer</td>
+      <td>Unix time, also used as message ID</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>float</td>
+      <td>24-hour trading volume</td>
+    </tr>
+    <tr>
+      <td>count</td>
+      <td>integer</td>
+      <td>Number of transactions in 24 hours</td>
+    </tr>
+    <tr>
+      <td>open</td>
+      <td>float</td>
+      <td>24-hour opening price</td>
+    </tr>
+    <tr>
+      <td>close</td>
+      <td>float</td>
+      <td>Latest price</td>
+    </tr>
+    <tr>
+      <td>low</td>
+      <td>float</td>
+      <td>24-hour lowest price</td>
+    </tr>
+    <tr>
+      <td>high</td>
+      <td>float</td>
+      <td>24-hour highest price</td>
+    </tr>
+    <tr>
+      <td>vol</td>
+      <td>float</td>
+      <td>24-hour turnover</td>
+    </tr>
+    <tr>
+      <td>version</td>
+      <td>integer</td>
+      <td>Internal field</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3 id="data-request-3">Data Request</h3>
 
@@ -7426,12 +7700,33 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="valid-values-for-action">Valid values for <code>action</code></h3>
-<p>| Valid Values | Value Description |
-| ———- | ———————————— |
-| sub | Subscription data |
-| req | Data request |
-| ping, pong | Heartbeat data |
-| push | Push data, the data type sent from the server to the client |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valid Values</th>
+      <th>Value Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>sub</td>
+      <td>Subscription data</td>
+    </tr>
+    <tr>
+      <td>req</td>
+      <td>Data request</td>
+    </tr>
+    <tr>
+      <td>ping, pong</td>
+      <td>Heartbeat data</td>
+    </tr>
+    <tr>
+      <td>push</td>
+      <td>Push data, the data type sent from the server to the client</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3 id="frequency-limit-1">Frequency Limit</h3>
 
@@ -7440,10 +7735,10 @@ In the future, the data behavior of 150 increments will be consistent with that 
 <ul>
   <li>Limit single connection <strong>effective</strong> requests (including req, sub, unsub, excluding ping/pong and other invalid requests) to <strong>50 times/second</strong> (here the second limit is a sliding window). When this limit is exceeded, a “too many request” error message is returned.</li>
   <li>Limit the total number of connections established with a single API Key to <strong>10</strong>. When this limit is exceeded, a “too many connection” error message is returned.</li>
-  <li>Limit the number of connections established by a single IP to <strong>100 times/second</strong>. When the limit is exceeded, a “too many request” error message will be returned.
-    <h3 id="authentication">Authentication</h3>
-  </li>
+  <li>Limit the number of connections established by a single IP to <strong>100 times/second</strong>. When the limit is exceeded, a “too many request” error message will be returned.</li>
 </ul>
+
+<h3 id="authentication">Authentication</h3>
 
 <p>The authentication request format is as follows:</p>
 
@@ -7470,17 +7765,68 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>Parameter Description
-| field            | required | data type | description                                                                                       |
-| —————- | ——– | ——— | ————————————————————————————————- |
-| action           | true     | string    | Websocket data operation type, the fixed value for authentication is req                         |
-| ch               | true     | string    | Request subject, the fixed value for authentication is auth                                      |
-| authType         | true     | string    | Authentication type, the fixed value for authentication is api. Note that this parameter is not included in the signature calculation. |
-| accessKey        | true     | string    | AccessKey in the API Key you applied for                                                          |
-| signatureMethod  | true     | string    | Signature method, the protocol for users to calculate the signature message hash, the fixed value is HmacSHA256 |
-| signatureVersion | true     | string    | Signature protocol version, the fixed value is 2.1                                               |
-| timestamp        | true     | string    | Timestamp, the time (UTC time) when you make the request. Including this value in the query request helps prevent third parties from intercepting your request. Format: 2017-05-11T16:22:06 (in UTC time zone) |
-| signature        | true     | string    | Signature, a computed value used to ensure that the signature is valid and has not been tampered with |</p>
+<p>Parameter Description</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>required</th>
+      <th>data type</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>action</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Websocket data operation type, the fixed value for authentication is req</td>
+    </tr>
+    <tr>
+      <td>ch</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Request subject, the fixed value for authentication is auth</td>
+    </tr>
+    <tr>
+      <td>authType</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Authentication type, the fixed value for authentication is api. Note that this parameter is not included in the signature calculation.</td>
+    </tr>
+    <tr>
+      <td>accessKey</td>
+      <td>true</td>
+      <td>string</td>
+      <td>AccessKey in the API Key you applied for</td>
+    </tr>
+    <tr>
+      <td>signatureMethod</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Signature method, the protocol for users to calculate the signature message hash, the fixed value is HmacSHA256</td>
+    </tr>
+    <tr>
+      <td>signatureVersion</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Signature protocol version, the fixed value is 2.1</td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Timestamp, the time (UTC time) when you make the request. Including this value in the query request helps prevent third parties from intercepting your request. Format: 2017-05-11T16:22:06 (in UTC time zone)</td>
+    </tr>
+    <tr>
+      <td>signature</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Signature, a computed value used to ensure that the signature is valid and has not been tampered with</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3 id="signature-steps">Signature steps</h3>
 
@@ -7526,28 +7872,114 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span></code></pre></div>
 <h3 id="error-code-2">error code</h3>
 
-<p>The following are the error codes, error messages, and descriptions of the WebSocket asset and order interfaces.
-| Error Code | Error Message        | Description                                                             |
-| ———- | ——————– | ———————————————————————– |
-| 200        | True                 | True returns                                                            |
-| 100        | timeout off          | Timeout off                                                             |
-| 400        | Bad Request          | Bad request                                                             |
-| 404        | Not Found            | Service not found                                                       |
-| 429        | Too Many Requests    | Exceeded the maximum number of connections for a single server or exceeded the maximum number of connections for a single IP |
-| 500        | System exception     | System error                                                            |
-| 2000       | invalid.ip           | Invalid IP                                                              |
-| 2001       | invalid.json         | Invalid request JSON                                                    |
-| 2001       | invalid.authType     | Signature verification method error                                      |
-| 2001       | invalid.action       | Invalid subscription event                                              |
-| 2001       | invalid.symbol       | Invalid trading pair                                                    |
-| 2001       | invalid.ch           | Invalid subscription                                                    |
-| 2001       | invalid.exchange     | Invalid exchange code                                                   |
-| 2001       | missing.param.auth   | Missing signature verification parameters                               |
-| 2002       | invalid.auth.state   | Authentication failed                                                   |
-| 2002       | auth.fail            | Signature verification failed                                           |
-| 2003       | query.account.list.error | Failed to query account list                                          |
-| 4000       | too.many.request     | Client uplink request frequency limit                                    |
-| 4000       | too.many.connection | Number of connections with the same key                                  |</p>
+<p>The following are the error codes, error messages, and descriptions of the WebSocket asset and order interfaces.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Error Code</th>
+      <th>Error Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>200</td>
+      <td>True</td>
+      <td>True returns</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td>timeout off</td>
+      <td>Timeout off</td>
+    </tr>
+    <tr>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>Bad request</td>
+    </tr>
+    <tr>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>Service not found</td>
+    </tr>
+    <tr>
+      <td>429</td>
+      <td>Too Many Requests</td>
+      <td>Exceeded the maximum number of connections for a single server or exceeded the maximum number of connections for a single IP</td>
+    </tr>
+    <tr>
+      <td>500</td>
+      <td>System exception</td>
+      <td>System error</td>
+    </tr>
+    <tr>
+      <td>2000</td>
+      <td>invalid.ip</td>
+      <td>Invalid IP</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>invalid.json</td>
+      <td>Invalid request JSON</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>invalid.authType</td>
+      <td>Signature verification method error</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>invalid.action</td>
+      <td>Invalid subscription event</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>invalid.symbol</td>
+      <td>Invalid trading pair</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>invalid.ch</td>
+      <td>Invalid subscription</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>invalid.exchange</td>
+      <td>Invalid exchange code</td>
+    </tr>
+    <tr>
+      <td>2001</td>
+      <td>missing.param.auth</td>
+      <td>Missing signature verification parameters</td>
+    </tr>
+    <tr>
+      <td>2002</td>
+      <td>invalid.auth.state</td>
+      <td>Authentication failed</td>
+    </tr>
+    <tr>
+      <td>2002</td>
+      <td>auth.fail</td>
+      <td>Signature verification failed</td>
+    </tr>
+    <tr>
+      <td>2003</td>
+      <td>query.account.list.error</td>
+      <td>Failed to query account list</td>
+    </tr>
+    <tr>
+      <td>4000</td>
+      <td>too.many.request</td>
+      <td>Client uplink request frequency limit</td>
+    </tr>
+    <tr>
+      <td>4000</td>
+      <td>too.many.connection</td>
+      <td>Number of connections with the same key</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="subscribe-to-order-updates">Subscribe to order updates</h2>
 
@@ -7639,21 +8071,80 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre></div><p>When an order is placed –
-| Field           | Data Type | Description                                                                 |
-| ————— | ——— | ————————————————————————— |
-| eventType       | string    | Event type, valid value: creation                                            |
-| symbol          | string    | Transaction code                                                             |
-| accountId       | long      | Account ID                                                                   |
-| orderId         | long      | Order ID                                                                     |
-| clientOrderId   | string    | User-made order number (if any)                                              |
-| orderPrice      | string    | Order price (not applicable for market orders)                               |
-| orderSize       | string    | Order size (invalid for market buy orders)                                   |
-| orderValue      | string    | Order amount (only valid for market buy orders)                              |
-| type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
-| orderStatus     | string    | Order status, valid value: submitted                                         |
-| orderCreateTime | long      | Order creation time                                                          |
-| orderSource     | string    | Order source                                                                 |</p>
+</span></code></pre></div>
+<p>When an order is placed –</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>eventType</td>
+      <td>string</td>
+      <td>Event type, valid value: creation</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>Transaction code</td>
+    </tr>
+    <tr>
+      <td>accountId</td>
+      <td>long</td>
+      <td>Account ID</td>
+    </tr>
+    <tr>
+      <td>orderId</td>
+      <td>long</td>
+      <td>Order ID</td>
+    </tr>
+    <tr>
+      <td>clientOrderId</td>
+      <td>string</td>
+      <td>User-made order number (if any)</td>
+    </tr>
+    <tr>
+      <td>orderPrice</td>
+      <td>string</td>
+      <td>Order price (not applicable for market orders)</td>
+    </tr>
+    <tr>
+      <td>orderSize</td>
+      <td>string</td>
+      <td>Order size (invalid for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>orderValue</td>
+      <td>string</td>
+      <td>Order amount (only valid for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+    </tr>
+    <tr>
+      <td>orderStatus</td>
+      <td>string</td>
+      <td>Order status, valid value: submitted</td>
+    </tr>
+    <tr>
+      <td>orderCreateTime</td>
+      <td>long</td>
+      <td>Order creation time</td>
+    </tr>
+    <tr>
+      <td>orderSource</td>
+      <td>string</td>
+      <td>Order source</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Note: <br /></p>
 
@@ -7691,26 +8182,104 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>When the order is filled –
-| Field       | Data Type | Description                                                                      |
-| ————| ——— | ——————————————————————————– |
-| eventType   | string    | Event type, valid value: trade                                                  |
-| symbol      | string    | Transaction code                                                                 |
-| tradePrice  | string    | Traded price                                                                    |
-| tradeVolume | string    | Trade volume                                                                    |
-| orderId     | long      | Order ID                                                                         |
-| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
-| clientOrderId | string  | User-made order number (if any)                                                  |
-| tradeId     | long      | Trade ID                                                                         |
-| tradeTime   | long      | Trade time                                                                       |
-| aggressor   | bool      | Whether to be the active party of the transaction, valid values: true (taker), false (maker) |
-| orderStatus | string    | Order status, valid values: partial-filled, filled                               |
-| remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
-| orderSize   | string    | Order quantity (not applicable for market buy orders)                             |
-| orderValue  | string    | Order amount (only applicable for market buy orders)                              |
-| orderPrice  | string    | Order price (not applicable for market orders)                                    |
-| orderSource | string    | Order source                                                                      |
-| execAmt     | string    | Cumulative trading volume                                                         |</p>
+<p>When the order is filled –</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>eventType</td>
+      <td>string</td>
+      <td>Event type, valid value: trade</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>Transaction code</td>
+    </tr>
+    <tr>
+      <td>tradePrice</td>
+      <td>string</td>
+      <td>Traded price</td>
+    </tr>
+    <tr>
+      <td>tradeVolume</td>
+      <td>string</td>
+      <td>Trade volume</td>
+    </tr>
+    <tr>
+      <td>orderId</td>
+      <td>long</td>
+      <td>Order ID</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+    </tr>
+    <tr>
+      <td>clientOrderId</td>
+      <td>string</td>
+      <td>User-made order number (if any)</td>
+    </tr>
+    <tr>
+      <td>tradeId</td>
+      <td>long</td>
+      <td>Trade ID</td>
+    </tr>
+    <tr>
+      <td>tradeTime</td>
+      <td>long</td>
+      <td>Trade time</td>
+    </tr>
+    <tr>
+      <td>aggressor</td>
+      <td>bool</td>
+      <td>Whether to be the active party of the transaction, valid values: true (taker), false (maker)</td>
+    </tr>
+    <tr>
+      <td>orderStatus</td>
+      <td>string</td>
+      <td>Order status, valid values: partial-filled, filled</td>
+    </tr>
+    <tr>
+      <td>remainAmt</td>
+      <td>string</td>
+      <td>Unexecuted quantity (buy order at market price is the unexecuted amount)</td>
+    </tr>
+    <tr>
+      <td>orderSize</td>
+      <td>string</td>
+      <td>Order quantity (not applicable for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>orderValue</td>
+      <td>string</td>
+      <td>Order amount (only applicable for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>orderPrice</td>
+      <td>string</td>
+      <td>Order price (not applicable for market orders)</td>
+    </tr>
+    <tr>
+      <td>orderSource</td>
+      <td>string</td>
+      <td>Order source</td>
+    </tr>
+    <tr>
+      <td>execAmt</td>
+      <td>string</td>
+      <td>Cumulative trading volume</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Note: <br /></p>
 
@@ -8008,17 +8577,60 @@ When the account balance changes or the available balance changes, both push and
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-8">Data update field list</h3>
-<p>| Field | Data Type | Description |
-| ———– | ——– | ————————————————————— |
-| currency | string | Currency |
-| accountId | long | Account ID |
-| balance | string | Account balance (only pushed when the account balance changes) |
-| available | string | Available balance (only pushed when the available balance changes) |
-| changeType | string | Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee-refund (deduct transaction fee) |
-| accountType | string | Account type, valid values: trade, frozen, loan, interest |
-| changeTime | long | Balance change time, UNIX time in milliseconds |
-| seqNum     | long | message sequence number |</p>
+</span></code></pre></div>
+<h3 id="data-update-field-list-8">Data update field list</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>currency</td>
+      <td>string</td>
+      <td>Currency</td>
+    </tr>
+    <tr>
+      <td>accountId</td>
+      <td>long</td>
+      <td>Account ID</td>
+    </tr>
+    <tr>
+      <td>balance</td>
+      <td>string</td>
+      <td>Account balance (only pushed when the account balance changes)</td>
+    </tr>
+    <tr>
+      <td>available</td>
+      <td>string</td>
+      <td>Available balance (only pushed when the available balance changes)</td>
+    </tr>
+    <tr>
+      <td>changeType</td>
+      <td>string</td>
+      <td>Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee-refund (deduct transaction fee)</td>
+    </tr>
+    <tr>
+      <td>accountType</td>
+      <td>string</td>
+      <td>Account type, valid values: trade, frozen, loan, interest</td>
+    </tr>
+    <tr>
+      <td>changeTime</td>
+      <td>long</td>
+      <td>Balance change time, UNIX time in milliseconds</td>
+    </tr>
+    <tr>
+      <td>seqNum</td>
+      <td>long</td>
+      <td>message sequence number</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Note: <br />
 The account update pushes the amount received, and multiple transaction rebates generated by multiple transactions may be combined into the account.</p>

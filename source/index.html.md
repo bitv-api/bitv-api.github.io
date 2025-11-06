@@ -3211,6 +3211,7 @@ To obtain K-line data at one time by request, the following parameters need to b
    "to": "to time in epoch seconds"
 }
 ```
+
 | Parameter   | Data Type | Required | Default Value                                     | Description                                             | Value Range                                                    |
 | ----------- | --------- | -------- | ------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
 | from        | integer   | false    | 1501174800 (2017-07-28T00:00:00+08:00)             | Start time (Epoch time in seconds)                       | [1501174800, 2556115200]                                       |

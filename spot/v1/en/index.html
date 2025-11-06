@@ -2089,11 +2089,45 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </ul>
 
 <h3 id="request-parameters-4">Request parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ——— | ——— | ——– | ————- | ———– | ———– |
-| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc, etc. |
-| period    | string    | false     | 1min            | Return data time granularity, i.e., the time interval of each candle | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
-| size      | integer   | false    | 150           | Number of K-line data to return | [1, 2000] |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>default value</th>
+      <th>description</th>
+      <th>value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Trading pair</td>
+      <td>btcusdt, ethbtc, etc.</td>
+    </tr>
+    <tr>
+      <td>period</td>
+      <td>string</td>
+      <td>false</td>
+      <td>1min</td>
+      <td>Return data time granularity, i.e., the time interval of each candle</td>
+      <td>1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year</td>
+    </tr>
+    <tr>
+      <td>size</td>
+      <td>integer</td>
+      <td>false</td>
+      <td>150</td>
+      <td>Number of K-line data to return</td>
+      <td>[1, 2000]</td>
+    </tr>
+  </tbody>
+</table>
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
 <aside class="notice">When obtaining hb10 net worth, please fill in "hb10" for symbol. </aside>
@@ -2122,16 +2156,58 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="response-data-1">Response data</h3>
-<p>| Field Name | Data Type | Description |
-| ———- | ——— | ———– |
-| id         | long      | The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick |
-| amount     | float     | Transaction amount in base currency |
-| count      | integer   | Transaction count |
-| open       | float     | Opening price of this candlestick |
-| close      | float     | Closing price of this candlestick |
-| low        | float     | Lowest price in this candlestick |
-| high       | float     | Highest price in this candlestick |
-| vol        | float     | Volume in quote currency |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>long</td>
+      <td>The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>float</td>
+      <td>Transaction amount in base currency</td>
+    </tr>
+    <tr>
+      <td>count</td>
+      <td>integer</td>
+      <td>Transaction count</td>
+    </tr>
+    <tr>
+      <td>open</td>
+      <td>float</td>
+      <td>Opening price of this candlestick</td>
+    </tr>
+    <tr>
+      <td>close</td>
+      <td>float</td>
+      <td>Closing price of this candlestick</td>
+    </tr>
+    <tr>
+      <td>low</td>
+      <td>float</td>
+      <td>Lowest price in this candlestick</td>
+    </tr>
+    <tr>
+      <td>high</td>
+      <td>float</td>
+      <td>Highest price in this candlestick</td>
+    </tr>
+    <tr>
+      <td>vol</td>
+      <td>float</td>
+      <td>Volume in quote currency</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="aggregation-quotes-ticker">Aggregation Quotes (Ticker)</h2>
 
@@ -2194,19 +2270,73 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="response-data-2">Response data</h3>
-<p>| Field Name | Data Type | Description |
-| ———- | ——— | ———– |
-| id         | long      | NA |
-| version    | long      | Internal field |
-| amount     | float     | Transaction volume in base currency (rolling 24 hours) |
-| count      | integer   | Number of transactions (rolling 24 hours) |
-| open       | float     | Opening price of this stage (rolling 24 hours) |
-| close      | float     | The latest price at this stage (rolling 24 hours) |
-| low        | float     | The lowest price of this stage (rolling 24 hours) |
-| high       | float     | The highest price of this stage (rolling 24 hours) |
-| vol        | float     | Volume in quote currency (rolling 24 hours) |
-| bid        | object    | Current highest bid price [price, size] |
-| ask        | object    | Current minimum ask price [price, size] |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>long</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>version</td>
+      <td>long</td>
+      <td>Internal field</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>float</td>
+      <td>Transaction volume in base currency (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>count</td>
+      <td>integer</td>
+      <td>Number of transactions (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>open</td>
+      <td>float</td>
+      <td>Opening price of this stage (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>close</td>
+      <td>float</td>
+      <td>The latest price at this stage (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>low</td>
+      <td>float</td>
+      <td>The lowest price of this stage (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>high</td>
+      <td>float</td>
+      <td>The highest price of this stage (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>vol</td>
+      <td>float</td>
+      <td>Volume in quote currency (rolling 24 hours)</td>
+    </tr>
+    <tr>
+      <td>bid</td>
+      <td>object</td>
+      <td>Current highest bid price [price, size]</td>
+    </tr>
+    <tr>
+      <td>ask</td>
+      <td>object</td>
+      <td>Current minimum ask price [price, size]</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="depth-of-market-data">Depth of Market Data</h2>
 
@@ -2221,11 +2351,45 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </ul>
 
 <h3 id="request-parameters-6">Request parameters</h3>
-<p>| parameter | data type | required | default value | description | value range |
-| ——— | ——— | ——– | ————- | ———— | ——————————————- |
-| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc… (refer to <code>GET /v1/common/symbols</code> for value) |
-| depth     | integer   | false    | 20            | Number of depths to return | 5, 10, 20 |
-| type      | string    | true     | step0         | Price aggregation level, see details below | step0, step1, step2, step3, step4, step5 |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>default value</th>
+      <th>description</th>
+      <th>value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Trading pair</td>
+      <td>btcusdt, ethbtc… (refer to <code>GET /v1/common/symbols</code> for value)</td>
+    </tr>
+    <tr>
+      <td>depth</td>
+      <td>integer</td>
+      <td>false</td>
+      <td>20</td>
+      <td>Number of depths to return</td>
+      <td>5, 10, 20</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>true</td>
+      <td>step0</td>
+      <td>Price aggregation level, see details below</td>
+      <td>step0, step1, step2, step3, step4, step5</td>
+    </tr>
+  </tbody>
+</table>
 
 <aside class="notice">When the type value is 'step0', the default value of 'depth' is 150 instead of 20.</aside>
 
@@ -2345,9 +2509,27 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </ul>
 
 <h3 id="request-parameters-7">Request parameters</h3>
-<p>| Parameter | Data Type | Required | Default Value | Description |
-| ——— | ——— | ——– | ————- | ———– |
-| symbol    | string    | true     | NA            | btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>) |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>)</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response:</p>
@@ -2432,10 +2614,34 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </ul>
 
 <h3 id="request-parameters-8">Request parameters</h3>
-<p>| parameter | data type | required | default value | description |
-| ——— | ——— | ——– | ————- | ———– |
-| symbol    | string    | true     | NA            | btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>) |
-| size      | integer   | false    | 1             | the number of transaction records to return, the maximum value is 2000 |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>default value</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>btcusdt, ethbtc… (value reference <code>GET /v1/common/symbols</code>)</td>
+    </tr>
+    <tr>
+      <td>size</td>
+      <td>integer</td>
+      <td>false</td>
+      <td>1</td>
+      <td>the number of transaction records to return, the maximum value is 2000</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response:</p>
@@ -2748,11 +2954,41 @@ Frequency limit value (NEW): 100 times/2s</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="response-data-7">Response data</h3>
-<p>| Parameter name | Required | Data type | Description | Value range |
-| ————– | ——– | ——— | ———– | ———– |
-| id | true | long | account-id | |
-| state | true | string | account status | working: normal, lock: account is locked |
-| type | true | string | account type | spot: spot account |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter name</th>
+      <th>Required</th>
+      <th>Data type</th>
+      <th>Description</th>
+      <th>Value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>true</td>
+      <td>long</td>
+      <td>account-id</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>state</td>
+      <td>true</td>
+      <td>string</td>
+      <td>account status</td>
+      <td>working: normal, lock: account is locked</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>true</td>
+      <td>string</td>
+      <td>account type</td>
+      <td>spot: spot account</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="account-balance">Account Balance</h2>
 
@@ -2826,12 +3062,48 @@ Frequency limit value (NEW): 100 times/2s</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="response-data-8">Response data</h3>
-<p>| Parameter name | Required | Data type | Description | Value range |
-| ————– | ——– | ——— | ———– | ———– |
-| id | true | long | Account ID | |
-| state | true | string | Account status | working: normal, lock: account is locked |
-| type | true | string | Account type | spot: spot account |
-| list | false | Array | | |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter name</th>
+      <th>Required</th>
+      <th>Data type</th>
+      <th>Description</th>
+      <th>Value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>true</td>
+      <td>long</td>
+      <td>Account ID</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>state</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Account status</td>
+      <td>working: normal, lock: account is locked</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Account type</td>
+      <td>spot: spot account</td>
+    </tr>
+    <tr>
+      <td>list</td>
+      <td>false</td>
+      <td>Array</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong>list</strong> field description:</p>
 
@@ -3855,13 +4127,61 @@ Frequency limit value (NEW): 20 times/2s</p>
 </ul>
 
 <h3 id="request-parameters-18">Request parameters</h3>
-<p>| Parameter name | Required | Data type | Description | Default value | Value range |
-| ————– | ——– | ——— | ———– | ————- | ———– |
-| currency       | false    | string    | Currency    |               | btc, ltc, bch, eth, etc … (Refer to <code>GET /v1/common/currencys</code>) |
-| type           | true     | string    | Recharge or withdrawal |             | deposit or withdraw |
-| from           | false    | string    | Query starting ID | By default, the default value is direct. When direct is ‘prev’, from is 1, return from old to new in ascending order; when direct is ‘next’, from is the ID of the latest record, and return from new to old in descending order | |
-| size           | false    | string    | Query record size | 100           | 1-500 |
-| direct         | false    | string    | Return record sorting direction | default       | “prev” (ascending) or “next” (descending) |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter name</th>
+      <th>Required</th>
+      <th>Data type</th>
+      <th>Description</th>
+      <th>Default value</th>
+      <th>Value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>currency</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Currency</td>
+      <td> </td>
+      <td>btc, ltc, bch, eth, etc … (Refer to <code>GET /v1/common/currencys</code>)</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Recharge or withdrawal</td>
+      <td> </td>
+      <td>deposit or withdraw</td>
+    </tr>
+    <tr>
+      <td>from</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Query starting ID</td>
+      <td>By default, the default value is direct. When direct is ‘prev’, from is 1, return from old to new in ascending order; when direct is ‘next’, from is the ID of the latest record, and return from new to old in descending order</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>size</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Query record size</td>
+      <td>100</td>
+      <td>1-500</td>
+    </tr>
+    <tr>
+      <td>direct</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Return record sorting direction</td>
+      <td>default</td>
+      <td>“prev” (ascending) or “next” (descending)</td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response:</p>
@@ -3888,22 +4208,118 @@ Frequency limit value (NEW): 20 times/2s</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="response-data-15">Response data</h3>
-<p>| Parameter name | Required | Data type | Description | Value range |
-| ————– | ——– | ——— | ———– | ———– |
-| id             | true     | long      | Deposit order ID | |
-| type           | true     | string    | Type | ‘deposit’, ‘withdraw’ |
-| currency       | true     | string    | Currency | |
-| tx-hash        | true     | string    | Transaction hash | |
-| chain          | true     | string    | Chain name | |
-| amount         | true     | float     | Amount | |
-| address        | true     | string    | Destination address | |
-| address-tag    | true     | string    | Address tag | |
-| fee            | true     | float     | Handling fee | |
-| state          | true     | string    | State | See table below |
-| error-code     | false    | string    | Withdrawal failure error code, only applicable when type is “withdraw” and state is “reject”, “wallet-reject”, or “failed” | |
-| error-msg      | false    | string    | Withdrawal failure error message, only applicable when type is “withdraw” and state is “reject”, “wallet-reject”, or “failed” | |
-| created-at     | true     | long      | Creation time | |
-| updated-at     | true     | long      | Last updated time | |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter name</th>
+      <th>Required</th>
+      <th>Data type</th>
+      <th>Description</th>
+      <th>Value range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>id</td>
+      <td>true</td>
+      <td>long</td>
+      <td>Deposit order ID</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Type</td>
+      <td>‘deposit’, ‘withdraw’</td>
+    </tr>
+    <tr>
+      <td>currency</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Currency</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>tx-hash</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Transaction hash</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>chain</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Chain name</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>true</td>
+      <td>float</td>
+      <td>Amount</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>address</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Destination address</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>address-tag</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Address tag</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>fee</td>
+      <td>true</td>
+      <td>float</td>
+      <td>Handling fee</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>state</td>
+      <td>true</td>
+      <td>string</td>
+      <td>State</td>
+      <td>See table below</td>
+    </tr>
+    <tr>
+      <td>error-code</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Withdrawal failure error code, only applicable when type is “withdraw” and state is “reject”, “wallet-reject”, or “failed”</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>error-msg</td>
+      <td>false</td>
+      <td>string</td>
+      <td>Withdrawal failure error message, only applicable when type is “withdraw” and state is “reject”, “wallet-reject”, or “failed”</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>created-at</td>
+      <td>true</td>
+      <td>long</td>
+      <td>Creation time</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>updated-at</td>
+      <td>true</td>
+      <td>long</td>
+      <td>Last updated time</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <ul>
   <li>Definition of virtual currency deposit status:</li>
@@ -4242,15 +4658,69 @@ Frequency limit value; 100 times/2s</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="request-parameters-19">Request parameters</h3>
-<p>| Parameter Name   | Data Type | Required | Default Value | Description |
-|——————|———–|———–|—————-|————-|
-| account-id       | string    | true      | NA             | Account ID. Refer to <code>GET /v1/account/accounts</code> for valid values. For spot transactions, use the account ID of the ‘spot’ account. |
-| symbol           | string    | true      | NA             | Trading pair, such as btcusdt, ethbtc, etc. Refer to <code>GET /v1/common/symbols</code> for valid values. |
-| type             | string    | true      | NA             | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
-| amount           | string    | true      | NA             | Order amount (for market orders, it represents the buying amount). |
-| price            | string    | false     | NA             | Order price (not applicable for market orders). |
-| source           | string    | false     | spot-api       | Order source. Use <code>"spot-api"</code> for spot transactions. |
-| client-order-id  | string    | false     | NA             | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours). |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter Name</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>account-id</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Account ID. Refer to <code>GET /v1/account/accounts</code> for valid values. For spot transactions, use the account ID of the ‘spot’ account.</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Trading pair, such as btcusdt, ethbtc, etc. Refer to <code>GET /v1/common/symbols</code> for valid values.</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions.</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Order amount (for market orders, it represents the buying amount).</td>
+    </tr>
+    <tr>
+      <td>price</td>
+      <td>string</td>
+      <td>false</td>
+      <td>NA</td>
+      <td>Order price (not applicable for market orders).</td>
+    </tr>
+    <tr>
+      <td>source</td>
+      <td>string</td>
+      <td>false</td>
+      <td>spot-api</td>
+      <td>Order source. Use <code>"spot-api"</code> for spot transactions.</td>
+    </tr>
+    <tr>
+      <td>client-order-id</td>
+      <td>string</td>
+      <td>false</td>
+      <td>NA</td>
+      <td>User-defined order ID (maximum length of 64 characters, must be unique within 24 hours).</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong>buy-limit-maker</strong></p>
 
@@ -5315,9 +5785,27 @@ Frequency limit value (NEW): 50 times/2s</p>
 </ul>
 
 <h3 id="request-parameters-27">Request parameters</h3>
-<p>| Parameter name  | Required | Type   | Description                     | Default value |
-| ————— | ——– | —— | ——————————- | ————- |
-| clientOrderId   | true     | string | User-defined order number        |               |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter name</th>
+      <th>Required</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>clientOrderId</td>
+      <td>true</td>
+      <td>string</td>
+      <td>User-defined order number</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response:</p>
@@ -5488,9 +5976,27 @@ Frequency limit value (NEW): 50 times/2s</p>
 </ul>
 
 <h3 id="request-parameters-28">Request parameters</h3>
-<p>| Parameter name | Required | Type  | Description                        | Default value |
-| ————– | ——– | ——| ———————————- | ————- |
-| order-id       | true     | string| Order ID, fill in the path         |               |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter name</th>
+      <th>Required</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>order-id</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Order ID, fill in the path</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <blockquote>
   <p>Response:</p>
@@ -8312,17 +8818,59 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>When an order is canceled -
-| Field       | Data Type | Description                                                                      |
-| ————| ——— | ——————————————————————————– |
-| eventType   | string    | Event type, valid value: cancellation                                             |
-| symbol      | string    | Transaction code                                                                 |
-| orderId     | long      | Order ID                                                                         |
-| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
-| clientOrderId | string  | User-made order number (if any)                                                  |
-| orderStatus | string    | Order status, valid values: partial-canceled, canceled                            |
-| remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
-| lastActTime | long      | Last update time of the order                                                     |</p>
+<p>When an order is canceled -</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>eventType</td>
+      <td>string</td>
+      <td>Event type, valid value: cancellation</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>Transaction code</td>
+    </tr>
+    <tr>
+      <td>orderId</td>
+      <td>long</td>
+      <td>Order ID</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+    </tr>
+    <tr>
+      <td>clientOrderId</td>
+      <td>string</td>
+      <td>User-made order number (if any)</td>
+    </tr>
+    <tr>
+      <td>orderStatus</td>
+      <td>string</td>
+      <td>Order status, valid values: partial-canceled, canceled</td>
+    </tr>
+    <tr>
+      <td>remainAmt</td>
+      <td>string</td>
+      <td>Unexecuted quantity (buy order at market price is the unexecuted amount)</td>
+    </tr>
+    <tr>
+      <td>lastActTime</td>
+      <td>long</td>
+      <td>Last update time of the order</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Note: <br /></p>
 
@@ -8343,10 +8891,31 @@ In the future, the data behavior of 150 increments will be consistent with that 
 <p><code>trade.clearing#${symbol}#${mode}</code></p>
 
 <h3 id="subscription-parameters-1">Subscription parameters</h3>
-<p>| parameter | data type | required | description |
-| ——— | ——— | ——– | ———– |
-| symbol    | string    | TRUE     | Transaction code (supports wildcard *) |
-| mode      | int       | FALSE    | Push mode (0 - push only when the order is completed; 1 - push both when the order is completed and canceled; default value: 0) |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th>data type</th>
+      <th>required</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>TRUE</td>
+      <td>Transaction code (supports wildcard *)</td>
+    </tr>
+    <tr>
+      <td>mode</td>
+      <td>int</td>
+      <td>FALSE</td>
+      <td>Push mode (0 - push only when the order is completed; 1 - push both when the order is completed and canceled; default value: 0)</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Note: <br />
 Optional subscription parameter mode, if not filled or filled with 0, only transaction events will be pushed; if 1 is filled, transaction and cancellation events will be pushed. <br /></p>
@@ -8401,33 +8970,140 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
           </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"partial-filled"</span><span class="w">
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="data-update-field-list-when-the-order-is-completed">Data update field list (when the order is completed)</h3>
-<p>| Field | Data Type | Description |
-| ————— | ——– | ———————————————————— |
-| eventType | string | Event type (trade) |
-| symbol | string | Transaction code |
-| orderId | long | Order ID |
-| tradePrice | string | Traded price |
-| tradeVolume | string | Trade volume |
-| orderSide | string | Order direction, valid values: buy, sell |
-| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| aggressor | bool | Whether the trade was initiated by the active party, valid values: true, false |
-| tradeId | long | Trade ID |
-| tradeTime | long | Trade time (Unix time in milliseconds) |
-| transactFee | string | Transaction fee (positive value) or transaction fee rebate (negative value) |
-| feeCurrency | string | Transaction fee or transaction fee rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the quote currency; the transaction fee rebate currency for buy orders is the denominated currency, and the transaction fee rebate currency for sell orders is the base currency) |
-| feeDeduct | string | Transaction fee deduction |
-| feeDeductType | string | Transaction fee deduction type |
-| accountId | long | Account ID |
-| source | string | Order source |
-| orderPrice | string | Order price (not applicable for market orders) |
-| orderSize | string | Order quantity (not applicable for market buy orders) |
-| orderValue | string | Order amount (only applicable for market buy orders) |
-| clientOrderId | string | User-defined order number |
-| stopPrice | string | Order trigger price (only available for stop-loss orders) |
-| operator | string | Order trigger direction (only applicable for take profit and stop-loss orders) |
-| orderCreateTime | long | Order creation time |
-| orderStatus | string | Order status, valid values: filled, partial-filled |</p>
+</span></code></pre></div>
+<h3 id="data-update-field-list-when-the-order-is-completed">Data update field list (when the order is completed)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>eventType</td>
+      <td>string</td>
+      <td>Event type (trade)</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>Transaction code</td>
+    </tr>
+    <tr>
+      <td>orderId</td>
+      <td>long</td>
+      <td>Order ID</td>
+    </tr>
+    <tr>
+      <td>tradePrice</td>
+      <td>string</td>
+      <td>Traded price</td>
+    </tr>
+    <tr>
+      <td>tradeVolume</td>
+      <td>string</td>
+      <td>Trade volume</td>
+    </tr>
+    <tr>
+      <td>orderSide</td>
+      <td>string</td>
+      <td>Order direction, valid values: buy, sell</td>
+    </tr>
+    <tr>
+      <td>orderType</td>
+      <td>string</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+    </tr>
+    <tr>
+      <td>aggressor</td>
+      <td>bool</td>
+      <td>Whether the trade was initiated by the active party, valid values: true, false</td>
+    </tr>
+    <tr>
+      <td>tradeId</td>
+      <td>long</td>
+      <td>Trade ID</td>
+    </tr>
+    <tr>
+      <td>tradeTime</td>
+      <td>long</td>
+      <td>Trade time (Unix time in milliseconds)</td>
+    </tr>
+    <tr>
+      <td>transactFee</td>
+      <td>string</td>
+      <td>Transaction fee (positive value) or transaction fee rebate (negative value)</td>
+    </tr>
+    <tr>
+      <td>feeCurrency</td>
+      <td>string</td>
+      <td>Transaction fee or transaction fee rebate currency (the transaction fee currency for buy orders is the base currency, the transaction fee currency for sell orders is the quote currency; the transaction fee rebate currency for buy orders is the denominated currency, and the transaction fee rebate currency for sell orders is the base currency)</td>
+    </tr>
+    <tr>
+      <td>feeDeduct</td>
+      <td>string</td>
+      <td>Transaction fee deduction</td>
+    </tr>
+    <tr>
+      <td>feeDeductType</td>
+      <td>string</td>
+      <td>Transaction fee deduction type</td>
+    </tr>
+    <tr>
+      <td>accountId</td>
+      <td>long</td>
+      <td>Account ID</td>
+    </tr>
+    <tr>
+      <td>source</td>
+      <td>string</td>
+      <td>Order source</td>
+    </tr>
+    <tr>
+      <td>orderPrice</td>
+      <td>string</td>
+      <td>Order price (not applicable for market orders)</td>
+    </tr>
+    <tr>
+      <td>orderSize</td>
+      <td>string</td>
+      <td>Order quantity (not applicable for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>orderValue</td>
+      <td>string</td>
+      <td>Order amount (only applicable for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>clientOrderId</td>
+      <td>string</td>
+      <td>User-defined order number</td>
+    </tr>
+    <tr>
+      <td>stopPrice</td>
+      <td>string</td>
+      <td>Order trigger price (only available for stop-loss orders)</td>
+    </tr>
+    <tr>
+      <td>operator</td>
+      <td>string</td>
+      <td>Order trigger direction (only applicable for take profit and stop-loss orders)</td>
+    </tr>
+    <tr>
+      <td>orderCreateTime</td>
+      <td>long</td>
+      <td>Order creation time</td>
+    </tr>
+    <tr>
+      <td>orderStatus</td>
+      <td>string</td>
+      <td>Order status, valid values: filled, partial-filled</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Note: <br /></p>
 
@@ -8436,24 +9112,98 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 </ul>
 
 <h3 id="data-update-field-list-when-the-order-is-canceled">Data update field list (when the order is canceled)</h3>
-<p>| Field | Data Type | Description |
-| ————— | ——– | ———————————————————— |
-| eventType | string | Event type (cancellation) |
-| symbol | string | Transaction code |
-| orderId | long | Order ID |
-| orderSide | string | Order direction, valid values: buy, sell |
-| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
-| accountId | long | Account ID |
-| source | string | Order source |
-| orderPrice | string | Order price (not applicable for market orders) |
-| orderSize | string | Order quantity (not applicable for market buy orders) |
-| orderValue | string | Order amount (only applicable for market buy orders) |
-| clientOrderId | string | User-defined order number |
-| stopPrice | string | Order trigger price (only available for stop-loss orders) |
-| operator | string | Order trigger direction (only applicable for take profit and stop-loss orders) |
-| orderCreateTime | long | Order creation time |
-| remainAmt | string | Open volume (for market buy orders, this field is defined as unfilled volume) |
-| orderStatus | string | Order status, valid values: canceled, partial-canceled |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>eventType</td>
+      <td>string</td>
+      <td>Event type (cancellation)</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>Transaction code</td>
+    </tr>
+    <tr>
+      <td>orderId</td>
+      <td>long</td>
+      <td>Order ID</td>
+    </tr>
+    <tr>
+      <td>orderSide</td>
+      <td>string</td>
+      <td>Order direction, valid values: buy, sell</td>
+    </tr>
+    <tr>
+      <td>orderType</td>
+      <td>string</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+    </tr>
+    <tr>
+      <td>accountId</td>
+      <td>long</td>
+      <td>Account ID</td>
+    </tr>
+    <tr>
+      <td>source</td>
+      <td>string</td>
+      <td>Order source</td>
+    </tr>
+    <tr>
+      <td>orderPrice</td>
+      <td>string</td>
+      <td>Order price (not applicable for market orders)</td>
+    </tr>
+    <tr>
+      <td>orderSize</td>
+      <td>string</td>
+      <td>Order quantity (not applicable for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>orderValue</td>
+      <td>string</td>
+      <td>Order amount (only applicable for market buy orders)</td>
+    </tr>
+    <tr>
+      <td>clientOrderId</td>
+      <td>string</td>
+      <td>User-defined order number</td>
+    </tr>
+    <tr>
+      <td>stopPrice</td>
+      <td>string</td>
+      <td>Order trigger price (only available for stop-loss orders)</td>
+    </tr>
+    <tr>
+      <td>operator</td>
+      <td>string</td>
+      <td>Order trigger direction (only applicable for take profit and stop-loss orders)</td>
+    </tr>
+    <tr>
+      <td>orderCreateTime</td>
+      <td>long</td>
+      <td>Order creation time</td>
+    </tr>
+    <tr>
+      <td>remainAmt</td>
+      <td>string</td>
+      <td>Open volume (for market buy orders, this field is defined as unfilled volume)</td>
+    </tr>
+    <tr>
+      <td>orderStatus</td>
+      <td>string</td>
+      <td>Order status, valid values: canceled, partial-canceled</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="subscribe-account-changes">Subscribe account changes</h2>
 

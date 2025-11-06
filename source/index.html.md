@@ -2959,6 +2959,8 @@ API Key 权限：读取<br>
       "trade-id": 100282808529,
       "role": taker,
       "filled-points": "0.0",
+      "fee-currency": "eth",
+      "fee-deduct-state": "done",
       "fee-deduct-currency": ""
     }
     ...

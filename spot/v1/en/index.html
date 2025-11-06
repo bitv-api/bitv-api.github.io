@@ -6755,10 +6755,37 @@ Frequency limit value (NEW): 20 times/2s</p>
    </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="s2">"from time in epoch seconds"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"to time in epoch seconds"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><p>| Parameter   | Data Type | Required | Default Value                                     | Description                                             | Value Range                                                    |
-| ———– | ——— | ——– | ————————————————- | ——————————————————- | ————————————————————– |
-| from        | integer   | false    | 1501174800 (2017-07-28T00:00:00+08:00)             | Start time (Epoch time in seconds)                       | [1501174800, 2556115200]                                       |
-| to          | integer   | false    | 2556115200 (2050-01-01T00:00:00+08:00)             | End time (Epoch time in seconds)                         | [1501174800, 2556115200] or ($from, 2556115200] if “from” is set |</p>
+</span></code></pre></div>
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+      <th>Value Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>from</td>
+      <td>integer</td>
+      <td>false</td>
+      <td>1501174800 (2017-07-28T00:00:00+08:00)</td>
+      <td>Start time (Epoch time in seconds)</td>
+      <td>[1501174800, 2556115200]</td>
+    </tr>
+    <tr>
+      <td>to</td>
+      <td>integer</td>
+      <td>false</td>
+      <td>2556115200 (2050-01-01T00:00:00+08:00)</td>
+      <td>End time (Epoch time in seconds)</td>
+      <td>[1501174800, 2556115200] or ($from, 2556115200] if “from” is set</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="depth-of-market-market-data">Depth of market market data</h2>
 

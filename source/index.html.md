@@ -1031,6 +1031,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 - GET `/market/history/kline`
 
 ### Request parameters
+
 | parameter | data type | required | default value | description | value range |
 | --------- | --------- | -------- | ------------- | ----------- | ----------- |
 | symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc, etc. |
@@ -1065,6 +1066,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 ```
 
 ### Response data
+
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
 | id         | long      | The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick |
@@ -1120,6 +1122,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 ```
 
 ### Response data
+
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
 | id         | long      | NA |
@@ -1147,6 +1150,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 - GET `/market/depth`
 
 ### Request parameters
+
 | parameter | data type | required | default value | description | value range |
 | --------- | --------- | -------- | ------------- | ------------ | ------------------------------------------- |
 | symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
@@ -1222,6 +1226,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 - GET `/market/trade`
 
 ### Request parameters
+
 | Parameter | Data Type | Required | Default Value | Description |
 | --------- | --------- | -------- | ------------- | ----------- |
 | symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
@@ -1278,6 +1283,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 - GET `/market/history/trade`
 
 ### Request parameters
+
 | parameter | data type | required | default value | description |
 | --------- | --------- | -------- | ------------- | ----------- |
 | symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
@@ -1456,6 +1462,7 @@ none
 ```
 
 ### Response data
+
 | Parameter name | Required | Data type | Description | Value range |
 | -------------- | -------- | --------- | ----------- | ----------- |
 | id | true | long | account-id | |
@@ -1515,6 +1522,7 @@ spot: spot account
 ```
 
 ### Response data
+
 | Parameter name | Required | Data type | Description | Value range |
 | -------------- | -------- | --------- | ----------- | ----------- |
 | id | true | long | Account ID | |
@@ -1914,6 +1922,7 @@ Frequency limit value (NEW): 20 times/2s
 - GET `/v1/query/deposit-withdraw`
 
 ### Request parameters
+
 | Parameter name | Required | Data type | Description | Default value | Value range |
 | -------------- | -------- | --------- | ----------- | ------------- | ----------- |
 | currency       | false    | string    | Currency    |               | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
@@ -1948,6 +1957,7 @@ Frequency limit value (NEW): 20 times/2s
 ```
 
 ### Response data
+
 | Parameter name | Required | Data type | Description | Value range |
 | -------------- | -------- | --------- | ----------- | ----------- |
 | id             | true     | long      | Deposit order ID | |
@@ -2078,6 +2088,7 @@ Send a new order for matching.
 ```
 
 ### Request parameters
+
 | Parameter Name   | Data Type | Required | Default Value | Description |
 |------------------|-----------|-----------|----------------|-------------|
 | account-id       | string    | true      | NA             | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
@@ -2613,6 +2624,7 @@ This interface returns the latest order status and details of the specified user
 - GET `/v1/order/orders/getClientOrder`
 
 ### Request parameters
+
 | Parameter name  | Required | Type   | Description                     | Default value |
 | --------------- | -------- | ------ | ------------------------------- | ------------- |
 | clientOrderId   | true     | string | User-defined order number        |               |
@@ -2685,6 +2697,7 @@ This interface returns the transaction details of the specified order.
 - GET `/v1/order/orders/{order-id}/matchresults`
 
 ### Request parameters
+
 | Parameter name | Required | Type  | Description                        | Default value |
 | -------------- | -------- | ------| ---------------------------------- | ------------- |
 | order-id       | true     | string| Order ID, fill in the path         |               |
@@ -4149,6 +4162,7 @@ Note: <BR>
 ```
 
 When an order is canceled -
+
 | Field       | Data Type | Description                                                                      |
 | ------------| --------- | -------------------------------------------------------------------------------- |
 | eventType   | string    | Event type, valid value: cancellation                                             |
@@ -4177,6 +4191,7 @@ If the user needs to get order updates updated sequentially, it is recommended t
 `trade.clearing#${symbol}#${mode}`
 
 ### Subscription parameters
+
 | parameter | data type | required | description |
 | --------- | --------- | -------- | ----------- |
 | symbol    | string    | TRUE     | Transaction code (supports wildcard *) |
@@ -4236,7 +4251,9 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
      }
 }
 ```
+
 ### Data update field list (when the order is completed)
+
 | Field | Data Type | Description |
 | --------------- | -------- | ------------------------------------------------------------ |
 | eventType | string | Event type (trade) |
@@ -4264,11 +4281,14 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 | orderCreateTime | long | Order creation time |
 | orderStatus | string | Order status, valid values: filled, partial-filled |
 
+
 Note: <br>
 
 - The transaction rebate amount in transactFee may not arrive in real time;<br>
 
 ### Data update field list (when the order is canceled)
+
+
 | Field | Data Type | Description |
 | --------------- | -------- | ------------------------------------------------------------ |
 | eventType | string | Event type (cancellation) |
@@ -4287,6 +4307,7 @@ Note: <br>
 | orderCreateTime | long | Order creation time |
 | remainAmt | string | Open volume (for market buy orders, this field is defined as unfilled volume) |
 | orderStatus | string | Order status, valid values: canceled, partial-canceled |
+
 
 
 ## Subscribe account changes

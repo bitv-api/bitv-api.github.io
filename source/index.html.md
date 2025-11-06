@@ -4152,67 +4152,6 @@ API Key 權限：讀取
 
 ### 數據更新字段列表
 
-> Update example
-
-```json
-{
-	"action":"push",
-	"ch":"orders#btcusdt",
-	"data":
-	{
-		"orderSide":"buy",
-		"lastActTime":1583853365586,
-		"clientOrderId":"abc123",
-		"orderStatus":"rejected",
-		"symbol":"btcusdt",
-		"eventType":"trigger",
-		"errCode": 2002,
-		"errMessage":"invalid.client.order.id (NT)"
-	}
-}
-```
-
-當計劃委託/追蹤委託觸發失敗後 –
-
-| 字段          | 數據類型 | 描述                                                         |
-| ------------- | -------- | ------------------------------------------------------------ |
-| eventType     | string   | 事件類型，有效值：trigger（本事件僅對計劃委託/追蹤委託有效） |
-| symbol        | string   | 交易代碼                                                     |
-| clientOrderId | string   | 用戶自編訂單號                                               |
-| orderSide     | string   | 訂單方向，有效值：buy,sell                                   |
-| orderStatus   | string   | 訂單狀態，有效值：rejected                                   |
-| errCode       | int      | 訂單觸發失敗錯誤碼                                           |
-| errMessage    | string   | 訂單觸發失敗錯誤消息                                         |
-| lastActTime   | long     | 訂單觸發失敗時間                                             |
-
-> Update example
-
-```json
-{
-	"action":"push",
-	"ch":"orders#btcusdt",
-	"data":
-	{
-		"orderSide":"buy",
-		"lastActTime":1583853365586,
-		"clientOrderId":"abc123",
-		"orderStatus":"canceled",
-		"symbol":"btcusdt",
-		"eventType":"deletion"
-	}
-}
-```
-
-當計劃委託/追蹤委託在觸發前被撤銷後 –
-
-| 字段          | 數據類型 | 描述                                                         |
-| ------------- | -------- | ------------------------------------------------------------ |
-| eventType     | string   | 事件類型，有效值：deletion（本事件僅對計劃委託/追蹤委託有效） |
-| symbol        | string   | 交易代碼                                                     |
-| clientOrderId | string   | 用戶自編訂單號                                               |
-| orderSide     | string   | 訂單方向，有效值：buy,sell                                   |
-| orderStatus   | string   | 訂單狀態，有效值：canceled                                   |
-| lastActTime   | long     | 訂單撤銷時間                                                 |
 
 > Update example
 

@@ -3237,12 +3237,14 @@ This topic sends the latest Depth of Market snapshot. The snapshot frequency is 
 ```
 
 ### parameters
+
 | parameter | data type | required | default value | description | value range |
 | ------ | -------- | -------- | ------ | ------------ | ------------------------------------------------------ |
 | symbol | string | true | NA | transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
 | type | string | true | step0 | merge depth type | step0, step1, step2, step3, step4, step5 |
 
 **"type" merge depth type**
+
 | Value | Description |
 | ----- | ------------------------------------ |
 | step0 | Do not merge depth |
@@ -3287,6 +3289,7 @@ When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default 
   }
 }
 ```
+
 ### Data update field list
 
 <aside class="notice">Display the depth list of buying and selling orders under the 'tick' object</aside>
@@ -3382,6 +3385,7 @@ In the future, the data behavior of the 150-level incremental push will be consi
 }
 
 ```
+
 However, the 5-level/20-level MBP is incremented one by one, and no data is pushed when the order book does not change;<br>
 In the future, the data behavior of 150 increments will be consistent with that of 5 increments, that is, when the order book has not changed, empty messages will no longer be pushed;<br>
 5) Only some trading pairs (btcusdt, ethusdt, xrpusdt, eosusdt, ltcusdt, etcusdt, adausdt, dashusdt, bsvusdt) are supported in the 5-level/20-level incremental market, and 150-level snapshot increments support all trading pairs. <br>
@@ -3413,7 +3417,9 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
    "id": "id2"
 }
 ```
+
 ### parameters
+
 | parameter | data type | required | default value | description | value range |
 | --------- | --------- | -------- | ------------- | ----------- | ----------- |
 | symbol    | string    | true     | NA            | transaction code (wildcards are not supported) | |
@@ -3473,6 +3479,7 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
 }
 }
 ```
+
 ### Data update field list
 
 | Field       | Data Type | Description                                          |
@@ -3501,6 +3508,7 @@ Users can subscribe to this channel to receive the full data push of the latest 
 ```
 
 ### parameters
+
 | parameter | data type | required | default value | description | value range |
 | --------- | --------- | -------- | ------------- | ------------ | ----------- |
 | symbol    | string    | true     | NA            | transaction code (wildcards are not supported) | |
@@ -3544,6 +3552,7 @@ Users can subscribe to this channel to receive the full data push of the latest 
 }
 }
 ```
+
 ### Data update field list
 
 | Field  | Data Type | Description                                      |
@@ -3604,7 +3613,9 @@ When any of the data of the first price of buying, the first amount of buying, t
     }
 }
 ```
+
 ### Data update field list
+
 | Field | Data Type | Description |
 | ------ | -------- | ------------------ |
 | symbol | string | transaction code |
@@ -3634,6 +3645,7 @@ This topic provides a tick-by-tick breakdown of the latest transactions in the m
 ```
 
 ### parameters
+
 | Parameter | Data Type | Required | Default Value | Description | Value Range |
 | --------- | --------- | -------- | ------------- | ----------- | ----------- |
 | symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for values) |
@@ -3672,7 +3684,9 @@ This topic provides a tick-by-tick breakdown of the latest transactions in the m
    }
 }
 ```
+
 ### Data update field list
+
 | Field | Data Type | Description |
 | ------ | -------- | ---------------------------------------------- |
 | id | integer | Unique transaction ID (will be discarded) |
@@ -3712,6 +3726,7 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
 ```
 
 ### parameters
+
 | Parameter | Data Type | Required | Default Value | Description | Value Range |
 | --------- | -------- | -------- | ------------- | ----------- | ----------- |
 | symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc, etc. (value reference `GET /v1/common/symbols`) |
@@ -3747,7 +3762,9 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
    }
 }
 ```
+
 ### Data update field list
+
 | Field | Data Type | Description |
 | ------ | -------- | ------------------------ |
 | id | integer | Unix time, also used as message ID |
@@ -3814,6 +3831,7 @@ When the user's Websocket client receives this heartbeat message, it should retu
 ```
 
 ### Valid values for `action`
+
 | Valid Values | Value Description |
 | ---------- | ------------------------------------ |
 | sub | Subscription data |
@@ -3828,6 +3846,7 @@ This version adopts a multi-dimensional frequency limiting strategy for users. T
 - Limit single connection **effective** requests (including req, sub, unsub, excluding ping/pong and other invalid requests) to **50 times/second** (here the second limit is a sliding window). When this limit is exceeded, a "too many request" error message is returned.
 - Limit the total number of connections established with a single API Key to **10**. When this limit is exceeded, a "too many connection" error message is returned.
 - Limit the number of connections established by a single IP to **100 times/second**. When the limit is exceeded, a "too many request" error message will be returned.
+
 ### Authentication
 
 The authentication request format is as follows:
@@ -3860,6 +3879,7 @@ After successful authentication, the returned data format is as follows:
 ```
 
 Parameter Description
+
 | field            | required | data type | description                                                                                       |
 | ---------------- | -------- | --------- | ------------------------------------------------------------------------------------------------- |
 | action           | true     | string    | Websocket data operation type, the fixed value for authentication is req                         |
@@ -3926,6 +3946,7 @@ After the request is successful, the Websocket client will receive the following
 ### error code
 
 The following are the error codes, error messages, and descriptions of the WebSocket asset and order interfaces.
+
 | Error Code | Error Message        | Description                                                             |
 | ---------- | -------------------- | ----------------------------------------------------------------------- |
 | 200        | True                 | True returns                                                            |
@@ -4024,7 +4045,9 @@ In the messages pushed by different event types, the list of fields is slightly 
 }
 
 ```
+
 When an order is placed –
+
 | Field           | Data Type | Description                                                                 |
 | --------------- | --------- | --------------------------------------------------------------------------- |
 | eventType       | string    | Event type, valid value: creation                                            |
@@ -4075,6 +4098,7 @@ Note: <BR>
 ```
 
 When the order is filled –
+
 | Field       | Data Type | Description                                                                      |
 | ------------| --------- | -------------------------------------------------------------------------------- |
 | eventType   | string    | Event type, valid value: trade                                                  |
@@ -4367,7 +4391,9 @@ accounts.update#1:
 }
 }
 ```
+
 ### Data update field list
+
 | Field | Data Type | Description |
 | ----------- | -------- | --------------------------------------------------------------- |
 | currency | string | Currency |

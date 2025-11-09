@@ -837,8 +837,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | Field Name      | Required | Type    | Field Description     | Value Range                                            |
 | --------------- | -------- | ------- | --------------------- | ------------------------------------------------------ |
 | currency        | false    | string  | Currency              | btc, ltc, bch, eth, etc ... (refer to `GET /v1/common/currencys`) |
-| authorizedUser  | false    | boolean | Authenticated User    | true or false (default: true if not filled)             |
-
 
 > Response:
 
@@ -866,8 +864,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                      "withdrawFeeType": "circulated",
                      "withdrawPrecision": 5,
                      "withdrawQuotaPerDay": "280000.00000000",
-                     "withdrawQuotaPerYear": "2800000.00000000",
-                     "withdrawQuotaTotal": "2800000.00000000",
                      "withdrawStatus": "allowed",
                      "transactFeeWithdraw":"",
                      "addrWithTag": false,
@@ -890,8 +886,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                      "withdrawFeeType": "ratio",
                      "withdrawPrecision": 7,
                      "withdrawQuotaPerDay": "90000.00000000",
-                     "withdrawQuotaPerYear": "111000.00000000",
-                     "withdrawQuotaTotal": "1110000.00000000",
                      "withdrawStatus": "allowed",
                      "transactFeeWithdraw":"",
                      "addrWithTag": false,
@@ -914,8 +908,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                      "withdrawFeeType": "fixed",
                      "withdrawPrecision": 6,
                      "withdrawQuotaPerDay": "180000.00000000",
-                     "withdrawQuotaPerYear": "200000.00000000",
-                     "withdrawQuotaTotal": "300000.00000000",
                      "withdrawStatus": "allowed",
                      "transactFeeWithdraw":"",
                      "addrWithTag": false,
@@ -933,35 +925,37 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 
 ### Response data
 
-| field name            | required | data type | field description                                                                                       | value range |
-|-----------------------|----------|-----------|---------------------------------------------------------------------------------------------------------|-------------|
-| code                  | true     | int       | status code                                                                                             |             |
-| message               | false    | string    | error description (if any)                                                                              |             |
-| data                  | true     | object    |                                                                                                         |             |
-| currency              | true     | string    | currency                                                                                                |             |
-| chains                | true     | object    |                                                                                                         |             |
-| chain                 | true     | string    | chain name                                                                                              |             |
-| displayName           | true     | string    | chain display name                                                                                      |             |
-| baseChain             | false    | string    | underlying chain name                                                                                   |             |
-| baseChainProtocol     | false    | string    | underlying chain protocol                                                                               |             |
-| isDynamic             | false    | boolean   | Whether dynamic fee (only valid for fixed type, withdrawFeeType=fixed)                                 | true, false |
+| field name            | required | data type | field description         | value range |
+|-----------------------|----------|-----------|---------------------------|-------------|
+| code                  | true     | int       | status code               |             |
+| message               | false    | string    | error description (if any) |             |
+| data                  | true     | object    |                           |             |
+| currency              | true     | string    | currency                  |             |
+| chains                | true     | object    |                           |             |
+| chain                 | true     | string    | chain name                |             |
+| displayName           | true     | string    | chain display name        |             |
+| assetType             | false    | string    | asset type, 1 virtual currency 2 fiat currency|             |
+| fullName             | false    | string    | currency full name|             |
+| baseChain             | false    | string    | underlying chain name                                                                                 |             |
+| baseChainProtocol     | false    | string    | underlying chain protocol                                                                             |             |
+| isDynamic             | false    | boolean   | Whether dynamic fee (only valid for fixed type, withdrawFeeType=fixed)                               | true, false |
 | numOfConfirmations    | true     | int       | The number of confirmations required for secure account login (coin withdrawals are allowed after reaching the number of confirmations) |             |
 | numOfFastConfirmations| true     | int       | The number of confirmations required for fast account transfer (transactions are allowed but withdrawals are not allowed after reaching the number of confirmations) |             |
-| minDepositAmt         | true     | string    | minimum deposit amount                                                                                  |             |
-| depositStatus         | true     | string    | deposit status                                                                                          | allowed, prohibited |
-| minWithdrawAmt        | true     | string    | minimum withdrawal amount                                                                               |             |
-| maxWithdrawAmt        | true     | string    | single maximum withdrawal amount                                                                        |             |
-| withdrawQuotaPerDay   | true     | string    | Daily withdrawal quota (Singapore time zone)                                                            |             |
-| withdrawQuotaPerYear  | false     | string    | withdrawal quota for the year                                                                           |             |
-| withdrawQuotaTotal    | false     | string    | total withdrawal quota                                                                                  |             |
-| withdrawPrecision     | true     | int       | withdrawal precision                                                                                    |             |
+| minDepositAmt         | true     | string    | minimum deposit amount                                                                                |             |
+| depositStatus         | true     | string    | deposit status                                                                                        | allowed, prohibited |
+| minWithdrawAmt        | true     | string    | minimum withdrawal amount                                                                             |             |
+| maxWithdrawAmt        | true     | string    | single maximum withdrawal amount                                                                      |             |
+| withdrawQuotaPerDay   | true     | string    | Daily withdrawal quota (Singapore time zone)                                                          |             |
+| withdrawPrecision     | true     | int       | withdrawal precision                                                                                  |             |
 | withdrawFeeType       | true     | string    | Withdrawal fee type (the type of withdrawal fee for a specific currency on a specific chain is unique) | fixed, circulated, ratio |
-| transactFeeWithdraw   | false    | string    | single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)                               |             |
+| transactFeeWithdraw   | false    | string    | single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)                             |             |
 | minTransactFeeWithdraw| false    | string    | Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio) |             |
 | maxTransactFeeWithdraw| false    | string    | Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio) |             |
-| transactFeeRateWithdraw| false   | string    | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio)       |             |
-| withdrawStatus        | true     | string    | withdrawal status                                                                                       | allowed, prohibited |
-| instStatus            | true     | string    | currency status                                                                                         | normal, delisted |
+| transactFeeRateWithdraw| false   | string    | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio)     |             |
+| withdrawStatus        | true     | string    | withdrawal status                                                                                     | allowed, prohibited |
+| instStatus            | true     | string    | currency status                                                                                       | normal, delisted |
+| addrWithTag            | true     | boolean    | addr with tag                                                                                       |  |
+| addrDepositTag            | true     | boolean    | has addr deposit tag                                                                                       |  |
 
 
 ### status code

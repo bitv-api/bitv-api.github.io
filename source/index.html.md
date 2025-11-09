@@ -1930,44 +1930,49 @@ Frequency limit value (NEW): 20 times/2s
 
 ```json
 {
-   "data":
-     [
-       {
-         "id": 1171,
-         "type": "deposit",
-         "currency": "xrp",
-         "tx-hash": "ed03094b84eafbe4bc16e7ef766ee959885ee5bcb265872baaa9c64e1cf86c2b",
-         "amount": 7.457467,
-         "address": "rae93V8d2mdoUQHwBDBdM4NHCMehRJAsbm",
-         "address-tag": "100040",
-         "fee": 0,
-         "state": "safe",
-         "created-at": 1510912472199,
-         "updated-at": 1511145876575
-       },
-       ...
-     ]
+  "status": "ok",
+  "data": [
+    {
+      "id": 105380410,
+      "type": "deposit",
+      "sub-type": "NORMAL",
+      "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",
+      "currency": "usdc",
+      "chain": "usdc",
+      "tx-hash": "244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf",
+      "amount": 100,
+      "address": "0x2c7c448a32d754d8d680e43b0b0b49cf61c83750",
+      "address-tag": "",
+      "fee": 0,
+      "state": "safe",
+      "wallet-confirm": 12,
+      "created-at": 1752738144869,
+      "updated-at": 1752738289051
+    },
+    ...
+  ]
 }
 ```
 
 ### Response data
 
-| Parameter name | Required | Data type | Description | Value range |
-| -------------- | -------- | --------- | ----------- | ----------- |
-| id             | true     | long      | Deposit order ID | |
-| type           | true     | string    | Type | 'deposit', 'withdraw' |
-| currency       | true     | string    | Currency | |
-| tx-hash        | true     | string    | Transaction hash | |
-| chain          | true     | string    | Chain name | |
-| amount         | true     | float     | Amount | |
-| address        | true     | string    | Destination address | |
-| address-tag    | true     | string    | Address tag | |
-| fee            | true     | float     | Handling fee | |
-| state          | true     | string    | State | See table below |
-| error-code     | false    | string    | Withdrawal failure error code, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed" | |
+| Parameter name | Required | Data type | Description                                                                                                                   | Value range |
+| -------------- |----------| --------- |-------------------------------------------------------------------------------------------------------------------------------| ----------- |
+| id             | true     | long      | Deposit order ID                                                                                                              | |
+| type           | true     | string    | Type                                                                                                                          | 'deposit', 'withdraw' |
+| currency       | true     | string    | Currency                                                                                                                      | |
+| tx-hash        | true     | string    | Transaction hash                                                                                                              | |
+| chain          | true     | string    | Chain name                                                                                                                    | |
+| amount         | true     | float     | Amount                                                                                                                        | |
+| address        | true     | string    | Destination address                                                                                                           | |
+| address-tag    | true     | string    | Address tag                                                                                                                   | |
+| fee            | true     | float     | Handling fee                                                                                                                  | |
+| state          | true     | string    | State                                                                                                                         | See table below |
+| wallet-confirm          | false    | long    | wallet confirm times                                                                                                          |  |
+| error-code     | false    | string    | Withdrawal failure error code, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed"    | |
 | error-msg      | false    | string    | Withdrawal failure error message, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed" | |
-| created-at     | true     | long      | Creation time | |
-| updated-at     | true     | long      | Last updated time | |
+| created-at     | true     | long      | Creation time                                                                                                                 | |
+| updated-at     | true     | long      | Last updated time                                                                                                             | |
 
 - Definition of virtual currency deposit status:
 

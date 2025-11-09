@@ -1958,7 +1958,7 @@ Frequency limit value (NEW): 20 times/2s
 
 | Parameter name | Required | Data type | Description                                                                                                                   | Value range |
 | -------------- |----------| --------- |-------------------------------------------------------------------------------------------------------------------------------| ----------- |
-| id             | true     | long      | Deposit order ID                                                                                                              | |
+| id             | true     | long      | Deposit order ID / Withdraw order ID                                                                                          | |
 | type           | true     | string    | Type                                                                                                                          | 'deposit', 'withdraw' |
 | currency       | true     | string    | Currency                                                                                                                      | |
 | tx-hash        | true     | string    | Transaction hash                                                                                                              | |

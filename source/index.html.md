@@ -851,7 +851,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | 字段名称       | 是否必需 | 类型    | 字段描述   | 取值范围                                                     |
 | -------------- | -------- | ------- | ---------- | ------------------------------------------------------------ |
 | currency       | false    | string  | 币种       | btc, ltc, bch, eth, etc ...(取值参考`GET /v1/common/currencys`) |
-| authorizedUser | false    | boolean | 已认证用户 | true or false (如不填，缺省为true)                           |
 
 > Response:
 
@@ -879,8 +878,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawFeeType":"circulated",
                     "withdrawPrecision":5,
                     "withdrawQuotaPerDay":"280000.00000000",
-                    "withdrawQuotaPerYear":"2800000.00000000",
-                    "withdrawQuotaTotal":"2800000.00000000",
                     "withdrawStatus":"allowed",
                     "transactFeeWithdraw":"",
                     "addrWithTag": false,
@@ -903,8 +900,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawFeeType":"ratio",
                     "withdrawPrecision":7,
                     "withdrawQuotaPerDay":"90000.00000000",
-                    "withdrawQuotaPerYear":"111000.00000000",
-                    "withdrawQuotaTotal":"1110000.00000000",
                     "withdrawStatus":"allowed",
                     "transactFeeWithdraw":"",
                     "addrWithTag": false,
@@ -927,8 +922,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawFeeType":"fixed",
                     "withdrawPrecision":6,
                     "withdrawQuotaPerDay":"180000.00000000",
-                    "withdrawQuotaPerYear":"200000.00000000",
-                    "withdrawQuotaTotal":"300000.00000000",
                     "withdrawStatus":"allowed",
                     "transactFeeWithdraw":"",
                     "addrWithTag": false,
@@ -947,35 +940,35 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 ### 响应数据
 
 
-| 字段名称                | 是否必需 | 数据类型 | 字段描述                                                     | 取值范围               |
-| ----------------------- | -------- | -------- | ------------------------------------------------------------ | ---------------------- |
-| code                    | true     | int      | 状态码                                                       |                        |
-| message                 | false    | string   | 错误描述（如有）                                             |                        |
-| data                    | true     | object   |                                                              |                        |
-| { currency              | true     | string   | 币种                                                         |                        |
-| { chains                | true     | object   |                                                              |                        |
-| chain                   | true     | string   | 链名称                                                       |                        |
-| displayName             | true     | string   | 链显示名称                                                   |                        |
-| baseChain               | false    | string   | 底层链名称                                                   |                        |
-| baseChainProtocol       | false    | string   | 底层链协议                                                   |                        |
-| isDynamic               | false    | boolean  | 是否动态手续费（仅对固定类型有效，withdrawFeeType=fixed）    | true,false             |
-| numOfConfirmations      | true     | int      | 安全上账所需确认次数（达到确认次数后允许提币）               |                        |
-| numOfFastConfirmations  | true     | int      | 快速上账所需确认次数（达到确认次数后允许交易但不允许提币）   |                        |
-| minDepositAmt           | true     | string   | 单次最小充币金额                                             |                        |
-| depositStatus           | true     | string   | 充币状态                                                     | allowed,prohibited     |
-| minWithdrawAmt          | true     | string   | 单次最小提币金额                                             |                        |
-| maxWithdrawAmt          | true     | string   | 单次最大提币金额                                             |                        |
-| withdrawQuotaPerDay     | true     | string   | 当日提币额度（新加坡时区）                                   |                        |
-| withdrawQuotaPerYear    | false     | string   | 当年提币额度                                                 |                        |
-| withdrawQuotaTotal      | false     | string   | 总提币额度                                                   |                        |
-| withdrawPrecision       | true     | int      | 提币精度                                                     |                        |
-| withdrawFeeType         | true     | string   | 提币手续费类型（特定币种在特定链上的提币手续费类型唯一）     | fixed,circulated,ratio |
-| transactFeeWithdraw     | false    | string   | 单次提币手续费（仅对固定类型有效，withdrawFeeType=fixed）    |                        |
+| 字段名称                | 是否必需 | 数据类型 | 字段描述                                                            | 取值范围               |
+| ----------------------- | -------- | -------- |-----------------------------------------------------------------| ---------------------- |
+| code                    | true     | int      | 状态码                                                             |                        |
+| message                 | false    | string   | 错误描述（如有）                                                        |                        |
+| data                    | true     | object   |                                                                 |                        |
+| { currency              | true     | string   | 币种                                                              |                        |
+| { chains                | true     | object   |                                                                 |                        |
+| chain                   | true     | string   | 链名称                                                             |                        |
+| displayName             | true     | string   | 链显示名称                                                           |                        |
+| assetType               | false    | string   | 资产类型，1 虚拟币 2 法币                                                                |                        |
+| baseChain               | false    | string   | 底层链名称                                                           |                        |
+| fullName               | false    | string   | 币种全称|                        |
+| baseChainProtocol       | false    | string   | 底层链协议                                                           |                        |
+| isDynamic               | false    | boolean  | 是否动态手续费（仅对固定类型有效，withdrawFeeType=fixed）                         | true,false             |
+| numOfConfirmations      | true     | int      | 安全上账所需确认次数（达到确认次数后允许提币）                                         |                        |
+| numOfFastConfirmations  | true     | int      | 快速上账所需确认次数（达到确认次数后允许交易但不允许提币）                                   |                        |
+| minDepositAmt           | true     | string   | 单次最小充币金额                                                        |                        |
+| depositStatus           | true     | string   | 充币状态                                                            | allowed,prohibited     |
+| minWithdrawAmt          | true     | string   | 单次最小提币金额                                                        |                        |
+| maxWithdrawAmt          | true     | string   | 单次最大提币金额                                                        |                        |
+| withdrawQuotaPerDay     | true     | string   | 当日提币额度（新加坡时区）                                                   |                        |
+| withdrawPrecision       | true     | int      | 提币精度                                                            |                        |
+| withdrawFeeType         | true     | string   | 提币手续费类型（特定币种在特定链上的提币手续费类型唯一）                                    | fixed,circulated,ratio |
+| transactFeeWithdraw     | false    | string   | 单次提币手续费（仅对固定类型有效，withdrawFeeType=fixed）                         |                        |
 | minTransactFeeWithdraw  | false    | string   | 最小单次提币手续费（仅对区间类型和有下限的比例类型有效，withdrawFeeType=circulated or ratio） |                        |
 | maxTransactFeeWithdraw  | false    | string   | 最大单次提币手续费（仅对区间类型和有上限的比例类型有效，withdrawFeeType=circulated or ratio） |                        |
-| transactFeeRateWithdraw | false    | string   | 单次提币手续费率（仅对比例类型有效，withdrawFeeType=ratio）  |                        |
-| withdrawStatus}         | true     | string   | 提币状态                                                     | allowed,prohibited     |
-| instStatus }            | true     | string   | 币种状态                                                     | normal,delisted        |
+| transactFeeRateWithdraw | false    | string   | 单次提币手续费率（仅对比例类型有效，withdrawFeeType=ratio）                        |                        |
+| withdrawStatus}         | true     | string   | 提币状态                                                            | allowed,prohibited     |
+| instStatus }            | true     | string   | 币种状态                                                            | normal,delisted        |
 
 ### 状态码
 
@@ -1927,44 +1920,51 @@ API Key 权限：读取<br>
 
 ```json
 {
-  "data":
-    [
-      {
-        "id": 1171,
-        "type": "deposit",
-        "currency": "xrp",
-        "tx-hash": "ed03094b84eafbe4bc16e7ef766ee959885ee5bcb265872baaa9c64e1cf86c2b",
-        "amount": 7.457467,
-        "address": "rae93V8d2mdoUQHwBDBdM4NHCMehRJAsbm",
-        "address-tag": "100040",
-        "fee": 0,
-        "state": "safe",
-        "created-at": 1510912472199,
-        "updated-at": 1511145876575
-      },
-      ...
-    ]
+  "status": "ok",
+  "data": [
+    {
+      "id": 105380410,
+      "type": "deposit",
+      "sub-type": "NORMAL",
+      "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",
+      "currency": "usdc",
+      "chain": "usdc",
+      "tx-hash": "244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf",
+      "amount": 100,
+      "address": "0x2c7c448a32d754d8d680e43b0b0b49cf61c83750",
+      "address-tag": "",
+      "fee": 0,
+      "state": "safe",
+      "wallet-confirm": 12,
+      "created-at": 1752738144869,
+      "updated-at": 1752738289051
+    },
+    ...
+  ]
 }
 ```
 
 ### 响应数据
 
-| 参数名称    | 是否必须 | 数据类型 | 描述                                                         | 取值范围                                 |
-| ----------- | -------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |
-| id          | true     | long     | 充币订单id                                                   |                                          |
-| type        | true     | string   | 类型                                                         | 'deposit', 'withdraw' |
-| currency    | true     | string   | 币种                                                         |                                          |
-| tx-hash     | true     | string   | 交易哈希                                                     |                                          |
-| chain       | true     | string   | 链名称                                                       |                                          |
-| amount      | true     | float    | 个数                                                         |                                          |
-| address     | true     | string   | 目的地址                                                     |                                          |
-| address-tag | true     | string   | 地址标签                                                     |                                          |
-| fee         | true     | float    | 手续费                                                       |                                          |
-| state       | true     | string   | 状态                                                         | 状态参见下表                             |
-| error-code  | false    | string   | 提币失败错误码，仅type为”withdraw“，且state为”reject“、”wallet-reject“和”failed“时有。 |                                          |
-| error-msg   | false    | string   | 提币失败错误描述，仅type为”withdraw“，且state为”reject“、”wallet-reject“和”failed“时有。 |                                          |
-| created-at  | true     | long     | 发起时间                                                     |                                          |
-| updated-at  | true     | long     | 最后更新时间                                                 |                                          |
+| 参数名称           | 是否必须  | 数据类型 | 描述                                                                    | 取值范围                                 |
+|----------------|-------| -------- |-----------------------------------------------------------------------| ---------------------------------------- |
+| id             | true  | long     | 充币订单id/提币订单id                                                         |                                          |
+| type           | true  | string   | 类型                                                                    | 'deposit', 'withdraw' |
+| sub-type       | false | string   | 子类型，保留字段                                                              |  |
+| currency       | true  | string   | 币种                                                                    |                                          |
+| tx-hash        | true  | string   | 交易哈希                                                                  |                                          |
+| chain          | true  | string   | 链名称                                                                   |                                          |
+| amount         | true  | float    | 个数                                                                    |                                          |
+| address        | true  | string   | 目的地址                                                                  |                                          |
+| address-tag    | true  | string   | 地址标签                                                                  |                                          |
+| request-id     | false | string   | 保留字段                                                                  |                                          |
+| fee            | true  | float    | 手续费                                                                   |                                          |
+| state          | true  | string   | 状态                                                                    | 状态参见下表                             |
+| wallet-confirm | false | string   | 钱包确认次数                                                                |                             |
+| error-code     | false | string   | 提币失败错误码，仅type为”withdraw“，且state为”reject“、”wallet-reject“和”failed“时有。  |                                          |
+| error-msg      | false | string   | 提币失败错误描述，仅type为”withdraw“，且state为”reject“、”wallet-reject“和”failed“时有。 |                                          |
+| created-at     | true  | long     | 发起时间                                                                  |                                          |
+| updated-at     | true  | long     | 最后更新时间                                                                |                                          |
 
 
 - 虚拟币充值状态定义：

@@ -1710,8 +1710,6 @@
                     </span><span class="nl">"withdrawFeeType"</span><span class="p">:</span><span class="s2">"circulated"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawPrecision"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"280000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaPerYear"</span><span class="p">:</span><span class="s2">"2800000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaTotal"</span><span class="p">:</span><span class="s2">"2800000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -1734,8 +1732,6 @@
                     </span><span class="nl">"withdrawFeeType"</span><span class="p">:</span><span class="s2">"ratio"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawPrecision"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"90000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaPerYear"</span><span class="p">:</span><span class="s2">"111000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaTotal"</span><span class="p">:</span><span class="s2">"1110000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -1757,8 +1753,6 @@
                     </span><span class="nl">"withdrawFeeType"</span><span class="p">:</span><span class="s2">"fixed"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawPrecision"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"180000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaPerYear"</span><span class="p">:</span><span class="s2">"200000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaTotal"</span><span class="p">:</span><span class="s2">"300000.00000000"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -1843,6 +1837,13 @@
       <td> </td>
     </tr>
     <tr>
+      <td>fullName</td>
+      <td>false</td>
+      <td>string</td>
+      <td>幣種全稱</td>
+      <td> </td>
+    </tr>
+    <tr>
       <td>baseChainProtocol</td>
       <td>false</td>
       <td>string</td>
@@ -1906,20 +1907,6 @@
       <td> </td>
     </tr>
     <tr>
-      <td>withdrawQuotaPerYear</td>
-      <td>false</td>
-      <td>string</td>
-      <td>當年提幣額度</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>withdrawQuotaTotal</td>
-      <td>false</td>
-      <td>string</td>
-      <td>總提幣額度</td>
-      <td> </td>
-    </tr>
-    <tr>
       <td>withdrawPrecision</td>
       <td>true</td>
       <td>int</td>
@@ -1959,6 +1946,20 @@
       <td>false</td>
       <td>string</td>
       <td>單次提幣手續費率（僅對比例類型有效，withdrawFeeType=ratio）</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>addrDepositTag</td>
+      <td>false</td>
+      <td>boolean</td>
+      <td>提幣地址tag</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>addrWithTag</td>
+      <td>false</td>
+      <td>boolean</td>
+      <td>地址tag</td>
       <td> </td>
     </tr>
     <tr>
@@ -4388,7 +4389,7 @@ endTime缺省值：當前時間</p>
     </tr>
     <tr>
       <td>fee</td>
-      <td>true</td>
+      <td>false</td>
       <td>string</td>
       <td>轉賬手續費</td>
       <td> </td>
@@ -4587,6 +4588,7 @@ endTime缺省值：當前時間</p>
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w">
     </span><span class="p">[</span><span class="w">
       </span><span class="p">{</span><span class="w">
@@ -4623,7 +4625,7 @@ endTime缺省值：當前時間</p>
       <td>id</td>
       <td>true</td>
       <td>long</td>
-      <td>充幣訂單id</td>
+      <td>充幣訂單id/提幣訂單id</td>
       <td> </td>
     </tr>
     <tr>
@@ -4631,6 +4633,13 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>類型</td>
+      <td>‘deposit’, ‘withdraw’, 子用戶僅有deposit</td>
+    </tr>
+    <tr>
+      <td>sub-type</td>
+      <td>false</td>
+      <td>string</td>
+      <td>子類型，保留字段</td>
       <td>‘deposit’, ‘withdraw’, 子用戶僅有deposit</td>
     </tr>
     <tr>
@@ -4676,6 +4685,13 @@ endTime缺省值：當前時間</p>
       <td> </td>
     </tr>
     <tr>
+      <td>request-id</td>
+      <td>false</td>
+      <td>string</td>
+      <td>保留字段</td>
+      <td> </td>
+    </tr>
+    <tr>
       <td>fee</td>
       <td>true</td>
       <td>float</td>
@@ -4688,6 +4704,13 @@ endTime缺省值：當前時間</p>
       <td>string</td>
       <td>狀態</td>
       <td>狀態參見下表</td>
+    </tr>
+    <tr>
+      <td>wallet-confirm</td>
+      <td>false</td>
+      <td>string</td>
+      <td>錢包確認次數</td>
+      <td> </td>
     </tr>
     <tr>
       <td>error-code</td>

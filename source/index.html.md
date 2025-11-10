@@ -967,6 +967,8 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | minTransactFeeWithdraw  | false    | string   | 最小单次提币手续费（仅对区间类型和有下限的比例类型有效，withdrawFeeType=circulated or ratio） |                        |
 | maxTransactFeeWithdraw  | false    | string   | 最大单次提币手续费（仅对区间类型和有上限的比例类型有效，withdrawFeeType=circulated or ratio） |                        |
 | transactFeeRateWithdraw | false    | string   | 单次提币手续费率（仅对比例类型有效，withdrawFeeType=ratio）                        |                        |
+| addrDepositTag          | false    | boolean  | 提币地址tag                                                                   |  
+| addrWithTag             | false    | boolean  | 地址tag                                                                   |                        |
 | withdrawStatus}         | true     | string   | 提币状态                                                            | allowed,prohibited     |
 | instStatus }            | true     | string   | 币种状态                                                            | normal,delisted        |
 
@@ -1840,7 +1842,7 @@ API Key 权限：提币<br>
 | address  | true     | string | 提币地址                                                     | 仅支持在官网上相应币种地址列表中的地址                       |
 | amount   | true     | string | 提币数量                                                     |                                                              |
 | currency | true     | string | 资产类型                                                     | btc, ltc, bch, eth, etc ...(取值参考`GET /v1/common/currencys`) |
-| fee      | true     | string | 转账手续费                                                   |                                                              |
+| fee      | false    | string | 转账手续费                                                   |                                                              |
 | chain    | false    | string | 取值参考`GET /v2/reference/currencies`,例如提USDT至OMNI时须设置此参数为"usdt"，提USDT至TRX时须设置此参数为"trc20usdt"，其他币种提币无须设置此参数 |                                                              |
 | addr-tag | false    | string | 虚拟币共享地址tag，适用于xrp，xem，bts，steem，eos，xmr      | 格式, "123"类的整数字符串                                    |
 

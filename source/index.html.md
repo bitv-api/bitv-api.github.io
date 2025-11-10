@@ -877,8 +877,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawFeeType":"circulated",
                     "withdrawPrecision":5,
                     "withdrawQuotaPerDay":"280000.00000000",
-                    "withdrawQuotaPerYear":"2800000.00000000",
-                    "withdrawQuotaTotal":"2800000.00000000",
                     "withdrawStatus":"allowed",
                     "transactFeeWithdraw":"",
                     "addrWithTag": false,
@@ -901,8 +899,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawFeeType":"ratio",
                     "withdrawPrecision":7,
                     "withdrawQuotaPerDay":"90000.00000000",
-                    "withdrawQuotaPerYear":"111000.00000000",
-                    "withdrawQuotaTotal":"1110000.00000000",
                     "withdrawStatus":"allowed",
                     "transactFeeWithdraw":"",
                     "addrWithTag": false,
@@ -924,8 +920,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
                     "withdrawFeeType":"fixed",
                     "withdrawPrecision":6,
                     "withdrawQuotaPerDay":"180000.00000000",
-                    "withdrawQuotaPerYear":"200000.00000000",
-                    "withdrawQuotaTotal":"300000.00000000",
                     "withdrawStatus":"allowed",
                     "transactFeeWithdraw":"",
                     "addrWithTag": false,
@@ -954,6 +948,7 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | chain                   | true     | string   | 鏈名稱                                                       |                        |
 | displayName             | true     | string   | 鏈顯示名稱                                                   |                        |
 | baseChain               | false    | string   | 底層鏈名稱                                                   |                        |
+| fullName                | false    | string   | 幣種全稱                                                   |                        |
 | baseChainProtocol       | false    | string   | 底層鏈協議                                                   |                        |
 | isDynamic               | false    | boolean  | 是否動態手續費（僅對固定類型有效，withdrawFeeType=fixed）    | true,false             |
 | numOfConfirmations      | true     | int      | 安全上賬所需確認次數（達到確認次數後允許提幣）               |                        |
@@ -963,14 +958,14 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | minWithdrawAmt          | true     | string   | 單次最小提幣金額                                             |                        |
 | maxWithdrawAmt          | true     | string   | 單次最大提幣金額                                             |                        |
 | withdrawQuotaPerDay     | true     | string   | 當日提幣額度（新加坡時區）                                   |                        |
-| withdrawQuotaPerYear    | false     | string   | 當年提幣額度                                                 |                        |
-| withdrawQuotaTotal      | false     | string   | 總提幣額度                                                   |                        |
 | withdrawPrecision       | true     | int      | 提幣精度                                                     |                        |
 | withdrawFeeType         | true     | string   | 提幣手續費類型（特定幣種在特定鏈上的提幣手續費類型唯一）     | fixed,circulated,ratio |
 | transactFeeWithdraw     | false    | string   | 單次提幣手續費（僅對固定類型有效，withdrawFeeType=fixed）    |                        |
 | minTransactFeeWithdraw  | false    | string   | 最小單次提幣手續費（僅對區間類型和有下限的比例類型有效，withdrawFeeType=circulated or ratio） |                        |
 | maxTransactFeeWithdraw  | false    | string   | 最大單次提幣手續費（僅對區間類型和有上限的比例類型有效，withdrawFeeType=circulated or ratio） |                        |
 | transactFeeRateWithdraw | false    | string   | 單次提幣手續費率（僅對比例類型有效，withdrawFeeType=ratio）  |                        |
+| addrDepositTag          | false    | boolean  | 提幣地址tag                                             |                        |
+| addrWithTag             | false    | boolean  | 地址tag                                                |                        |
 | withdrawStatus}         | true     | string   | 提幣狀態                                                     | allowed,prohibited     |
 | instStatus }            | true     | string   | 幣種狀態                                                     | normal,delisted        |
 
@@ -1990,7 +1985,7 @@ API Key 權限：提幣<br>
 | address  | true     | string | 提幣地址                                                     | 僅支持在官網上相應幣種地址列表中的地址                       |
 | amount   | true     | string | 提幣數量                                                     |                                                              |
 | currency | true     | string | 資產類型                                                     | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-| fee      | true     | string | 轉賬手續費                                                   |                                                              |
+| fee      | false    | string | 轉賬手續費                                                   |                                                              |
 | chain    | false    | string | 取值參考`GET /v2/reference/currencies`,例如提USDT至OMNI時須設置此參數為"usdt"，提USDT至TRX時須設置此參數為"trc20usdt"，其他幣種提幣無須設置此參數 |                                                              |
 | addr-tag | false    | string | 虛擬幣共享地址tag，適用於xrp，xem，bts，steem，eos，xmr      | 格式, "123"類的整數字符串                                    |
 
@@ -2070,6 +2065,7 @@ API Key 權限：讀取<br>
 
 ```json
 {
+  "status": "ok",
   "data":
     [
       {
@@ -2094,16 +2090,19 @@ API Key 權限：讀取<br>
 
 | 參數名稱    | 是否必須 | 數據類型 | 描述                                                         | 取值範圍                                 |
 | ----------- | -------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |
-| id          | true     | long     | 充幣訂單id                                                   |                                          |
+| id          | true     | long     | 充幣訂單id/提幣訂單id                                          |                                          |
 | type        | true     | string   | 類型                                                         | 'deposit', 'withdraw', 子用戶僅有deposit |
+| sub-type    | false    | string   | 子類型，保留字段                                               | 'deposit', 'withdraw', 子用戶僅有deposit |
 | currency    | true     | string   | 幣種                                                         |                                          |
 | tx-hash     | true     | string   | 交易哈希                                                     |                                          |
 | chain       | true     | string   | 鏈名稱                                                       |                                          |
 | amount      | true     | float    | 個數                                                         |                                          |
 | address     | true     | string   | 目的地址                                                     |                                          |
 | address-tag | true     | string   | 地址標籤                                                     |                                          |
+| request-id  | false    | string   | 保留字段                                                     |                                          |
 | fee         | true     | float    | 手續費                                                       |                                          |
 | state       | true     | string   | 狀態                                                         | 狀態參見下表                             |
+| wallet-confirm | false     | string   | 錢包確認次數                                              |                                        |
 | error-code  | false    | string   | 提幣失敗錯誤碼，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |
 | error-msg   | false    | string   | 提幣失敗錯誤描述，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |
 | created-at  | true     | long     | 發起時間                                                     |                                          |

@@ -1848,7 +1848,7 @@ Frequency limit value (NEW): 20 times/2s
 | address        | true     | string    | Withdrawal address | Only supports addresses in the corresponding currency address list on the official website |
 | amount         | true     | string    | Withdrawal amount | |
 | currency       | true     | string    | Asset type | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| fee            | true     | string    | Transfer fee | |
+| fee            | false     | string    | Transfer fee | |
 | chain          | false    | string    | Value reference `GET /v2/reference/currencies`. For example, when withdrawing USDT to OMNI, this parameter must be set to "usdt". When withdrawing USDT to TRX, this parameter must be set to "trc20usdt". For other currencies, this parameter does not need to be set. | |
 | addr-tag       | false    | string    | Virtual currency shared address tag, suitable for xrp, xem, bts, steem, eos, xmr | Integer string format, e.g., "123" |
 
@@ -1960,12 +1960,14 @@ Frequency limit value (NEW): 20 times/2s
 | -------------- |----------| --------- |-------------------------------------------------------------------------------------------------------------------------------| ----------- |
 | id             | true     | long      | Deposit order ID / Withdraw order ID                                                                                          | |
 | type           | true     | string    | Type                                                                                                                          | 'deposit', 'withdraw' |
+| sub-type       | false    | string    | sub-type reserved field                                                                                                                     | |
 | currency       | true     | string    | Currency                                                                                                                      | |
 | tx-hash        | true     | string    | Transaction hash                                                                                                              | |
 | chain          | true     | string    | Chain name                                                                                                                    | |
 | amount         | true     | float     | Amount                                                                                                                        | |
 | address        | true     | string    | Destination address                                                                                                           | |
 | address-tag    | true     | string    | Address tag                                                                                                                   | |
+| request-id     | false    | string    | reserved field                                                                                                                    | |
 | fee            | true     | float     | Handling fee                                                                                                                  | |
 | state          | true     | string    | State                                                                                                                         | See table below |
 | wallet-confirm          | false    | long    | wallet confirm times                                                                                                          |  |

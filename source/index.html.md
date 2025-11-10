@@ -1962,7 +1962,7 @@ API Key 权限：读取<br>
 | request-id     | false | string   | 保留字段                                                                  |                                          |
 | fee            | true  | float    | 手续费                                                                   |                                          |
 | state          | true  | string   | 状态                                                                    | 状态参见下表                             |
-| wallet-confirm | false | string   | 钱包确认次数                                                                |                             |
+| wallet-confirm | false | long     | 钱包确认次数                                                                |                             |
 | error-code     | false | string   | 提币失败错误码，仅type为”withdraw“，且state为”reject“、”wallet-reject“和”failed“时有。  |                                          |
 | error-msg      | false | string   | 提币失败错误描述，仅type为”withdraw“，且state为”reject“、”wallet-reject“和”failed“时有。 |                                          |
 | created-at     | true  | long     | 发起时间                                                                  |                                          |

@@ -2752,7 +2752,7 @@ This interface returns the transaction details of the specified order.
 | role               | true     | string    | Transaction role                                        | maker, taker |
 | filled-points      | true     | string    | Deduction amount                                        |              |
 | fee-deduct-currency| true     | string    | Deduction type                                          |   deduction type. if blank, the transaction fee is based on original currency  |
-| fee-deduct-state   | true     | string    | Deduction status                                        | deduction in progress, deduction completed |
+| fee-deduct-state   | true     | string    | Deduction status                                        | Fee deduction status，In deduction：ongoing，Deduction completed：done |
 
 
 Note: <br>
@@ -2913,7 +2913,7 @@ This interface queries historical orders within the last 48 hours based on searc
 
 | Parameter name     | Required | Data type | Description                                                                                                                                                                         | Value range                                                             |
 | ------------------ | -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| account-id         | true     | long      | Account ID                                                                                                                                                                          |                                                                         |
+| {account-id         | true     | long      | Account ID                                                                                                                                                                          |                                                                         |
 | amount             | true     | string    | Order quantity                                                                                                                                                                      |                                                                         |
 | canceled-at        | false    | long      | The time when the cancellation request was received                                                                                                                                  |                                                                         |
 | created-at         | true     | long      | Order creation time                                                                                                                                                                 |                                                                         |
@@ -2927,7 +2927,7 @@ This interface queries historical orders within the last 48 hours based on searc
 | source             | true     | string    | Order source                                                                                                                                                                        | api                                                                     |
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
 | symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, rcneth, etc.                                            |
-| type               | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, etc. |
+| type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, etc. |
 | next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next")                                       | UTC time in milliseconds                                                |
 
 ## Current and historical transactions

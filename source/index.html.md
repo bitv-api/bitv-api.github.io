@@ -930,8 +930,8 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | code                  | true     | int       | status code               |             |
 | message               | false    | string    | error description (if any) |             |
 | data                  | true     | object    |                           |             |
-| currency              | true     | string    | currency                  |             |
-| chains                | true     | object    |                           |             |
+| {currency             | true     | string    | currency                  |             |
+| {chains               | true     | object    |                           |             |
 | chain                 | true     | string    | chain name                |             |
 | displayName           | true     | string    | chain display name        |             |
 | assetType             | false    | string    | asset type, 1 virtual currency 2 fiat currency|             |
@@ -952,10 +952,10 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | minTransactFeeWithdraw| false    | string    | Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio) |             |
 | maxTransactFeeWithdraw| false    | string    | Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio) |             |
 | transactFeeRateWithdraw| false   | string    | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio)     |             |
-| withdrawStatus        | true     | string    | withdrawal status                                                                                     | allowed, prohibited |
-| instStatus            | true     | string    | currency status                                                                                       | normal, delisted |
 | addrWithTag            | true     | boolean    | addr with tag                                                                                       |  |
 | addrDepositTag            | true     | boolean    | has addr deposit tag                                                                                       |  |
+| withdrawStatus }       | true     | string    | withdrawal status                                                                                     | allowed, prohibited |
+| instStatus  }          | true     | string    | currency status                                                                                       | normal, delisted |
 
 
 ### status code
@@ -2163,6 +2163,7 @@ A batch of up to 10 orders
 ```
 
 ### Request parameters
+
 | Parameter Name | Data Type | Required | Default Value | Description |
 | -------------- | --------- | -------- | ------------- | ----------- |
 | account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
@@ -2357,7 +2358,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | symbol         | string    | false     | NA            | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
 | side           | string    | false    | both          | Specify to only return orders in one direction, possible values are: buy, sell. By default, both directions are returned. |
 | from           | string    | false    |               | Query starting ID |
-| direct         | string    | false    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
+| direct         | string    | false((if field "from" is defined, this field "direct" becomes Required))    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
 | size           | int       | false    | 100           | Return the quantity of the order, the maximum value is 500. |
 
 
@@ -2426,7 +2427,7 @@ This interface sends a request to cancel orders in batches.
 | account-id     | false    | string | Account ID, refer to `GET /v1/account/accounts` for available values. If not provided, orders from all accounts will be returned.            |               |               |
 | symbol         | false    | string | List of trading symbols (up to 10 symbols, multiple symbols separated by commas). If not provided, orders for all symbols will be returned. | all           |               |
 | side           | false    | string | Trading direction. If not provided, all orders that meet the conditions and have not been executed will be returned.                        |               | "buy" or "sell" |
-| size           | false    | int    | Number of records to be returned.                                                                                                           | 100           | [0, 100]      |
+| size           | false    | int    | Number of records to be returned.                                                                                                           | 100           | [1, 100]      |
 
 
 
@@ -2601,16 +2602,12 @@ This interface returns the latest status and details of the specified order. Ord
 | field-fees         | true     | string    | Transaction fee (buy for coins, sell for money)                                                  |                                                                                                    |
 | finished-at        | false    | long      | The time when the order becomes finalized, not the transaction time, including the "cancelled" status |                                                                                                    |
 | id                 | true     | long      | Order ID                                                                                         |                                                                                                    |
-| client-order-id    | false    | string    | User-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time)                   |
-|                    |          |           | (state <> canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time)                    |
-|                    |          |           | can return client-order-id (if any)                                                              |                                                                                                    |
+| client-order-id    | false    | string    | User-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time)  (state <> canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time)  can return client-order-id (if any)                                                              |                                                                                                    |
 | price              | true     | string    | Order price                                                                                      |                                                                                                    |
 | source             | true     | string    | Order source                                                                                     | api                                                                                                |
 | state              | true     | string    | Order status                                                                                     | submitted, partial-filled, partially-canceled, filled, canceled, created                            |
 | symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, rcneth ...                                                                         |
-| type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, |
-|                    |          |           | sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, |
-|                    |          |           | sell-limit-maker, buy-stop-limit, sell-stop-limit                                                 |                                                                                                    |
+| type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker,sell-limit-maker, buy-stop-limit, sell-stop-limit                                                 |                                                                                                    |
 
 
 ## Query order details (based on client order ID)
@@ -2743,7 +2740,7 @@ This interface returns the transaction details of the specified order.
 | created-at         | true     | long      | Transaction timestamp                                   |              |
 | filled-amount      | true     | string    | Filled amount                                           |              |
 | filled-fees        | true     | string    | Transaction fee (positive value) or transaction rebate (negative value) |              |
-| fee-currency       | true     | string    | Transaction fee or rebate currency                       |              |
+| fee-currency       | true     | string    | Currency of transaction fee or transaction fee rebate (transaction fee of buy order is based on base currency, transaction fee of sell order is based on quote currency; transaction fee rebate of buy order is based on quote currency, transaction fee rebate of sell order is based on base currency)                       |              |
 | id                 | true     | long      | Order transaction record ID                              |              |
 | match-id           | true     | long      | Matching ID                                             |              |
 | order-id           | true     | long      | Order ID                                                |              |
@@ -2754,7 +2751,7 @@ This interface returns the transaction details of the specified order.
 | type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
 | role               | true     | string    | Transaction role                                        | maker, taker |
 | filled-points      | true     | string    | Deduction amount                                        |              |
-| fee-deduct-currency| true     | string    | Deduction type                                          |              |
+| fee-deduct-currency| true     | string    | Deduction type                                          |   deduction type. if blank, the transaction fee is based on original currency  |
 | fee-deduct-state   | true     | string    | Deduction status                                        | deduction in progress, deduction completed |
 
 

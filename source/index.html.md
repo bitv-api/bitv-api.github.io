@@ -2417,7 +2417,7 @@ API Key 权限：交易<br>
 | account-id | false    | string | 账户ID，取值参考 `GET /v1/account/accounts`                  |        |                                                   |
 | symbol     | false    | string | 交易代码列表（最多10 个symbols，多个交易代码间以逗号分隔），btcusdt, ethbtc...（取值参考`/v1/common/symbols`） | all    |                                                   |
 | side       | false    | string | 主动交易方向                                                 |        | “buy”或“sell”，缺省将返回所有符合条件尚未成交订单 |
-| size       | false    | int    | 所需返回记录数                                               | 100    | [0,100]                                           |
+| size       | false    | int    | 所需返回记录数                                               | 100    | [1,100]                                           |
 
 
 > Response:

@@ -3591,6 +3591,7 @@ When any of the data of the first price of buying, the first amount of buying, t
 ```
 
 ### parameters
+
 | Parameter name | Data Type | Required | Default Value | Description | Value Range |
 | -------------- | --------- | -------- | ------------- | ----------- | ----------- |
 | symbol         | string    | true     | NA            | Transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
@@ -4245,7 +4246,8 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
           "orderSize": "1",
           "clientOrderId": "a001",
           "orderCreateTime": 998787897878,
-          "orderStatus": "partial-filled"
+          "orderStatus": "partial-filled",
+          "orderType": "buy-limit"
      }
 }
 ```

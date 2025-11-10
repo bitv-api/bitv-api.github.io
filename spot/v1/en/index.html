@@ -1784,14 +1784,14 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
       <td> </td>
     </tr>
     <tr>
-      <td>currency</td>
+      <td>{currency</td>
       <td>true</td>
       <td>string</td>
       <td>currency</td>
       <td> </td>
     </tr>
     <tr>
-      <td>chains</td>
+      <td>{chains</td>
       <td>true</td>
       <td>object</td>
       <td> </td>
@@ -1938,20 +1938,6 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
       <td> </td>
     </tr>
     <tr>
-      <td>withdrawStatus</td>
-      <td>true</td>
-      <td>string</td>
-      <td>withdrawal status</td>
-      <td>allowed, prohibited</td>
-    </tr>
-    <tr>
-      <td>instStatus</td>
-      <td>true</td>
-      <td>string</td>
-      <td>currency status</td>
-      <td>normal, delisted</td>
-    </tr>
-    <tr>
       <td>addrWithTag</td>
       <td>true</td>
       <td>boolean</td>
@@ -1964,6 +1950,20 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
       <td>boolean</td>
       <td>has addr deposit tag</td>
       <td> </td>
+    </tr>
+    <tr>
+      <td>withdrawStatus }</td>
+      <td>true</td>
+      <td>string</td>
+      <td>withdrawal status</td>
+      <td>allowed, prohibited</td>
+    </tr>
+    <tr>
+      <td>instStatus  }</td>
+      <td>true</td>
+      <td>string</td>
+      <td>currency status</td>
+      <td>normal, delisted</td>
     </tr>
   </tbody>
 </table>
@@ -4812,15 +4812,69 @@ Frequency limit (NEW): 50 times/2s<br /></p>
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
 <h3 id="request-parameters-20">Request parameters</h3>
-<p>| Parameter Name | Data Type | Required | Default Value | Description |
-| ————– | ——— | ——– | ————- | ———– |
-| account-id | string | true | NA | Account ID. Refer to <code>GET /v1/account/accounts</code> for valid values. For spot transactions, use the account ID of the ‘spot’ account. |
-| symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to <code>GET /v1/common/symbols</code> for valid values. |
-| type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
-| amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
-| price | string | false | NA | Order price (not applicable for market orders) |
-| source | string | false | spot-api | Order source. Use “spot-api” for spot transactions. |
-| client-order-id | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter Name</th>
+      <th>Data Type</th>
+      <th>Required</th>
+      <th>Default Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>account-id</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Account ID. Refer to <code>GET /v1/account/accounts</code> for valid values. For spot transactions, use the account ID of the ‘spot’ account.</td>
+    </tr>
+    <tr>
+      <td>symbol</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Trading pair, such as btcusdt, ethbtc, etc. Refer to <code>GET /v1/common/symbols</code> for valid values.</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions.</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>string</td>
+      <td>true</td>
+      <td>NA</td>
+      <td>Order amount (for market orders, it represents the buying amount)</td>
+    </tr>
+    <tr>
+      <td>price</td>
+      <td>string</td>
+      <td>false</td>
+      <td>NA</td>
+      <td>Order price (not applicable for market orders)</td>
+    </tr>
+    <tr>
+      <td>source</td>
+      <td>string</td>
+      <td>false</td>
+      <td>spot-api</td>
+      <td>Order source. Use “spot-api” for spot transactions.</td>
+    </tr>
+    <tr>
+      <td>client-order-id</td>
+      <td>string</td>
+      <td>false</td>
+      <td>NA</td>
+      <td>User-defined order ID (maximum length of 64 characters, must be unique within 24 hours)</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong>buy-limit-maker</strong></p>
 
@@ -5165,7 +5219,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     <tr>
       <td>direct</td>
       <td>string</td>
-      <td>false</td>
+      <td>false((if field “from” is defined, this field “direct” becomes Required))</td>
       <td> </td>
       <td>Query direction, prev means forward; next means backward (required if the ‘from’ field is set)</td>
     </tr>
@@ -5342,7 +5396,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>int</td>
       <td>Number of records to be returned.</td>
       <td>100</td>
-      <td>[0, 100]</td>
+      <td>[1, 100]</td>
     </tr>
   </tbody>
 </table>
@@ -5658,6 +5712,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <th>Data type</th>
       <th>Description</th>
       <th>Value range</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
@@ -5667,12 +5722,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>long</td>
       <td>Account ID</td>
       <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>amount</td>
       <td>true</td>
       <td>string</td>
       <td>Order quantity</td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
@@ -5681,12 +5738,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>long</td>
       <td>Order cancellation time</td>
       <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>created-at</td>
       <td>true</td>
       <td>long</td>
       <td>Order creation time</td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
@@ -5695,12 +5754,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Transaction amount</td>
       <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>field-cash-amount</td>
       <td>true</td>
       <td>string</td>
       <td>Total transaction amount</td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
@@ -5709,12 +5770,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Transaction fee (buy for coins, sell for money)</td>
       <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>finished-at</td>
       <td>false</td>
       <td>long</td>
       <td>The time when the order becomes finalized, not the transaction time, including the “cancelled” status</td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
@@ -5723,26 +5786,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>long</td>
       <td>Order ID</td>
       <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>client-order-id</td>
       <td>false</td>
       <td>string</td>
-      <td>User-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time)</td>
+      <td>User-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time)  (state &lt;&gt; canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time)  can return client-order-id (if any)</td>
       <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td>(state &lt;&gt; canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time)</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td>can return client-order-id (if any)</td>
       <td> </td>
     </tr>
     <tr>
@@ -5751,6 +5802,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Order price</td>
       <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>source</td>
@@ -5758,6 +5810,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Order source</td>
       <td>api</td>
+      <td> </td>
     </tr>
     <tr>
       <td>state</td>
@@ -5765,6 +5818,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Order status</td>
       <td>submitted, partial-filled, partially-canceled, filled, canceled, created</td>
+      <td> </td>
     </tr>
     <tr>
       <td>symbol</td>
@@ -5772,26 +5826,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Trading pair</td>
       <td>btcusdt, ethbtc, rcneth …</td>
+      <td> </td>
     </tr>
     <tr>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price,</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td>sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker,</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td>sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker,sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
       <td> </td>
     </tr>
   </tbody>
@@ -6093,7 +6135,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>fee-currency</td>
       <td>true</td>
       <td>string</td>
-      <td>Transaction fee or rebate currency</td>
+      <td>Currency of transaction fee or transaction fee rebate (transaction fee of buy order is based on base currency, transaction fee of sell order is based on quote currency; transaction fee rebate of buy order is based on quote currency, transaction fee rebate of sell order is based on base currency)</td>
       <td> </td>
     </tr>
     <tr>
@@ -6171,7 +6213,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Deduction type</td>
-      <td> </td>
+      <td>deduction type. if blank, the transaction fee is based on original currency</td>
     </tr>
     <tr>
       <td>fee-deduct-state</td>

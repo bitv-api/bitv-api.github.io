@@ -2560,7 +2560,7 @@ API Key 權限：交易<br>
 | account-id | false    | string | 賬戶ID，取值參考 `GET /v1/account/accounts`                  |        |                                                   |
 | symbol     | false    | string | 交易代碼列表（最多10 個symbols，多個交易代碼間以逗號分隔），btcusdt, ethbtc...（取值參考`/v1/common/symbols`） | all    |                                                   |
 | side       | false    | string | 主動交易方向                                                 |        | 「buy」或「sell」，缺省將返回所有符合條件尚未成交訂單 |
-| size       | false    | int    | 所需返回記錄數                                               | 100    | [0,100]                                           |
+| size       | false    | int    | 所需返回記錄數                                               | 100    | [1,100]                                           |
 
 
 > Response:

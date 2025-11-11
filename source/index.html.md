@@ -5,7 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - json
 
 toc_footers:
-  - <a href='https://www.bitv.com/api/'>Create API Key </a>
+  - <a href='https://www.bitv.com/api/'>Create an API key </a>
 includes:
 
 search: false

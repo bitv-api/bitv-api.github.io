@@ -952,8 +952,8 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | minTransactFeeWithdraw| false    | string    | Minimum single withdrawal fee (only valid for interval type and ratio type with lower limit, withdrawFeeType=circulated or ratio) |             |
 | maxTransactFeeWithdraw| false    | string    | Maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio) |             |
 | transactFeeRateWithdraw| false   | string    | transaction fee rate for a single withdrawal (only valid for ratio type, withdrawFeeType=ratio)     |             |
-| addrWithTag            | true     | boolean    | addr with tag                                                                                       |  |
-| addrDepositTag            | true     | boolean    | has addr deposit tag                                                                                       |  |
+| addrWithTag            | false     | boolean    | addr with tag                                                                                       |  |
+| addrDepositTag            | false     | boolean    | has addr deposit tag                                                                                       |  |
 | withdrawStatus }       | true     | string    | withdrawal status                                                                                     | allowed, prohibited |
 | instStatus  }          | true     | string    | currency status                                                                                       | normal, delisted |
 
@@ -1772,8 +1772,8 @@ This node is used to query the withdrawal addresses available for the API key, a
 | Parameter name | Required | Type   | Description                                                    | Default value | Value range                                              |
 | -------------- | -------- | ------ | -------------------------------------------------------------- | ------------- | -------------------------------------------------------- |
 | currency       | true     | string | Currency                                                       |               | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| chain          | false    | string | Chain name                                                      |               | If not filled, return the withdrawal addresses of all chains |
-| note           | false    | string | Address note                                                   |               | If not filled, return all note withdrawal addresses      |
+| chain          | false    | string | Chain name                                                      |      If not filled, return the withdrawal addresses of all chains         |  |
+| note           | false    | string | Address note                                                   |        If not filled, return all note withdrawal addresses       |       |
 | limit          | false    | int    | Maximum number of items returned in a single page               | 100           | [1, 500]                                                 |
 | fromId         | false    | long   | Starting number (withdrawal address ID, valid for pagination)   | NA            |                                                          |
 
@@ -2166,13 +2166,13 @@ A batch of up to 10 orders
 
 | Parameter Name | Data Type | Required | Default Value | Description |
 | -------------- | --------- | -------- | ------------- | ----------- |
-| account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
+| [{account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
 | symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
 | type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
 | amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
 | price | string | false | NA | Order price (not applicable for market orders) |
 | source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
-| client-order-id | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
+| client-order-id}] | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
 
 **buy-limit-maker**
 
@@ -2358,7 +2358,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | symbol         | string    | false     | NA            | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
 | side           | string    | false    | both          | Specify to only return orders in one direction, possible values are: buy, sell. By default, both directions are returned. |
 | from           | string    | false    |               | Query starting ID |
-| direct         | string    | false((if field "from" is defined, this field "direct" becomes Required))    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
+| direct         | string    | false(if field "from" is defined, this field "direct" becomes Required)    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
 | size           | int       | false    | 100           | Return the quantity of the order, the maximum value is 500. |
 
 
@@ -2424,9 +2424,9 @@ This interface sends a request to cancel orders in batches.
 
 | Parameter Name | Required | Type   | Description                                                                                                                                 | Default Value | Value Range   |
 | -------------- | -------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------- |
-| account-id     | false    | string | Account ID, refer to `GET /v1/account/accounts` for available values. If not provided, orders from all accounts will be returned.            |               |               |
-| symbol         | false    | string | List of trading symbols (up to 10 symbols, multiple symbols separated by commas). If not provided, orders for all symbols will be returned. | all           |               |
-| side           | false    | string | Trading direction. If not provided, all orders that meet the conditions and have not been executed will be returned.                        |               | "buy" or "sell" |
+| account-id     | false    | string | Account ID, refer to `GET /v1/account/accounts` for available values.                                       |               |               |
+| symbol         | false    | string | List of trading symbols (up to 10 symbols, multiple symbols separated by commas). e.g. btcusdt, bccbtc...(Refer to GET /v1/common/symbols) | all           |               |
+| side           | false    | string | Trading direction.                                         |               | "buy" or "sell",If not provided, all orders that meet the conditions and have not been executed will be returned.  |
 | size           | false    | int    | Number of records to be returned.                                                                                                           | 100           | [1, 100]      |
 
 
@@ -2521,8 +2521,8 @@ This interface sends cancellation requests for multiple orders (based on id) at 
 
 | Field Name      | Data Type | Description                                                                                           |
 | --------------- | --------- | ----------------------------------------------------------------------------------------------------- |
-| success         | string[]  | List of successfully canceled orders (can be order ID list or client order ID list as per user request) |
-| failed          | string[]  | List of failed orders (can be order ID list or client order ID list as per user request)               |
+|{ success         | string[]  | List of successfully canceled orders (can be order ID list or client order ID list as per user request) |
+| failed  }        | string[]  | List of failed orders (can be order ID list or client order ID list as per user request)               |
 
 Failed order list:
 
@@ -2532,7 +2532,7 @@ Failed order list:
 | client-order-id | string    | User-made order number (if the user includes client order ID when creating an order, this field must also be included) |
 | err-code        | string    | Order rejection error code (only valid for rejected orders)                                           |
 | err-msg         | string    | Order rejection error message (only valid for rejected orders)                                        |
-| order-state     | string    | Current order state (if applicable)                                                                    |
+| order-state }]  | string    | Current order state (if applicable)                                                                    |
 
 Possible values for order-state:
 
@@ -2646,7 +2646,6 @@ This interface returns the latest order status and details of the specified user
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "user-id": 1000,
     "source": "api",
     "state": "filled",
     "canceled-at": 0,
@@ -2928,7 +2927,7 @@ This interface queries historical orders within the last 48 hours based on searc
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
 | symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, rcneth, etc.                                            |
 | type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, etc. |
-| next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next")                                       | UTC time in milliseconds                                                |
+| next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next").Note: Only when the total number of items in the search result exceeded the limitation defined in "size", this field exists.                                       | UTC time in milliseconds                                                |
 
 ## Current and historical transactions
 

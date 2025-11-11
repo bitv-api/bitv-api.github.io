@@ -1400,7 +1400,7 @@
 </tr>
 <tr>
 <td>tags</td>
-<td>true</td>
+<td>false</td>
 <td>string</td>
 <td>标签，多个标签以逗号分隔，如：st,hadax</td>
 </tr>
@@ -4207,7 +4207,7 @@
 <td>string</td>
 <td>true</td>
 <td>NA</td>
-<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker（说明见下文）, buy-stop-limit, sell-stop-limit</td>
+<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -4238,18 +4238,6 @@
 <td>用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）</td>
 </tr>
 </tbody></table>
-
-<p><strong>buy-limit-maker</strong></p>
-
-<p>当“下单价格”&gt;=“市场最低卖出价”，订单提交后，系统将拒绝接受此订单；</p>
-
-<p>当“下单价格”&lt;“市场最低卖出价”，提交成功后，此订单将被系统接受。</p>
-
-<p><strong>sell-limit-maker</strong></p>
-
-<p>当“下单价格”&lt;=“市场最高买入价”，订单提交后，系统将拒绝接受此订单；</p>
-
-<p>当“下单价格”&gt;“市场最高买入价”，提交成功后，此订单将被系统接受。</p>
 
 <blockquote>
 <p>Response:</p>
@@ -4322,7 +4310,7 @@
 <td>string</td>
 <td>true</td>
 <td>NA</td>
-<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker（说明见下文）, buy-stop-limit, sell-stop-limit</td>
+<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -4353,18 +4341,6 @@
 <td>用户自编订单号（最大长度64个字符，须在24小时内保持唯一性）</td>
 </tr>
 </tbody></table>
-
-<p><strong>buy-limit-maker</strong></p>
-
-<p>当“下单价格”&gt;=“市场最低卖出价”，订单提交后，系统将拒绝接受此订单；</p>
-
-<p>当“下单价格”&lt;“市场最低卖出价”，提交成功后，此订单将被系统接受。</p>
-
-<p><strong>sell-limit-maker</strong></p>
-
-<p>当“下单价格”&lt;=“市场最高买入价”，订单提交后，系统将拒绝接受此订单；</p>
-
-<p>当“下单价格”&gt;“市场最高买入价”，提交成功后，此订单将被系统接受。</p>
 
 <blockquote>
 <p>Response:</p>
@@ -5186,7 +5162,7 @@
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 </tbody></table>
 <h2 id='client-order-id-2'>查询订单详情（基于client order ID）</h2>
@@ -5356,7 +5332,7 @@
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 </tbody></table>
 
@@ -5518,7 +5494,7 @@
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 <tr>
 <td>role</td>
@@ -5599,7 +5575,7 @@
 <td>string</td>
 <td>查询的订单类型组合，使用逗号分割</td>
 <td></td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 <tr>
 <td>start-time</td>
@@ -5790,7 +5766,7 @@
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+<td>submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 </tbody></table>
 <h3 id='start-date-end-date'>start-date, end-date相关错误码</h3>
@@ -6024,7 +6000,7 @@
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单, buy-limit-maker, sell-limit-maker, buy-limit-maker, sell-limit-maker</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 <tr>
 <td>next-time</td>
@@ -6068,7 +6044,7 @@
 <td>string</td>
 <td>查询的订单类型组合，使用&#39;,&#39;分割</td>
 <td>all</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 <tr>
 <td>start-date</td>
@@ -6232,7 +6208,7 @@
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC买单, sell-ioc：IOC卖单， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
 </tr>
 <tr>
 <td>role</td>
@@ -7755,7 +7731,7 @@
 <tr>
 <td>type</td>
 <td>string</td>
-<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
 </tr>
 <tr>
 <td>orderStatus</td>
@@ -7846,7 +7822,7 @@
 <tr>
 <td>type</td>
 <td>string</td>
-<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
 </tr>
 <tr>
 <td>clientOrderId</td>
@@ -7962,7 +7938,7 @@
 <tr>
 <td>type</td>
 <td>string</td>
-<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
 </tr>
 <tr>
 <td>clientOrderId</td>
@@ -8114,7 +8090,7 @@
 <tr>
 <td>orderType</td>
 <td>string</td>
-<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit,buy-ioc,sell-ioc,buy-limit-maker,sell-limit-maker,buy-stop-limit,sell-stop-limit</td>
+<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit</td>
 </tr>
 <tr>
 <td>aggressor</td>
@@ -8239,7 +8215,7 @@
 <tr>
 <td>orderType</td>
 <td>string</td>
-<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit,buy-ioc,sell-ioc,buy-limit-maker,sell-limit-maker,buy-stop-limit,sell-stop-limit</td>
+<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit</td>
 </tr>
 <tr>
 <td>accountId</td>

@@ -1939,14 +1939,14 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
     </tr>
     <tr>
       <td>addrWithTag</td>
-      <td>true</td>
+      <td>false</td>
       <td>boolean</td>
       <td>addr with tag</td>
       <td> </td>
     </tr>
     <tr>
       <td>addrDepositTag</td>
-      <td>true</td>
+      <td>false</td>
       <td>boolean</td>
       <td>has addr deposit tag</td>
       <td> </td>
@@ -3801,16 +3801,16 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>false</td>
       <td>string</td>
       <td>Chain name</td>
-      <td> </td>
       <td>If not filled, return the withdrawal addresses of all chains</td>
+      <td> </td>
     </tr>
     <tr>
       <td>note</td>
       <td>false</td>
       <td>string</td>
       <td>Address note</td>
-      <td> </td>
       <td>If not filled, return all note withdrawal addresses</td>
+      <td> </td>
     </tr>
     <tr>
       <td>limit</td>
@@ -4825,7 +4825,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
   </thead>
   <tbody>
     <tr>
-      <td>account-id</td>
+      <td>[{account-id</td>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
@@ -4867,7 +4867,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
       <td>Order source. Use “spot-api” for spot transactions.</td>
     </tr>
     <tr>
-      <td>client-order-id</td>
+      <td>client-order-id}]</td>
       <td>string</td>
       <td>false</td>
       <td>NA</td>
@@ -5219,7 +5219,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     <tr>
       <td>direct</td>
       <td>string</td>
-      <td>false((if field “from” is defined, this field “direct” becomes Required))</td>
+      <td>false(if field “from” is defined, this field “direct” becomes Required)</td>
       <td> </td>
       <td>Query direction, prev means forward; next means backward (required if the ‘from’ field is set)</td>
     </tr>
@@ -5370,7 +5370,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>account-id</td>
       <td>false</td>
       <td>string</td>
-      <td>Account ID, refer to <code>GET /v1/account/accounts</code> for available values. If not provided, orders from all accounts will be returned.</td>
+      <td>Account ID, refer to <code>GET /v1/account/accounts</code> for available values.</td>
       <td> </td>
       <td> </td>
     </tr>
@@ -5378,7 +5378,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>symbol</td>
       <td>false</td>
       <td>string</td>
-      <td>List of trading symbols (up to 10 symbols, multiple symbols separated by commas). If not provided, orders for all symbols will be returned.</td>
+      <td>List of trading symbols (up to 10 symbols, multiple symbols separated by commas). e.g. btcusdt, bccbtc…(Refer to GET /v1/common/symbols)</td>
       <td>all</td>
       <td> </td>
     </tr>
@@ -5386,9 +5386,9 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>side</td>
       <td>false</td>
       <td>string</td>
-      <td>Trading direction. If not provided, all orders that meet the conditions and have not been executed will be returned.</td>
+      <td>Trading direction.</td>
       <td> </td>
-      <td>“buy” or “sell”</td>
+      <td>“buy” or “sell”,If not provided, all orders that meet the conditions and have not been executed will be returned.</td>
     </tr>
     <tr>
       <td>size</td>
@@ -5554,12 +5554,12 @@ Frequency limit value (NEW): 50 times/2s</p>
   </thead>
   <tbody>
     <tr>
-      <td>success</td>
+      <td>{ success</td>
       <td>string[]</td>
       <td>List of successfully canceled orders (can be order ID list or client order ID list as per user request)</td>
     </tr>
     <tr>
-      <td>failed</td>
+      <td>failed  }</td>
       <td>string[]</td>
       <td>List of failed orders (can be order ID list or client order ID list as per user request)</td>
     </tr>
@@ -5598,7 +5598,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>Order rejection error message (only valid for rejected orders)</td>
     </tr>
     <tr>
-      <td>order-state</td>
+      <td>order-state }]</td>
       <td>string</td>
       <td>Current order state (if applicable)</td>
     </tr>
@@ -5894,7 +5894,6 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"user-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
     </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -6745,7 +6744,7 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>next-time</td>
       <td>false</td>
       <td>long</td>
-      <td>Next query start time (valid when the request field “direct” is “prev”), next query end time (valid when the request field “direct” is “next”)</td>
+      <td>Next query start time (valid when the request field “direct” is “prev”), next query end time (valid when the request field “direct” is “next”).Note: Only when the total number of items in the search result exceeded the limitation defined in “size”, this field exists.</td>
       <td>UTC time in milliseconds</td>
     </tr>
   </tbody>

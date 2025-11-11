@@ -3775,8 +3775,6 @@ Support data request method to obtain market summary data at one time:
 ```
 
 
-##
-
 
 # Websocket assets and orders
 
@@ -3892,7 +3890,7 @@ After successfully establishing a connection with the Websocket server, the Webs
 ```json
 {
 "action": "sub",
-"ch": "accounts. update"
+"ch": "accounts.update"
 }
 ```
 
@@ -3902,7 +3900,7 @@ If the subscription is successful, the Websocket client will receive the followi
 {
 "action": "sub",
 "code": 200,
-"ch": "accounts. update#0",
+"ch": "accounts.update#0",
 "data": {}
 }
 ```
@@ -4292,7 +4290,7 @@ Subscribe to order updates under your account.
 
 ### Subscribe to topics
 
-`accounts. update#${mode}`
+`accounts.update#${mode}`
 
 Users can choose any of the following ways to trigger account change push
 
@@ -4324,7 +4322,7 @@ Note: No matter which subscription mode the user adopts, after the subscription 
 ```json
 {
 "action": "sub",
-"ch": "accounts. update"
+"ch": "accounts.update"
 }
 
 ```
@@ -4335,7 +4333,7 @@ Note: No matter which subscription mode the user adopts, after the subscription 
 {
 "action": "sub",
 "code": 200,
-"ch": "accounts. update#0",
+"ch": "accounts.update#0",
 "data": {}
 }
 ```

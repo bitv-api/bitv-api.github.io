@@ -1807,7 +1807,7 @@ This node is used to query the withdrawal addresses available for the API key, a
 | note           | true     | string    | Address note                                                    |             |
 | addressTag     | false    | string    | Address tag, if any                                             |             |
 | address }      | true     | string    | Address                                                         |             |
-| nextId         | false    | long      | Starting number of the next page (withdrawal address ID)        |             |
+| nextId         | false    | long      | Starting number of the next page (withdrawal address ID,only valid if exceeded page size)        |             |
 
 Remarks:<br>
 The server returns the "nextId" field only when the data item requested by the user exceeds the single-page limit (set by the "limit" field). After the user receives the "nextId" returned by the server –<br>

@@ -4715,7 +4715,7 @@ Frequency limit value; 100 times/2s</p>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
-      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions.</td>
+      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -4747,18 +4747,6 @@ Frequency limit value; 100 times/2s</p>
     </tr>
   </tbody>
 </table>
-
-<p><strong>buy-limit-maker</strong></p>
-
-<p>When the “order price” &gt;= “the lowest selling price in the market”, after the order is submitted, the system will refuse to accept the order;</p>
-
-<p>When the “order price” &lt; “the lowest selling price in the market”, the order will be accepted by the system after the submission is successful.</p>
-
-<p><strong>sell-limit-maker</strong></p>
-
-<p>When the “order price” &lt;= “the highest buying price in the market”, the system will refuse to accept the order after the order is submitted;</p>
-
-<p>When the “order price” &gt; “the highest buying price in the market”, the order will be accepted by the system after the submission is successful.</p>
 
 <blockquote>
   <p>Response:</p>
@@ -4843,7 +4831,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
-      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions.</td>
+      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -4875,18 +4863,6 @@ Frequency limit (NEW): 50 times/2s<br /></p>
     </tr>
   </tbody>
 </table>
-
-<p><strong>buy-limit-maker</strong></p>
-
-<p>When the “order price” &gt;= “the lowest selling price in the market”, after the order is submitted, the system will refuse to accept the order;</p>
-
-<p>When the “order price” &lt; “the lowest selling price in the market”, the order will be accepted by the system after the submission is successful.</p>
-
-<p><strong>sell-limit-maker</strong></p>
-
-<p>When the “order price” &lt;= “the highest buying price in the market”, the system will refuse to accept the order after the order is submitted;</p>
-
-<p>When the “order price” &gt; “the highest buying price in the market”, the order will be accepted by the system after the submission is successful.</p>
 
 <blockquote>
   <p>Response:</p>
@@ -5833,7 +5809,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker,sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
       <td> </td>
     </tr>
   </tbody>
@@ -6191,7 +6167,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>role</td>
@@ -6287,7 +6263,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Combinations of order types to query, separated by commas</td>
       <td> </td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
     </tr>
     <tr>
       <td>start-time</td>
@@ -6484,7 +6460,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price</td>
     </tr>
   </tbody>
 </table>
@@ -6791,7 +6767,7 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>string</td>
       <td>Combination of order types to query, separated by ‘,’</td>
       <td>all</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
     </tr>
     <tr>
       <td>start-date</td>
@@ -6961,7 +6937,7 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order type.</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
     </tr>
     <tr>
       <td>role</td>
@@ -8719,7 +8695,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>orderStatus</td>
@@ -8814,7 +8790,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>clientOrderId</td>
@@ -8934,7 +8910,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>clientOrderId</td>
@@ -9103,7 +9079,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
     <tr>
       <td>orderType</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>aggressor</td>
@@ -9233,7 +9209,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
     <tr>
       <td>orderType</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>accountId</td>

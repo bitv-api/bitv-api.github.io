@@ -2094,24 +2094,11 @@ Send a new order for matching.
 |------------------|-----------|-----------|----------------|-------------|
 | account-id       | string    | true      | NA             | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
 | symbol           | string    | true      | NA             | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
-| type             | string    | true      | NA             | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
+| type             | string    | true      | NA             | Order type, including buy-market, sell-market, buy-limit, sell-limit  |
 | amount           | string    | true      | NA             | Order amount (for market orders, it represents the buying amount). |
 | price            | string    | false     | NA             | Order price (not applicable for market orders). |
 | source           | string    | false     | spot-api       | Order source. Use `"spot-api"` for spot transactions. |
 | client-order-id  | string    | false     | NA             | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours). |
-
-
-**buy-limit-maker**
-
-When the "order price" >= "the lowest selling price in the market", after the order is submitted, the system will refuse to accept the order;
-
-When the "order price" < "the lowest selling price in the market", the order will be accepted by the system after the submission is successful.
-
-**sell-limit-maker**
-
-When the "order price" <= "the highest buying price in the market", the system will refuse to accept the order after the order is submitted;
-
-When the "order price" > "the highest buying price in the market", the order will be accepted by the system after the submission is successful.
 
 > Response:
 
@@ -2168,23 +2155,11 @@ A batch of up to 10 orders
 | -------------- | --------- | -------- | ------------- | ----------- |
 | [{account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
 | symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
-| type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit. See below for descriptions. |
+| type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit  |
 | amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
 | price | string | false | NA | Order price (not applicable for market orders) |
 | source | string | false | spot-api | Order source. Use "spot-api" for spot transactions. |
 | client-order-id}] | string | false | NA | User-defined order ID (maximum length of 64 characters, must be unique within 24 hours) |
-
-**buy-limit-maker**
-
-When the "order price" >= "the lowest selling price in the market", after the order is submitted, the system will refuse to accept the order;
-
-When the "order price" < "the lowest selling price in the market", the order will be accepted by the system after the submission is successful.
-
-**sell-limit-maker**
-
-When the "order price" <= "the highest buying price in the market", the system will refuse to accept the order after the order is submitted;
-
-When the "order price" > "the highest buying price in the market", the order will be accepted by the system after the submission is successful.
 
 > Response:
 
@@ -2607,7 +2582,7 @@ This interface returns the latest status and details of the specified order. Ord
 | source             | true     | string    | Order source                                                                                     | api                                                                                                |
 | state              | true     | string    | Order status                                                                                     | submitted, partial-filled, partially-canceled, filled, canceled, created                            |
 | symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, rcneth ...                                                                         |
-| type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker,sell-limit-maker, buy-stop-limit, sell-stop-limit                                                 |                                                                                                    |
+| type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price                                                 |                                                                                                    |
 
 
 ## Query order details (based on client order ID)
@@ -2747,7 +2722,7 @@ This interface returns the transaction details of the specified order.
 | price              | true     | string    | Transaction price                                       |              |
 | source             | true     | string    | Order source                                            | api          |
 | symbol             | true     | string    | Trading pair                                            | btcusdt, ethbtc, rcneth, ... |
-| type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit  |
 | role               | true     | string    | Transaction role                                        | maker, taker |
 | filled-points      | true     | string    | Deduction amount                                        |              |
 | fee-deduct-currency| true     | string    | Deduction type                                          |   deduction type. if blank, the transaction fee is based on original currency  |
@@ -2785,7 +2760,7 @@ It is recommended that users query historical orders by "time range".
 | Parameter name | Required | Type   | Description                                                                                                           | Default value                            | Value range                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | -------------- | -------- | ------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | symbol         | true     | string | Trading pair                                                                                                          |                                          | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                                                                                                                                                                                                                                                                             |
-| types          | false    | string | Combinations of order types to query, separated by commas                                                              |                                          | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit                                                                                                                                                                  |
+| types          | false    | string | Combinations of order types to query, separated by commas                                                              |                                          | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price                                                                                                                                                                   |
 | start-time     | false    | long   | Query start time, the time format is UTC time in milliseconds. Query based on order generation time                  | -48h                                     | Value range [((end-time) – 48h), (end-time)], the maximum query window is 48 hours, and the translation range is the nearest for 180 days. The translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state="canceled").                                                                                                                   |
 | end-time       | false    | long   | Query end time, the time format is UTC time in milliseconds. Query based on order generation time                    | present                                  | Value range [(present-179d), present], the maximum query window is 48 hours, the translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state="canceled").                                                                                                                                                       |
 | states         | true     | string | Combination of order states to query, separated by ','.                                                               | partial-canceled, filled, canceled                                          |                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -2839,7 +2814,7 @@ It is recommended that users query historical orders by "time range".
 | source           | true     | string    | Order source                                                                                                                                                                                                                                                                                                                                                                         | api                                                                                                |
 | state            | true     | string    | Order status                                                                                                                                                                                                                                                                                                                                                                         | submitted, partial-filled, partially-canceled, partially-canceled, filled, canceled, created                                                                    |
 | symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, rcneth ...                                                                         |
-| type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price|
 
 ### Error codes related to start-date and end-date:
 
@@ -2946,7 +2921,7 @@ This interface queries current and historical transaction records based on searc
 | Parameter name | Required | Type   | Description                                                 | Default value | Value range                                                                                                                                                        |
 | -------------- | -------- | ------ | ----------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | symbols         | false     | string | Trading pair                                                | N/A           | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                      |
-| types          | false    | string | Combination of order types to query, separated by ','        | all           | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker |
+| types          | false    | string | Combination of order types to query, separated by ','        | all           | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price  |
 | start-date     | false    | string | Query start date (Singapore time zone), date format yyyy-mm-dd | -1d           | Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.                          |
 | end-date       | false    | string | Query end date (Singapore time zone), date format yyyy-mm-dd   | today         | Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.                                          |
 | from           | false    | string | Query start ID                                               | N/A           | If it is a backward query, it will be assigned the last ID (not trade-id) obtained in the last query result; if it is a forward query, it will be assigned the first ID (not trade-id) obtained in the last query result. |
@@ -2998,7 +2973,7 @@ This interface queries current and historical transaction records based on searc
 | price                 | true     | string    | Transaction price.                                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | source                | true     | string    | Order source.                                                                                                                                                                                                                                                          | api                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethbtc, rcneth ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| type                  | true     | string    | Order type.                                                                                                                                                                                                                                                            | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: IOC buy order, sell-ioc: IOC sell order, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit                                                                                                                                                                                                                                                   |
+| type                  | true     | string    | Order type.                                                                                                                                                                                                                                                            | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price                                                                                                                                                                                                                                                    |
 | role                  | true     | string    | Transaction role.                                                                                                                                                                                                                                                      | maker, taker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | filled-points         | true     | string    | Deduction amount .                                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | fee-deduct-currency   | true     | string    | Deduction type.                                                                                                                                                                                                                                                        |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -4069,7 +4044,7 @@ When an order is placed –
 | orderPrice      | string    | Order price (not applicable for market orders)                               |
 | orderSize       | string    | Order size (invalid for market buy orders)                                   |
 | orderValue      | string    | Order amount (only valid for market buy orders)                              |
-| type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
+| type            | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit |
 | orderStatus     | string    | Order status, valid value: submitted                                         |
 | orderCreateTime | long      | Order creation time                                                          |
 | orderSource     | string    | Order source                                                                 |
@@ -4117,7 +4092,7 @@ When the order is filled –
 | tradePrice  | string    | Traded price                                                                    |
 | tradeVolume | string    | Trade volume                                                                    |
 | orderId     | long      | Order ID                                                                         |
-| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
+| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit |
 | clientOrderId | string  | User-made order number (if any)                                                  |
 | tradeId     | long      | Trade ID                                                                         |
 | tradeTime   | long      | Trade time                                                                       |
@@ -4166,7 +4141,7 @@ When an order is canceled -
 | eventType   | string    | Event type, valid value: cancellation                                             |
 | symbol      | string    | Transaction code                                                                 |
 | orderId     | long      | Order ID                                                                         |
-| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc |
+| type        | string    | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit  |
 | clientOrderId | string  | User-made order number (if any)                                                  |
 | orderStatus | string    | Order status, valid values: partial-canceled, canceled                            |
 | remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
@@ -4261,7 +4236,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 | tradePrice | string | Traded price |
 | tradeVolume | string | Trade volume |
 | orderSide | string | Order direction, valid values: buy, sell |
-| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit |
 | aggressor | bool | Whether the trade was initiated by the active party, valid values: true, false |
 | tradeId | long | Trade ID |
 | tradeTime | long | Trade time (Unix time in milliseconds) |
@@ -4294,7 +4269,7 @@ Note: <br>
 | symbol | string | Transaction code |
 | orderId | long | Order ID |
 | orderSide | string | Order direction, valid values: buy, sell |
-| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit |
+| orderType | string | Order type, valid values: buy-market, sell-market, buy-limit, sell-limit |
 | accountId | long | Account ID |
 | source | string | Order source |
 | orderPrice | string | Order price (not applicable for market orders) |

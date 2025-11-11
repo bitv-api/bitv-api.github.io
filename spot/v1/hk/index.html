@@ -5113,7 +5113,7 @@ endTime缺省值：當前時間</p>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
-      <td>訂單類型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker（說明見下文）, buy-stop-limit, sell-stop-limit</td>
+      <td>訂單類型，包括buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -5145,18 +5145,6 @@ endTime缺省值：當前時間</p>
     </tr>
   </tbody>
 </table>
-
-<p><strong>buy-limit-maker</strong></p>
-
-<p>當「下單價格」&gt;=「市場最低賣出價」，訂單提交後，系統將拒絕接受此訂單；</p>
-
-<p>當「下單價格」&lt;「市場最低賣出價」，提交成功後，此訂單將被系統接受。</p>
-
-<p><strong>sell-limit-maker</strong></p>
-
-<p>當「下單價格」&lt;=「市場最高買入價」，訂單提交後，系統將拒絕接受此訂單；</p>
-
-<p>當「下單價格」&gt;「市場最高買入價」，提交成功後，此訂單將被系統接受。</p>
 
 <blockquote>
   <p>Response:</p>
@@ -5241,7 +5229,7 @@ endTime缺省值：當前時間</p>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
-      <td>訂單類型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker（說明見下文）, buy-stop-limit, sell-stop-limit</td>
+      <td>訂單類型，包括buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -5273,18 +5261,6 @@ endTime缺省值：當前時間</p>
     </tr>
   </tbody>
 </table>
-
-<p><strong>buy-limit-maker</strong></p>
-
-<p>當「下單價格」&gt;=「市場最低賣出價」，訂單提交後，系統將拒絕接受此訂單；</p>
-
-<p>當「下單價格」&lt;「市場最低賣出價」，提交成功後，此訂單將被系統接受。</p>
-
-<p><strong>sell-limit-maker</strong></p>
-
-<p>當「下單價格」&lt;=「市場最高買入價」，訂單提交後，系統將拒絕接受此訂單；</p>
-
-<p>當「下單價格」&gt;「市場最高買入價」，提交成功後，此訂單將被系統接受。</p>
 
 <blockquote>
   <p>Response:</p>
@@ -5794,7 +5770,7 @@ endTime缺省值：當前時間</p>
       <td>int</td>
       <td>所需返回記錄數</td>
       <td>100</td>
-      <td>[0,100]</td>
+      <td>[1,100]</td>
     </tr>
   </tbody>
 </table>
@@ -6216,7 +6192,7 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>訂單類型</td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
   </tbody>
 </table>
@@ -6401,7 +6377,7 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>訂單類型</td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
   </tbody>
 </table>
@@ -6578,7 +6554,7 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>訂單類型</td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
     <tr>
       <td>role</td>
@@ -6674,7 +6650,7 @@ endTime缺省值：當前時間</p>
       <td>string</td>
       <td>查詢的訂單類型組合，使用逗號分割</td>
       <td> </td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
     <tr>
       <td>start-time</td>
@@ -6871,7 +6847,7 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>訂單類型</td>
-      <td>submit-cancel：已提交撤單申請  ,buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+      <td>submit-cancel：已提交撤單申請  ,buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
   </tbody>
 </table>
@@ -7126,7 +7102,7 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>訂單類型</td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單, buy-limit-maker, sell-limit-maker, buy-limit-maker, sell-limit-maker</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
     <tr>
       <td>next-time</td>
@@ -7179,7 +7155,7 @@ endTime缺省值：當前時間</p>
       <td>string</td>
       <td>查詢的訂單類型組合，使用’,’分割</td>
       <td>all</td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單, buy-limit-maker, sell-limit-maker, buy-stop-limit, sell-stop-limit</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
     <tr>
       <td>start-date</td>
@@ -7349,7 +7325,7 @@ endTime缺省值：當前時間</p>
       <td>true</td>
       <td>string</td>
       <td>訂單類型</td>
-      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC買單, sell-ioc：IOC賣單， buy-limit-maker, sell-limit-maker, buy-stop-limit，sell-stop-limit</td>
+      <td>buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣</td>
     </tr>
     <tr>
       <td>role</td>
@@ -9110,7 +9086,7 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+      <td>訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>orderStatus</td>
@@ -9205,7 +9181,7 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+      <td>訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>clientOrderId</td>
@@ -9325,7 +9301,7 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-limit-maker, sell-limit-maker, buy-ioc, sell-ioc</td>
+      <td>訂單類型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
     </tr>
     <tr>
       <td>clientOrderId</td>
@@ -9493,7 +9469,7 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>orderType</td>
       <td>string</td>
-      <td>訂單類型，有效值： buy-market, sell-market,buy-limit,sell-limit,buy-ioc,sell-ioc,buy-limit-maker,sell-limit-maker,buy-stop-limit,sell-stop-limit</td>
+      <td>訂單類型，有效值： buy-market, sell-market,buy-limit,sell-limit</td>
     </tr>
     <tr>
       <td>aggressor</td>
@@ -9623,7 +9599,7 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>orderType</td>
       <td>string</td>
-      <td>訂單類型，有效值： buy-market, sell-market,buy-limit,sell-limit,buy-ioc,sell-ioc,buy-limit-maker,sell-limit-maker,buy-stop-limit,sell-stop-limit</td>
+      <td>訂單類型，有效值： buy-market, sell-market,buy-limit,sell-limit</td>
     </tr>
     <tr>
       <td>accountId</td>

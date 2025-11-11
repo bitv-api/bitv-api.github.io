@@ -2243,7 +2243,7 @@ In the returned field list, the possible values of order-state include -
 
 | order-state | Description |
 | ----------- | ------------------------------------------------------ |
-| -1          | The order was already closed in the distant past          |
+| -1          | order was already closed in the long past (order state = canceled, partial-canceled, filled, partial-filled)          |
 | 5           | Partially canceled                                      |
 | 6           | Filled                                                  |
 | 7           | Canceled                                                |

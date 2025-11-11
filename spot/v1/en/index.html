@@ -8232,8 +8232,6 @@ In the future, the data behavior of 150 increments will be consistent with that 
    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id11"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>##</p>
-
 <h1 id="websocket-assets-and-orders">Websocket assets and orders</h1>
 
 <h2 id="introduction-7">Introduction</h2>
@@ -8409,7 +8407,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update"</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>If the subscription is successful, the Websocket client will receive the following message:</p>
@@ -8417,7 +8415,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update#0"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update#0"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -9277,7 +9275,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 
 <h3 id="subscribe-to-topics-4">Subscribe to topics</h3>
 
-<p><code>accounts. update#${mode}</code></p>
+<p><code>accounts.update#${mode}</code></p>
 
 <p>Users can choose any of the following ways to trigger account change push</p>
 
@@ -9330,7 +9328,7 @@ When the account balance changes or the available balance changes, both push and
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update"</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre></div>
@@ -9341,7 +9339,7 @@ When the account balance changes or the available balance changes, both push and
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
 </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts. update#0"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update#0"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>

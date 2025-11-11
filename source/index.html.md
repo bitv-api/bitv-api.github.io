@@ -794,7 +794,7 @@ curl "https://api.bitv.com/v1/common/symbols"
 | sell-limit-must-greater-than              | true     | float   |  限价单卖出价格下限比例 |
 | market-sell-order-rate-must-less-than               | true     | float   | 市价单卖单价格上限比例     |
 | market-buy-order-rate-must-less-than              | true     | float   | 市价单买单价格上限比例   |
-| tags              | true     | string   |  标签，多个标签以逗号分隔，如：st,hadax     |
+| tags              | false     | string   |  标签，多个标签以逗号分隔，如：st,hadax     |
 
 
 ## 获取所有币种

@@ -849,7 +849,6 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | 字段名稱       | 是否必需 | 類型    | 字段描述   | 取值範圍                                                     |
 | -------------- | -------- | ------- | ---------- | ------------------------------------------------------------ |
 | currency       | false    | string  | 幣種       | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-| authorizedUser | false    | boolean | 已認證用戶 | true or false (如不填，缺省為true)                           |
 
 > Response:
 
@@ -947,6 +946,7 @@ curl "https://api.bitv.com/v2/reference/currencies?currency=usdt"
 | { chains                | true     | object   |                                                              |                        |
 | chain                   | true     | string   | 鏈名稱                                                       |                        |
 | displayName             | true     | string   | 鏈顯示名稱                                                   |                        |
+| assetType               | false    | string   | 資產類型，1 虛擬幣 2 法幣                                        |                        |
 | baseChain               | false    | string   | 底層鏈名稱                                                   |                        |
 | fullName                | false    | string   | 幣種全稱                                                   |                        |
 | baseChainProtocol       | false    | string   | 底層鏈協議                                                   |                        |
@@ -1531,62 +1531,6 @@ list字段說明
 | debt     | true     | string   | 餘額 | 負債                           |
 | seq-num     | true     | int   | 版本號 |                            |
 
-## 資產划轉
-
-API Key 權限：交易<br>
-
-該節點為母用戶和子用戶進行資產划轉的通用接口。<br>
-
-僅母用戶支持的功能包括：<br>
-1、母用戶幣幣賬戶與子用戶幣幣賬戶間的划轉；<br>
-2、不同子用戶幣幣賬戶間划轉；<br>
-
-僅子用戶支持的功能包括：<br>
-1、子用戶幣幣賬戶向母用戶下的其他子用戶幣幣賬戶划轉，此權限默認關閉，需母用戶授權。授權接口為 `POST /v2/sub-user/transferability`；<br>
-2、子用戶幣幣賬戶向母用戶幣幣賬戶划轉；<br>
-
-其他划轉功能將逐步上線，敬請期待。<br>
-
-### HTTP 請求
-
-- POST `/v1/account/transfer`
-
-### 請求參數
-
-| 參數              | 是否必填 | 數據類型 | 說明                                | 取值範圍                         |
-| ----------------- | -------- | -------- | ----------------------------------- | -------------------------------- |
-| from-user         | true     | long     | 轉出用戶uid                         | 母用戶uid,子用戶uid              |
-| from-account-type | true     | string   | 轉出賬戶類型                        | spot                             |
-| from-account      | true     | long     | 轉出賬戶id                          |                                  |
-| to-user           | true     | long     | 轉入用戶uid                         | 母用戶uid,子用戶uid              |
-| to-account-type   | true     | string   | 轉入賬戶類型                        | spot                             |
-| to-account        | true     | long     | 轉入賬戶id                          |                                  |
-| currency          | true     | string   | 幣種，即btc, ltc, bch, eth, etc ... | 取值參考GET /v1/common/currencys |
-| amount            | true     | string   | 划轉金額                            |                                  |
-
-
-> Response:
-
-```json
-{
-    "status": "ok",
-    "data": {
-        "transact-id": 220521190,
-        "transact-time": 1590662591832
-    }
-}
-```
-
-### 響應數據
-
-| 參數            | 是否必須 | 數據類型 | 說明       | 取值範圍        |
-| --------------- | -------- | -------- | ---------- | --------------- |
-| status          | true     | string   | 狀態       | "ok" or "error" |
-| data            | true     | list     |            |                 |
-| { transact-id   | true     | int      | 交易流水號 |                 |
-| transact-time } | true     | long     | 交易時間   |                 |
-
-
 ## 賬戶流水
 
 API Key 權限：讀取<br>
@@ -1657,97 +1601,6 @@ API Key 權限：讀取<br>
 | record-id }   | long     | 數據庫記錄編號（全局唯一）                           |          |
 | next-id       | long     | 下頁起始編號（僅在查詢結果需要分頁返回時包含此字段） |          |
 
-## 財務流水
-
-API Key 權限：讀取
-
-該節點基於用戶賬戶ID返回財務流水。<br>
-一期上線暫時僅支持划轉流水的查詢（「transactType」 = 「transfer」）。<br>
-通過「startTime」/「endTime」框定的查詢窗口最大為10天，意即，通過單次查詢可檢索的範圍最大為10天。<br>
-該查詢窗口可在最近180天範圍內平移，意即，通過多次平移窗口查詢，最多可檢索到過往180天的記錄。<br>
-
-### HTTP Request
-
-- GET `/v2/account/ledger`
-
-### 請求參數
-
-| 參數名稱      | 數據類型 | 是否必需 | 描述                                                |
-| ------------- | -------- | -------- | --------------------------------------------------- |
-| accountId     | string   | TRUE     | 賬戶編號                                            |
-| currency      | string   | FALSE    | 幣種 （缺省值所有幣種）                             |
-| transactTypes | string   | FALSE    | 變動類型，可多填 （缺省值all） 枚舉值： transfer    |
-| startTime     | long     | FALSE    | 遠點時間（取值範圍及缺省值見注1）                   |
-| endTime       | long     | FALSE    | 近點時間（取值範圍及缺省值見注2）                   |
-| sort          | string   | FALSE    | 檢索方向（asc 由遠及近, desc 由近及遠，缺省值desc） |
-| limit         | int      | FALSE    | 單頁最大返回條目數量 [1,500] （缺省值100）          |
-| fromId        | long     | FALSE    | 起始編號（僅在下頁查詢時有效，見注3）               |
-
-注1：<br>
-startTime取值範圍：[(endTime - 10天), endTime], unix time in millisecond<br>
-startTime缺省值：(endTime - 10天)
-
-注2：<br>
-endTime取值範圍：[(當前時間 - 180天), 當前時間], unix time in millisecond<br>
-endTime缺省值：當前時間
-
-> Response:
-
-```json
-{
-"code": 200,
-"message": "success",
-"data": [
-    {
-        "accountId": 5260185,
-        "currency": "btc",
-        "transactAmt": 1.000000000000000000,
-        "transactType": "transfer",
-        "transferType": "margin-transfer-out",
-        "transactId": 0,
-        "transactTime": 1585573286913,
-        "transferer": 5463409,
-        "transferee": 5260185
-    },
-    {
-        "accountId": 5260185,
-        "currency": "btc",
-        "transactAmt": -1.000000000000000000,
-        "transactType": "transfer",
-        "transferType": "margin-transfer-in",
-        "transactId": 0,
-        "transactTime": 1585573281160,
-        "transferer": 5260185,
-        "transferee": 5463409
-    }
-]
-}
-```
-
-### 響應數據
-
-| 字段名稱     | 數據類型 | 是否必需 | 描述                                                         | 取值範圍                                                     |
-| ------------ | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| code         | integer  | TRUE     | 狀態碼                                                       |                                                              |
-| message      | string   | FALSE    | 錯誤描述（如有）                                             |                                                              |
-| data         | object   | TRUE     | 按用戶請求參數sort中定義的順序排列                           |                                                              |
-| { accountId  | integer  | TRUE     | 賬戶編號                                                     |                                                              |
-| currency     | string   | TRUE     | 幣種                                                         |                                                              |
-| transactAmt  | number   | TRUE     | 變動金額（入賬為正 or 出賬為負）                             |                                                              |
-| transactType | string   | TRUE     | 變動類型                                                     | transfer（划轉）                                             |
-| transferType | string   | FALSE    | 划轉類型（僅對transactType=transfer有效）                    | master-transfer-in（轉入到母用戶）, master-transfer-out（從母用戶轉出）, sub-transfer-in（轉入到子用戶）, sub-transfer-out（從子用戶轉出） |
-| transactId   | integer  | TRUE     | 交易流水號                                                   |                                                              |
-| transactTime | integer  | TRUE     | 交易時間                                                     |                                                              |
-| transferer   | integer  | FALSE    | 付款方賬戶ID                                                 |                                                              |
-| transferee } | integer  | FALSE    | 收款方賬戶ID                                                 |                                                              |
-| nextId       | integer  | FALSE    | 下頁起始編號（僅在查詢結果需要分頁返回時包含此字段，見注3。） |                                                              |
-
-注3：<br>
-僅當用戶請求查詢的時間範圍內的數據條目超出單頁限制（由「limit「字段設定）時，服務器才返回」nextId「字段。用戶收到服務器返回的」nextId「後 –<br>
-1）	須知曉後續仍有數據未能在本頁返回；<br>
-2）	如需繼續查詢下頁數據，應再次請求查詢並將服務器返回的「nextId」作為「fromId「，其它請求參數不變。<br>
-3）	作為數據庫記錄ID，「nextId」和「fromId」除了用來翻頁查詢外，無其它業務含義。<br>
-
 # 錢包（充提相關）
 
 ## 簡介
@@ -1782,7 +1635,7 @@ curl "https://api.bitv.com/v2/account/deposit/address?currency=btc"
 
 ### HTTP 請求
 
-- GET ` /v2/account/deposit/address`
+- GET `/v2/account/deposit/address`
 
 ### 請求參數
 
@@ -1843,7 +1696,7 @@ curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
 
 ### HTTP 請求
 
-- GET ` /v2/account/withdraw/quota`
+- GET `/v2/account/withdraw/quota`
 
 ### 請求參數
 
@@ -1965,7 +1818,7 @@ API Key 權限：提幣<br>
 
 ### HTTP 請求
 
-- POST ` /v1/dw/withdraw/api/create`
+- POST `/v1/dw/withdraw/api/create`
 
 > Request:
 
@@ -2015,7 +1868,7 @@ API Key 權限：提幣<br>
 
 ### HTTP 請求
 
-- POST ` /v1/dw/withdraw-virtual/{withdraw-id}/cancel`
+- POST `/v1/dw/withdraw-virtual/{withdraw-id}/cancel`
 
 ### 請求參數
 
@@ -2071,13 +1924,17 @@ API Key 權限：讀取<br>
       {
         "id": 1171,
         "type": "deposit",
+        "sub-type": "NORMAL",
+        "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",
         "currency": "xrp",
+        "chain": "usdc",
         "tx-hash": "ed03094b84eafbe4bc16e7ef766ee959885ee5bcb265872baaa9c64e1cf86c2b",
         "amount": 7.457467,
         "address": "rae93V8d2mdoUQHwBDBdM4NHCMehRJAsbm",
         "address-tag": "100040",
         "fee": 0,
         "state": "safe",
+        "wallet-confirm": 12,
         "created-at": 1510912472199,
         "updated-at": 1511145876575
       },
@@ -2102,7 +1959,7 @@ API Key 權限：讀取<br>
 | request-id  | false    | string   | 保留字段                                                     |                                          |
 | fee         | true     | float    | 手續費                                                       |                                          |
 | state       | true     | string   | 狀態                                                         | 狀態參見下表                             |
-| wallet-confirm | false     | string   | 錢包確認次數                                              |                                        |
+| wallet-confirm | false     | long   | 錢包確認次數                                              |                                        |
 | error-code  | false    | string   | 提幣失敗錯誤碼，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |
 | error-msg   | false    | string   | 提幣失敗錯誤描述，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |
 | created-at  | true     | long     | 發起時間                                                     |                                          |
@@ -2212,7 +2069,7 @@ API Key 權限：交易
 
 ### HTTP 請求
 
-- POST ` /v1/order/orders/place`
+- POST `/v1/order/orders/place`
 
 > Request:
 
@@ -2264,7 +2121,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST ` /v1/order/batch-orders`
+- POST `/v1/order/batch-orders`
 
 > Request:
 
@@ -2341,7 +2198,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST ` /v1/order/orders/{order-id}/submitcancel`
+- POST `/v1/order/orders/{order-id}/submitcancel`
 
 
 ### 請求參數
@@ -2398,7 +2255,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST ` /v1/order/orders/submitCancelClientOrder`
+- POST `/v1/order/orders/submitCancelClientOrder`
 
 > Request:
 
@@ -2526,7 +2383,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST ` /v1/order/orders/batchCancelOpenOrders`
+- POST `/v1/order/orders/batchCancelOpenOrders`
 
 
 ### 請求參數
@@ -2571,7 +2428,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST ` /v1/order/orders/batchcancel`
+- POST `/v1/order/orders/batchcancel`
 
 > Request:
 
@@ -3900,10 +3757,6 @@ REQ頻道支持5檔/20檔/150檔全量數據的獲取。<br>
 }
 ```
 
-
-## 
-
-
 # Websocket資產及訂單
 
 ## 簡介
@@ -4098,7 +3951,7 @@ API Key 權限：讀取
 
 ### 訂閱主題
 
-` orders#${symbol}`
+`orders#${symbol}`
 
 ### 訂閱參數
 
@@ -4341,7 +4194,8 @@ API Key 權限：讀取
          "orderSize": "1",
          "clientOrderId": "a001",
          "orderCreateTime": 998787897878,
-         "orderStatus": "partial-filled"
+         "orderStatus": "partial-filled",
+         "orderType": "buy-limit"
     }
 }
 ```

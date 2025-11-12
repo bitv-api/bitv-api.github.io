@@ -3419,7 +3419,7 @@ The REQ channel supports the acquisition of full data of 5 files/20 files/150 fi
 "ts": 1573199608679, //system update time
    "tick": {
             "seqNum": 100020146795,
-             "prevSeqNum": 100020146794,
+            "prevSeqNum": 100020146794,
             "asks": [
                   [645.140000000000000000, 26.755973959140651643] // [price, size]
             ]

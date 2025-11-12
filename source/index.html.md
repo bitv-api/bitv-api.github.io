@@ -90,13 +90,9 @@ The private interface can be used for trade management and account management. E
 
 **`https://api.bitv.com`**
 
-**Websocket Feed (quotes, not including MBP incremental quotes)**
+**Websocket Feed (quotes)**
 
 **`wss://api.bitv.com/ws`**
-
-**Websocket Feed (ticker, MBP incremental ticker only)**
-
-**`wss://api.bitv.com/feed`**
 
 **Websocket Feed (assets and orders)**
 
@@ -1035,7 +1031,6 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
-<aside class="notice">When obtaining hb10 net worth, please fill in "hb10" for symbol. </aside>
 <aside class="notice">The K-line period is calculated based on Singapore time. For example, the starting period of the daily K-line is from 0:00 Singapore time to 0:00 Singapore time the next day. </aside>
 
 > Response:
@@ -3287,9 +3282,6 @@ When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default 
 | version | integer  | Internal field                            |
 | ts      | integer  | Timestamp of Singapore time in milliseconds |
 
-
-<aside class="notice">When symbol is set to "hb10", amount, count, vol are all zero values </aside>
-
 ### Data Request
 
 Support data request method to obtain market depth data at one time:
@@ -3304,10 +3296,6 @@ Support data request method to obtain market depth data at one time:
 ## Market depth MBP market data (incremental push)
 
 Users can subscribe to this channel to receive the incremental data push of the latest in-depth market Market By Price (MBP); at the same time, this channel supports users to request full data in the form of req.
-
-**MBP incremental push and MBP full REQ request address**
-
-**`wss://api.bitv.com/feed`**
 
 Suggested downstream data processing methods:<br>
 1) Subscribe to incremental data and start caching;<br>
@@ -4350,7 +4338,7 @@ accounts.update#0:
 "currency": "btc",
 "accountId": 123456,
 "balance": "23.111",
-"changeType": "transfer",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1568601800000,
 "seqNum":1
@@ -4365,7 +4353,7 @@ accounts.update#1:
 "currency": "btc",
 "accountId": 33385,
 "available": "2028.699426619837209087",
-"changeType": "order. match",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1574393385167,
 "seqNum":1
@@ -4378,7 +4366,7 @@ accounts.update#1:
 "currency": "btc",
 "accountId": 33385,
 "balance": "2065.100267619837209301",
-"changeType": "order. match",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1574393385122,
 "seqNum":1
@@ -4394,7 +4382,7 @@ accounts.update#1:
 | accountId | long | Account ID |
 | balance | string | Account balance (only pushed when the account balance changes) |
 | available | string | Available balance (only pushed when the available balance changes) |
-| changeType | string | Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee-refund (deduct transaction fee) |
+| changeType | string | Balance change type, valid values: order.place (order creation), order.match (order transaction), order-.efund (order transaction refund), order.cancel (order cancellation), order.fee-refund (deduct transaction fee) |
 | accountType | string | Account type, valid values: trade, frozen, loan, interest |
 | changeTime | long | Balance change time, UNIX time in milliseconds |
 | seqNum     | long | message sequence number |

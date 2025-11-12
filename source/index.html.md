@@ -96,13 +96,9 @@ WebSocket是HTML5一種新的協議（Protocol）。它實現了客戶端與服�
 
 **`https://api.bitv.com`**  
 
-**Websocket Feed（行情，不包含MBP增量行情）**
+**Websocket Feed（行情）**
 
 **`wss://api.bitv.com/ws`**  
-
-**Websocket Feed（行情，僅MBP增量行情）**
-
-**`wss://api.bitv.com/feed`**  
 
 **Websocket Feed（資產和訂單）**
 
@@ -1042,7 +1038,6 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 | size   | integer  | false    | 150    | 返回 K 線數據條數                          | [1, 2000]                                                    |
 
 <aside class="notice">當前 REST API 不支持自定義時間區間，如需要歷史固定時間範圍的數據，請參考 Websocket API 中的 K 線接口。</aside>
-<aside class="notice">獲取 hb10 淨值時， symbol 請填寫 「hb10」。</aside>
 <aside class="notice">K線週期以新加坡時間為基準開始計算，例如日K線的起始週期為新加坡時間0時-新加坡時間次日0時。</aside>
 
 > Response:
@@ -3276,8 +3271,6 @@ Websocket服務器同時支持一次性請求數據（pull）。
 | version | integer  | 內部字段                     |
 | ts      | integer  | 新加坡時間的時間戳，單位毫秒 |
 
-<aside class="notice">當symbol被設為"hb10"時，amount, count, vol均為零值 </aside>
-
 ### 數據請求
 
 支持數據請求方式一次性獲取市場深度數據：
@@ -3292,10 +3285,6 @@ Websocket服務器同時支持一次性請求數據（pull）。
 ## 市場深度MBP行情數據（增量推送）
 
 用戶可訂閱此頻道以接收最新深度行情Market By Price (MBP) 的增量數據推送；同時，該頻道支持用戶以req方式請求獲取全量數據。
-
-**MBP增量推送及MBP全量REQ請求地址**
-
-**`wss://api.bitv.com/feed`**  
 
 建議下游數據處理方式：<br>
 1）	訂閱增量數據並開始緩存；<br>
@@ -4321,7 +4310,7 @@ accounts.update#0:
 "currency": "btc",
 "accountId": 123456,
 "balance": "23.111",
-"changeType": "transfer",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1568601800000,
 "seqNum":1
@@ -4336,7 +4325,7 @@ accounts.update#1:
 "currency": "btc",
 "accountId": 33385,
 "available": "2028.699426619837209087",
-"changeType": "order. match",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1574393385167,
 "seqNum":1
@@ -4349,7 +4338,7 @@ accounts.update#1:
 "currency": "btc",
 "accountId": 33385,
 "balance": "2065.100267619837209301",
-"changeType": "order. match",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1574393385122,
 "seqNum":1
@@ -4365,7 +4354,7 @@ accounts.update#1:
 | accountId   | long     | 賬戶ID                                                       |
 | balance     | string   | 賬戶餘額（僅當賬戶餘額發生變動時推送）                       |
 | available   | string   | 可用餘額（僅當可用餘額發生變動時推送）                       |
-| changeType  | string   | 餘額變動類型，有效值：order-place(訂單創建)，order-match(訂單成交)，order-refund(訂單成交退款)，order-cancel(訂單撤銷)，order-fee-refund(抵扣交易手續費) |
+| changeType  | string   | 餘額變動類型，有效值：order.place(訂單創建)，order.match(訂單成交)，order.refund(訂單成交退款)，order.cancel(訂單撤銷)，order.fee-refund(抵扣交易手續費) |
 | accountType | string   | 賬戶類型，有效值：trade, frozen, loan, interest              |
 | changeTime  | long     | 餘額變動時間，unix time in millisecond                       |
 | seqNum      | long     | 消息序列號                                                   |

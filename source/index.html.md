@@ -3744,7 +3744,7 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
 | low    | float    | 24小时最低价             |
 | high   | float    | 24小时最高价             |
 | vol    | float    | 24小时成交额             |
-| version| long     | 内部字段                 |
+| version| integer     | 内部字段                 |
 
 ### 数据请求
 

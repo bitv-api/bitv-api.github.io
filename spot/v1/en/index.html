@@ -588,13 +588,9 @@ Each API Key can be bound to a maximum of 10 IP addresses (host or network addre
 
 <p><strong><code>https://api.bitv.com</code></strong></p>
 
-<p><strong>Websocket Feed (quotes, not including MBP incremental quotes)</strong></p>
+<p><strong>Websocket Feed (quotes)</strong></p>
 
 <p><strong><code>wss://api.bitv.com/ws</code></strong></p>
-
-<p><strong>Websocket Feed (ticker, MBP incremental ticker only)</strong></p>
-
-<p><strong><code>wss://api.bitv.com/feed</code></strong></p>
 
 <p><strong>Websocket Feed (assets and orders)</strong></p>
 
@@ -2134,7 +2130,6 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 </table>
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
-<aside class="notice">When obtaining hb10 net worth, please fill in "hb10" for symbol. </aside>
 <aside class="notice">The K-line period is calculated based on Singapore time. For example, the starting period of the daily K-line is from 0:00 Singapore time to 0:00 Singapore time the next day. </aside>
 
 <blockquote>
@@ -7497,8 +7492,6 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
   </tbody>
 </table>
 
-<aside class="notice">When symbol is set to "hb10", amount, count, vol are all zero values </aside>
-
 <h3 id="data-request-1">Data Request</h3>
 
 <p>Support data request method to obtain market depth data at one time:</p>
@@ -7511,10 +7504,6 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
 <h2 id="market-depth-mbp-market-data-incremental-push">Market depth MBP market data (incremental push)</h2>
 
 <p>Users can subscribe to this channel to receive the incremental data push of the latest in-depth market Market By Price (MBP); at the same time, this channel supports users to request full data in the form of req.</p>
-
-<p><strong>MBP incremental push and MBP full REQ request address</strong></p>
-
-<p><strong><code>wss://api.bitv.com/feed</code></strong></p>
 
 <p>Suggested downstream data processing methods:<br />
 1) Subscribe to incremental data and start caching;<br />
@@ -9358,7 +9347,7 @@ When the account balance changes or the available balance changes, both push and
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="p">,</span><span class="w">
 </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23.111"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1568601800000</span><span class="p">,</span><span class="w">
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
@@ -9373,7 +9362,7 @@ When the account balance changes or the available balance changes, both push and
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
 </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2028.699426619837209087"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order. match"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385167</span><span class="p">,</span><span class="w">
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
@@ -9386,7 +9375,7 @@ When the account balance changes or the available balance changes, both push and
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
 </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065.100267619837209301"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order. match"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385122</span><span class="p">,</span><span class="w">
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
@@ -9427,7 +9416,7 @@ When the account balance changes or the available balance changes, both push and
     <tr>
       <td>changeType</td>
       <td>string</td>
-      <td>Balance change type, valid values: order-place (order creation), order-match (order transaction), order-refund (order transaction refund), order-cancel (order cancellation), order-fee-refund (deduct transaction fee)</td>
+      <td>Balance change type, valid values: order.place (order creation), order.match (order transaction), order-.efund (order transaction refund), order.cancel (order cancellation), order.fee-refund (deduct transaction fee)</td>
     </tr>
     <tr>
       <td>accountType</td>

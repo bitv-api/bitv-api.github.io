@@ -372,13 +372,7 @@
                     <a href="#賬戶餘額" class="toc-h2 toc-link" data-title="賬戶餘額">賬戶餘額</a>
                   </li>
                   <li>
-                    <a href="#資產划轉" class="toc-h2 toc-link" data-title="資產划轉">資產划轉</a>
-                  </li>
-                  <li>
                     <a href="#賬戶流水" class="toc-h2 toc-link" data-title="賬戶流水">賬戶流水</a>
-                  </li>
-                  <li>
-                    <a href="#財務流水" class="toc-h2 toc-link" data-title="財務流水">財務流水</a>
                   </li>
               </ul>
           </li>
@@ -1673,13 +1667,6 @@
       <td>幣種</td>
       <td>btc, ltc, bch, eth, etc …(取值參考<code>GET /v1/common/currencys</code>)</td>
     </tr>
-    <tr>
-      <td>authorizedUser</td>
-      <td>false</td>
-      <td>boolean</td>
-      <td>已認證用戶</td>
-      <td>true or false (如不填，缺省為true)</td>
-    </tr>
   </tbody>
 </table>
 
@@ -1827,6 +1814,13 @@
       <td>true</td>
       <td>string</td>
       <td>鏈顯示名稱</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>assetType</td>
+      <td>false</td>
+      <td>string</td>
+      <td>資產類型，1 虛擬幣 2 法幣</td>
       <td> </td>
     </tr>
     <tr>
@@ -3175,156 +3169,6 @@
   </tbody>
 </table>
 
-<h2 id="資產划轉">資產划轉</h2>
-
-<p>API Key 權限：交易<br /></p>
-
-<p>該節點為母用戶和子用戶進行資產划轉的通用接口。<br /></p>
-
-<p>僅母用戶支持的功能包括：<br />
-1、母用戶幣幣賬戶與子用戶幣幣賬戶間的划轉；<br />
-2、不同子用戶幣幣賬戶間划轉；<br /></p>
-
-<p>僅子用戶支持的功能包括：<br />
-1、子用戶幣幣賬戶向母用戶下的其他子用戶幣幣賬戶划轉，此權限默認關閉，需母用戶授權。授權接口為 <code>POST /v2/sub-user/transferability</code>；<br />
-2、子用戶幣幣賬戶向母用戶幣幣賬戶划轉；<br /></p>
-
-<p>其他划轉功能將逐步上線，敬請期待。<br /></p>
-
-<h3 id="http-請求-12">HTTP 請求</h3>
-
-<ul>
-  <li>POST <code>/v1/account/transfer</code></li>
-</ul>
-
-<h3 id="請求參數-12">請求參數</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>參數</th>
-      <th>是否必填</th>
-      <th>數據類型</th>
-      <th>說明</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>from-user</td>
-      <td>true</td>
-      <td>long</td>
-      <td>轉出用戶uid</td>
-      <td>母用戶uid,子用戶uid</td>
-    </tr>
-    <tr>
-      <td>from-account-type</td>
-      <td>true</td>
-      <td>string</td>
-      <td>轉出賬戶類型</td>
-      <td>spot</td>
-    </tr>
-    <tr>
-      <td>from-account</td>
-      <td>true</td>
-      <td>long</td>
-      <td>轉出賬戶id</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>to-user</td>
-      <td>true</td>
-      <td>long</td>
-      <td>轉入用戶uid</td>
-      <td>母用戶uid,子用戶uid</td>
-    </tr>
-    <tr>
-      <td>to-account-type</td>
-      <td>true</td>
-      <td>string</td>
-      <td>轉入賬戶類型</td>
-      <td>spot</td>
-    </tr>
-    <tr>
-      <td>to-account</td>
-      <td>true</td>
-      <td>long</td>
-      <td>轉入賬戶id</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>currency</td>
-      <td>true</td>
-      <td>string</td>
-      <td>幣種，即btc, ltc, bch, eth, etc …</td>
-      <td>取值參考GET /v1/common/currencys</td>
-    </tr>
-    <tr>
-      <td>amount</td>
-      <td>true</td>
-      <td>string</td>
-      <td>划轉金額</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>Response:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"transact-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">220521190</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transact-time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1590662591832</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="響應數據-9">響應數據</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>參數</th>
-      <th>是否必須</th>
-      <th>數據類型</th>
-      <th>說明</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>status</td>
-      <td>true</td>
-      <td>string</td>
-      <td>狀態</td>
-      <td>“ok” or “error”</td>
-    </tr>
-    <tr>
-      <td>data</td>
-      <td>true</td>
-      <td>list</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>{ transact-id</td>
-      <td>true</td>
-      <td>int</td>
-      <td>交易流水號</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transact-time }</td>
-      <td>true</td>
-      <td>long</td>
-      <td>交易時間</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="賬戶流水">賬戶流水</h2>
 
 <p>API Key 權限：讀取<br />
@@ -3338,7 +3182,7 @@
   <li>GET <code>/v1/account/history</code></li>
 </ul>
 
-<h3 id="請求參數-13">請求參數</h3>
+<h3 id="請求參數-12">請求參數</h3>
 
 <table>
   <thead>
@@ -3449,7 +3293,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-10">響應數據</h3>
+<h3 id="響應數據-9">響應數據</h3>
 
 <table>
   <thead>
@@ -3530,238 +3374,6 @@
   </tbody>
 </table>
 
-<h2 id="財務流水">財務流水</h2>
-
-<p>API Key 權限：讀取</p>
-
-<p>該節點基於用戶賬戶ID返回財務流水。<br />
-一期上線暫時僅支持划轉流水的查詢（「transactType」 = 「transfer」）。<br />
-通過「startTime」/「endTime」框定的查詢窗口最大為10天，意即，通過單次查詢可檢索的範圍最大為10天。<br />
-該查詢窗口可在最近180天範圍內平移，意即，通過多次平移窗口查詢，最多可檢索到過往180天的記錄。<br /></p>
-
-<h3 id="http-request-1">HTTP Request</h3>
-
-<ul>
-  <li>GET <code>/v2/account/ledger</code></li>
-</ul>
-
-<h3 id="請求參數-14">請求參數</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>參數名稱</th>
-      <th>數據類型</th>
-      <th>是否必需</th>
-      <th>描述</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>accountId</td>
-      <td>string</td>
-      <td>TRUE</td>
-      <td>賬戶編號</td>
-    </tr>
-    <tr>
-      <td>currency</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>幣種 （缺省值所有幣種）</td>
-    </tr>
-    <tr>
-      <td>transactTypes</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>變動類型，可多填 （缺省值all） 枚舉值： transfer</td>
-    </tr>
-    <tr>
-      <td>startTime</td>
-      <td>long</td>
-      <td>FALSE</td>
-      <td>遠點時間（取值範圍及缺省值見注1）</td>
-    </tr>
-    <tr>
-      <td>endTime</td>
-      <td>long</td>
-      <td>FALSE</td>
-      <td>近點時間（取值範圍及缺省值見注2）</td>
-    </tr>
-    <tr>
-      <td>sort</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>檢索方向（asc 由遠及近, desc 由近及遠，缺省值desc）</td>
-    </tr>
-    <tr>
-      <td>limit</td>
-      <td>int</td>
-      <td>FALSE</td>
-      <td>單頁最大返回條目數量 [1,500] （缺省值100）</td>
-    </tr>
-    <tr>
-      <td>fromId</td>
-      <td>long</td>
-      <td>FALSE</td>
-      <td>起始編號（僅在下頁查詢時有效，見注3）</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>注1：<br />
-startTime取值範圍：[(endTime - 10天), endTime], unix time in millisecond<br />
-startTime缺省值：(endTime - 10天)</p>
-
-<p>注2：<br />
-endTime取值範圍：[(當前時間 - 180天), 當前時間], unix time in millisecond<br />
-endTime缺省值：當前時間</p>
-
-<blockquote>
-  <p>Response:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-</span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-</span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">5260185</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactAmt"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.000000000000000000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transferType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"margin-transfer-out"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1585573286913</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transferer"</span><span class="p">:</span><span class="w"> </span><span class="mi">5463409</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transferee"</span><span class="p">:</span><span class="w"> </span><span class="mi">5260185</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">5260185</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactAmt"</span><span class="p">:</span><span class="w"> </span><span class="mf">-1.000000000000000000</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transferType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"margin-transfer-in"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transactTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1585573281160</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transferer"</span><span class="p">:</span><span class="w"> </span><span class="mi">5260185</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"transferee"</span><span class="p">:</span><span class="w"> </span><span class="mi">5463409</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="響應數據-11">響應數據</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>字段名稱</th>
-      <th>數據類型</th>
-      <th>是否必需</th>
-      <th>描述</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>code</td>
-      <td>integer</td>
-      <td>TRUE</td>
-      <td>狀態碼</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>message</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>錯誤描述（如有）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>data</td>
-      <td>object</td>
-      <td>TRUE</td>
-      <td>按用戶請求參數sort中定義的順序排列</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>{ accountId</td>
-      <td>integer</td>
-      <td>TRUE</td>
-      <td>賬戶編號</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>currency</td>
-      <td>string</td>
-      <td>TRUE</td>
-      <td>幣種</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transactAmt</td>
-      <td>number</td>
-      <td>TRUE</td>
-      <td>變動金額（入賬為正 or 出賬為負）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transactType</td>
-      <td>string</td>
-      <td>TRUE</td>
-      <td>變動類型</td>
-      <td>transfer（划轉）</td>
-    </tr>
-    <tr>
-      <td>transferType</td>
-      <td>string</td>
-      <td>FALSE</td>
-      <td>划轉類型（僅對transactType=transfer有效）</td>
-      <td>master-transfer-in（轉入到母用戶）, master-transfer-out（從母用戶轉出）, sub-transfer-in（轉入到子用戶）, sub-transfer-out（從子用戶轉出）</td>
-    </tr>
-    <tr>
-      <td>transactId</td>
-      <td>integer</td>
-      <td>TRUE</td>
-      <td>交易流水號</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transactTime</td>
-      <td>integer</td>
-      <td>TRUE</td>
-      <td>交易時間</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transferer</td>
-      <td>integer</td>
-      <td>FALSE</td>
-      <td>付款方賬戶ID</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transferee }</td>
-      <td>integer</td>
-      <td>FALSE</td>
-      <td>收款方賬戶ID</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>nextId</td>
-      <td>integer</td>
-      <td>FALSE</td>
-      <td>下頁起始編號（僅在查詢結果需要分頁返回時包含此字段，見注3。）</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
-<p>注3：<br />
-僅當用戶請求查詢的時間範圍內的數據條目超出單頁限制（由「limit「字段設定）時，服務器才返回」nextId「字段。用戶收到服務器返回的」nextId「後 –<br />
-1）	須知曉後續仍有數據未能在本頁返回；<br />
-2）	如需繼續查詢下頁數據，應再次請求查詢並將服務器返回的「nextId」作為「fromId「，其它請求參數不變。<br />
-3）	作為數據庫記錄ID，「nextId」和「fromId」除了用來翻頁查詢外，無其它業務含義。<br /></p>
-
 <h1 id="錢包充提相關">錢包（充提相關）</h1>
 
 <h2 id="簡介-4">簡介</h2>
@@ -3825,13 +3437,13 @@ endTime缺省值：當前時間</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/account/deposit/address?currency=btc"</span>
 </code></pre></div>
-<h3 id="http-請求-13">HTTP 請求</h3>
+<h3 id="http-請求-12">HTTP 請求</h3>
 
 <ul>
-  <li>GET ` /v2/account/deposit/address`</li>
+  <li>GET <code>/v2/account/deposit/address</code></li>
 </ul>
 
-<h3 id="請求參數-15">請求參數</h3>
+<h3 id="請求參數-13">請求參數</h3>
 
 <table>
   <thead>
@@ -3870,7 +3482,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-12">響應數據</h3>
+<h3 id="響應數據-10">響應數據</h3>
 
 <table>
   <thead>
@@ -3988,13 +3600,13 @@ endTime缺省值：當前時間</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/account/withdraw/quota?currency=btc"</span>
 </code></pre></div>
-<h3 id="http-請求-14">HTTP 請求</h3>
+<h3 id="http-請求-13">HTTP 請求</h3>
 
 <ul>
-  <li>GET ` /v2/account/withdraw/quota`</li>
+  <li>GET <code>/v2/account/withdraw/quota</code></li>
 </ul>
 
-<h3 id="請求參數-16">請求參數</h3>
+<h3 id="請求參數-14">請求參數</h3>
 
 <table>
   <thead>
@@ -4037,7 +3649,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-13">響應數據</h3>
+<h3 id="響應數據-11">響應數據</h3>
 
 <table>
   <thead>
@@ -4161,13 +3773,13 @@ endTime缺省值：當前時間</p>
 
 <p>該節點用於查詢API key可用的提幣地址，限母用戶可用。<br /></p>
 
-<h3 id="http-請求-15">HTTP 請求</h3>
+<h3 id="http-請求-14">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v2/account/withdraw/address</code></li>
 </ul>
 
-<h3 id="請求參數-17">請求參數</h3>
+<h3 id="請求參數-15">請求參數</h3>
 
 <table>
   <thead>
@@ -4241,7 +3853,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-14">響應數據</h3>
+<h3 id="響應數據-12">響應數據</h3>
 
 <table>
   <thead>
@@ -4336,10 +3948,10 @@ endTime缺省值：當前時間</p>
 <aside class="notice">如果用戶在個人設置 &lt;/a&gt; 里設置了優先使用快速提幣，通過API發起的提幣也會優先選擇快速提幣通道。快速提幣是指當提幣目標地址是平台內部用戶地址時，提幣將通過平台內部快速通道，不通過區塊鏈。</aside>
 <aside class="notice">API提幣僅支持用戶提幣地址列表&lt;/a&gt; 中的地址。IOTA一次性提幣地址無法被設置為常用地址，因此不支持通過API方式提幣IOTA。 </aside>
 
-<h3 id="http-請求-16">HTTP 請求</h3>
+<h3 id="http-請求-15">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/dw/withdraw/api/create`</li>
+  <li>POST <code>/v1/dw/withdraw/api/create</code></li>
 </ul>
 
 <blockquote>
@@ -4353,7 +3965,7 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-18">請求參數</h3>
+<h3 id="請求參數-16">請求參數</h3>
 
 <table>
   <thead>
@@ -4420,7 +4032,7 @@ endTime缺省值：當前時間</p>
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">91934214</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-15">響應數據</h3>
+<h3 id="響應數據-13">響應數據</h3>
 
 <table>
   <thead>
@@ -4450,13 +4062,13 @@ endTime缺省值：當前時間</p>
 <p>API Key 權限：提幣<br />
 限頻值（NEW）：20次/2s</p>
 
-<h3 id="http-請求-17">HTTP 請求</h3>
+<h3 id="http-請求-16">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/dw/withdraw-virtual/{withdraw-id}/cancel`</li>
+  <li>POST <code>/v1/dw/withdraw-virtual/{withdraw-id}/cancel</code></li>
 </ul>
 
-<h3 id="請求參數-19">請求參數</h3>
+<h3 id="請求參數-17">請求參數</h3>
 
 <table>
   <thead>
@@ -4490,7 +4102,7 @@ endTime缺省值：當前時間</p>
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91934217"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-16">響應數據</h3>
+<h3 id="響應數據-14">響應數據</h3>
 
 <table>
   <thead>
@@ -4520,13 +4132,13 @@ endTime缺省值：當前時間</p>
 <p>API Key 權限：讀取<br />
 限頻值（NEW）：20次/2s</p>
 
-<h3 id="http-請求-18">HTTP 請求</h3>
+<h3 id="http-請求-17">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/query/deposit-withdraw</code></li>
 </ul>
 
-<h3 id="請求參數-20">請求參數</h3>
+<h3 id="請求參數-18">請求參數</h3>
 
 <table>
   <thead>
@@ -4594,13 +4206,17 @@ endTime缺省值：當前時間</p>
       </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1171</span><span class="p">,</span><span class="w">
         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"deposit"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sub-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NORMAL"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xrp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdc"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"tx-hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed03094b84eafbe4bc16e7ef766ee959885ee5bcb265872baaa9c64e1cf86c2b"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">7.457467</span><span class="p">,</span><span class="w">
         </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rae93V8d2mdoUQHwBDBdM4NHCMehRJAsbm"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"address-tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100040"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"safe"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"wallet-confirm"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
         </span><span class="nl">"created-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510912472199</span><span class="p">,</span><span class="w">
         </span><span class="nl">"updated-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1511145876575</span><span class="w">
       </span><span class="p">},</span><span class="w">
@@ -4608,7 +4224,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-17">響應數據</h3>
+<h3 id="響應數據-15">響應數據</h3>
 
 <table>
   <thead>
@@ -4708,7 +4324,7 @@ endTime缺省值：當前時間</p>
     <tr>
       <td>wallet-confirm</td>
       <td>false</td>
-      <td>string</td>
+      <td>long</td>
       <td>錢包確認次數</td>
       <td> </td>
     </tr>
@@ -5061,10 +4677,10 @@ endTime缺省值：當前時間</p>
 
 <p>發送一個新訂單以進行撮合。</p>
 
-<h3 id="http-請求-19">HTTP 請求</h3>
+<h3 id="http-請求-18">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/order/orders/place`</li>
+  <li>POST <code>/v1/order/orders/place</code></li>
 </ul>
 
 <blockquote>
@@ -5081,7 +4697,7 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-21">請求參數</h3>
+<h3 id="請求參數-19">請求參數</h3>
 
 <table>
   <thead>
@@ -5155,7 +4771,7 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-18">響應數據</h3>
+<h3 id="響應數據-16">響應數據</h3>
 
 <p>返回的主數據對象是一個對應下單單號的字符串。</p>
 
@@ -5168,10 +4784,10 @@ endTime缺省值：當前時間</p>
 
 <p>一個批量最多10張訂單</p>
 
-<h3 id="http-請求-20">HTTP 請求</h3>
+<h3 id="http-請求-19">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/order/batch-orders`</li>
+  <li>POST <code>/v1/order/batch-orders</code></li>
 </ul>
 
 <blockquote>
@@ -5197,7 +4813,7 @@ endTime缺省值：當前時間</p>
 	</span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-22">請求參數</h3>
+<h3 id="請求參數-20">請求參數</h3>
 
 <table>
   <thead>
@@ -5280,7 +4896,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-19">響應數據</h3>
+<h3 id="響應數據-17">響應數據</h3>
 
 <table>
   <thead>
@@ -5325,13 +4941,13 @@ endTime缺省值：當前時間</p>
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-21">HTTP 請求</h3>
+<h3 id="http-請求-20">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/order/orders/{order-id}/submitcancel`</li>
+  <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
 
-<h3 id="請求參數-23">請求參數</h3>
+<h3 id="請求參數-21">請求參數</h3>
 
 <table>
   <thead>
@@ -5365,7 +4981,7 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-20">響應數據</h3>
+<h3 id="響應數據-18">響應數據</h3>
 
 <p>返回的主數據對象是一個對應下單單號的字符串。</p>
 
@@ -5424,10 +5040,10 @@ endTime缺省值：當前時間</p>
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-22">HTTP 請求</h3>
+<h3 id="http-請求-21">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/order/orders/submitCancelClientOrder`</li>
+  <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
 </ul>
 
 <blockquote>
@@ -5438,7 +5054,7 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-24">請求參數</h3>
+<h3 id="請求參數-22">請求參數</h3>
 
 <table>
   <thead>
@@ -5472,7 +5088,7 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-21">響應數據</h3>
+<h3 id="響應數據-19">響應數據</h3>
 
 <table>
   <thead>
@@ -5533,7 +5149,7 @@ endTime缺省值：當前時間</p>
 
 <p>查詢已提交但是仍未完全成交或未被撤銷的訂單。</p>
 
-<h3 id="http-請求-23">HTTP 請求</h3>
+<h3 id="http-請求-22">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/openOrders</code></li>
@@ -5549,7 +5165,7 @@ endTime缺省值：當前時間</p>
    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-25">請求參數</h3>
+<h3 id="請求參數-23">請求參數</h3>
 
 <table>
   <thead>
@@ -5632,7 +5248,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-22">響應數據</h3>
+<h3 id="響應數據-20">響應數據</h3>
 
 <table>
   <thead>
@@ -5720,13 +5336,13 @@ endTime缺省值：當前時間</p>
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-24">HTTP 請求</h3>
+<h3 id="http-請求-23">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/order/orders/batchCancelOpenOrders`</li>
+  <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
 </ul>
 
-<h3 id="請求參數-26">請求參數</h3>
+<h3 id="請求參數-24">請求參數</h3>
 
 <table>
   <thead>
@@ -5788,7 +5404,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-23">響應數據</h3>
+<h3 id="響應數據-21">響應數據</h3>
 
 <table>
   <thead>
@@ -5832,10 +5448,10 @@ endTime缺省值：當前時間</p>
 
 <p>此接口同時為多個訂單（基於id）發送取消請求。</p>
 
-<h3 id="http-請求-25">HTTP 請求</h3>
+<h3 id="http-請求-24">HTTP 請求</h3>
 
 <ul>
-  <li>POST ` /v1/order/orders/batchcancel`</li>
+  <li>POST <code>/v1/order/orders/batchcancel</code></li>
 </ul>
 
 <blockquote>
@@ -5848,7 +5464,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-27">請求參數</h3>
+<h3 id="請求參數-25">請求參數</h3>
 
 <table>
   <thead>
@@ -5916,7 +5532,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-24">響應數據</h3>
+<h3 id="響應數據-22">響應數據</h3>
 
 <table>
   <thead>
@@ -6019,13 +5635,13 @@ endTime缺省值：當前時間</p>
 
 <p>此接口返回指定訂單的最新狀態和詳情。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-26">HTTP 請求</h3>
+<h3 id="http-請求-25">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
 
-<h3 id="請求參數-28">請求參數</h3>
+<h3 id="請求參數-26">請求參數</h3>
 
 <table>
   <thead>
@@ -6076,7 +5692,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-25">響應數據</h3>
+<h3 id="響應數據-23">響應數據</h3>
 
 <table>
   <thead>
@@ -6204,13 +5820,13 @@ endTime缺省值：當前時間</p>
 
 <p>此接口返回指定用戶自編訂單號（24小時內）的訂單最新狀態和詳情。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-27">HTTP 請求</h3>
+<h3 id="http-請求-26">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/getClientOrder</code></li>
 </ul>
 
-<h3 id="請求參數-29">請求參數</h3>
+<h3 id="請求參數-27">請求參數</h3>
 
 <table>
   <thead>
@@ -6261,7 +5877,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-26">響應數據</h3>
+<h3 id="響應數據-24">響應數據</h3>
 
 <table>
   <thead>
@@ -6397,13 +6013,13 @@ endTime缺省值：當前時間</p>
 
 <p>此接口返回指定訂單的成交明細。</p>
 
-<h3 id="http-請求-28">HTTP 請求</h3>
+<h3 id="http-請求-27">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
 
-<h3 id="請求參數-30">請求參數</h3>
+<h3 id="請求參數-28">請求參數</h3>
 
 <table>
   <thead>
@@ -6457,7 +6073,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-27">響應數據</h3>
+<h3 id="響應數據-25">響應數據</h3>
 
 <aside class="notice">返回的主數據對象為一個對象數組，其中每一個元件代表一個交易結果。</aside>
 
@@ -6616,13 +6232,13 @@ endTime缺省值：當前時間</p>
 
 <p>建議用戶以「時間範圍「查詢歷史訂單。</p>
 
-<h3 id="http-請求-29">HTTP 請求</h3>
+<h3 id="http-請求-28">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders</code></li>
 </ul>
 
-<h3 id="請求參數-31">請求參數</h3>
+<h3 id="請求參數-29">請求參數</h3>
 
 <table>
   <thead>
@@ -6731,7 +6347,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-28">響應數據</h3>
+<h3 id="響應數據-26">響應數據</h3>
 
 <table>
   <thead>
@@ -6884,7 +6500,7 @@ endTime缺省值：當前時間</p>
 
 <p>此接口基於搜索條件查詢最近48小時內歷史訂單。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-30">HTTP 請求</h3>
+<h3 id="http-請求-29">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/history</code></li>
@@ -6902,7 +6518,7 @@ endTime缺省值：當前時間</p>
    </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-32">請求參數</h3>
+<h3 id="請求參數-30">請求參數</h3>
 
 <table>
   <thead>
@@ -6986,7 +6602,7 @@ endTime缺省值：當前時間</p>
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-29">響應數據</h3>
+<h3 id="響應數據-27">響應數據</h3>
 
 <table>
   <thead>
@@ -7121,13 +6737,13 @@ endTime缺省值：當前時間</p>
 
 <p>此接口基於搜索條件查詢當前和歷史成交記錄。</p>
 
-<h3 id="http-請求-31">HTTP 請求</h3>
+<h3 id="http-請求-30">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
 
-<h3 id="請求參數-33">請求參數</h3>
+<h3 id="請求參數-31">請求參數</h3>
 
 <table>
   <thead>
@@ -7228,7 +6844,7 @@ endTime缺省值：當前時間</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-30">響應數據</h3>
+<h3 id="響應數據-28">響應數據</h3>
 
 <aside class="notice">返回的主數據對象為一個對象數組，其中每一個元件代表一個交易結果。</aside>
 
@@ -8623,8 +8239,6 @@ endTime缺省值：當前時間</p>
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id11"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>##</p>
-
 <h1 id="websocket資產及訂單">Websocket資產及訂單</h1>
 
 <h2 id="簡介-7">簡介</h2>
@@ -8964,7 +8578,7 @@ endTime缺省值：當前時間</p>
 
 <h3 id="訂閱主題-2">訂閱主題</h3>
 
-<p>` orders#${symbol}`</p>
+<p><code>orders#${symbol}</code></p>
 
 <h3 id="訂閱參數">訂閱參數</h3>
 
@@ -9421,7 +9035,8 @@ endTime缺省值：當前時間</p>
          </span><span class="nl">"orderSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
          </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a001"</span><span class="p">,</span><span class="w">
          </span><span class="nl">"orderCreateTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">998787897878</span><span class="p">,</span><span class="w">
-         </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"partial-filled"</span><span class="w">
+         </span><span class="nl">"orderStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"partial-filled"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"orderType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>

@@ -1873,7 +1873,7 @@ Frequency limit value (NEW): 20 times/2s
 
 ### HTTP requests
 
-- POST ` /v1/dw/withdraw-virtual/{withdraw-id}/cancel`
+- POST `/v1/dw/withdraw-virtual/{withdraw-id}/cancel`
 
 ### Request parameters
 
@@ -2897,7 +2897,7 @@ This interface queries historical orders within the last 48 hours based on searc
 | source             | true     | string    | Order source                                                                                                                                                                        | api                                                                     |
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
 | symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, rcneth, etc.                                            |
-| type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, etc. |
+| type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, etc. |
 | next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next").Note: Only when the total number of items in the search result exceeded the limitation defined in "size", this field exists.                                       | UTC time in milliseconds                                                |
 
 ## Current and historical transactions

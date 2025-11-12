@@ -590,13 +590,9 @@
 
 <p><strong><code>https://api.bitv.com</code></strong></p>
 
-<p><strong>Websocket Feed（行情，不包含MBP增量行情）</strong></p>
+<p><strong>Websocket Feed（行情）</strong></p>
 
 <p><strong><code>wss://api.bitv.com/ws</code></strong></p>
-
-<p><strong>Websocket Feed（行情，僅MBP增量行情）</strong></p>
-
-<p><strong><code>wss://api.bitv.com/feed</code></strong></p>
 
 <p><strong>Websocket Feed（資產和訂單）</strong></p>
 
@@ -2136,7 +2132,6 @@
 </table>
 
 <aside class="notice">當前 REST API 不支持自定義時間區間，如需要歷史固定時間範圍的數據，請參考 Websocket API 中的 K 線接口。</aside>
-<aside class="notice">獲取 hb10 淨值時， symbol 請填寫 「hb10」。</aside>
 <aside class="notice">K線週期以新加坡時間為基準開始計算，例如日K線的起始週期為新加坡時間0時-新加坡時間次日0時。</aside>
 
 <blockquote>
@@ -7502,8 +7497,6 @@
   </tbody>
 </table>
 
-<aside class="notice">當symbol被設為"hb10"時，amount, count, vol均為零值 </aside>
-
 <h3 id="數據請求-1">數據請求</h3>
 
 <p>支持數據請求方式一次性獲取市場深度數據：</p>
@@ -7516,10 +7509,6 @@
 <h2 id="市場深度mbp行情數據增量推送">市場深度MBP行情數據（增量推送）</h2>
 
 <p>用戶可訂閱此頻道以接收最新深度行情Market By Price (MBP) 的增量數據推送；同時，該頻道支持用戶以req方式請求獲取全量數據。</p>
-
-<p><strong>MBP增量推送及MBP全量REQ請求地址</strong></p>
-
-<p><strong><code>wss://api.bitv.com/feed</code></strong></p>
 
 <p>建議下游數據處理方式：<br />
 1）	訂閱增量數據並開始緩存；<br />
@@ -9355,7 +9344,7 @@ accounts.update#1<br />
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="p">,</span><span class="w">
 </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23.111"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transfer"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1568601800000</span><span class="p">,</span><span class="w">
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
@@ -9370,7 +9359,7 @@ accounts.update#1<br />
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
 </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2028.699426619837209087"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order. match"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385167</span><span class="p">,</span><span class="w">
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
@@ -9383,7 +9372,7 @@ accounts.update#1<br />
 </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">33385</span><span class="p">,</span><span class="w">
 </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2065.100267619837209301"</span><span class="p">,</span><span class="w">
-</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order. match"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order.match"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"accountType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trade"</span><span class="p">,</span><span class="w">
 </span><span class="nl">"changeTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1574393385122</span><span class="p">,</span><span class="w">
 </span><span class="nl">"seqNum"</span><span class="p">:</span><span class="mi">1</span><span class="w">
@@ -9424,7 +9413,7 @@ accounts.update#1<br />
     <tr>
       <td>changeType</td>
       <td>string</td>
-      <td>餘額變動類型，有效值：order-place(訂單創建)，order-match(訂單成交)，order-refund(訂單成交退款)，order-cancel(訂單撤銷)，order-fee-refund(抵扣交易手續費)</td>
+      <td>餘額變動類型，有效值：order.place(訂單創建)，order.match(訂單成交)，order.refund(訂單成交退款)，order.cancel(訂單撤銷)，order.fee-refund(抵扣交易手續費)</td>
     </tr>
     <tr>
       <td>accountType</td>

@@ -96,13 +96,9 @@ WebSocket是HTML5一种新的协议（Protocol）。它实现了客户端与服�
 
 **`https://api.bitv.com`**  
 
-**Websocket Feed（行情，不包含MBP增量行情）**
+**Websocket Feed（行情）**
 
 **`wss://api.bitv.com/ws`**  
-
-**Websocket Feed（行情，仅MBP增量行情）**
-
-**`wss://api.bitv.com/feed`**  
 
 **Websocket Feed（资产和订单）**
 
@@ -1045,7 +1041,6 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 | size   | integer  | false    | 150    | 返回 K 线数据条数                          | [1, 2000]                                                    |
 
 <aside class="notice">当前 REST API 不支持自定义时间区间，如需要历史固定时间范围的数据，请参考 Websocket API 中的 K 线接口。</aside>
-<aside class="notice">获取 hb10 净值时， symbol 请填写 “hb10”。</aside>
 <aside class="notice">K线周期以新加坡时间为基准开始计算，例如日K线的起始周期为新加坡时间0时-新加坡时间次日0时。</aside>
 
 > Response:
@@ -3276,8 +3271,6 @@ Websocket服务器同时支持一次性请求数据（pull）。
 | version | integer  | 内部字段                     |
 | ts      | integer  | 新加坡时间的时间戳，单位毫秒 |
 
-<aside class="notice">当symbol被设为"hb10"时，amount, count, vol均为零值 </aside>
-
 ### 数据请求
 
 支持数据请求方式一次性获取市场深度数据：
@@ -3292,10 +3285,6 @@ Websocket服务器同时支持一次性请求数据（pull）。
 ## 市场深度MBP行情数据（增量推送）
 
 用户可订阅此频道以接收最新深度行情Market By Price (MBP) 的增量数据推送；同时，该频道支持用户以req方式请求获取全量数据。
-
-**MBP增量推送及MBP全量REQ请求地址**
-
-**`wss://api.bitv.com/feed`**  
 
 建议下游数据处理方式：<br>
 1）	订阅增量数据并开始缓存；<br>
@@ -4325,7 +4314,7 @@ accounts.update#0:
 "currency": "btc",
 "accountId": 123456,
 "balance": "23.111",
-"changeType": "transfer",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1568601800000,
 "seqNum":1
@@ -4340,7 +4329,7 @@ accounts.update#1:
 "currency": "btc",
 "accountId": 33385,
 "available": "2028.699426619837209087",
-"changeType": "order. match",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1574393385167,
 "seqNum":1
@@ -4353,7 +4342,7 @@ accounts.update#1:
 "currency": "btc",
 "accountId": 33385,
 "balance": "2065.100267619837209301",
-"changeType": "order. match",
+"changeType": "order.match",
 "accountType": "trade",
 "changeTime": 1574393385122,
 "seqNum":1
@@ -4369,7 +4358,7 @@ accounts.update#1:
 | accountId   | long     | 账户ID                                                       |
 | balance     | string   | 账户余额（仅当账户余额发生变动时推送）                       |
 | available   | string   | 可用余额（仅当可用余额发生变动时推送）                       |
-| changeType  | string   | 余额变动类型，有效值：order-place(订单创建)，order-match(订单成交)，order-refund(订单成交退款)，order-cancel(订单撤销)，order-fee-refund(抵扣交易手续费) |
+| changeType  | string   | 余额变动类型，有效值：order.place(订单创建)，order.match(订单成交)，order.refund(订单成交退款)，order.cancel(订单撤销)，order.fee-refund(抵扣交易手续费) |
 | accountType | string   | 账户类型，有效值：trade, frozen, loan, interest              |
 | changeTime  | long     | 余额变动时间，unix time in millisecond                       |
 | seqNum      | long     | 消息序列号                       |

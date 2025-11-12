@@ -4001,7 +4001,7 @@ API Key 權限：讀取
 		"orderStatus":"submitted",
 		"symbol":"btcusdt",
 		"eventType":"creation",
-      "orderSource":"web"
+		"orderSource":"web"
 	}
 }
 
@@ -4049,11 +4049,11 @@ API Key 權限：讀取
 		"clientOrderId":"abc123",
 		"orderStatus":"filled",
 		"symbol":"btcusdt",
-    "orderPrice": "76.000000000000000000",
-    "orderSize": "0.009",
+		"orderPrice": "76.000000000000000000",
+		"orderSize": "0.009",
 		"eventType":"trade",
-      "orderSource":"web",
-      "execAmt":"0.0006"
+		"orderSource":"web",
+		"execAmt":"0.0006"
 	}
 }
 ```
@@ -4100,11 +4100,11 @@ API Key 權限：讀取
 		"clientOrderId":"abc123",
 		"orderStatus":"canceled",
 		"symbol":"btcusdt",
-		"eventType":"cancellation",
-      "orderSource": "web",
-      "orderPrice": "0.01",
-      "orderSize": "0.02",
-      "execAmt":0
+		"eventType":"cancellation", 
+		"orderSource": "web",
+		"orderPrice": "0.01",
+		"orderSize": "0.02",
+		"execAmt":0
 	}
 }
 ```

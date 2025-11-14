@@ -18,7 +18,7 @@ search: false
 ## API 简介
 
 欢迎使用BitV API！  
-/market/depth
+
 此文档是BitV的唯一官方API文档，提供的功能和服务会在此持续更新，请大家及时关注。  
 
 您可以通过点击上方菜单来切换获取不同业务的API，还可通过点击右上方的语言按钮来切换文档语言。  
@@ -451,16 +451,10 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 
 - 推荐使用`start-time`、`end-time`参数进行查询，该参数传入值为13位时间戳（精确至毫秒），使用该参数查询时最大查询窗口为48小时（2天），推荐按照小时进行查询，您搜索的时间范围越小，时间戳准确性越高，查询的效率会更高，可以根据上次查询的时间戳进行迭代查询。
 
-**订单状态变化的通知**
-
-- 建议使用WebSocket订阅`orders.$symbol.update`主题，该主题拥有更低的数据延迟以及更准确的消息顺序。
-- 不建议使用WebSocket订阅`orders.$symbol`主题，该主题已由`orders.$symbol.update`取代，会在后续停止服务，请尽早更换使用。
-
 ###账户类
 **资产变更**
 
-- 使用WebSocket的方式，同时订阅`orders.$symbol.update`、`accounts.update#${mode}`主题，`orders.$symbol.update`用于接收订单的状态变化（创建、成交、撤销以及相关成交价格、数量信息），由于该主题在推送数据时，未经过清算，所以时效性更快，可根据`accounts.update#${mode}`主题接收相关资产的变更信息，以此来维护账户内的资金情况。
-- 不建议WebSocket订阅`accounts`主题，该主题已由`accounts.update#${mode}`取代，会在后续停止服务，请尽早更换使用。
+- 使用WebSocket的方式，同时订阅`orders#$symbol、`accounts.update#${mode}`主题，`orders#$symbol`用于接收订单的状态变化（创建、成交、撤销以及相关成交价格、数量信息），由于该主题在推送数据时，未经过清算，所以时效性更快，可根据`accounts.update#${mode}`主题接收相关资产的变更信息，以此来维护账户内的资金情况。
 
 # 常见问题
 
@@ -625,17 +619,7 @@ A： 可使用 Rest API `GET /v1/common/symbols` 获取相关币对信息， 下
 - order-limitorder-amount-max-error : 限价单数量高于限价阈值  
 - order-limitorder-amount-min-error : 限价单数量低于限价阈值  
 
-### Q4：WebSocket 订单更新推送主题orders.\$symbol 和 orders.$symbol.update的区别？
-
-A： 区别如下：
-
-1. order.\$symbol 主题作为老的推送主题，会在一段时间后停止主题的维护和使用， 推荐使用order.$symbol.update主题。
-
-2. 新主题orders.$symbol.update具有严格的时序性，保证数据严格按照撮合成交顺序进行推送，且具有更快的时效性以及更低的时延。
-
-3. 为减少重复数据推送量以及更快的速度，在orders.$symbol.update推送中并未携带原始订单数量，价格信息，若需要此信息，建议可在下单时在本地维护订单信息，或在接收到推送消息后，使用Rest接口进行查询。
-
-### Q5： 为什么收到订单成功成交的消息后再次进行下单，返回余额不足？
+### Q4： 为什么收到订单成功成交的消息后再次进行下单，返回余额不足？
 
 A：为保证订单的及时送达以及低延时， 订单推送的结果是在撮合后直接推送，此时订单可能并未完成资产的清算。  
 
@@ -647,7 +631,7 @@ A：为保证订单的及时送达以及低延时， 订单推送的结果是在
 
 3. 账户中保留相对充足的资金余额。
 
-### Q6: 撮合结果里的filled-fees和filled-points有什么区别？
+### Q5: 撮合结果里的filled-fees和filled-points有什么区别？
 
 A: 撮合成交中的成交手续费分为普通手续费以及抵扣手续费两种类型，两种类型不会同时存在。
 
@@ -655,11 +639,11 @@ A: 撮合成交中的成交手续费分为普通手续费以及抵扣手续费�
 
 2. 抵扣手续费表示，在成交时，开启了抵扣，使用抵扣资产作为手续费的抵扣。例如BTCUSDT币种对下购买BTC，抵扣资产充足时，filled-fees为空，filled-points不为空，表示扣除了抵扣资产作为手续费，扣除单位需参考fee-deduct-currency字段
 
-### Q7: 撮合结果中match-id和trade-id有什么区别？
+### Q6: 撮合结果中match-id和trade-id有什么区别？
 
 A: match-id表示订单在撮合中的顺序号，trade-id表示成交时的序号， 一个match-id可能有多个trade-id（成交时），也可能没有trade-id(创建订单、撤销订单)
 
-### Q8: 为什么基于当前盘口买一或者卖一价格进行下单触发了下单限价错误？
+### Q7: 为什么基于当前盘口买一或者卖一价格进行下单触发了下单限价错误？
 
 A: 当前有基于最新成交价上下一定幅度的限价保护，对流动性不好的币，基于盘口数据下单可能会触发限价保护。建议基于ws推送的成交价+盘口数据信息进行下单
 

@@ -504,9 +504,9 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='5ea2e0cde2'>简介</h1><h2 id='api'>API 简介</h2>
-<p>欢迎使用BitV API！<br>
-/market/depth
-此文档是BitV的唯一官方API文档，提供的功能和服务会在此持续更新，请大家及时关注。  </p>
+<p>欢迎使用BitV API！  </p>
+
+<p>此文档是BitV的唯一官方API文档，提供的功能和服务会在此持续更新，请大家及时关注。  </p>
 
 <p>您可以通过点击上方菜单来切换获取不同业务的API，还可通过点击右上方的语言按钮来切换文档语言。  </p>
 
@@ -974,19 +974,11 @@
 <ul>
 <li>推荐使用<code>start-time</code>、<code>end-time</code>参数进行查询，该参数传入值为13位时间戳（精确至毫秒），使用该参数查询时最大查询窗口为48小时（2天），推荐按照小时进行查询，您搜索的时间范围越小，时间戳准确性越高，查询的效率会更高，可以根据上次查询的时间戳进行迭代查询。</li>
 </ul>
-
-<p><strong>订单状态变化的通知</strong></p>
-
-<ul>
-<li>建议使用WebSocket订阅<code>orders.$symbol.update</code>主题，该主题拥有更低的数据延迟以及更准确的消息顺序。</li>
-<li>不建议使用WebSocket订阅<code>orders.$symbol</code>主题，该主题已由<code>orders.$symbol.update</code>取代，会在后续停止服务，请尽早更换使用。</li>
-</ul>
 <h3 id='dff6dbe326'>账户类</h3>
 <p><strong>资产变更</strong></p>
 
 <ul>
-<li>使用WebSocket的方式，同时订阅<code>orders.$symbol.update</code>、<code>accounts.update#${mode}</code>主题，<code>orders.$symbol.update</code>用于接收订单的状态变化（创建、成交、撤销以及相关成交价格、数量信息），由于该主题在推送数据时，未经过清算，所以时效性更快，可根据<code>accounts.update#${mode}</code>主题接收相关资产的变更信息，以此来维护账户内的资金情况。</li>
-<li>不建议WebSocket订阅<code>accounts</code>主题，该主题已由<code>accounts.update#${mode}</code>取代，会在后续停止服务，请尽早更换使用。</li>
+<li>使用WebSocket的方式，同时订阅<code>orders#$symbol、</code>accounts.update#${mode}<code>主题，</code>orders#$symbol<code>用于接收订单的状态变化（创建、成交、撤销以及相关成交价格、数量信息），由于该主题在推送数据时，未经过清算，所以时效性更快，可根据</code>accounts.update#${mode}`主题接收相关资产的变更信息，以此来维护账户内的资金情况。</li>
 </ul>
 <h1 id='0adb1147b3'>常见问题</h1><h2 id='api-2'>API信息通知</h2>
 <p>关于API新增、更新、下线等信息会提前发布公告进行通知，建议您关注和订阅我们的公告，及时获取相关信息。  </p>
@@ -1121,15 +1113,7 @@
 <li>order-limitorder-amount-max-error : 限价单数量高于限价阈值<br></li>
 <li>order-limitorder-amount-min-error : 限价单数量低于限价阈值<br></li>
 </ul>
-<h3 id='q4-websocket-orders-symbol-orders-symbol-update'>Q4：WebSocket 订单更新推送主题orders.\$symbol 和 orders.$symbol.update的区别？</h3>
-<p>A： 区别如下：</p>
-
-<ol>
-<li><p>order.\$symbol 主题作为老的推送主题，会在一段时间后停止主题的维护和使用， 推荐使用order.$symbol.update主题。</p></li>
-<li><p>新主题orders.$symbol.update具有严格的时序性，保证数据严格按照撮合成交顺序进行推送，且具有更快的时效性以及更低的时延。</p></li>
-<li><p>为减少重复数据推送量以及更快的速度，在orders.$symbol.update推送中并未携带原始订单数量，价格信息，若需要此信息，建议可在下单时在本地维护订单信息，或在接收到推送消息后，使用Rest接口进行查询。</p></li>
-</ol>
-<h3 id='q5'>Q5： 为什么收到订单成功成交的消息后再次进行下单，返回余额不足？</h3>
+<h3 id='q4-2'>Q4： 为什么收到订单成功成交的消息后再次进行下单，返回余额不足？</h3>
 <p>A：为保证订单的及时送达以及低延时， 订单推送的结果是在撮合后直接推送，此时订单可能并未完成资产的清算。  </p>
 
 <p>建议使用以下方式保证资金可以正确下单：</p>
@@ -1139,16 +1123,16 @@
 <li><p>收到订单推送消息时，使用Rest接口调用账户余额，验证账户资金是否足够。</p></li>
 <li><p>账户中保留相对充足的资金余额。</p></li>
 </ol>
-<h3 id='q6-filled-fees-filled-points'>Q6: 撮合结果里的filled-fees和filled-points有什么区别？</h3>
+<h3 id='q5-filled-fees-filled-points'>Q5: 撮合结果里的filled-fees和filled-points有什么区别？</h3>
 <p>A: 撮合成交中的成交手续费分为普通手续费以及抵扣手续费两种类型，两种类型不会同时存在。</p>
 
 <ol>
 <li><p>普通手续费表示，在成交时未开启抵扣，使用原币进行手续费扣除。例如：在BTCUSDT币种对下购买BTC，filled-fees字段不为空，表示扣除了普通手续费，单位是BTC。</p></li>
 <li><p>抵扣手续费表示，在成交时，开启了抵扣，使用抵扣资产作为手续费的抵扣。例如BTCUSDT币种对下购买BTC，抵扣资产充足时，filled-fees为空，filled-points不为空，表示扣除了抵扣资产作为手续费，扣除单位需参考fee-deduct-currency字段</p></li>
 </ol>
-<h3 id='q7-match-id-trade-id'>Q7: 撮合结果中match-id和trade-id有什么区别？</h3>
+<h3 id='q6-match-id-trade-id'>Q6: 撮合结果中match-id和trade-id有什么区别？</h3>
 <p>A: match-id表示订单在撮合中的顺序号，trade-id表示成交时的序号， 一个match-id可能有多个trade-id（成交时），也可能没有trade-id(创建订单、撤销订单)</p>
-<h3 id='q8'>Q8: 为什么基于当前盘口买一或者卖一价格进行下单触发了下单限价错误？</h3>
+<h3 id='q7'>Q7: 为什么基于当前盘口买一或者卖一价格进行下单触发了下单限价错误？</h3>
 <p>A: 当前有基于最新成交价上下一定幅度的限价保护，对流动性不好的币，基于盘口数据下单可能会触发限价保护。建议基于ws推送的成交价+盘口数据信息进行下单</p>
 <h2 id='1e4de8d72a'>账户充提相关</h2><h3 id='q1-api-not-support-temp-addr'>Q1：为什么创建提币时返回api-not-support-temp-addr错误？</h3>
 <p>A：因安全考虑，API创建提币时仅支持已在提币地址列表中的地址，暂不支持使用API添加地址至提币地址列表中，需在网页端或APP端添加地址后才可在API中进行提币操作。</p>
@@ -1189,7 +1173,7 @@
 <li>maxTransactFeeWithdraw : 最大单次提币手续费（仅对区间类型和有上限的比例类型有效，withdrawFeeType=circulated or ratio</li>
 <li>transactFeeRateWithdraw :  单次提币手续费率（仅对比例类型有效，withdrawFeeType=ratio）</li>
 </ul>
-<h3 id='q4-2'>Q4：如何查看我的提币额度？</h3>
+<h3 id='q4-3'>Q4：如何查看我的提币额度？</h3>
 <p>A：请参考/v2/account/withdraw/quota接口返回值，返回信息中包含您查询币种的单次、当日、当前、总提币额度以及剩余额度的信息。 </p>
 
 <p>备注：若您有大额提币需求，且提币数额超出相关限额，可联系官方客服进行沟通。  </p>

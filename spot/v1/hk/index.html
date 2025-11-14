@@ -1060,19 +1060,11 @@
   <li>推薦使用<code>start-time</code>、<code>end-time</code>參數進行查詢，該參數傳入值為13位時間戳（精確至毫秒），使用該參數查詢時最大查詢窗口為48小時（2天），推薦按照小時進行查詢，您搜索的時間範圍越小，時間戳準確性越高，查詢的效率會更高，可以根據上次查詢的時間戳進行迭代查詢。</li>
 </ul>
 
-<p><strong>訂單狀態變化的通知</strong></p>
-
-<ul>
-  <li>建議使用WebSocket訂閱<code>orders.$symbol.update</code>主題，該主題擁有更低的數據延遲以及更準確的消息順序。</li>
-  <li>不建議使用WebSocket訂閱<code>orders.$symbol</code>主題，該主題已由<code>orders.$symbol.update</code>取代，會在後續停止服務，請盡早更換使用。</li>
-</ul>
-
 <p>###賬戶類
 <strong>資產變更</strong></p>
 
 <ul>
-  <li>使用WebSocket的方式，同時訂閱<code>orders.$symbol.update</code>、<code>accounts.update#${mode}</code>主題，<code>orders.$symbol.update</code>用於接收訂單的狀態變化（創建、成交、撤銷以及相關成交價格、數量信息），由於該主題在推送數據時，未經過清算，所以時效性更快，可根據<code>accounts.update#${mode}</code>主題接收相關資產的變更信息，以此來維護賬戶內的資金情況。</li>
-  <li>不建議WebSocket訂閱<code>accounts</code>主題，該主題已由<code>accounts.update#${mode}</code>取代，會在後續停止服務，請盡早更換使用。</li>
+  <li>使用WebSocket的方式，同時訂閱<code>orders#$symbol</code>、<code>accounts.update#${mode}</code>主題，<code>orders#$symbol</code>用於接收訂單的狀態變化（創建、成交、撤銷以及相關成交價格、數量信息），由於該主題在推送數據時，未經過清算，所以時效性更快，可根據<code>accounts.update#${mode}</code>主題接收相關資產的變更信息，以此來維護賬戶內的資金情況。</li>
 </ul>
 
 <h1 id="常見問題">常見問題</h1>
@@ -1262,23 +1254,7 @@
   <li>order-limitorder-amount-min-error : 限價單數量低於限價閾值</li>
 </ul>
 
-<h3 id="q4websocket-訂單更新推送主題orderssymbol-和-orderssymbolupdate的區別">Q4：WebSocket 訂單更新推送主題orders.$symbol 和 orders.$symbol.update的區別？</h3>
-
-<p>A： 區別如下：</p>
-
-<ol>
-  <li>
-    <p>order.$symbol 主題作為老的推送主題，會在一段時間後停止主題的維護和使用， 推薦使用order.$symbol.update主題。</p>
-  </li>
-  <li>
-    <p>新主題orders.$symbol.update具有嚴格的時序性，保證數據嚴格按照撮合成交順序進行推送，且具有更快的時效性以及更低的時延。</p>
-  </li>
-  <li>
-    <p>為減少重複數據推送量以及更快的速度，在orders.$symbol.update推送中並未攜帶原始訂單數量，價格信息，若需要此信息，建議可在下單時在本地維護訂單信息，或在接收到推送消息後，使用Rest接口進行查詢。</p>
-  </li>
-</ol>
-
-<h3 id="q5-為什麼收到訂單成功成交的消息後再次進行下單返回餘額不足">Q5： 為什麼收到訂單成功成交的消息後再次進行下單，返回餘額不足？</h3>
+<h3 id="q4-為什麼收到訂單成功成交的消息後再次進行下單返回餘額不足">Q4： 為什麼收到訂單成功成交的消息後再次進行下單，返回餘額不足？</h3>
 
 <p>A：為保證訂單的及時送達以及低延時， 訂單推送的結果是在撮合後直接推送，此時訂單可能並未完成資產的清算。</p>
 
@@ -1296,7 +1272,7 @@
   </li>
 </ol>
 
-<h3 id="q6-撮合結果里的filled-fees和filled-points有什麼區別">Q6: 撮合結果里的filled-fees和filled-points有什麼區別？</h3>
+<h3 id="q5-撮合結果里的filled-fees和filled-points有什麼區別">Q5: 撮合結果里的filled-fees和filled-points有什麼區別？</h3>
 
 <p>A: 撮合成交中的成交手續費分為普通手續費以及抵扣手續費兩種類型，兩種類型不會同時存在。</p>
 
@@ -1309,11 +1285,11 @@
   </li>
 </ol>
 
-<h3 id="q7-撮合結果中match-id和trade-id有什麼區別">Q7: 撮合結果中match-id和trade-id有什麼區別？</h3>
+<h3 id="q6-撮合結果中match-id和trade-id有什麼區別">Q6: 撮合結果中match-id和trade-id有什麼區別？</h3>
 
 <p>A: match-id表示訂單在撮合中的順序號，trade-id表示成交時的序號， 一個match-id可能有多個trade-id（成交時），也可能沒有trade-id(創建訂單、撤銷訂單)</p>
 
-<h3 id="q8-為什麼基於當前盤口買一或者賣一價格進行下單觸發了下單限價錯誤">Q8: 為什麼基於當前盤口買一或者賣一價格進行下單觸發了下單限價錯誤？</h3>
+<h3 id="q7-為什麼基於當前盤口買一或者賣一價格進行下單觸發了下單限價錯誤">Q7: 為什麼基於當前盤口買一或者賣一價格進行下單觸發了下單限價錯誤？</h3>
 
 <p>A: 當前有基於最新成交價上下一定幅度的限價保護，對流動性不好的幣，基於盤口數據下單可能會觸發限價保護。建議基於ws推送的成交價+盤口數據信息進行下單</p>
 

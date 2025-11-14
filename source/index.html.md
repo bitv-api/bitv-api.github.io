@@ -438,17 +438,11 @@ This document describes the conventions for data types in the JSON format:
 
 - It is recommended to use the `start-time` and `end-time` parameters for querying historical orders. The parameter value should be a 13-digit timestamp (accurate to milliseconds). The maximum time window for querying is 48 hours (2 days). It is recommended to query hourly. The smaller the time range, the higher the timestamp accuracy, and the more efficient the query. You can iterate the query based on the timestamp of the last query.
 
-**Order Status Notifications**
-
-- It is recommended to subscribe to the `orders.$symbol.update` topic via WebSocket. This topic provides lower data latency and more accurate message ordering.
-- It is not recommended to subscribe to the `orders.$symbol` topic via WebSocket as it has been replaced by `orders.$symbol.update`. Please switch to the new topic as the old one will be discontinued.
-
 ### Account Management
 
 **Asset Changes**
 
-- Use WebSocket to subscribe to both the `orders.$symbol.update` and `accounts.update#${mode}` topics. The `orders.$symbol.update` topic is used to receive order status changes (creation, execution, cancellation) and related trade price and quantity information. Since this topic pushes data without clearing, it has faster timeliness. You can receive asset changes related to your account using the `accounts.update#${mode}` topic to maintain an updated view of your account funds.
-- It is not recommended to subscribe to the `accounts` topic via WebSocket as it has been replaced by `accounts.update#${mode}`. Please switch to the new topic as the old one will be discontinued.
+- Use WebSocket to subscribe to both the `orders#$symbol` and `accounts.update#${mode}` topics. The `orders#$symbol` topic is used to receive order status changes (creation, execution, cancellation) and related trade price and quantity information. Since this topic pushes data without clearing, it has faster timeliness. You can receive asset changes related to your account using the `accounts.update#${mode}` topic to maintain an updated view of your account funds.
 
 # common problem
 
@@ -613,17 +607,7 @@ Common return errors are as follows:
 - order-limitorder-amount-max-error : The limit order amount is higher than the limit price threshold
 - order-limitorder-amount-min-error : The limit order quantity is lower than the limit price threshold
 
-### Q4: What is the difference between the WebSocket order update push topic orders.\$symbol and orders.$symbol.update?
-
-A: The differences are as follows:
-
-1. The order.\$symbol theme is an old push theme, and the maintenance and use of the theme will stop after a period of time. It is recommended to use the order.$symbol.update theme.
-
-2. The new topic orders.$symbol.update has strict timing, which ensures that data is pushed strictly in the order of matching transactions, and has faster timeliness and lower delay.
-
-3. In order to reduce the amount of repeated data push and achieve faster speed, the original order quantity and price information are not carried in the push of orders.$symbol.update. If this information is needed, it is recommended to maintain the order information locally when placing an order, or After receiving the push message, use the Rest interface to query.
-
-### Q5: Why is the balance insufficient when placing an order again after receiving the message that the order has been successfully filled?
+### Q4: Why is the balance insufficient when placing an order again after receiving the message that the order has been successfully filled?
 
 A: In order to ensure the timely delivery of orders and low latency, the result of order push is pushed directly after matching. At this time, the order may not have completed the liquidation of assets.
 
@@ -635,7 +619,7 @@ It is recommended to use the following methods to ensure that funds can be place
 
 3. Keep a relatively sufficient fund balance in the account.
 
-### Q6: What is the difference between filled-fees and filled-points in the matching results?
+### Q5: What is the difference between filled-fees and filled-points in the matching results?
 
 A: There are two types of transaction fees in matchmaking transactions: ordinary fees and deductible fees, and the two types will not exist at the same time.
 
@@ -643,11 +627,11 @@ A: There are two types of transaction fees in matchmaking transactions: ordinary
 
 2. The deduction of handling fee means that when the transaction is completed, the deduction is turned on, and the deduction asset is used as the deduction of the handling fee. For example, when purchasing BTC under the BTCUSDT currency pair, when the deduction assets are sufficient, filled-fees is empty, and filled-points is not empty, indicating that the deduction assets are deducted as a handling fee. The deduction unit needs to refer to the fee-deduct-currency field
 
-### Q7: What is the difference between match-id and trade-id in the matching results?
+### Q6: What is the difference between match-id and trade-id in the matching results?
 
 A: match-id indicates the sequence number of the order in matching, and trade-id indicates the sequence number at the time of transaction. A match-id may have multiple trade-ids (at the time of transaction), or may not have trade-id (creating order, canceling Order)
 
-### Q8: Why does placing an order based on the price of buying one or selling one in the current market trigger an order limit error?
+### Q7: Why does placing an order based on the price of buying one or selling one in the current market trigger an order limit error?
 
 A: Currently, there is price limit protection based on the latest transaction price. For coins with poor liquidity, placing an order based on market data may trigger price limit protection. It is recommended to place an order based on the transaction price + handicap data information pushed by ws
 

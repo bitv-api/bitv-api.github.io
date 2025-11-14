@@ -450,16 +450,10 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 
 - 推薦使用`start-time`、`end-time`參數進行查詢，該參數傳入值為13位時間戳（精確至毫秒），使用該參數查詢時最大查詢窗口為48小時（2天），推薦按照小時進行查詢，您搜索的時間範圍越小，時間戳準確性越高，查詢的效率會更高，可以根據上次查詢的時間戳進行迭代查詢。
 
-**訂單狀態變化的通知**
-
-- 建議使用WebSocket訂閱`orders.$symbol.update`主題，該主題擁有更低的數據延遲以及更準確的消息順序。
-- 不建議使用WebSocket訂閱`orders.$symbol`主題，該主題已由`orders.$symbol.update`取代，會在後續停止服務，請盡早更換使用。
-
 ###賬戶類
 **資產變更**
 
-- 使用WebSocket的方式，同時訂閱`orders.$symbol.update`、`accounts.update#${mode}`主題，`orders.$symbol.update`用於接收訂單的狀態變化（創建、成交、撤銷以及相關成交價格、數量信息），由於該主題在推送數據時，未經過清算，所以時效性更快，可根據`accounts.update#${mode}`主題接收相關資產的變更信息，以此來維護賬戶內的資金情況。
-- 不建議WebSocket訂閱`accounts`主題，該主題已由`accounts.update#${mode}`取代，會在後續停止服務，請盡早更換使用。
+- 使用WebSocket的方式，同時訂閱`orders#$symbol`、`accounts.update#${mode}`主題，`orders#$symbol`用於接收訂單的狀態變化（創建、成交、撤銷以及相關成交價格、數量信息），由於該主題在推送數據時，未經過清算，所以時效性更快，可根據`accounts.update#${mode}`主題接收相關資產的變更信息，以此來維護賬戶內的資金情況。
 
 # 常見問題
 
@@ -624,17 +618,7 @@ A： 可使用 Rest API `GET /v1/common/symbols` 獲取相關幣對信息， 下
 - order-limitorder-amount-max-error : 限價單數量高於限價閾值  
 - order-limitorder-amount-min-error : 限價單數量低於限價閾值  
 
-### Q4：WebSocket 訂單更新推送主題orders.\$symbol 和 orders.$symbol.update的區別？
-
-A： 區別如下：
-
-1. order.\$symbol 主題作為老的推送主題，會在一段時間後停止主題的維護和使用， 推薦使用order.$symbol.update主題。
-
-2. 新主題orders.$symbol.update具有嚴格的時序性，保證數據嚴格按照撮合成交順序進行推送，且具有更快的時效性以及更低的時延。
-
-3. 為減少重複數據推送量以及更快的速度，在orders.$symbol.update推送中並未攜帶原始訂單數量，價格信息，若需要此信息，建議可在下單時在本地維護訂單信息，或在接收到推送消息後，使用Rest接口進行查詢。
-
-### Q5： 為什麼收到訂單成功成交的消息後再次進行下單，返回餘額不足？
+### Q4： 為什麼收到訂單成功成交的消息後再次進行下單，返回餘額不足？
 
 A：為保證訂單的及時送達以及低延時， 訂單推送的結果是在撮合後直接推送，此時訂單可能並未完成資產的清算。  
 
@@ -646,7 +630,7 @@ A：為保證訂單的及時送達以及低延時， 訂單推送的結果是在
 
 3. 賬戶中保留相對充足的資金餘額。
 
-### Q6: 撮合結果里的filled-fees和filled-points有什麼區別？
+### Q5: 撮合結果里的filled-fees和filled-points有什麼區別？
 
 A: 撮合成交中的成交手續費分為普通手續費以及抵扣手續費兩種類型，兩種類型不會同時存在。
 
@@ -654,11 +638,11 @@ A: 撮合成交中的成交手續費分為普通手續費以及抵扣手續費�
 
 2. 抵扣手續費表示，在成交時，開啓了抵扣，使用抵扣資產作為手續費的抵扣。例如BTCUSDT幣種對下購買BTC，抵扣資產充足時，filled-fees為空，filled-points不為空，表示扣除了抵扣資產作為手續費，扣除單位需參考fee-deduct-currency字段
 
-### Q7: 撮合結果中match-id和trade-id有什麼區別？
+### Q6: 撮合結果中match-id和trade-id有什麼區別？
 
 A: match-id表示訂單在撮合中的順序號，trade-id表示成交時的序號， 一個match-id可能有多個trade-id（成交時），也可能沒有trade-id(創建訂單、撤銷訂單)
 
-### Q8: 為什麼基於當前盤口買一或者賣一價格進行下單觸發了下單限價錯誤？
+### Q7: 為什麼基於當前盤口買一或者賣一價格進行下單觸發了下單限價錯誤？
 
 A: 當前有基於最新成交價上下一定幅度的限價保護，對流動性不好的幣，基於盤口數據下單可能會觸發限價保護。建議基於ws推送的成交價+盤口數據信息進行下單
 

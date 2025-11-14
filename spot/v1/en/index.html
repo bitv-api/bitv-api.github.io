@@ -1041,20 +1041,12 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
   <li>It is recommended to use the <code>start-time</code> and <code>end-time</code> parameters for querying historical orders. The parameter value should be a 13-digit timestamp (accurate to milliseconds). The maximum time window for querying is 48 hours (2 days). It is recommended to query hourly. The smaller the time range, the higher the timestamp accuracy, and the more efficient the query. You can iterate the query based on the timestamp of the last query.</li>
 </ul>
 
-<p><strong>Order Status Notifications</strong></p>
-
-<ul>
-  <li>It is recommended to subscribe to the <code>orders.$symbol.update</code> topic via WebSocket. This topic provides lower data latency and more accurate message ordering.</li>
-  <li>It is not recommended to subscribe to the <code>orders.$symbol</code> topic via WebSocket as it has been replaced by <code>orders.$symbol.update</code>. Please switch to the new topic as the old one will be discontinued.</li>
-</ul>
-
 <h3 id="account-management">Account Management</h3>
 
 <p><strong>Asset Changes</strong></p>
 
 <ul>
-  <li>Use WebSocket to subscribe to both the <code>orders.$symbol.update</code> and <code>accounts.update#${mode}</code> topics. The <code>orders.$symbol.update</code> topic is used to receive order status changes (creation, execution, cancellation) and related trade price and quantity information. Since this topic pushes data without clearing, it has faster timeliness. You can receive asset changes related to your account using the <code>accounts.update#${mode}</code> topic to maintain an updated view of your account funds.</li>
-  <li>It is not recommended to subscribe to the <code>accounts</code> topic via WebSocket as it has been replaced by <code>accounts.update#${mode}</code>. Please switch to the new topic as the old one will be discontinued.</li>
+  <li>Use WebSocket to subscribe to both the <code>orders#$symbol</code> and <code>accounts.update#${mode}</code> topics. The <code>orders#$symbol</code> topic is used to receive order status changes (creation, execution, cancellation) and related trade price and quantity information. Since this topic pushes data without clearing, it has faster timeliness. You can receive asset changes related to your account using the <code>accounts.update#${mode}</code> topic to maintain an updated view of your account funds.</li>
 </ul>
 
 <h1 id="common-problem">common problem</h1>
@@ -1259,23 +1251,7 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
   <li>order-limitorder-amount-min-error : The limit order quantity is lower than the limit price threshold</li>
 </ul>
 
-<h3 id="q4-what-is-the-difference-between-the-websocket-order-update-push-topic-orderssymbol-and-orderssymbolupdate">Q4: What is the difference between the WebSocket order update push topic orders.$symbol and orders.$symbol.update?</h3>
-
-<p>A: The differences are as follows:</p>
-
-<ol>
-  <li>
-    <p>The order.$symbol theme is an old push theme, and the maintenance and use of the theme will stop after a period of time. It is recommended to use the order.$symbol.update theme.</p>
-  </li>
-  <li>
-    <p>The new topic orders.$symbol.update has strict timing, which ensures that data is pushed strictly in the order of matching transactions, and has faster timeliness and lower delay.</p>
-  </li>
-  <li>
-    <p>In order to reduce the amount of repeated data push and achieve faster speed, the original order quantity and price information are not carried in the push of orders.$symbol.update. If this information is needed, it is recommended to maintain the order information locally when placing an order, or After receiving the push message, use the Rest interface to query.</p>
-  </li>
-</ol>
-
-<h3 id="q5-why-is-the-balance-insufficient-when-placing-an-order-again-after-receiving-the-message-that-the-order-has-been-successfully-filled">Q5: Why is the balance insufficient when placing an order again after receiving the message that the order has been successfully filled?</h3>
+<h3 id="q4-why-is-the-balance-insufficient-when-placing-an-order-again-after-receiving-the-message-that-the-order-has-been-successfully-filled">Q4: Why is the balance insufficient when placing an order again after receiving the message that the order has been successfully filled?</h3>
 
 <p>A: In order to ensure the timely delivery of orders and low latency, the result of order push is pushed directly after matching. At this time, the order may not have completed the liquidation of assets.</p>
 
@@ -1293,7 +1269,7 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
   </li>
 </ol>
 
-<h3 id="q6-what-is-the-difference-between-filled-fees-and-filled-points-in-the-matching-results">Q6: What is the difference between filled-fees and filled-points in the matching results?</h3>
+<h3 id="q5-what-is-the-difference-between-filled-fees-and-filled-points-in-the-matching-results">Q5: What is the difference between filled-fees and filled-points in the matching results?</h3>
 
 <p>A: There are two types of transaction fees in matchmaking transactions: ordinary fees and deductible fees, and the two types will not exist at the same time.</p>
 
@@ -1306,11 +1282,11 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
   </li>
 </ol>
 
-<h3 id="q7-what-is-the-difference-between-match-id-and-trade-id-in-the-matching-results">Q7: What is the difference between match-id and trade-id in the matching results?</h3>
+<h3 id="q6-what-is-the-difference-between-match-id-and-trade-id-in-the-matching-results">Q6: What is the difference between match-id and trade-id in the matching results?</h3>
 
 <p>A: match-id indicates the sequence number of the order in matching, and trade-id indicates the sequence number at the time of transaction. A match-id may have multiple trade-ids (at the time of transaction), or may not have trade-id (creating order, canceling Order)</p>
 
-<h3 id="q8-why-does-placing-an-order-based-on-the-price-of-buying-one-or-selling-one-in-the-current-market-trigger-an-order-limit-error">Q8: Why does placing an order based on the price of buying one or selling one in the current market trigger an order limit error?</h3>
+<h3 id="q7-why-does-placing-an-order-based-on-the-price-of-buying-one-or-selling-one-in-the-current-market-trigger-an-order-limit-error">Q7: Why does placing an order based on the price of buying one or selling one in the current market trigger an order limit error?</h3>
 
 <p>A: Currently, there is price limit protection based on the latest transaction price. For coins with poor liquidity, placing an order based on market data may trigger price limit protection. It is recommended to place an order based on the transaction price + handicap data information pushed by ws</p>
 

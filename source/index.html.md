@@ -42,13 +42,12 @@ API 使用中如有疑問或咨詢事項，請參考`咨詢事項 Q&A`進行咨�
 
 您可以點擊<a href='https://www.bitv.com/api/'>這裡 </a> 創建 API Key。
 
-每個母用戶可創建20組Api Key，每個Api Key可對應設置讀取、交易、提幣三種權限。  
+每個母用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限。  
 
 權限說明如下：
 
 - 讀取權限：讀取權限用於對數據的查詢接口，例如：訂單查詢、成交查詢等。
 - 交易權限：交易權限用於下單、撤單、划轉類接口。
-- 提幣權限：提幣權限用於創建提幣訂單、取消提幣訂單操作。
 
 創建成功後請務必記住以下信息：
 
@@ -60,20 +59,20 @@ API 使用中如有疑問或咨詢事項，請參考`咨詢事項 Q&A`進行咨�
 每個 API Key 最多可綁定 10個IP 地址(主機地址或網絡地址)。出於安全考慮，強烈建議您綁定 IP 地址。
 </aside>
 <aside class="warning">
-<red><b>風險提示</b></red>：這兩個密鑰與賬號安全緊密相關，無論何時都請勿將二者<b>同時</b>向其它人透露。API Key的洩露可能會造成您的資產損失（即使未開通提幣權限），若發現API Key洩露請盡快刪除該API Key。
+<red><b>風險提示</b></red>：這兩個密鑰與賬號安全緊密相關，無論何時都請勿將二者<b>同時</b>向其它人透露。API Key的洩露可能會造成您的資產損失，若發現API Key洩露請盡快刪除該API Key。
 </aside> 
 
 
 
 ## 接口類型
 
-我們為用戶提供兩種接口，您可根據自己的使用場景和偏好來選擇適合的方式進行查詢行情、交易或提幣。  
+我們為用戶提供兩種接口，您可根據自己的使用場景和偏好來選擇適合的方式進行查詢行情或交易。  
 
 ### REST API
 
 REST，即Representational State Transfer的縮寫，是目前較為流行的基於HTTP的一種通信機制，每一個URL代表一種資源。
 
-交易或資產提幣等一次性操作，建議開發者使用REST API進行操作。
+交易等一次性操作，建議開發者使用REST API進行操作。
 
 ### WebSocket API
 
@@ -465,14 +464,12 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 
 ### Q1：一個用戶可以申請多少個Api Key？
 
-A:  每個母用戶可創建5組Api Key，每個Api Key可對應設置讀取、交易、提幣三種權限。 
-每個母用戶還可創建200個子用戶，每個子用戶可創建5組Api Key，每個Api Key可對應設置讀取、交易兩種權限。   
+A:  每個母用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限。 每個母用戶還可創建200個子用戶，每個子用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限   
 
-以下是三種權限的說明：  
+以下是兩種權限的說明：  
 
 - 讀取權限：讀取權限用於對數據的查詢接口，例如：訂單查詢、成交查詢等。  
-- 交易權限：交易權限用於下單、撤單、划轉類接口。  
-- 提幣權限：提幣權限用於創建提幣訂單、取消提幣訂單操作。  
+- 交易權限：交易權限用於下單、撤單、划轉類接口。 
 
 ### Q2：為什麼經常出現斷線、超時的情況？
 
@@ -646,43 +643,65 @@ A: match-id表示訂單在撮合中的順序號，trade-id表示成交時的序�
 
 A: 當前有基於最新成交價上下一定幅度的限價保護，對流動性不好的幣，基於盤口數據下單可能會觸發限價保護。建議基於ws推送的成交價+盤口數據信息進行下單
 
-## 賬戶充提相關
+[//]: # ()
+[//]: # (## 賬戶充提相關)
 
-### Q1：為什麼創建提幣時返回api-not-support-temp-addr錯誤？
+[//]: # ()
+[//]: # (### Q1：為什麼創建提幣時返回api-not-support-temp-addr錯誤？)
 
-A：因安全考慮，API創建提幣時僅支持已在提幣地址列表中的地址，暫不支持使用API添加地址至提幣地址列表中，需在網頁端或APP端添加地址後才可在API中進行提幣操作。
+[//]: # ()
+[//]: # (A：因安全考慮，API創建提幣時僅支持已在提幣地址列表中的地址，暫不支持使用API添加地址至提幣地址列表中，需在網頁端或APP端添加地址後才可在API中進行提幣操作。)
 
-### Q2：為什麼USDT提幣時返回Invaild-Address錯誤？
+[//]: # ()
+[//]: # (### Q2：為什麼USDT提幣時返回Invaild-Address錯誤？)
 
-A：USDT幣種為典型的一幣多鏈幣種， 創建提幣訂單時應填寫chain參數對應地址類型。以下表格展示了鏈和chain參數的對應關係：
+[//]: # ()
+[//]: # (A：USDT幣種為典型的一幣多鏈幣種， 創建提幣訂單時應填寫chain參數對應地址類型。以下表格展示了鏈和chain參數的對應關係：)
 
-| 鏈             | chain 參數 |
-| -------------- | ---------- |
-| ERC20 （默認） | usdterc20  |
-| OMNI           | usdt       |
-| TRX            | trc20usdt  |
+[//]: # ()
+[//]: # (| 鏈             | chain 參數 |)
 
-如果chain參數為空，則默認的鏈為ERC20，或者也可以顯示將參數賦值為`usdterc20`。
+[//]: # (| -------------- | ---------- |)
 
-如果要提幣到OMNI或者TRX，則chain參數應該填寫usdt或者trc20usdt。chain參數可使用值請參考 `GET /v2/reference/currencies` 接口。
+[//]: # (| ERC20 （默認） | usdterc20  |)
 
+[//]: # (| OMNI           | usdt       |)
 
-### Q3：創建提幣時fee字段應該怎麼填？
+[//]: # (| TRX            | trc20usdt  |)
 
-A：請參考 GET /v2/reference/currencies接口返回值，返回信息中withdrawFeeType為提幣手續費類型，根據類型選擇對應字段設置提幣手續費。 
+[//]: # ()
+[//]: # (如果chain參數為空，則默認的鏈為ERC20，或者也可以顯示將參數賦值為`usdterc20`。)
 
-提幣手續費類型包含：  
+[//]: # ()
+[//]: # (如果要提幣到OMNI或者TRX，則chain參數應該填寫usdt或者trc20usdt。chain參數可使用值請參考 `GET /v2/reference/currencies` 接口。)
 
-- transactFeeWithdraw : 單次提幣手續費（僅對固定類型有效，withdrawFeeType=fixed）  
-- minTransactFeeWithdraw : 最小單次提幣手續費（僅對區間類型有效，withdrawFeeType=circulated or ratio） 
-- maxTransactFeeWithdraw : 最大單次提幣手續費（僅對區間類型和有上限的比例類型有效，withdrawFeeType=circulated or ratio
-- transactFeeRateWithdraw :  單次提幣手續費率（僅對比例類型有效，withdrawFeeType=ratio）
+[//]: # ()
+[//]: # ()
+[//]: # (### Q3：創建提幣時fee字段應該怎麼填？)
 
-### Q4：如何查看我的提幣額度？
+[//]: # ()
+[//]: # (A：請參考 GET /v2/reference/currencies接口返回值，返回信息中withdrawFeeType為提幣手續費類型，根據類型選擇對應字段設置提幣手續費。 )
 
-A：請參考/v2/account/withdraw/quota接口返回值，返回信息中包含您查詢幣種的單次、當日、當前、總提幣額度以及剩餘額度的信息。 
+[//]: # ()
+[//]: # (提幣手續費類型包含：  )
 
-備注：若您有大額提幣需求，且提幣數額超出相關限額，可聯繫官方客服進行溝通。  
+[//]: # ()
+[//]: # (- transactFeeWithdraw : 單次提幣手續費（僅對固定類型有效，withdrawFeeType=fixed）  )
+
+[//]: # (- minTransactFeeWithdraw : 最小單次提幣手續費（僅對區間類型有效，withdrawFeeType=circulated or ratio） )
+
+[//]: # (- maxTransactFeeWithdraw : 最大單次提幣手續費（僅對區間類型和有上限的比例類型有效，withdrawFeeType=circulated or ratio)
+
+[//]: # (- transactFeeRateWithdraw :  單次提幣手續費率（僅對比例類型有效，withdrawFeeType=ratio）)
+
+[//]: # ()
+[//]: # (### Q4：如何查看我的提幣額度？)
+
+[//]: # ()
+[//]: # (A：請參考/v2/account/withdraw/quota接口返回值，返回信息中包含您查詢幣種的單次、當日、當前、總提幣額度以及剩餘額度的信息。 )
+
+[//]: # ()
+[//]: # (備注：若您有大額提幣需求，且提幣數額超出相關限額，可聯繫官方客服進行溝通。  )
 
 # 基礎信息
 
@@ -1527,7 +1546,7 @@ API Key 權限：讀取<br>
 | -------------- | -------- | -------- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | account-id     | true     | string   | 賬戶編號,取值參考 `GET /v1/account/accounts`                 |                      |                                                              |
 | currency       | false    | string   | 幣種,即btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |                      |                                                              |
-| transact-types | false    | string   | 變動類型，可多選，以逗號分隔                                 | all                  | trade (交易), transact-fee（交易手續費）, fee-deduction（手續費抵扣）, transfer（划轉）, deposit（充幣），withdraw（提幣）, withdraw-fee（提幣手續費）, other-types（其他）,rebate（交易返傭） |
+| transact-types | false    | string   | 變動類型，可多選，以逗號分隔                                 | all                  | trade (交易), transact-fee（交易手續費）, fee-deduction（手續費抵扣）, transfer（划轉）, deposit（充幣），withdraw（提幣）, withdraw-fee（提幣手續費）, other-types（其他）|
 | start-time     | false    | long     | 遠點時間 unix time in millisecond. 以transact-time為key進行檢索. 查詢窗口最大為1小時. 窗口平移範圍為最近30天. | ((end-time) – 1hour) | [((end-time) – 1hour), (end-time)]                           |
 | end-time       | false    | long     | 近點時間unix time in millisecond. 以transact-time為key進行檢索. 查詢窗口最大為1小時. 窗口平移範圍為最近30天. | current-time         | [(current-time) – 29days,(current-time)]                     |
 | sort           | false    | string   | 檢索方向                                                     | asc                  | asc or desc                                                  |
@@ -1580,399 +1599,699 @@ API Key 權限：讀取<br>
 | record-id }   | long     | 數據庫記錄編號（全局唯一）                           |          |
 | next-id       | long     | 下頁起始編號（僅在查詢結果需要分頁返回時包含此字段） |          |
 
-# 錢包（充提相關）
+[//]: # ()
+[//]: # (# 錢包（充提相關）)
 
-## 簡介
+[//]: # ()
+[//]: # (## 簡介)
 
-充提相關接口提供了充幣地址、提幣地址、提幣額度、充提記錄等查詢，以及提幣、取消提幣等功能。
+[//]: # ()
+[//]: # (充提相關接口提供了充幣地址、提幣地址、提幣額度、充提記錄等查詢，以及提幣、取消提幣等功能。)
 
-<aside class="notice">訪問充提相關的接口需要進行簽名認證。</aside>
+[//]: # ()
+[//]: # (<aside class="notice">訪問充提相關的接口需要進行簽名認證。</aside>)
 
-以下是充提相關接口返回的返回碼、返回消息以及說明。
+[//]: # ()
+[//]: # (以下是充提相關接口返回的返回碼、返回消息以及說明。)
 
-| 返回碼 | 返回消息                             | 說明         |
-| ------ | ------------------------------------ | ------------ |
-| 200    | success                              | 請求成功     |
-| 500    | error                                | 系統錯誤     |
-| 1002   | unauthorized                         | 未授權       |
-| 1003   | invalid signature                    | 驗簽失敗     |
-| 2002   | invalid field value in "field name"  | 非法字段取值 |
-| 2003   | missing mandatory field "field name" | 強制字段缺失 |
+[//]: # ()
+[//]: # (| 返回碼 | 返回消息                             | 說明         |)
 
-## 充幣地址查詢
+[//]: # (| ------ | ------------------------------------ | ------------ |)
 
-此節點用於查詢特定幣種（IOTA除外）在其所在區塊鏈中的充幣地址，母子用戶均可用
+[//]: # (| 200    | success                              | 請求成功     |)
 
-API Key 權限：讀取<br>
-限頻值（NEW）：20次/2s
+[//]: # (| 500    | error                                | 系統錯誤     |)
 
-<aside class="notice"> 充幣地址查詢暫不支持IOTA幣 </aside>
+[//]: # (| 1002   | unauthorized                         | 未授權       |)
 
-```shell
-curl "https://api.bitv.com/v2/account/deposit/address?currency=btc"
-```
+[//]: # (| 1003   | invalid signature                    | 驗簽失敗     |)
 
-### HTTP 請求
-
-- GET `/v2/account/deposit/address`
-
-### 請求參數
-
-| 字段名稱 | 是否必需 | 類型   | 字段描述 | 取值範圍                                                     |
-| -------- | -------- | ------ | -------- | ------------------------------------------------------------ |
-| currency | true     | string | 幣種     | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-
-> Response:
-
-```json
-{
-    "code": 200,
-    "data": [
-        {
-            "currency": "btc",
-            "address": "1PSRjPg53cX7hMRYAXGJnL8mqHtzmQgPUs",
-            "addressTag": "",
-            "chain": "btc"
-        }
-    ]
-}
-```
+[//]: # (| 2002   | invalid field value in "field name"  | 非法字段取值 |)
 
-### 響應數據
+[//]: # (| 2003   | missing mandatory field "field name" | 強制字段缺失 |)
 
+[//]: # ()
+[//]: # (## 充幣地址查詢)
 
-| 字段名稱   | 是否必需 | 數據類型 | 字段描述         | 取值範圍 |
-| ---------- | -------- | -------- | ---------------- | -------- |
-| code       | true     | int      | 狀態碼           |          |
-| message    | false    | string   | 錯誤描述（如有） |          |
-| data       | true     | object   |                  |          |
-| {currency  | true     | string   | 幣種             |          |
-| address    | true     | string   | 充幣地址         |          |
-| addressTag | true     | string   | 充幣地址標籤     |          |
-| chain }    | true     | string   | 鏈名稱           |          |
+[//]: # ()
+[//]: # (此節點用於查詢特定幣種（IOTA除外）在其所在區塊鏈中的充幣地址，母子用戶均可用)
 
-### 狀態碼
+[//]: # ()
+[//]: # (API Key 權限：讀取<br>)
 
-| 狀態碼 | 錯誤信息                             | 錯誤場景描述 |
-| ------ | ------------------------------------ | ------------ |
-| 200    | success                              | 請求成功     |
-| 500    | error                                | 系統錯誤     |
-| 1002   | unauthorized                         | 未授權       |
-| 1003   | invalid signature                    | 驗簽失敗     |
-| 2002   | invalid field value in "field name"  | 非法字段取值 |
-| 2003   | missing mandatory field "field name" | 強制字段缺失 |
-
-## 提幣額度查詢
-
-此節點用於查詢各幣種提幣額度，限母用戶可用
-
-API Key 權限：讀取<br>
-限頻值（NEW）：20次/2s
-
-```shell
-curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
-```
-
-### HTTP 請求
-
-- GET `/v2/account/withdraw/quota`
-
-### 請求參數
-
-| 字段名稱 | 是否必需 | 類型   | 字段描述 | 取值範圍                                                     |
-| -------- | -------- | ------ | -------- | ------------------------------------------------------------ |
-| currency | true     | string | 幣種     | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-
-> Response:
-
-```json
-{
-    "code": 200,
-    "data": 
-        {
-            "currency": "btc",
-            "chains": [
-                {
-                    "chain": "btc",
-                    "maxWithdrawAmt": "200.00000000",
-                    "withdrawQuotaPerDay": "200.00000000",
-                    "remainWithdrawQuotaPerDay": "200.000000000000000000"
-                }
-        }
-    ]
-}
-```
-
-### 響應數據
-
-| 字段名稱                   | 是否必需 | 數據類型 | 字段描述         | 取值範圍 |
-| -------------------------- | -------- | -------- | ---------------- | -------- |
-| code                       | true     | int      | 狀態碼           |          |
-| message                    | false    | string   | 錯誤描述（如有） |          |
-| data                       | true     | object   |                  |          |
-| currency                   | true     | string   | 幣種             |          |
-| chains                     | true     | object   |                  |          |
-| { chain                    | true     | string   | 鏈名稱           |          |
-| maxWithdrawAmt             | true     | string   | 單次最大提幣金額 |          |
-| withdrawQuotaPerDay        | true     | string   | 當日提幣額度     |          |
-| remainWithdrawQuotaPerDay} | true     | string   | 當日提幣剩餘額度 |          |
-
-### 狀態碼
-
-| 狀態碼 | 錯誤信息                            | 錯誤場景描述 |
-| ------ | ----------------------------------- | ------------ |
-| 200    | success                             | 請求成功     |
-| 500    | error                               | 系統錯誤     |
-| 1002   | unauthorized                        | 未授權       |
-| 1003   | invalid signature                   | 驗簽失敗     |
-| 2002   | invalid field value in "field name" | 非法字段取值 |
-
-## 提幣地址查詢
-
-API Key 權限：讀取<br>
-
-該節點用於查詢API key可用的提幣地址，限母用戶可用。<br>
-
-### HTTP 請求
-
-- GET `/v2/account/withdraw/address`
-
-### 請求參數
-
-| 參數名稱 | 是否必須 | 類型   | 描述                                                   | 默認值                         | 取值範圍                                                     |
-| -------- | -------- | ------ | ------------------------------------------------------ | ------------------------------ | ------------------------------------------------------------ |
-| currency | true     | string | 幣種                                                   |                                | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-| chain    | false    | string | 鏈名稱                                                 | 如不填，返回所有鏈的提幣地址   |                                                              |
-| note     | false    | string | 地址備注                                               | 如不填，返回所有備注的提幣地址 |                                                              |
-| limit    | false    | int    | 單頁最大返回條目數量                                   | 100                            | [1,500]                                                      |
-| fromId   | false    | long   | 起始編號（提幣地址ID，僅在下頁查詢時有效，詳細見備注） | NA                             |                                                              |
-
-> Response:
-
-```json
-{
-    "code": 200,
-    "data": [
-        {
-            "currency": "usdt",
-            "chain": "usdt",
-            "note": "幣安",
-            "addressTag": "",
-            "address": "15PrEcqTJRn4haLeby3gJJebtyf4KgWmSd"
-        }
-    ]
-}
-```
-
-### 響應數據
-
-| 參數名稱   | 是否必須 | 數據類型 | 描述                                                         | 取值範圍 |
-| ---------- | -------- | -------- | ------------------------------------------------------------ | -------- |
-| code       | true     | int      | 狀態碼                                                       |          |
-| message    | false    | string   | 錯誤描述（如有）                                             |          |
-| data       | true     | object   |                                                              |          |
-| { currency | true     | string   | 幣種                                                         |          |
-| chain      | true     | string   | 鏈名稱                                                       |          |
-| note       | true     | string   | 地址備注                                                     |          |
-| addressTag | false    | string   | 地址標籤，如有                                               |          |
-| address }  | true     | string   | 地址                                                         |          |
-| nextId     | false    | long     | 下頁起始編號（提幣地址ID，僅在查詢結果需要分頁返回時，包含此字段，詳細見備注） |          |
+[//]: # (限頻值（NEW）：20次/2s)
 
-備注：<br>
-僅當用戶請求查詢的數據條目超出單頁限制（由「limit「字段設定）時，服務器才返回」nextId「字段。用戶收到服務器返回的」nextId「後 –<br>
-1）須知曉後續仍有數據未能在本頁返回；<br>
-2）如需繼續查詢下頁數據，應再次請求查詢並將服務器返回的「nextId」作為「fromId「，其它請求參數不變。<br>
-3）作為數據庫記錄ID，「nextId」和「fromId」除了用來翻頁查詢外，無其它業務含義。<br>
+[//]: # ()
+[//]: # (<aside class="notice"> 充幣地址查詢暫不支持IOTA幣 </aside>)
 
+[//]: # ()
+[//]: # (```shell)
 
-## 虛擬幣提幣
+[//]: # (curl "https://api.bitv.com/v2/account/deposit/address?currency=btc")
 
-此節點用於將現貨賬戶的數字幣提取到區塊鏈地址（已存在於提幣地址列表）而不需要多重（短信、郵件）驗證，限母用戶可用
+[//]: # (```)
 
-API Key 權限：提幣<br>
-限頻值（NEW）：20次/2s
+[//]: # ()
+[//]: # (### HTTP 請求)
 
-<aside class="notice">如果用戶在個人設置 </a> 里設置了優先使用快速提幣，通過API發起的提幣也會優先選擇快速提幣通道。快速提幣是指當提幣目標地址是平台內部用戶地址時，提幣將通過平台內部快速通道，不通過區塊鏈。</aside>
-<aside class="notice">API提幣僅支持用戶提幣地址列表</a> 中的地址。IOTA一次性提幣地址無法被設置為常用地址，因此不支持通過API方式提幣IOTA。 </aside>
+[//]: # ()
+[//]: # (- GET `/v2/account/deposit/address`)
 
-### HTTP 請求
+[//]: # ()
+[//]: # (### 請求參數)
 
-- POST `/v1/dw/withdraw/api/create`
+[//]: # ()
+[//]: # (| 字段名稱 | 是否必需 | 類型   | 字段描述 | 取值範圍                                                     |)
 
-> Request:
+[//]: # (| -------- | -------- | ------ | -------- | ------------------------------------------------------------ |)
 
-```json
-{
-  "address": "0xde709f2102306220921060314715629080e2fb77",
-  "amount": "0.05",
-  "currency": "eth",
-  "fee": "0.01"
-}
-```
-
-### 請求參數
-
-| 參數名稱 | 是否必須 | 類型   | 描述                                                         | 取值範圍                                                     |
-| -------- | -------- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| address  | true     | string | 提幣地址                                                     | 僅支持在官網上相應幣種地址列表中的地址                       |
-| amount   | true     | string | 提幣數量                                                     |                                                              |
-| currency | true     | string | 資產類型                                                     | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-| fee      | false    | string | 轉賬手續費                                                   |                                                              |
-| chain    | false    | string | 取值參考`GET /v2/reference/currencies`,例如提USDT至OMNI時須設置此參數為"usdt"，提USDT至TRX時須設置此參數為"trc20usdt"，其他幣種提幣無須設置此參數 |                                                              |
-| addr-tag | false    | string | 虛擬幣共享地址tag，適用於xrp，xem，bts，steem，eos，xmr      | 格式, "123"類的整數字符串                                    |
-
-> Response:
-
-```json
-{
-    "status": "ok",
-    "data": 91934214
-}
-```
-
-### 響應數據
-
-
-| 參數名稱 | 是否必須 | 數據類型 | 描述    | 取值範圍 |
-| -------- | -------- | -------- | ------- | -------- |
-| data     | false    | long     | 提幣 ID |          |
-
-
-## 取消提幣
-
-此節點用於取消已提交的提幣請求，限母用戶可用
-
-API Key 權限：提幣<br>
-限頻值（NEW）：20次/2s
-
-### HTTP 請求
-
-- POST `/v1/dw/withdraw-virtual/{withdraw-id}/cancel`
-
-### 請求參數
-
-| 參數名稱    | 是否必須 | 類型 | 描述                  | 默認值 | 取值範圍 |
-| ----------- | -------- | ---- | --------------------- | ------ | -------- |
-| withdraw-id | true     | long | 提幣 ID，填在 path 中 |        |          |
-
-
-> Response:
-
-```json
-{
-    "status": "ok",
-    "data": "91934217"
-}
-```
-
-### 響應數據
-
-
-| 參數名稱 | 是否必須 | 數據類型 | 描述    | 取值範圍 |
-| -------- | -------- | -------- | ------- | -------- |
-| data     | false    | long     | 提幣 ID |          |
-
-## 充提記錄
-
-此節點用於查詢充提記錄，母子用戶均可用
-
-API Key 權限：讀取<br>
-限頻值（NEW）：20次/2s
-
-### HTTP 請求
-
-- GET `/v1/query/deposit-withdraw`
-
-### 請求參數
-
-| 參數名稱 | 是否必須 | 類型   | 描述             | 默認值                                                       | 取值範圍                                                     |
-| -------- | -------- | ------ | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| currency | false    | string | 幣種             |                                                              | btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |
-| type     | true     | string | 充值或提幣       |                                                              | deposit 或 withdraw,子用戶僅可用deposit                      |
-| from     | false    | string | 查詢起始 ID      | 缺省時，默認值direct相關。當direct為‘prev’時，from 為1 ，從舊到新升序返回；當direct為’next‘時，from為最新的一條記錄的ID，從新到舊降序返回 |                                                              |
-| size     | false    | string | 查詢記錄大小     | 100                                                          | 1-500                                                        |
-| direct   | false    | string | 返回記錄排序方向 | 缺省時，默認為「prev」 （升序）                                | 「prev」 （升序）or 「next」 （降序）                            |
-
-> Response:
-
-```json
-{
-  "status": "ok",
-  "data":
-    [
-      {
-        "id": 1171,
-        "type": "deposit",
-        "sub-type": "NORMAL",
-        "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",
-        "currency": "xrp",
-        "chain": "usdc",
-        "tx-hash": "ed03094b84eafbe4bc16e7ef766ee959885ee5bcb265872baaa9c64e1cf86c2b",
-        "amount": 7.457467,
-        "address": "rae93V8d2mdoUQHwBDBdM4NHCMehRJAsbm",
-        "address-tag": "100040",
-        "fee": 0,
-        "state": "safe",
-        "wallet-confirm": 12,
-        "created-at": 1510912472199,
-        "updated-at": 1511145876575
-      },
-      ...
-    ]
-}
-```
-
-### 響應數據
-
-| 參數名稱    | 是否必須 | 數據類型 | 描述                                                         | 取值範圍                                 |
-| ----------- | -------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |
-| id          | true     | long     | 充幣訂單id/提幣訂單id                                          |                                          |
-| type        | true     | string   | 類型                                                         | 'deposit', 'withdraw', 子用戶僅有deposit |
-| sub-type    | false    | string   | 子類型，保留字段                                               | 'deposit', 'withdraw', 子用戶僅有deposit |
-| currency    | true     | string   | 幣種                                                         |                                          |
-| tx-hash     | true     | string   | 交易哈希                                                     |                                          |
-| chain       | true     | string   | 鏈名稱                                                       |                                          |
-| amount      | true     | float    | 個數                                                         |                                          |
-| address     | true     | string   | 目的地址                                                     |                                          |
-| address-tag | true     | string   | 地址標籤                                                     |                                          |
-| request-id  | false    | string   | 保留字段                                                     |                                          |
-| fee         | true     | float    | 手續費                                                       |                                          |
-| state       | true     | string   | 狀態                                                         | 狀態參見下表                             |
-| wallet-confirm | false     | long   | 錢包確認次數                                              |                                        |
-| error-code  | false    | string   | 提幣失敗錯誤碼，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |
-| error-msg   | false    | string   | 提幣失敗錯誤描述，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |
-| created-at  | true     | long     | 發起時間                                                     |                                          |
-| updated-at  | true     | long     | 最後更新時間                                                 |                                          |
-
-
-- 虛擬幣充值狀態定義：
-
-| 狀態       | 描述     |
-| ---------- | -------- |
-| unknown    | 狀態未知 |
-| confirming | 確認中   |
-| confirmed  | 已確認   |
-| safe       | 已完成   |
-| orphan     | 待確認   |
-
-- 虛擬幣提幣狀態定義：
-
-| 狀態            | 描述         |
-| --------------- | ------------ |
-| verifying       | 待驗證       |
-| failed          | 驗證失敗     |
-| submitted       | 已提交       |
-| reexamine       | 審核中       |
-| canceled        | 已撤銷       |
-| pass            | 審批通過     |
-| reject          | 審批拒絕     |
-| pre-transfer    | 處理中       |
-| wallet-transfer | 已匯出       |
-| wallet-reject   | 錢包拒絕     |
-| confirmed       | 區塊已確認   |
-| confirm-error   | 區塊確認錯誤 |
-| repealed        | 已撤銷       |
+[//]: # (| currency | true     | string | 幣種     | btc, ltc, bch, eth, etc ...&#40;取值參考`GET /v1/common/currencys`&#41; |)
 
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "code": 200,)
+
+[//]: # (    "data": [)
+
+[//]: # (        {)
+
+[//]: # (            "currency": "btc",)
+
+[//]: # (            "address": "1PSRjPg53cX7hMRYAXGJnL8mqHtzmQgPUs",)
+
+[//]: # (            "addressTag": "",)
+
+[//]: # (            "chain": "btc")
+
+[//]: # (        })
+
+[//]: # (    ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 響應數據)
+
+[//]: # ()
+[//]: # ()
+[//]: # (| 字段名稱   | 是否必需 | 數據類型 | 字段描述         | 取值範圍 |)
+
+[//]: # (| ---------- | -------- | -------- | ---------------- | -------- |)
+
+[//]: # (| code       | true     | int      | 狀態碼           |          |)
+
+[//]: # (| message    | false    | string   | 錯誤描述（如有） |          |)
+
+[//]: # (| data       | true     | object   |                  |          |)
+
+[//]: # (| {currency  | true     | string   | 幣種             |          |)
+
+[//]: # (| address    | true     | string   | 充幣地址         |          |)
+
+[//]: # (| addressTag | true     | string   | 充幣地址標籤     |          |)
+
+[//]: # (| chain }    | true     | string   | 鏈名稱           |          |)
+
+[//]: # ()
+[//]: # (### 狀態碼)
+
+[//]: # ()
+[//]: # (| 狀態碼 | 錯誤信息                             | 錯誤場景描述 |)
+
+[//]: # (| ------ | ------------------------------------ | ------------ |)
+
+[//]: # (| 200    | success                              | 請求成功     |)
+
+[//]: # (| 500    | error                                | 系統錯誤     |)
+
+[//]: # (| 1002   | unauthorized                         | 未授權       |)
+
+[//]: # (| 1003   | invalid signature                    | 驗簽失敗     |)
+
+[//]: # (| 2002   | invalid field value in "field name"  | 非法字段取值 |)
+
+[//]: # (| 2003   | missing mandatory field "field name" | 強制字段缺失 |)
+
+[//]: # ()
+[//]: # (## 提幣額度查詢)
+
+[//]: # ()
+[//]: # (此節點用於查詢各幣種提幣額度，限母用戶可用)
+
+[//]: # ()
+[//]: # (API Key 權限：讀取<br>)
+
+[//]: # (限頻值（NEW）：20次/2s)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc")
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### HTTP 請求)
+
+[//]: # ()
+[//]: # (- GET `/v2/account/withdraw/quota`)
+
+[//]: # ()
+[//]: # (### 請求參數)
+
+[//]: # ()
+[//]: # (| 字段名稱 | 是否必需 | 類型   | 字段描述 | 取值範圍                                                     |)
+
+[//]: # (| -------- | -------- | ------ | -------- | ------------------------------------------------------------ |)
+
+[//]: # (| currency | true     | string | 幣種     | btc, ltc, bch, eth, etc ...&#40;取值參考`GET /v1/common/currencys`&#41; |)
+
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "code": 200,)
+
+[//]: # (    "data": )
+
+[//]: # (        {)
+
+[//]: # (            "currency": "btc",)
+
+[//]: # (            "chains": [)
+
+[//]: # (                {)
+
+[//]: # (                    "chain": "btc",)
+
+[//]: # (                    "maxWithdrawAmt": "200.00000000",)
+
+[//]: # (                    "withdrawQuotaPerDay": "200.00000000",)
+
+[//]: # (                    "remainWithdrawQuotaPerDay": "200.000000000000000000")
+
+[//]: # (                })
+
+[//]: # (        })
+
+[//]: # (    ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 響應數據)
+
+[//]: # ()
+[//]: # (| 字段名稱                   | 是否必需 | 數據類型 | 字段描述         | 取值範圍 |)
+
+[//]: # (| -------------------------- | -------- | -------- | ---------------- | -------- |)
+
+[//]: # (| code                       | true     | int      | 狀態碼           |          |)
+
+[//]: # (| message                    | false    | string   | 錯誤描述（如有） |          |)
+
+[//]: # (| data                       | true     | object   |                  |          |)
+
+[//]: # (| currency                   | true     | string   | 幣種             |          |)
+
+[//]: # (| chains                     | true     | object   |                  |          |)
+
+[//]: # (| { chain                    | true     | string   | 鏈名稱           |          |)
+
+[//]: # (| maxWithdrawAmt             | true     | string   | 單次最大提幣金額 |          |)
+
+[//]: # (| withdrawQuotaPerDay        | true     | string   | 當日提幣額度     |          |)
+
+[//]: # (| remainWithdrawQuotaPerDay} | true     | string   | 當日提幣剩餘額度 |          |)
+
+[//]: # ()
+[//]: # (### 狀態碼)
+
+[//]: # ()
+[//]: # (| 狀態碼 | 錯誤信息                            | 錯誤場景描述 |)
+
+[//]: # (| ------ | ----------------------------------- | ------------ |)
+
+[//]: # (| 200    | success                             | 請求成功     |)
+
+[//]: # (| 500    | error                               | 系統錯誤     |)
+
+[//]: # (| 1002   | unauthorized                        | 未授權       |)
+
+[//]: # (| 1003   | invalid signature                   | 驗簽失敗     |)
+
+[//]: # (| 2002   | invalid field value in "field name" | 非法字段取值 |)
+
+[//]: # ()
+[//]: # (## 提幣地址查詢)
+
+[//]: # ()
+[//]: # (API Key 權限：讀取<br>)
+
+[//]: # ()
+[//]: # (該節點用於查詢API key可用的提幣地址，限母用戶可用。<br>)
+
+[//]: # ()
+[//]: # (### HTTP 請求)
+
+[//]: # ()
+[//]: # (- GET `/v2/account/withdraw/address`)
+
+[//]: # ()
+[//]: # (### 請求參數)
+
+[//]: # ()
+[//]: # (| 參數名稱 | 是否必須 | 類型   | 描述                                                   | 默認值                         | 取值範圍                                                     |)
+
+[//]: # (| -------- | -------- | ------ | ------------------------------------------------------ | ------------------------------ | ------------------------------------------------------------ |)
+
+[//]: # (| currency | true     | string | 幣種                                                   |                                | btc, ltc, bch, eth, etc ...&#40;取值參考`GET /v1/common/currencys`&#41; |)
+
+[//]: # (| chain    | false    | string | 鏈名稱                                                 | 如不填，返回所有鏈的提幣地址   |                                                              |)
+
+[//]: # (| note     | false    | string | 地址備注                                               | 如不填，返回所有備注的提幣地址 |                                                              |)
+
+[//]: # (| limit    | false    | int    | 單頁最大返回條目數量                                   | 100                            | [1,500]                                                      |)
+
+[//]: # (| fromId   | false    | long   | 起始編號（提幣地址ID，僅在下頁查詢時有效，詳細見備注） | NA                             |                                                              |)
+
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "code": 200,)
+
+[//]: # (    "data": [)
+
+[//]: # (        {)
+
+[//]: # (            "currency": "usdt",)
+
+[//]: # (            "chain": "usdt",)
+
+[//]: # (            "note": "幣安",)
+
+[//]: # (            "addressTag": "",)
+
+[//]: # (            "address": "15PrEcqTJRn4haLeby3gJJebtyf4KgWmSd")
+
+[//]: # (        })
+
+[//]: # (    ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 響應數據)
+
+[//]: # ()
+[//]: # (| 參數名稱   | 是否必須 | 數據類型 | 描述                                                         | 取值範圍 |)
+
+[//]: # (| ---------- | -------- | -------- | ------------------------------------------------------------ | -------- |)
+
+[//]: # (| code       | true     | int      | 狀態碼                                                       |          |)
+
+[//]: # (| message    | false    | string   | 錯誤描述（如有）                                             |          |)
+
+[//]: # (| data       | true     | object   |                                                              |          |)
+
+[//]: # (| { currency | true     | string   | 幣種                                                         |          |)
+
+[//]: # (| chain      | true     | string   | 鏈名稱                                                       |          |)
+
+[//]: # (| note       | true     | string   | 地址備注                                                     |          |)
+
+[//]: # (| addressTag | false    | string   | 地址標籤，如有                                               |          |)
+
+[//]: # (| address }  | true     | string   | 地址                                                         |          |)
+
+[//]: # (| nextId     | false    | long     | 下頁起始編號（提幣地址ID，僅在查詢結果需要分頁返回時，包含此字段，詳細見備注） |          |)
+
+[//]: # ()
+[//]: # (備注：<br>)
+
+[//]: # (僅當用戶請求查詢的數據條目超出單頁限制（由「limit「字段設定）時，服務器才返回」nextId「字段。用戶收到服務器返回的」nextId「後 –<br>)
+
+[//]: # (1）須知曉後續仍有數據未能在本頁返回；<br>)
+
+[//]: # (2）如需繼續查詢下頁數據，應再次請求查詢並將服務器返回的「nextId」作為「fromId「，其它請求參數不變。<br>)
+
+[//]: # (3）作為數據庫記錄ID，「nextId」和「fromId」除了用來翻頁查詢外，無其它業務含義。<br>)
+
+[//]: # ()
+[//]: # ()
+[//]: # (## 虛擬幣提幣)
+
+[//]: # ()
+[//]: # (此節點用於將現貨賬戶的數字幣提取到區塊鏈地址（已存在於提幣地址列表）而不需要多重（短信、郵件）驗證，限母用戶可用)
+
+[//]: # ()
+[//]: # (API Key 權限：提幣<br>)
+
+[//]: # (限頻值（NEW）：20次/2s)
+
+[//]: # ()
+[//]: # (<aside class="notice">如果用戶在個人設置 </a> 里設置了優先使用快速提幣，通過API發起的提幣也會優先選擇快速提幣通道。快速提幣是指當提幣目標地址是平台內部用戶地址時，提幣將通過平台內部快速通道，不通過區塊鏈。</aside>)
+
+[//]: # (<aside class="notice">API提幣僅支持用戶提幣地址列表</a> 中的地址。IOTA一次性提幣地址無法被設置為常用地址，因此不支持通過API方式提幣IOTA。 </aside>)
+
+[//]: # ()
+[//]: # (### HTTP 請求)
+
+[//]: # ()
+[//]: # (- POST `/v1/dw/withdraw/api/create`)
+
+[//]: # ()
+[//]: # (> Request:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (  "address": "0xde709f2102306220921060314715629080e2fb77",)
+
+[//]: # (  "amount": "0.05",)
+
+[//]: # (  "currency": "eth",)
+
+[//]: # (  "fee": "0.01")
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 請求參數)
+
+[//]: # ()
+[//]: # (| 參數名稱 | 是否必須 | 類型   | 描述                                                         | 取值範圍                                                     |)
+
+[//]: # (| -------- | -------- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |)
+
+[//]: # (| address  | true     | string | 提幣地址                                                     | 僅支持在官網上相應幣種地址列表中的地址                       |)
+
+[//]: # (| amount   | true     | string | 提幣數量                                                     |                                                              |)
+
+[//]: # (| currency | true     | string | 資產類型                                                     | btc, ltc, bch, eth, etc ...&#40;取值參考`GET /v1/common/currencys`&#41; |)
+
+[//]: # (| fee      | false    | string | 轉賬手續費                                                   |                                                              |)
+
+[//]: # (| chain    | false    | string | 取值參考`GET /v2/reference/currencies`,例如提USDT至OMNI時須設置此參數為"usdt"，提USDT至TRX時須設置此參數為"trc20usdt"，其他幣種提幣無須設置此參數 |                                                              |)
+
+[//]: # (| addr-tag | false    | string | 虛擬幣共享地址tag，適用於xrp，xem，bts，steem，eos，xmr      | 格式, "123"類的整數字符串                                    |)
+
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "status": "ok",)
+
+[//]: # (    "data": 91934214)
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 響應數據)
+
+[//]: # ()
+[//]: # ()
+[//]: # (| 參數名稱 | 是否必須 | 數據類型 | 描述    | 取值範圍 |)
+
+[//]: # (| -------- | -------- | -------- | ------- | -------- |)
+
+[//]: # (| data     | false    | long     | 提幣 ID |          |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (## 取消提幣)
+
+[//]: # ()
+[//]: # (此節點用於取消已提交的提幣請求，限母用戶可用)
+
+[//]: # ()
+[//]: # (API Key 權限：提幣<br>)
+
+[//]: # (限頻值（NEW）：20次/2s)
+
+[//]: # ()
+[//]: # (### HTTP 請求)
+
+[//]: # ()
+[//]: # (- POST `/v1/dw/withdraw-virtual/{withdraw-id}/cancel`)
+
+[//]: # ()
+[//]: # (### 請求參數)
+
+[//]: # ()
+[//]: # (| 參數名稱    | 是否必須 | 類型 | 描述                  | 默認值 | 取值範圍 |)
+
+[//]: # (| ----------- | -------- | ---- | --------------------- | ------ | -------- |)
+
+[//]: # (| withdraw-id | true     | long | 提幣 ID，填在 path 中 |        |          |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "status": "ok",)
+
+[//]: # (    "data": "91934217")
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 響應數據)
+
+[//]: # ()
+[//]: # ()
+[//]: # (| 參數名稱 | 是否必須 | 數據類型 | 描述    | 取值範圍 |)
+
+[//]: # (| -------- | -------- | -------- | ------- | -------- |)
+
+[//]: # (| data     | false    | long     | 提幣 ID |          |)
+
+[//]: # ()
+[//]: # (## 充提記錄)
+
+[//]: # ()
+[//]: # (此節點用於查詢充提記錄，母子用戶均可用)
+
+[//]: # ()
+[//]: # (API Key 權限：讀取<br>)
+
+[//]: # (限頻值（NEW）：20次/2s)
+
+[//]: # ()
+[//]: # (### HTTP 請求)
+
+[//]: # ()
+[//]: # (- GET `/v1/query/deposit-withdraw`)
+
+[//]: # ()
+[//]: # (### 請求參數)
+
+[//]: # ()
+[//]: # (| 參數名稱 | 是否必須 | 類型   | 描述             | 默認值                                                       | 取值範圍                                                     |)
+
+[//]: # (| -------- | -------- | ------ | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |)
+
+[//]: # (| currency | false    | string | 幣種             |                                                              | btc, ltc, bch, eth, etc ...&#40;取值參考`GET /v1/common/currencys`&#41; |)
+
+[//]: # (| type     | true     | string | 充值或提幣       |                                                              | deposit 或 withdraw,子用戶僅可用deposit                      |)
+
+[//]: # (| from     | false    | string | 查詢起始 ID      | 缺省時，默認值direct相關。當direct為‘prev’時，from 為1 ，從舊到新升序返回；當direct為’next‘時，from為最新的一條記錄的ID，從新到舊降序返回 |                                                              |)
+
+[//]: # (| size     | false    | string | 查詢記錄大小     | 100                                                          | 1-500                                                        |)
+
+[//]: # (| direct   | false    | string | 返回記錄排序方向 | 缺省時，默認為「prev」 （升序）                                | 「prev」 （升序）or 「next」 （降序）                            |)
+
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (  "status": "ok",)
+
+[//]: # (  "data":)
+
+[//]: # (    [)
+
+[//]: # (      {)
+
+[//]: # (        "id": 1171,)
+
+[//]: # (        "type": "deposit",)
+
+[//]: # (        "sub-type": "NORMAL",)
+
+[//]: # (        "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",)
+
+[//]: # (        "currency": "xrp",)
+
+[//]: # (        "chain": "usdc",)
+
+[//]: # (        "tx-hash": "ed03094b84eafbe4bc16e7ef766ee959885ee5bcb265872baaa9c64e1cf86c2b",)
+
+[//]: # (        "amount": 7.457467,)
+
+[//]: # (        "address": "rae93V8d2mdoUQHwBDBdM4NHCMehRJAsbm",)
+
+[//]: # (        "address-tag": "100040",)
+
+[//]: # (        "fee": 0,)
+
+[//]: # (        "state": "safe",)
+
+[//]: # (        "wallet-confirm": 12,)
+
+[//]: # (        "created-at": 1510912472199,)
+
+[//]: # (        "updated-at": 1511145876575)
+
+[//]: # (      },)
+
+[//]: # (      ...)
+
+[//]: # (    ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### 響應數據)
+
+[//]: # ()
+[//]: # (| 參數名稱    | 是否必須 | 數據類型 | 描述                                                         | 取值範圍                                 |)
+
+[//]: # (| ----------- | -------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |)
+
+[//]: # (| id          | true     | long     | 充幣訂單id/提幣訂單id                                          |                                          |)
+
+[//]: # (| type        | true     | string   | 類型                                                         | 'deposit', 'withdraw', 子用戶僅有deposit |)
+
+[//]: # (| sub-type    | false    | string   | 子類型，保留字段                                               | 'deposit', 'withdraw', 子用戶僅有deposit |)
+
+[//]: # (| currency    | true     | string   | 幣種                                                         |                                          |)
+
+[//]: # (| tx-hash     | true     | string   | 交易哈希                                                     |                                          |)
+
+[//]: # (| chain       | true     | string   | 鏈名稱                                                       |                                          |)
+
+[//]: # (| amount      | true     | float    | 個數                                                         |                                          |)
+
+[//]: # (| address     | true     | string   | 目的地址                                                     |                                          |)
+
+[//]: # (| address-tag | true     | string   | 地址標籤                                                     |                                          |)
+
+[//]: # (| request-id  | false    | string   | 保留字段                                                     |                                          |)
+
+[//]: # (| fee         | true     | float    | 手續費                                                       |                                          |)
+
+[//]: # (| state       | true     | string   | 狀態                                                         | 狀態參見下表                             |)
+
+[//]: # (| wallet-confirm | false     | long   | 錢包確認次數                                              |                                        |)
+
+[//]: # (| error-code  | false    | string   | 提幣失敗錯誤碼，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |)
+
+[//]: # (| error-msg   | false    | string   | 提幣失敗錯誤描述，僅type為」withdraw「，且state為」reject「、」wallet-reject「和」failed「時有。 |                                          |)
+
+[//]: # (| created-at  | true     | long     | 發起時間                                                     |                                          |)
+
+[//]: # (| updated-at  | true     | long     | 最後更新時間                                                 |                                          |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (- 虛擬幣充值狀態定義：)
+
+[//]: # ()
+[//]: # (| 狀態       | 描述     |)
+
+[//]: # (| ---------- | -------- |)
+
+[//]: # (| unknown    | 狀態未知 |)
+
+[//]: # (| confirming | 確認中   |)
+
+[//]: # (| confirmed  | 已確認   |)
+
+[//]: # (| safe       | 已完成   |)
+
+[//]: # (| orphan     | 待確認   |)
+
+[//]: # ()
+[//]: # (- 虛擬幣提幣狀態定義：)
+
+[//]: # ()
+[//]: # (| 狀態            | 描述         |)
+
+[//]: # (| --------------- | ------------ |)
+
+[//]: # (| verifying       | 待驗證       |)
+
+[//]: # (| failed          | 驗證失敗     |)
+
+[//]: # (| submitted       | 已提交       |)
+
+[//]: # (| reexamine       | 審核中       |)
+
+[//]: # (| canceled        | 已撤銷       |)
+
+[//]: # (| pass            | 審批通過     |)
+
+[//]: # (| reject          | 審批拒絕     |)
+
+[//]: # (| pre-transfer    | 處理中       |)
+
+[//]: # (| wallet-transfer | 已匯出       |)
+
+[//]: # (| wallet-reject   | 錢包拒絕     |)
+
+[//]: # (| confirmed       | 區塊已確認   |)
+
+[//]: # (| confirm-error   | 區塊確認錯誤 |)
+
+[//]: # (| repealed        | 已撤銷       |)
+
+[//]: # ()
 
 
 

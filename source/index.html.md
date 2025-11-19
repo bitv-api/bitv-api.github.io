@@ -40,13 +40,12 @@ To use the API, please log in to the web terminal and complete the API key appli
 
 You can create an API key by clicking [here ](https://www.bitv.com/api/).
 
-Each parent user can create 20 groups of Api Key, and each Api Key can set three kinds of permissions: read, trade and withdraw coins.
+Each parent user can create 3 groups of API Key, and each API Key can set two kinds of permissions: read and trade.
 
 Permissions are described as follows:
 
 - Read permission: Read permission is used for the query interface of data, such as: order query, transaction query, etc.
 - Trading permission: Trading permission is used for placing, withdrawing and transferring orders.
-- Withdrawal permission: Withdrawal permission is used to create withdrawal orders and cancel withdrawal order operations.
 
 After successful creation, please make sure to remember the following information:
 
@@ -58,18 +57,18 @@ After successful creation, please make sure to remember the following informatio
 Each API Key can be bound to a maximum of 10 IP addresses (host or network addresses). For security reasons, it is strongly recommended that you bind an IP address.
 </aside>
 <aside class="warning"> 
- <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets (even if you do not open withdrawal privileges), if you find API Key leakage, please delete the API Key as soon as possible.
+ <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets , if you find API Key leakage, please delete the API Key as soon as possible.
 </aside> 
 
 ## Interface Types
 
-We provide two kinds of interfaces for users, you can choose the suitable way to check the quotes, trade or withdraw coins according to your usage scenarios and preferences.
+We provide two kinds of interfaces for users, you can choose the suitable way to check the quotes or trade according to your usage scenarios and preferences.
 
 ### REST API
 
 REST, which stands for Representational State Transfer, is a popular HTTP-based communication mechanism, where each URL represents a resource.
 
-For one-time operations such as trading or withdrawing coins from assets, developers are recommended to use the REST API for operations.
+For one-time operations such as trading, developers are recommended to use the REST API for operations.
 
 ### WebSocket API
 
@@ -454,14 +453,12 @@ Announcements will be issued in advance to notify you of new API additions, upda
 
 ### Q1: How many Api Keys can a user apply for?
 
-A: Each parent user can create 5 groups of Api Keys, and each Api Key can be set with three permissions: reading, trading, and withdrawal.
-Each parent user can also create 200 sub-users, and each sub-user can create 5 sets of Api Keys, and each Api Key can be set with two permissions for reading and trading.
+A: Each parent user can create 3 groups of API Keys, and each API Key can be set with two permissions: reading and trading. Each parent user can also create 200 sub-users, and each sub-user can create 3 sets of API Keys, and each API Key can be set with two permissions for reading and trading.
 
-The following are descriptions of the three permissions:
+The following are descriptions of the two permissions:
 
 - Read permission: read permission is used for data query interface, such as: order query, transaction query, etc.
 - Transaction authority: transaction authority is used for placing orders, canceling orders, and transferring interfaces.
-- Withdrawal permission: Withdrawal permission is used to create withdrawal orders and cancel withdrawal orders.
 
 ### Q2: Why do disconnections and timeouts often occur?
 
@@ -635,43 +632,65 @@ A: match-id indicates the sequence number of the order in matching, and trade-id
 
 A: Currently, there is price limit protection based on the latest transaction price. For coins with poor liquidity, placing an order based on market data may trigger price limit protection. It is recommended to place an order based on the transaction price + handicap data information pushed by ws
 
-## Account deposit and withdrawal related
+[//]: # ()
+[//]: # (## Account deposit and withdrawal related)
 
-### Q1: Why does it return an api-not-support-temp-addr error when creating a withdrawal?
+[//]: # ()
+[//]: # (### Q1: Why does it return an api-not-support-temp-addr error when creating a withdrawal?)
 
-A: Due to security considerations, the API only supports addresses that are already in the withdrawal address list when creating withdrawals. It does not currently support using the API to add addresses to the withdrawal address list. You need to add addresses on the web page or APP before you can use them. Withdraw operations in the API.
+[//]: # ()
+[//]: # (A: Due to security considerations, the API only supports addresses that are already in the withdrawal address list when creating withdrawals. It does not currently support using the API to add addresses to the withdrawal address list. You need to add addresses on the web page or APP before you can use them. Withdraw operations in the API.)
 
-### Q2: Why is the Invaild-Address error returned when USDT is withdrawn?
+[//]: # ()
+[//]: # (### Q2: Why is the Invaild-Address error returned when USDT is withdrawn?)
 
-A: The USDT currency is a typical one-coin multi-chain currency. When creating a withdrawal order, you should fill in the address type corresponding to the chain parameter. The following table shows the correspondence between chains and chain parameters:
+[//]: # ()
+[//]: # (A: The USDT currency is a typical one-coin multi-chain currency. When creating a withdrawal order, you should fill in the address type corresponding to the chain parameter. The following table shows the correspondence between chains and chain parameters:)
 
-| chain | chain parameter |
-| -------------- | ---------- |
-| ERC20 (default) | usdterc20 |
-| OMNI | usdt |
-| TRX | trc20usdt |
+[//]: # ()
+[//]: # (| chain | chain parameter |)
 
-If the chain parameter is empty, the default chain is ERC20, or you can also assign the parameter to `usdterc20`.
+[//]: # (| -------------- | ---------- |)
 
-If you want to withdraw coins to OMNI or TRX, the chain parameter should be filled with usdt or trc20usdt. Please refer to the `GET /v2/reference/currencies` interface for available values of the chain parameter.
+[//]: # (| ERC20 &#40;default&#41; | usdterc20 |)
 
+[//]: # (| OMNI | usdt |)
 
-### Q3: How to fill in the fee field when creating a withdrawal?
+[//]: # (| TRX | trc20usdt |)
 
-A: Please refer to the return value of the GET /v2/reference/currencies interface. The withdrawFeeType in the returned information is the type of withdrawal fee. Select the corresponding field according to the type to set the withdrawal fee.
+[//]: # ()
+[//]: # (If the chain parameter is empty, the default chain is ERC20, or you can also assign the parameter to `usdterc20`.)
 
-Withdrawal fee types include:
+[//]: # ()
+[//]: # (If you want to withdraw coins to OMNI or TRX, the chain parameter should be filled with usdt or trc20usdt. Please refer to the `GET /v2/reference/currencies` interface for available values of the chain parameter.)
 
-- transactFeeWithdraw : single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)
-- minTransactFeeWithdraw : Minimum single withdrawal fee (only valid for interval type, withdrawFeeType=circulated or ratio)
-- maxTransactFeeWithdraw : The maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio
-- transactFeeRateWithdraw : single withdrawal fee rate (only valid for ratio type, withdrawFeeType=ratio)
+[//]: # ()
+[//]: # ()
+[//]: # (### Q3: How to fill in the fee field when creating a withdrawal?)
 
-### Q4: How to check my withdrawal amount?
+[//]: # ()
+[//]: # (A: Please refer to the return value of the GET /v2/reference/currencies interface. The withdrawFeeType in the returned information is the type of withdrawal fee. Select the corresponding field according to the type to set the withdrawal fee.)
 
-A: Please refer to the return value of the /v2/account/withdraw/quota interface. The returned information includes the single, current, current, total withdrawal quota and remaining quota information of the currency you inquired about.
+[//]: # ()
+[//]: # (Withdrawal fee types include:)
 
-Remarks: If you have a large amount of withdrawal needs, and the withdrawal amount exceeds the relevant limit, you can contact the official customer service for communication.
+[//]: # ()
+[//]: # (- transactFeeWithdraw : single withdrawal fee &#40;only valid for fixed type, withdrawFeeType=fixed&#41;)
+
+[//]: # (- minTransactFeeWithdraw : Minimum single withdrawal fee &#40;only valid for interval type, withdrawFeeType=circulated or ratio&#41;)
+
+[//]: # (- maxTransactFeeWithdraw : The maximum single withdrawal fee &#40;only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio)
+
+[//]: # (- transactFeeRateWithdraw : single withdrawal fee rate &#40;only valid for ratio type, withdrawFeeType=ratio&#41;)
+
+[//]: # ()
+[//]: # (### Q4: How to check my withdrawal amount?)
+
+[//]: # ()
+[//]: # (A: Please refer to the return value of the /v2/account/withdraw/quota interface. The returned information includes the single, current, current, total withdrawal quota and remaining quota information of the currency you inquired about.)
+
+[//]: # ()
+[//]: # (Remarks: If you have a large amount of withdrawal needs, and the withdrawal amount exceeds the relevant limit, you can contact the official customer service for communication.)
 
 # basic information
 
@@ -1532,7 +1551,7 @@ This node returns the account history based on the user account ID.
 | -------------- | -------- | --------- | ----------- | ------------- | ----------- |
 | account-id     | true     | string    | Account number, refer to `GET /v1/account/accounts` |               |             |
 | currency       | false    | string    | Currency, e.g., btc, ltc, bch, eth, etc... (refer to `GET /v1/common/currencys` for values) |               |             |
-| transact-types | false    | string    | Change types, multiple choices separated by commas | all           | trade, transact-fee, fee-deduction, transfer, deposit, withdraw, withdraw-fee, other-types, rebate |
+| transact-types | false    | string    | Change types, multiple choices separated by commas | all           | trade, transact-fee, fee-deduction, transfer, deposit, withdraw, withdraw-fee, other-types |
 | start-time     | false    | long      | Unix time in milliseconds. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | ((end-time) - 1 hour) | [(end-time) - 1 hour, end-time] |
 | end-time       | false    | long      | Unix time in milliseconds. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | current-time   | [(current-time) - 29 days, current-time] |
 | sort           | false    | string    | Search direction | asc           | asc, desc   |
@@ -1586,403 +1605,701 @@ This node returns the account history based on the user account ID.
 | record-id }   | long      | Database record ID (globally unique)                     |             |
 | next-id       | long      | The start number of the next page (included when the query results need to be returned in pages) |             |
 
-# Wallet (deposit and withdrawal related)
+[//]: # ()
+[//]: # (# Wallet &#40;deposit and withdrawal related&#41;)
 
-## Introduction
+[//]: # ()
+[//]: # (## Introduction)
 
-The interface related to deposit and withdrawal provides functions such as deposit address, withdrawal address, withdrawal amount, deposit and withdrawal records, etc., as well as functions such as withdrawal and cancellation of withdrawal.
+[//]: # ()
+[//]: # (The interface related to deposit and withdrawal provides functions such as deposit address, withdrawal address, withdrawal amount, deposit and withdrawal records, etc., as well as functions such as withdrawal and cancellation of withdrawal.)
 
-<aside class="notice">Signature authentication is required to access the interfaces related to deposit and withdrawal. </aside>
+[//]: # ()
+[//]: # (<aside class="notice">Signature authentication is required to access the interfaces related to deposit and withdrawal. </aside>)
 
-The following are the return codes, return messages and instructions returned by the relevant interfaces of deposit and withdrawal.
+[//]: # ()
+[//]: # (The following are the return codes, return messages and instructions returned by the relevant interfaces of deposit and withdrawal.)
 
-| Return Code | Return Message                    | Description                           |
-| ----------- | -------------------------------- | ------------------------------------- |
-| 200         | success                          | Request succeeded                     |
-| 500         | error                            | System error                          |
-| 1002        | unauthorized                     | Unauthorized                          |
-| 1003        | invalid signature                | Signature verification failed         |
-| 2002        | invalid field value in "field name" | Illegal field value                   |
-| 2003        | missing mandatory field "field name" | Mandatory field missing               |
+[//]: # ()
+[//]: # (| Return Code | Return Message                    | Description                           |)
 
+[//]: # (| ----------- | -------------------------------- | ------------------------------------- |)
 
-## Deposit Address Query
+[//]: # (| 200         | success                          | Request succeeded                     |)
 
-This node is used to query the deposit address of a specific currency (except IOTA) in its blockchain, and both parent and child users are available
+[//]: # (| 500         | error                            | System error                          |)
 
-API Key Permission: Read<br>
-Frequency limit value (NEW): 20 times/2s
+[//]: # (| 1002        | unauthorized                     | Unauthorized                          |)
 
-<aside class="notice"> IOTA coins are not supported for deposit address query </aside>
+[//]: # (| 1003        | invalid signature                | Signature verification failed         |)
 
-```shell
-curl "https://api.bitv.com/v2/account/deposit/address?currency=btc"
-```
+[//]: # (| 2002        | invalid field value in "field name" | Illegal field value                   |)
 
-### HTTP requests
+[//]: # (| 2003        | missing mandatory field "field name" | Mandatory field missing               |)
 
-- GET `/v2/account/deposit/address`
+[//]: # ()
+[//]: # ()
+[//]: # (## Deposit Address Query)
 
-### Request parameters
+[//]: # ()
+[//]: # (This node is used to query the deposit address of a specific currency &#40;except IOTA&#41; in its blockchain, and both parent and child users are available)
 
-| Field Name | Required | Type   | Field Description | Value Range                               |
-| ---------- | -------- | ------ | ----------------- | ----------------------------------------- |
-| currency   | true     | string | Currency          | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`) |
+[//]: # ()
+[//]: # (API Key Permission: Read<br>)
 
+[//]: # (Frequency limit value &#40;NEW&#41;: 20 times/2s)
 
-> Response:
+[//]: # ()
+[//]: # (<aside class="notice"> IOTA coins are not supported for deposit address query </aside>)
 
-```json
-{
-     "code": 200,
-     "data": [
-         {
-             "currency": "btc",
-             "address": "1PSRjPg53cX7hMRYAXGJnL8mqHtzmQgPUs",
-             "addressTag": "",
-             "chain": "btc"
-         }
-     ]
-}
-```
+[//]: # ()
+[//]: # (```shell)
 
-### Response data
+[//]: # (curl "https://api.bitv.com/v2/account/deposit/address?currency=btc")
 
-| Field Name  | Required | Data Type | Field Description                     | Value Range                                              |
-| ----------- | -------- | --------- | ------------------------------------ | ------------------------------------------------------- |
-| code        | true     | int       | Status code                           |                                                         |
-| message     | false    | string    | Error description (if any)            |                                                         |
-| data        | true     | object    |                                       |                                                         |
-| { currency  | true     | string    | Currency                              |                                                         |
-|   address   | true     | string    | Deposit address                       |                                                         |
-|   addressTag| true     | string    | Deposit address tag                   |                                                         |
-|   chain }   | true     | string    | Chain name                            |                                                         |
+[//]: # (```)
 
-### Status Code
+[//]: # ()
+[//]: # (### HTTP requests)
 
-| Status Code | Error Message                  | Error Scenario Description                                |
-| ----------- | ----------------------------- | -------------------------------------------------------- |
-| 200         | success                       | Request succeeded                                        |
-| 500         | error                         | System error                                             |
-| 1002        | unauthorized                  | Unauthorized                                             |
-| 1003        | invalid signature             | Signature verification failed                            |
-| 2002        | invalid field value in "field name" | Illegal field value                                      |
-| 2003        | missing mandatory field "field name" | Mandatory field missing                                 |
+[//]: # ()
+[//]: # (- GET `/v2/account/deposit/address`)
 
+[//]: # ()
+[//]: # (### Request parameters)
 
-## Withdrawal limit query
+[//]: # ()
+[//]: # (| Field Name | Required | Type   | Field Description | Value Range                               |)
 
-This node is used to query the withdrawal amount of each currency, and it is only available to parent users
+[//]: # (| ---------- | -------- | ------ | ----------------- | ----------------------------------------- |)
 
-API Key Permission: Read<br>
-Frequency limit value (NEW): 20 times/2s
+[//]: # (| currency   | true     | string | Currency          | btc, ltc, bch, eth, etc ... &#40;value reference `GET /v1/common/currencys`&#41; |)
 
-```shell
-curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc"
-```
+[//]: # ()
+[//]: # ()
+[//]: # (> Response:)
 
-### HTTP requests
+[//]: # ()
+[//]: # (```json)
 
-- GET `/v2/account/withdraw/quota`
+[//]: # ({)
 
-### Request parameters
+[//]: # (     "code": 200,)
 
-| Field Name | Required | Data Type | Field Description | Value Range                                      |
-| ---------- | -------- | --------- | ---------------- | ----------------------------------------------- |
-| currency   | true     | string    | Currency          | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`) |
-
-
-> Response:
-
-```json
-{
-     "code": 200,
-     "data":
-         {
-             "currency": "btc",
-             "chains": [
-                 {
-                     "chain": "btc",
-                     "maxWithdrawAmt": "200.00000000",
-                     "withdrawQuotaPerDay": "200.00000000",
-                     "remainWithdrawQuotaPerDay": "200.000000000000000000"
-                 }
-         }
-     ]
-}
-```
-
-### Response data
-
-| Field Name                  | Required | Data Type | Field Description                 | Value Range                                                                                     |
-| -------------------------- | -------- | --------- | --------------------------------- | ---------------------------------------------------------------------------------------------- |
-| code                       | true     | int       | Status code                       |                                                                                                  |
-| message                    | false    | string    | Error description (if any)        |                                                                                                  |
-| data                       | true     | object    |                                   |                                                                                                  |
-| currency                   | true     | string    | Currency                          | btc, ltc, bch, eth, etc ... (value reference `GET /v1/common/currencys`)                       |
-| chains                     | true     | object    |                                   |                                                                                                  |
-| { chain                    | true     | string    | Chain name                        |                                                                                                  |
-| maxWithdrawAmt             | true     | string    | Single maximum withdrawal amount  |                                                                                                  |
-| withdrawQuotaPerDay        | true     | string    | Daily withdrawal quota            |                                                                                                  |
-| remainWithdrawQuotaPerDay} | true     | string    | Remaining withdrawal quota for the day  |                                                                                              |
-
-
-### Status Code
-
-| Status Code | Error Message                     | Error Scenario Description                   |
-| ----------- | --------------------------------- | ------------------------------------------- |
-| 200         | success                           | Request succeeded                            |
-| 500         | error                             | System error                                 |
-| 1002        | unauthorized                      | Unauthorized                                 |
-| 1003        | invalid signature                 | Signature verification failed                |
-| 2002        | invalid field value in "field name" | Illegal field value                          |
-
-## Withdraw address query
-
-API Key Permission: Read<br>
-
-This node is used to query the withdrawal addresses available for the API key, and is only available to parent users. <br>
-
-### HTTP requests
-
-- GET `/v2/account/withdraw/address`
-
-### Request parameters
-
-| Parameter name | Required | Type   | Description                                                    | Default value | Value range                                              |
-| -------------- | -------- | ------ | -------------------------------------------------------------- | ------------- | -------------------------------------------------------- |
-| currency       | true     | string | Currency                                                       |               | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| chain          | false    | string | Chain name                                                      |      If not filled, return the withdrawal addresses of all chains         |  |
-| note           | false    | string | Address note                                                   |        If not filled, return all note withdrawal addresses       |       |
-| limit          | false    | int    | Maximum number of items returned in a single page               | 100           | [1, 500]                                                 |
-| fromId         | false    | long   | Starting number (withdrawal address ID, valid for pagination)   | NA            |                                                          |
-
+[//]: # (     "data": [)
 
-> Response:
+[//]: # (         {)
 
-```json
-{
-     "code": 200,
-     "data": [
-         {
-             "currency": "usdt",
-             "chain": "usdt",
-             "note": "Binance",
-             "addressTag": "",
-             "address": "15PrEcqTJRn4haLeby3gJJebtyf4KgWmSd"
-         }
-     ]
-}
-```
+[//]: # (             "currency": "btc",)
 
-### Response data
+[//]: # (             "address": "1PSRjPg53cX7hMRYAXGJnL8mqHtzmQgPUs",)
 
-| Parameter name | Required | Data type | Description                                                    | Value range |
-| -------------- | -------- | --------- | -------------------------------------------------------------- | ----------- |
-| code           | true     | int       | Status code                                                     |             |
-| message        | false    | string    | Error description (if any)                                      |             |
-| data           | true     | object    |                                                                |             |
-| { currency     | true     | string    | Currency                                                        |             |
-| chain          | true     | string    | Chain name                                                       |             |
-| note           | true     | string    | Address note                                                    |             |
-| addressTag     | false    | string    | Address tag, if any                                             |             |
-| address }      | true     | string    | Address                                                         |             |
-| nextId         | false    | long      | Starting number of the next page (withdrawal address ID,only valid if exceeded page size)        |             |
+[//]: # (             "addressTag": "",)
 
-Remarks:<br>
-The server returns the "nextId" field only when the data item requested by the user exceeds the single-page limit (set by the "limit" field). After the user receives the "nextId" returned by the server –<br>
-1) It must be known that there are still data that cannot be returned on this page;<br>
-2) If you need to continue to query the next page of data, you should request the query again and use the "nextId" returned by the server as "fromId", and keep other request parameters unchanged. <br>
-3) As the database record ID, "nextId" and "fromId" have no other business meaning except for page turning query. <br>
+[//]: # (             "chain": "btc")
 
+[//]: # (         })
 
-## Virtual currency withdrawal
+[//]: # (     ])
 
-This node is used to withdraw the digital currency of the spot account to the blockchain address (which already exists in the currency withdrawal address list) without multiple (SMS, email) verification, and is only available to mother users
+[//]: # (})
 
-API Key Permission: Withdrawal<br>
-Frequency limit value (NEW): 20 times/2s
+[//]: # (```)
 
-<aside class="notice">If the user has set priority to use the fast withdrawal channel in the personal settings </a>, the withdrawal initiated through the API will also give priority to the fast withdrawal channel. Quick coin withdrawal means that when the target address of the coin withdrawal is the internal user address of the platform, the coin withdrawal will go through the fast channel inside the platform instead of the blockchain. </aside>
-<aside class="notice">API withdrawal only supports the addresses in the user withdrawal address list</a>. The IOTA one-time withdrawal address cannot be set as a common address, so IOTA withdrawal through API is not supported. </aside>
+[//]: # ()
+[//]: # (### Response data)
 
-### HTTP requests
+[//]: # ()
+[//]: # (| Field Name  | Required | Data Type | Field Description                     | Value Range                                              |)
 
-- POST `/v1/dw/withdraw/api/create`
+[//]: # (| ----------- | -------- | --------- | ------------------------------------ | ------------------------------------------------------- |)
 
-> Request:
+[//]: # (| code        | true     | int       | Status code                           |                                                         |)
 
-```json
-{
-   "address": "0xde709f2102306220921060314715629080e2fb77",
-   "amount": "0.05",
-   "currency": "eth",
-   "fee": "0.01"
-}
-```
+[//]: # (| message     | false    | string    | Error description &#40;if any&#41;            |                                                         |)
 
-### Request parameters
+[//]: # (| data        | true     | object    |                                       |                                                         |)
 
-| Parameter name | Required | Data type | Description | Value range |
-| -------------- | -------- | --------- | ----------------------------------------------------- | ----------- |
-| address        | true     | string    | Withdrawal address | Only supports addresses in the corresponding currency address list on the official website |
-| amount         | true     | string    | Withdrawal amount | |
-| currency       | true     | string    | Asset type | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| fee            | false     | string    | Transfer fee | |
-| chain          | false    | string    | Value reference `GET /v2/reference/currencies`. For example, when withdrawing USDT to OMNI, this parameter must be set to "usdt". When withdrawing USDT to TRX, this parameter must be set to "trc20usdt". For other currencies, this parameter does not need to be set. | |
-| addr-tag       | false    | string    | Virtual currency shared address tag, suitable for xrp, xem, bts, steem, eos, xmr | Integer string format, e.g., "123" |
+[//]: # (| { currency  | true     | string    | Currency                              |                                                         |)
 
-> Response:
+[//]: # (|   address   | true     | string    | Deposit address                       |                                                         |)
 
-```json
-{
-    "status": "ok",
-    "data": 91934214
-}
-```
+[//]: # (|   addressTag| true     | string    | Deposit address tag                   |                                                         |)
 
-### Response data
+[//]: # (|   chain }   | true     | string    | Chain name                            |                                                         |)
 
-| Parameter name | Required | Data type | Description | Value range |
-| -------------- | -------- | --------- | ----------- | ----------- |
-| data           | false    | long      | Withdrawal ID |             |
+[//]: # ()
+[//]: # (### Status Code)
 
-
-## Cancel withdrawal
-
-This node is used to cancel the submitted withdrawal request and is only available to parent users
-
-API Key Permission: Withdrawal<br>
-Frequency limit value (NEW): 20 times/2s
-
-### HTTP requests
-
-- POST `/v1/dw/withdraw-virtual/{withdraw-id}/cancel`
-
-### Request parameters
-
-| Parameter name | Required | Type | Description |
-| -------------- | -------- | ---- | ----------- |
-| withdraw-id   | true     | long | Withdrawal ID (to be filled in the path) |
-
-
-
-> Response:
-
-```json
-{
-    "status": "ok",
-    "data": "91934217"
-}
-```
-
-### Response data
-
-
-| Parameter name | Required | Data type | Description |
-| -------------- | -------- | --------- | ----------- |
-| data           | false    | long      | Withdrawal ID |
-
-
-## Deposit and withdrawal record
-
-This node is used to query deposit and withdrawal records, both parent and child users are available
-
-API Key Permission: Read<br>
-Frequency limit value (NEW): 20 times/2s
-
-### HTTP requests
-
-- GET `/v1/query/deposit-withdraw`
-
-### Request parameters
-
-| Parameter name | Required | Data type | Description | Default value | Value range |
-| -------------- | -------- | --------- | ----------- | ------------- | ----------- |
-| currency       | false    | string    | Currency    |               | btc, ltc, bch, eth, etc ... (Refer to `GET /v1/common/currencys`) |
-| type           | true     | string    | Recharge or withdrawal |             | deposit or withdraw |
-| from           | false    | string    | Query starting ID | By default, the default value is direct. When direct is 'prev', from is 1, return from old to new in ascending order; when direct is 'next', from is the ID of the latest record, and return from new to old in descending order | |
-| size           | false    | string    | Query record size | 100           | 1-500 |
-| direct         | false    | string    | Return record sorting direction | default       | "prev" (ascending) or "next" (descending) |
-
-
-> Response:
-
-```json
-{
-  "status": "ok",
-  "data": [
-    {
-      "id": 105380410,
-      "type": "deposit",
-      "sub-type": "NORMAL",
-      "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",
-      "currency": "usdc",
-      "chain": "usdc",
-      "tx-hash": "244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf",
-      "amount": 100,
-      "address": "0x2c7c448a32d754d8d680e43b0b0b49cf61c83750",
-      "address-tag": "",
-      "fee": 0,
-      "state": "safe",
-      "wallet-confirm": 12,
-      "created-at": 1752738144869,
-      "updated-at": 1752738289051
-    },
-    ...
-  ]
-}
-```
-
-### Response data
-
-| Parameter name | Required | Data type | Description                                                                                                                   | Value range |
-| -------------- |----------| --------- |-------------------------------------------------------------------------------------------------------------------------------| ----------- |
-| id             | true     | long      | Deposit order ID / Withdraw order ID                                                                                          | |
-| type           | true     | string    | Type                                                                                                                          | 'deposit', 'withdraw' |
-| sub-type       | false    | string    | sub-type reserved field                                                                                                                     | |
-| currency       | true     | string    | Currency                                                                                                                      | |
-| tx-hash        | true     | string    | Transaction hash                                                                                                              | |
-| chain          | true     | string    | Chain name                                                                                                                    | |
-| amount         | true     | float     | Amount                                                                                                                        | |
-| address        | true     | string    | Destination address                                                                                                           | |
-| address-tag    | true     | string    | Address tag                                                                                                                   | |
-| request-id     | false    | string    | reserved field                                                                                                                    | |
-| fee            | true     | float     | Handling fee                                                                                                                  | |
-| state          | true     | string    | State                                                                                                                         | See table below |
-| wallet-confirm          | false    | long    | wallet confirm times                                                                                                          |  |
-| error-code     | false    | string    | Withdrawal failure error code, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed"    | |
-| error-msg      | false    | string    | Withdrawal failure error message, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed" | |
-| created-at     | true     | long      | Creation time                                                                                                                 | |
-| updated-at     | true     | long      | Last updated time                                                                                                             | |
-
-- Definition of virtual currency deposit status:
-
-| Status   | Description   |
-| -------- | ------------- |
-| unknown  | Status unknown |
-| confirming  | Confirming |
-| confirmed | Confirmed |
-| safe | Completed |
-| orphan | To be confirmed |
-
-- Definition of virtual currency withdrawal status:
-
-| Status        | Description       |
-| -------------- | ----------------- |
-| verifying      | Pending verification |
-| failed            | Authentication failed |
-| submitted     | Submitted |
-| reexamine    | Under review |
-| canceled       | Canceled |
-| pass              | Approved |
-| reject           | Approval rejected |
-| pre-transfer   | Processing |
-| wallet-transfer | Sent |
-| wallet-reject   | Wallet reject |
-| confirmed    | Block confirmed |
-| confirm-error   | Block confirmation error |
-| repealed         | Revoked |
+[//]: # ()
+[//]: # (| Status Code | Error Message                  | Error Scenario Description                                |)
+
+[//]: # (| ----------- | ----------------------------- | -------------------------------------------------------- |)
+
+[//]: # (| 200         | success                       | Request succeeded                                        |)
+
+[//]: # (| 500         | error                         | System error                                             |)
+
+[//]: # (| 1002        | unauthorized                  | Unauthorized                                             |)
+
+[//]: # (| 1003        | invalid signature             | Signature verification failed                            |)
+
+[//]: # (| 2002        | invalid field value in "field name" | Illegal field value                                      |)
+
+[//]: # (| 2003        | missing mandatory field "field name" | Mandatory field missing                                 |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (## Withdrawal limit query)
+
+[//]: # ()
+[//]: # (This node is used to query the withdrawal amount of each currency, and it is only available to parent users)
+
+[//]: # ()
+[//]: # (API Key Permission: Read<br>)
+
+[//]: # (Frequency limit value &#40;NEW&#41;: 20 times/2s)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (curl "https://api.bitv.com/v2/account/withdraw/quota?currency=btc")
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### HTTP requests)
+
+[//]: # ()
+[//]: # (- GET `/v2/account/withdraw/quota`)
+
+[//]: # ()
+[//]: # (### Request parameters)
+
+[//]: # ()
+[//]: # (| Field Name | Required | Data Type | Field Description | Value Range                                      |)
+
+[//]: # (| ---------- | -------- | --------- | ---------------- | ----------------------------------------------- |)
+
+[//]: # (| currency   | true     | string    | Currency          | btc, ltc, bch, eth, etc ... &#40;value reference `GET /v1/common/currencys`&#41; |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (     "code": 200,)
+
+[//]: # (     "data":)
+
+[//]: # (         {)
+
+[//]: # (             "currency": "btc",)
+
+[//]: # (             "chains": [)
+
+[//]: # (                 {)
+
+[//]: # (                     "chain": "btc",)
+
+[//]: # (                     "maxWithdrawAmt": "200.00000000",)
+
+[//]: # (                     "withdrawQuotaPerDay": "200.00000000",)
+
+[//]: # (                     "remainWithdrawQuotaPerDay": "200.000000000000000000")
+
+[//]: # (                 })
+
+[//]: # (         })
+
+[//]: # (     ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Response data)
+
+[//]: # ()
+[//]: # (| Field Name                  | Required | Data Type | Field Description                 | Value Range                                                                                     |)
+
+[//]: # (| -------------------------- | -------- | --------- | --------------------------------- | ---------------------------------------------------------------------------------------------- |)
+
+[//]: # (| code                       | true     | int       | Status code                       |                                                                                                  |)
+
+[//]: # (| message                    | false    | string    | Error description &#40;if any&#41;        |                                                                                                  |)
+
+[//]: # (| data                       | true     | object    |                                   |                                                                                                  |)
+
+[//]: # (| currency                   | true     | string    | Currency                          | btc, ltc, bch, eth, etc ... &#40;value reference `GET /v1/common/currencys`&#41;                       |)
+
+[//]: # (| chains                     | true     | object    |                                   |                                                                                                  |)
+
+[//]: # (| { chain                    | true     | string    | Chain name                        |                                                                                                  |)
+
+[//]: # (| maxWithdrawAmt             | true     | string    | Single maximum withdrawal amount  |                                                                                                  |)
+
+[//]: # (| withdrawQuotaPerDay        | true     | string    | Daily withdrawal quota            |                                                                                                  |)
+
+[//]: # (| remainWithdrawQuotaPerDay} | true     | string    | Remaining withdrawal quota for the day  |                                                                                              |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (### Status Code)
+
+[//]: # ()
+[//]: # (| Status Code | Error Message                     | Error Scenario Description                   |)
+
+[//]: # (| ----------- | --------------------------------- | ------------------------------------------- |)
+
+[//]: # (| 200         | success                           | Request succeeded                            |)
+
+[//]: # (| 500         | error                             | System error                                 |)
+
+[//]: # (| 1002        | unauthorized                      | Unauthorized                                 |)
+
+[//]: # (| 1003        | invalid signature                 | Signature verification failed                |)
+
+[//]: # (| 2002        | invalid field value in "field name" | Illegal field value                          |)
+
+[//]: # ()
+[//]: # (## Withdraw address query)
+
+[//]: # ()
+[//]: # (API Key Permission: Read<br>)
+
+[//]: # ()
+[//]: # (This node is used to query the withdrawal addresses available for the API key, and is only available to parent users. <br>)
+
+[//]: # ()
+[//]: # (### HTTP requests)
+
+[//]: # ()
+[//]: # (- GET `/v2/account/withdraw/address`)
+
+[//]: # ()
+[//]: # (### Request parameters)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Type   | Description                                                    | Default value | Value range                                              |)
+
+[//]: # (| -------------- | -------- | ------ | -------------------------------------------------------------- | ------------- | -------------------------------------------------------- |)
+
+[//]: # (| currency       | true     | string | Currency                                                       |               | btc, ltc, bch, eth, etc ... &#40;Refer to `GET /v1/common/currencys`&#41; |)
+
+[//]: # (| chain          | false    | string | Chain name                                                      |      If not filled, return the withdrawal addresses of all chains         |  |)
+
+[//]: # (| note           | false    | string | Address note                                                   |        If not filled, return all note withdrawal addresses       |       |)
+
+[//]: # (| limit          | false    | int    | Maximum number of items returned in a single page               | 100           | [1, 500]                                                 |)
+
+[//]: # (| fromId         | false    | long   | Starting number &#40;withdrawal address ID, valid for pagination&#41;   | NA            |                                                          |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (     "code": 200,)
+
+[//]: # (     "data": [)
+
+[//]: # (         {)
+
+[//]: # (             "currency": "usdt",)
+
+[//]: # (             "chain": "usdt",)
+
+[//]: # (             "note": "Binance",)
+
+[//]: # (             "addressTag": "",)
+
+[//]: # (             "address": "15PrEcqTJRn4haLeby3gJJebtyf4KgWmSd")
+
+[//]: # (         })
+
+[//]: # (     ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Response data)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Data type | Description                                                    | Value range |)
+
+[//]: # (| -------------- | -------- | --------- | -------------------------------------------------------------- | ----------- |)
+
+[//]: # (| code           | true     | int       | Status code                                                     |             |)
+
+[//]: # (| message        | false    | string    | Error description &#40;if any&#41;                                      |             |)
+
+[//]: # (| data           | true     | object    |                                                                |             |)
+
+[//]: # (| { currency     | true     | string    | Currency                                                        |             |)
+
+[//]: # (| chain          | true     | string    | Chain name                                                       |             |)
+
+[//]: # (| note           | true     | string    | Address note                                                    |             |)
+
+[//]: # (| addressTag     | false    | string    | Address tag, if any                                             |             |)
+
+[//]: # (| address }      | true     | string    | Address                                                         |             |)
+
+[//]: # (| nextId         | false    | long      | Starting number of the next page &#40;withdrawal address ID,only valid if exceeded page size&#41;        |             |)
+
+[//]: # ()
+[//]: # (Remarks:<br>)
+
+[//]: # (The server returns the "nextId" field only when the data item requested by the user exceeds the single-page limit &#40;set by the "limit" field&#41;. After the user receives the "nextId" returned by the server –<br>)
+
+[//]: # (1&#41; It must be known that there are still data that cannot be returned on this page;<br>)
+
+[//]: # (2&#41; If you need to continue to query the next page of data, you should request the query again and use the "nextId" returned by the server as "fromId", and keep other request parameters unchanged. <br>)
+
+[//]: # (3&#41; As the database record ID, "nextId" and "fromId" have no other business meaning except for page turning query. <br>)
+
+[//]: # ()
+[//]: # ()
+[//]: # (## Virtual currency withdrawal)
+
+[//]: # ()
+[//]: # (This node is used to withdraw the digital currency of the spot account to the blockchain address &#40;which already exists in the currency withdrawal address list&#41; without multiple &#40;SMS, email&#41; verification, and is only available to mother users)
+
+[//]: # ()
+[//]: # (API Key Permission: Withdrawal<br>)
+
+[//]: # (Frequency limit value &#40;NEW&#41;: 20 times/2s)
+
+[//]: # ()
+[//]: # (<aside class="notice">If the user has set priority to use the fast withdrawal channel in the personal settings </a>, the withdrawal initiated through the API will also give priority to the fast withdrawal channel. Quick coin withdrawal means that when the target address of the coin withdrawal is the internal user address of the platform, the coin withdrawal will go through the fast channel inside the platform instead of the blockchain. </aside>)
+
+[//]: # (<aside class="notice">API withdrawal only supports the addresses in the user withdrawal address list</a>. The IOTA one-time withdrawal address cannot be set as a common address, so IOTA withdrawal through API is not supported. </aside>)
+
+[//]: # ()
+[//]: # (### HTTP requests)
+
+[//]: # ()
+[//]: # (- POST `/v1/dw/withdraw/api/create`)
+
+[//]: # ()
+[//]: # (> Request:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (   "address": "0xde709f2102306220921060314715629080e2fb77",)
+
+[//]: # (   "amount": "0.05",)
+
+[//]: # (   "currency": "eth",)
+
+[//]: # (   "fee": "0.01")
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Request parameters)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Data type | Description | Value range |)
+
+[//]: # (| -------------- | -------- | --------- | ----------------------------------------------------- | ----------- |)
+
+[//]: # (| address        | true     | string    | Withdrawal address | Only supports addresses in the corresponding currency address list on the official website |)
+
+[//]: # (| amount         | true     | string    | Withdrawal amount | |)
+
+[//]: # (| currency       | true     | string    | Asset type | btc, ltc, bch, eth, etc ... &#40;Refer to `GET /v1/common/currencys`&#41; |)
+
+[//]: # (| fee            | false     | string    | Transfer fee | |)
+
+[//]: # (| chain          | false    | string    | Value reference `GET /v2/reference/currencies`. For example, when withdrawing USDT to OMNI, this parameter must be set to "usdt". When withdrawing USDT to TRX, this parameter must be set to "trc20usdt". For other currencies, this parameter does not need to be set. | |)
+
+[//]: # (| addr-tag       | false    | string    | Virtual currency shared address tag, suitable for xrp, xem, bts, steem, eos, xmr | Integer string format, e.g., "123" |)
+
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "status": "ok",)
+
+[//]: # (    "data": 91934214)
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Response data)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Data type | Description | Value range |)
+
+[//]: # (| -------------- | -------- | --------- | ----------- | ----------- |)
+
+[//]: # (| data           | false    | long      | Withdrawal ID |             |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (## Cancel withdrawal)
+
+[//]: # ()
+[//]: # (This node is used to cancel the submitted withdrawal request and is only available to parent users)
+
+[//]: # ()
+[//]: # (API Key Permission: Withdrawal<br>)
+
+[//]: # (Frequency limit value &#40;NEW&#41;: 20 times/2s)
+
+[//]: # ()
+[//]: # (### HTTP requests)
+
+[//]: # ()
+[//]: # (- POST `/v1/dw/withdraw-virtual/{withdraw-id}/cancel`)
+
+[//]: # ()
+[//]: # (### Request parameters)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Type | Description |)
+
+[//]: # (| -------------- | -------- | ---- | ----------- |)
+
+[//]: # (| withdraw-id   | true     | long | Withdrawal ID &#40;to be filled in the path&#41; |)
+
+[//]: # ()
+[//]: # ()
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (    "status": "ok",)
+
+[//]: # (    "data": "91934217")
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Response data)
+
+[//]: # ()
+[//]: # ()
+[//]: # (| Parameter name | Required | Data type | Description |)
+
+[//]: # (| -------------- | -------- | --------- | ----------- |)
+
+[//]: # (| data           | false    | long      | Withdrawal ID |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (## Deposit and withdrawal record)
+
+[//]: # ()
+[//]: # (This node is used to query deposit and withdrawal records, both parent and child users are available)
+
+[//]: # ()
+[//]: # (API Key Permission: Read<br>)
+
+[//]: # (Frequency limit value &#40;NEW&#41;: 20 times/2s)
+
+[//]: # ()
+[//]: # (### HTTP requests)
+
+[//]: # ()
+[//]: # (- GET `/v1/query/deposit-withdraw`)
+
+[//]: # ()
+[//]: # (### Request parameters)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Data type | Description | Default value | Value range |)
+
+[//]: # (| -------------- | -------- | --------- | ----------- | ------------- | ----------- |)
+
+[//]: # (| currency       | false    | string    | Currency    |               | btc, ltc, bch, eth, etc ... &#40;Refer to `GET /v1/common/currencys`&#41; |)
+
+[//]: # (| type           | true     | string    | Recharge or withdrawal |             | deposit or withdraw |)
+
+[//]: # (| from           | false    | string    | Query starting ID | By default, the default value is direct. When direct is 'prev', from is 1, return from old to new in ascending order; when direct is 'next', from is the ID of the latest record, and return from new to old in descending order | |)
+
+[//]: # (| size           | false    | string    | Query record size | 100           | 1-500 |)
+
+[//]: # (| direct         | false    | string    | Return record sorting direction | default       | "prev" &#40;ascending&#41; or "next" &#40;descending&#41; |)
+
+[//]: # ()
+[//]: # ()
+[//]: # (> Response:)
+
+[//]: # ()
+[//]: # (```json)
+
+[//]: # ({)
+
+[//]: # (  "status": "ok",)
+
+[//]: # (  "data": [)
+
+[//]: # (    {)
+
+[//]: # (      "id": 105380410,)
+
+[//]: # (      "type": "deposit",)
+
+[//]: # (      "sub-type": "NORMAL",)
+
+[//]: # (      "request-id": "usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171",)
+
+[//]: # (      "currency": "usdc",)
+
+[//]: # (      "chain": "usdc",)
+
+[//]: # (      "tx-hash": "244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf",)
+
+[//]: # (      "amount": 100,)
+
+[//]: # (      "address": "0x2c7c448a32d754d8d680e43b0b0b49cf61c83750",)
+
+[//]: # (      "address-tag": "",)
+
+[//]: # (      "fee": 0,)
+
+[//]: # (      "state": "safe",)
+
+[//]: # (      "wallet-confirm": 12,)
+
+[//]: # (      "created-at": 1752738144869,)
+
+[//]: # (      "updated-at": 1752738289051)
+
+[//]: # (    },)
+
+[//]: # (    ...)
+
+[//]: # (  ])
+
+[//]: # (})
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Response data)
+
+[//]: # ()
+[//]: # (| Parameter name | Required | Data type | Description                                                                                                                   | Value range |)
+
+[//]: # (| -------------- |----------| --------- |-------------------------------------------------------------------------------------------------------------------------------| ----------- |)
+
+[//]: # (| id             | true     | long      | Deposit order ID / Withdraw order ID                                                                                          | |)
+
+[//]: # (| type           | true     | string    | Type                                                                                                                          | 'deposit', 'withdraw' |)
+
+[//]: # (| sub-type       | false    | string    | sub-type reserved field                                                                                                                     | |)
+
+[//]: # (| currency       | true     | string    | Currency                                                                                                                      | |)
+
+[//]: # (| tx-hash        | true     | string    | Transaction hash                                                                                                              | |)
+
+[//]: # (| chain          | true     | string    | Chain name                                                                                                                    | |)
+
+[//]: # (| amount         | true     | float     | Amount                                                                                                                        | |)
+
+[//]: # (| address        | true     | string    | Destination address                                                                                                           | |)
+
+[//]: # (| address-tag    | true     | string    | Address tag                                                                                                                   | |)
+
+[//]: # (| request-id     | false    | string    | reserved field                                                                                                                    | |)
+
+[//]: # (| fee            | true     | float     | Handling fee                                                                                                                  | |)
+
+[//]: # (| state          | true     | string    | State                                                                                                                         | See table below |)
+
+[//]: # (| wallet-confirm          | false    | long    | wallet confirm times                                                                                                          |  |)
+
+[//]: # (| error-code     | false    | string    | Withdrawal failure error code, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed"    | |)
+
+[//]: # (| error-msg      | false    | string    | Withdrawal failure error message, only applicable when type is "withdraw" and state is "reject", "wallet-reject", or "failed" | |)
+
+[//]: # (| created-at     | true     | long      | Creation time                                                                                                                 | |)
+
+[//]: # (| updated-at     | true     | long      | Last updated time                                                                                                             | |)
+
+[//]: # ()
+[//]: # (- Definition of virtual currency deposit status:)
+
+[//]: # ()
+[//]: # (| Status   | Description   |)
+
+[//]: # (| -------- | ------------- |)
+
+[//]: # (| unknown  | Status unknown |)
+
+[//]: # (| confirming  | Confirming |)
+
+[//]: # (| confirmed | Confirmed |)
+
+[//]: # (| safe | Completed |)
+
+[//]: # (| orphan | To be confirmed |)
+
+[//]: # ()
+[//]: # (- Definition of virtual currency withdrawal status:)
+
+[//]: # ()
+[//]: # (| Status        | Description       |)
+
+[//]: # (| -------------- | ----------------- |)
+
+[//]: # (| verifying      | Pending verification |)
+
+[//]: # (| failed            | Authentication failed |)
+
+[//]: # (| submitted     | Submitted |)
+
+[//]: # (| reexamine    | Under review |)
+
+[//]: # (| canceled       | Canceled |)
+
+[//]: # (| pass              | Approved |)
+
+[//]: # (| reject           | Approval rejected |)
+
+[//]: # (| pre-transfer   | Processing |)
+
+[//]: # (| wallet-transfer | Sent |)
+
+[//]: # (| wallet-reject   | Wallet reject |)
+
+[//]: # (| confirmed    | Block confirmed |)
+
+[//]: # (| confirm-error   | Block confirmation error |)
+
+[//]: # (| repealed         | Revoked |)
 
 
 # Spot Trading

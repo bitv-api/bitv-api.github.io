@@ -2299,7 +2299,7 @@ This node returns the account history based on the user account ID.
 
 [//]: # (| confirm-error   | Block confirmation error |)
 
-[//]: # (| repealed         | Revoked |)
+[//]: # (| repealed         | Revoked |) 
 
 
 # Spot Trading

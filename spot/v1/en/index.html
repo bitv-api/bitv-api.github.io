@@ -308,9 +308,6 @@
                   <li>
                     <a href="#transaction-related" class="toc-h2 toc-link" data-title="Transaction related">Transaction related</a>
                   </li>
-                  <li>
-                    <a href="#account-deposit-and-withdrawal-related" class="toc-h2 toc-link" data-title="Account deposit and withdrawal related">Account deposit and withdrawal related</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -377,36 +374,10 @@
               </ul>
           </li>
           <li>
-            <a href="#wallet-deposit-and-withdrawal-related" class="toc-h1 toc-link" data-title="Wallet (deposit and withdrawal related)">Wallet (deposit and withdrawal related)</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#introduction-4" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
-                  </li>
-                  <li>
-                    <a href="#deposit-address-query" class="toc-h2 toc-link" data-title="Deposit Address Query">Deposit Address Query</a>
-                  </li>
-                  <li>
-                    <a href="#withdrawal-limit-query" class="toc-h2 toc-link" data-title="Withdrawal limit query">Withdrawal limit query</a>
-                  </li>
-                  <li>
-                    <a href="#withdraw-address-query" class="toc-h2 toc-link" data-title="Withdraw address query">Withdraw address query</a>
-                  </li>
-                  <li>
-                    <a href="#virtual-currency-withdrawal" class="toc-h2 toc-link" data-title="Virtual currency withdrawal">Virtual currency withdrawal</a>
-                  </li>
-                  <li>
-                    <a href="#cancel-withdrawal" class="toc-h2 toc-link" data-title="Cancel withdrawal">Cancel withdrawal</a>
-                  </li>
-                  <li>
-                    <a href="#deposit-and-withdrawal-record" class="toc-h2 toc-link" data-title="Deposit and withdrawal record">Deposit and withdrawal record</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
             <a href="#spot-trading" class="toc-h1 toc-link" data-title="Spot Trading">Spot Trading</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#introduction-5" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                    <a href="#introduction-4" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
                   </li>
                   <li>
                     <a href="#place-an-order" class="toc-h2 toc-link" data-title="place an order">place an order</a>
@@ -453,7 +424,7 @@
             <a href="#websocket-market-data" class="toc-h1 toc-link" data-title="Websocket market data">Websocket market data</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#introduction-6" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                    <a href="#introduction-5" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
                   </li>
                   <li>
                     <a href="#k-line-data" class="toc-h2 toc-link" data-title="K line data">K line data</a>
@@ -482,7 +453,7 @@
             <a href="#websocket-assets-and-orders" class="toc-h1 toc-link" data-title="Websocket assets and orders">Websocket assets and orders</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#introduction-7" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                    <a href="#introduction-6" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
                   </li>
                   <li>
                     <a href="#subscribe-to-order-updates" class="toc-h2 toc-link" data-title="Subscribe to order updates">Subscribe to order updates</a>
@@ -531,14 +502,13 @@
 
 <p>You can create an API key by clicking <a href="https://www.bitv.com/api/">here </a>.</p>
 
-<p>Each parent user can create 20 groups of Api Key, and each Api Key can set three kinds of permissions: read, trade and withdraw coins.</p>
+<p>Each parent user can create 3 groups of API Key, and each API Key can set two kinds of permissions: read and trade.</p>
 
 <p>Permissions are described as follows:</p>
 
 <ul>
   <li>Read permission: Read permission is used for the query interface of data, such as: order query, transaction query, etc.</li>
   <li>Trading permission: Trading permission is used for placing, withdrawing and transferring orders.</li>
-  <li>Withdrawal permission: Withdrawal permission is used to create withdrawal orders and cancel withdrawal order operations.</li>
 </ul>
 
 <p>After successful creation, please make sure to remember the following information:</p>
@@ -556,18 +526,18 @@
 Each API Key can be bound to a maximum of 10 IP addresses (host or network addresses). For security reasons, it is strongly recommended that you bind an IP address.
 </aside>
 <aside class="warning"> 
- <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets (even if you do not open withdrawal privileges), if you find API Key leakage, please delete the API Key as soon as possible.
+ <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets , if you find API Key leakage, please delete the API Key as soon as possible.
 </aside>
 
 <h2 id="interface-types">Interface Types</h2>
 
-<p>We provide two kinds of interfaces for users, you can choose the suitable way to check the quotes, trade or withdraw coins according to your usage scenarios and preferences.</p>
+<p>We provide two kinds of interfaces for users, you can choose the suitable way to check the quotes or trade according to your usage scenarios and preferences.</p>
 
 <h3 id="rest-api">REST API</h3>
 
 <p>REST, which stands for Representational State Transfer, is a popular HTTP-based communication mechanism, where each URL represents a resource.</p>
 
-<p>For one-time operations such as trading or withdrawing coins from assets, developers are recommended to use the REST API for operations.</p>
+<p>For one-time operations such as trading, developers are recommended to use the REST API for operations.</p>
 
 <h3 id="websocket-api">WebSocket API</h3>
 
@@ -1059,15 +1029,13 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 
 <h3 id="q1-how-many-api-keys-can-a-user-apply-for">Q1: How many Api Keys can a user apply for?</h3>
 
-<p>A: Each parent user can create 5 groups of Api Keys, and each Api Key can be set with three permissions: reading, trading, and withdrawal.
-Each parent user can also create 200 sub-users, and each sub-user can create 5 sets of Api Keys, and each Api Key can be set with two permissions for reading and trading.</p>
+<p>A: Each parent user can create 3 groups of API Keys, and each API Key can be set with two permissions: reading and trading. Each parent user can also create 200 sub-users, and each sub-user can create 3 sets of API Keys, and each API Key can be set with two permissions for reading and trading.</p>
 
-<p>The following are descriptions of the three permissions:</p>
+<p>The following are descriptions of the two permissions:</p>
 
 <ul>
   <li>Read permission: read permission is used for data query interface, such as: order query, transaction query, etc.</li>
   <li>Transaction authority: transaction authority is used for placing orders, canceling orders, and transferring interfaces.</li>
-  <li>Withdrawal permission: Withdrawal permission is used to create withdrawal orders and cancel withdrawal orders.</li>
 </ul>
 
 <h3 id="q2-why-do-disconnections-and-timeouts-often-occur">Q2: Why do disconnections and timeouts often occur?</h3>
@@ -1290,61 +1258,49 @@ Each parent user can also create 200 sub-users, and each sub-user can create 5 s
 
 <p>A: Currently, there is price limit protection based on the latest transaction price. For coins with poor liquidity, placing an order based on market data may trigger price limit protection. It is recommended to place an order based on the transaction price + handicap data information pushed by ws</p>
 
-<h2 id="account-deposit-and-withdrawal-related">Account deposit and withdrawal related</h2>
-
-<h3 id="q1-why-does-it-return-an-api-not-support-temp-addr-error-when-creating-a-withdrawal">Q1: Why does it return an api-not-support-temp-addr error when creating a withdrawal?</h3>
-
-<p>A: Due to security considerations, the API only supports addresses that are already in the withdrawal address list when creating withdrawals. It does not currently support using the API to add addresses to the withdrawal address list. You need to add addresses on the web page or APP before you can use them. Withdraw operations in the API.</p>
-
-<h3 id="q2-why-is-the-invaild-address-error-returned-when-usdt-is-withdrawn">Q2: Why is the Invaild-Address error returned when USDT is withdrawn?</h3>
-
-<p>A: The USDT currency is a typical one-coin multi-chain currency. When creating a withdrawal order, you should fill in the address type corresponding to the chain parameter. The following table shows the correspondence between chains and chain parameters:</p>
-
 <table>
-  <thead>
-    <tr>
-      <th>chain</th>
-      <th>chain parameter</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
-      <td>ERC20 (default)</td>
-      <td>usdterc20</td>
-    </tr>
-    <tr>
-      <td>OMNI</td>
-      <td>usdt</td>
-    </tr>
-    <tr>
-      <td>TRX</td>
-      <td>trc20usdt</td>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>———-</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<p>If the chain parameter is empty, the default chain is ERC20, or you can also assign the parameter to <code>usdterc20</code>.</p>
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>ERC20 (default)</td>
+      <td>usdterc20</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>If you want to withdraw coins to OMNI or TRX, the chain parameter should be filled with usdt or trc20usdt. Please refer to the <code>GET /v2/reference/currencies</code> interface for available values of the chain parameter.</p>
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>OMNI</td>
+      <td>usdt</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="q3-how-to-fill-in-the-fee-field-when-creating-a-withdrawal">Q3: How to fill in the fee field when creating a withdrawal?</h3>
-
-<p>A: Please refer to the return value of the GET /v2/reference/currencies interface. The withdrawFeeType in the returned information is the type of withdrawal fee. Select the corresponding field according to the type to set the withdrawal fee.</p>
-
-<p>Withdrawal fee types include:</p>
-
-<ul>
-  <li>transactFeeWithdraw : single withdrawal fee (only valid for fixed type, withdrawFeeType=fixed)</li>
-  <li>minTransactFeeWithdraw : Minimum single withdrawal fee (only valid for interval type, withdrawFeeType=circulated or ratio)</li>
-  <li>maxTransactFeeWithdraw : The maximum single withdrawal fee (only valid for interval type and ratio type with upper limit, withdrawFeeType=circulated or ratio</li>
-  <li>transactFeeRateWithdraw : single withdrawal fee rate (only valid for ratio type, withdrawFeeType=ratio)</li>
-</ul>
-
-<h3 id="q4-how-to-check-my-withdrawal-amount">Q4: How to check my withdrawal amount?</h3>
-
-<p>A: Please refer to the return value of the /v2/account/withdraw/quota interface. The returned information includes the single, current, current, total withdrawal quota and remaining quota information of the currency you inquired about.</p>
-
-<p>Remarks: If you have a large amount of withdrawal needs, and the withdrawal amount exceeds the relevant limit, you can contact the official customer service for communication.</p>
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>TRX</td>
+      <td>trc20usdt</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
 
 <h1 id="basic-information">basic information</h1>
 
@@ -3187,7 +3143,7 @@ Frequency limit value (NEW): 5 times/2s</p>
       <td>string</td>
       <td>Change types, multiple choices separated by commas</td>
       <td>all</td>
-      <td>trade, transact-fee, fee-deduction, transfer, deposit, withdraw, withdraw-fee, other-types, rebate</td>
+      <td>trade, transact-fee, fee-deduction, transfer, deposit, withdraw, withdraw-fee, other-types</td>
     </tr>
     <tr>
       <td>start-time</td>
@@ -3343,1089 +3299,1629 @@ Frequency limit value (NEW): 5 times/2s</p>
   </tbody>
 </table>
 
-<h1 id="wallet-deposit-and-withdrawal-related">Wallet (deposit and withdrawal related)</h1>
-
-<h2 id="introduction-4">Introduction</h2>
-
-<p>The interface related to deposit and withdrawal provides functions such as deposit address, withdrawal address, withdrawal amount, deposit and withdrawal records, etc., as well as functions such as withdrawal and cancellation of withdrawal.</p>
-
-<aside class="notice">Signature authentication is required to access the interfaces related to deposit and withdrawal. </aside>
-
-<p>The following are the return codes, return messages and instructions returned by the relevant interfaces of deposit and withdrawal.</p>
-
 <table>
-  <thead>
-    <tr>
-      <th>Return Code</th>
-      <th>Return Message</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
-      <td>200</td>
-      <td>success</td>
-      <td>Request succeeded</td>
-    </tr>
-    <tr>
-      <td>500</td>
-      <td>error</td>
-      <td>System error</td>
-    </tr>
-    <tr>
-      <td>1002</td>
-      <td>unauthorized</td>
-      <td>Unauthorized</td>
-    </tr>
-    <tr>
-      <td>1003</td>
-      <td>invalid signature</td>
-      <td>Signature verification failed</td>
-    </tr>
-    <tr>
-      <td>2002</td>
-      <td>invalid field value in “field name”</td>
-      <td>Illegal field value</td>
-    </tr>
-    <tr>
-      <td>2003</td>
-      <td>missing mandatory field “field name”</td>
-      <td>Mandatory field missing</td>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>———–</td>
+      <td>——————————–</td>
+      <td>————————————-</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="deposit-address-query">Deposit Address Query</h2>
-
-<p>This node is used to query the deposit address of a specific currency (except IOTA) in its blockchain, and both parent and child users are available</p>
-
-<p>API Key Permission: Read<br />
-Frequency limit value (NEW): 20 times/2s</p>
-
-<aside class="notice"> IOTA coins are not supported for deposit address query </aside>
-
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/account/deposit/address?currency=btc"</span>
-</code></pre></div>
-<h3 id="http-requests-12">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v2/account/deposit/address</code></li>
-</ul>
-
-<h3 id="request-parameters-13">Request parameters</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Field Name</th>
-      <th>Required</th>
-      <th>Type</th>
-      <th>Field Description</th>
-      <th>Value Range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>200</td>
+      <td>success</td>
+      <td>Request succeeded</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>500</td>
+      <td>error</td>
+      <td>System error</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>1002</td>
+      <td>unauthorized</td>
+      <td>Unauthorized</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>1003</td>
+      <td>invalid signature</td>
+      <td>Signature verification failed</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>2002</td>
+      <td>invalid field value in “field name”</td>
+      <td>Illegal field value</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>2003</td>
+      <td>missing mandatory field “field name”</td>
+      <td>Mandatory field missing</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (curl “https://api.bitv.com/v2/account/deposit/address?currency=btc”)</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>———-</td>
+      <td>——–</td>
+      <td>——</td>
+      <td>—————–</td>
+      <td>—————————————–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td>btc, ltc, bch, eth, etc … (value reference <code>GET /v1/common/currencys</code>)</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<blockquote>
-  <p>Response:</p>
-</blockquote>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (     “code”: 200,)</p>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-     </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-         </span><span class="p">{</span><span class="w">
-             </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1PSRjPg53cX7hMRYAXGJnL8mqHtzmQgPUs"</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"addressTag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="w">
-         </span><span class="p">}</span><span class="w">
-     </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-10">Response data</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (     “data”: [)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “currency”: “btc”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “address”: “1PSRjPg53cX7hMRYAXGJnL8mqHtzmQgPUs”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “addressTag”: “”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “chain”: “btc”)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Field Name</th>
-      <th>Required</th>
-      <th>Data Type</th>
-      <th>Field Description</th>
-      <th>Value Range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>———–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>————————————</td>
+      <td>——————————————————-</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>code</td>
       <td>true</td>
       <td>int</td>
       <td>Status code</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>message</td>
       <td>false</td>
       <td>string</td>
       <td>Error description (if any)</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>data</td>
       <td>true</td>
       <td>object</td>
       <td> </td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>{ currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>address</td>
       <td>true</td>
       <td>string</td>
       <td>Deposit address</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>addressTag</td>
       <td>true</td>
       <td>string</td>
       <td>Deposit address tag</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>chain }</td>
       <td>true</td>
       <td>string</td>
       <td>Chain name</td>
       <td> </td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="status-code-1">Status Code</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Status Code</th>
-      <th>Error Message</th>
-      <th>Error Scenario Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>———–</td>
+      <td>—————————–</td>
+      <td>——————————————————–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>200</td>
       <td>success</td>
       <td>Request succeeded</td>
-    </tr>
-    <tr>
-      <td>500</td>
-      <td>error</td>
-      <td>System error</td>
-    </tr>
-    <tr>
-      <td>1002</td>
-      <td>unauthorized</td>
-      <td>Unauthorized</td>
-    </tr>
-    <tr>
-      <td>1003</td>
-      <td>invalid signature</td>
-      <td>Signature verification failed</td>
-    </tr>
-    <tr>
-      <td>2002</td>
-      <td>invalid field value in “field name”</td>
-      <td>Illegal field value</td>
-    </tr>
-    <tr>
-      <td>2003</td>
-      <td>missing mandatory field “field name”</td>
-      <td>Mandatory field missing</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="withdrawal-limit-query">Withdrawal limit query</h2>
-
-<p>This node is used to query the withdrawal amount of each currency, and it is only available to parent users</p>
-
-<p>API Key Permission: Read<br />
-Frequency limit value (NEW): 20 times/2s</p>
-
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/account/withdraw/quota?currency=btc"</span>
-</code></pre></div>
-<h3 id="http-requests-13">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v2/account/withdraw/quota</code></li>
-</ul>
-
-<h3 id="request-parameters-14">Request parameters</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Field Name</th>
-      <th>Required</th>
-      <th>Data Type</th>
-      <th>Field Description</th>
-      <th>Value Range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>500</td>
+      <td>error</td>
+      <td>System error</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>1002</td>
+      <td>unauthorized</td>
+      <td>Unauthorized</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>1003</td>
+      <td>invalid signature</td>
+      <td>Signature verification failed</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>2002</td>
+      <td>invalid field value in “field name”</td>
+      <td>Illegal field value</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>2003</td>
+      <td>missing mandatory field “field name”</td>
+      <td>Mandatory field missing</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (curl “https://api.bitv.com/v2/account/withdraw/quota?currency=btc”)</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>———-</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>—————-</td>
+      <td>———————————————–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td>btc, ltc, bch, eth, etc … (value reference <code>GET /v1/common/currencys</code>)</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<blockquote>
-  <p>Response:</p>
-</blockquote>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (     “code”: 200,)</p>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-     </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"data"</span><span class="p">:</span><span class="w">
-         </span><span class="p">{</span><span class="w">
-             </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"chains"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                 </span><span class="p">{</span><span class="w">
-                     </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btc"</span><span class="p">,</span><span class="w">
-                     </span><span class="nl">"maxWithdrawAmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200.00000000"</span><span class="p">,</span><span class="w">
-                     </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200.00000000"</span><span class="p">,</span><span class="w">
-                     </span><span class="nl">"remainWithdrawQuotaPerDay"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200.000000000000000000"</span><span class="w">
-                 </span><span class="p">}</span><span class="w">
-         </span><span class="err">}</span><span class="w">
-     </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-11">Response data</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (     “data”:)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “currency”: “btc”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “chains”: [)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (                     “chain”: “btc”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (                     “maxWithdrawAmt”: “200.00000000”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (                     “withdrawQuotaPerDay”: “200.00000000”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (                     “remainWithdrawQuotaPerDay”: “200.000000000000000000”)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Field Name</th>
-      <th>Required</th>
-      <th>Data Type</th>
-      <th>Field Description</th>
-      <th>Value Range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————————–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>———————————</td>
+      <td>———————————————————————————————-</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>code</td>
       <td>true</td>
       <td>int</td>
       <td>Status code</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>message</td>
       <td>false</td>
       <td>string</td>
       <td>Error description (if any)</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>data</td>
       <td>true</td>
       <td>object</td>
       <td> </td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td>btc, ltc, bch, eth, etc … (value reference <code>GET /v1/common/currencys</code>)</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>chains</td>
       <td>true</td>
       <td>object</td>
       <td> </td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>{ chain</td>
       <td>true</td>
       <td>string</td>
       <td>Chain name</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>maxWithdrawAmt</td>
       <td>true</td>
       <td>string</td>
       <td>Single maximum withdrawal amount</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>withdrawQuotaPerDay</td>
       <td>true</td>
       <td>string</td>
       <td>Daily withdrawal quota</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>remainWithdrawQuotaPerDay}</td>
       <td>true</td>
       <td>string</td>
       <td>Remaining withdrawal quota for the day</td>
       <td> </td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="status-code-2">Status Code</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Status Code</th>
-      <th>Error Message</th>
-      <th>Error Scenario Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>———–</td>
+      <td>———————————</td>
+      <td>——————————————-</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>200</td>
       <td>success</td>
       <td>Request succeeded</td>
-    </tr>
-    <tr>
-      <td>500</td>
-      <td>error</td>
-      <td>System error</td>
-    </tr>
-    <tr>
-      <td>1002</td>
-      <td>unauthorized</td>
-      <td>Unauthorized</td>
-    </tr>
-    <tr>
-      <td>1003</td>
-      <td>invalid signature</td>
-      <td>Signature verification failed</td>
-    </tr>
-    <tr>
-      <td>2002</td>
-      <td>invalid field value in “field name”</td>
-      <td>Illegal field value</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="withdraw-address-query">Withdraw address query</h2>
-
-<p>API Key Permission: Read<br /></p>
-
-<p>This node is used to query the withdrawal addresses available for the API key, and is only available to parent users. <br /></p>
-
-<h3 id="http-requests-14">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v2/account/withdraw/address</code></li>
-</ul>
-
-<h3 id="request-parameters-15">Request parameters</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default value</th>
-      <th>Value range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>500</td>
+      <td>error</td>
+      <td>System error</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>1002</td>
+      <td>unauthorized</td>
+      <td>Unauthorized</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>1003</td>
+      <td>invalid signature</td>
+      <td>Signature verification failed</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>2002</td>
+      <td>invalid field value in “field name”</td>
+      <td>Illegal field value</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>——</td>
+      <td>————————————————————–</td>
+      <td>————-</td>
+      <td>——————————————————–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td> </td>
       <td>btc, ltc, bch, eth, etc … (Refer to <code>GET /v1/common/currencys</code>)</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>chain</td>
       <td>false</td>
       <td>string</td>
       <td>Chain name</td>
       <td>If not filled, return the withdrawal addresses of all chains</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>note</td>
       <td>false</td>
       <td>string</td>
       <td>Address note</td>
       <td>If not filled, return all note withdrawal addresses</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>limit</td>
       <td>false</td>
       <td>int</td>
       <td>Maximum number of items returned in a single page</td>
       <td>100</td>
       <td>[1, 500]</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>fromId</td>
       <td>false</td>
       <td>long</td>
       <td>Starting number (withdrawal address ID, valid for pagination)</td>
       <td>NA</td>
       <td> </td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<blockquote>
-  <p>Response:</p>
-</blockquote>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (     “code”: 200,)</p>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-     </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-         </span><span class="p">{</span><span class="w">
-             </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Binance"</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"addressTag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-             </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15PrEcqTJRn4haLeby3gJJebtyf4KgWmSd"</span><span class="w">
-         </span><span class="p">}</span><span class="w">
-     </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-12">Response data</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (     “data”: [)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “currency”: “usdt”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “chain”: “usdt”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “note”: “Binance”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “addressTag”: “”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (             “address”: “15PrEcqTJRn4haLeby3gJJebtyf4KgWmSd”)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Data type</th>
-      <th>Description</th>
-      <th>Value range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>————————————————————–</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>code</td>
       <td>true</td>
       <td>int</td>
       <td>Status code</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>message</td>
       <td>false</td>
       <td>string</td>
       <td>Error description (if any)</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>data</td>
       <td>true</td>
       <td>object</td>
       <td> </td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>{ currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>chain</td>
       <td>true</td>
       <td>string</td>
       <td>Chain name</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>note</td>
       <td>true</td>
       <td>string</td>
       <td>Address note</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>addressTag</td>
       <td>false</td>
       <td>string</td>
       <td>Address tag, if any</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>address }</td>
       <td>true</td>
       <td>string</td>
       <td>Address</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>nextId</td>
       <td>false</td>
       <td>long</td>
       <td>Starting number of the next page (withdrawal address ID,only valid if exceeded page size)</td>
       <td> </td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<p>Remarks:<br />
-The server returns the “nextId” field only when the data item requested by the user exceeds the single-page limit (set by the “limit” field). After the user receives the “nextId” returned by the server –<br />
-1) It must be known that there are still data that cannot be returned on this page;<br />
-2) If you need to continue to query the next page of data, you should request the query again and use the “nextId” returned by the server as “fromId”, and keep other request parameters unchanged. <br />
-3) As the database record ID, “nextId” and “fromId” have no other business meaning except for page turning query. <br /></p>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (The server returns the “nextId” field only when the data item requested by the user exceeds the single-page limit (set by the “limit” field). After the user receives the “nextId” returned by the server –<br />)</p>
 
-<h2 id="virtual-currency-withdrawal">Virtual currency withdrawal</h2>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (2) If you need to continue to query the next page of data, you should request the query again and use the “nextId” returned by the server as “fromId”, and keep other request parameters unchanged. <br />)</p>
 
-<p>This node is used to withdraw the digital currency of the spot account to the blockchain address (which already exists in the currency withdrawal address list) without multiple (SMS, email) verification, and is only available to mother users</p>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (3) As the database record ID, “nextId” and “fromId” have no other business meaning except for page turning query. <br />)</p>
 
-<p>API Key Permission: Withdrawal<br />
-Frequency limit value (NEW): 20 times/2s</p>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (   “address”: “0xde709f2102306220921060314715629080e2fb77”,)</p>
 
-<aside class="notice">If the user has set priority to use the fast withdrawal channel in the personal settings &lt;/a&gt;, the withdrawal initiated through the API will also give priority to the fast withdrawal channel. Quick coin withdrawal means that when the target address of the coin withdrawal is the internal user address of the platform, the coin withdrawal will go through the fast channel inside the platform instead of the blockchain. </aside>
-<aside class="notice">API withdrawal only supports the addresses in the user withdrawal address list&lt;/a&gt;. The IOTA one-time withdrawal address cannot be set as a common address, so IOTA withdrawal through API is not supported. </aside>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (   “amount”: “0.05”,)</p>
 
-<h3 id="http-requests-15">HTTP requests</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (   “currency”: “eth”,)</p>
 
-<ul>
-  <li>POST <code>/v1/dw/withdraw/api/create</code></li>
-</ul>
-
-<blockquote>
-  <p>Request:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-   </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xde709f2102306220921060314715629080e2fb77"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.05"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eth"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="request-parameters-16">Request parameters</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (   “fee”: “0.01”)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Data type</th>
-      <th>Description</th>
-      <th>Value range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>—————————————————–</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>address</td>
       <td>true</td>
       <td>string</td>
       <td>Withdrawal address</td>
       <td>Only supports addresses in the corresponding currency address list on the official website</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>amount</td>
       <td>true</td>
       <td>string</td>
       <td>Withdrawal amount</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>true</td>
       <td>string</td>
       <td>Asset type</td>
       <td>btc, ltc, bch, eth, etc … (Refer to <code>GET /v1/common/currencys</code>)</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>fee</td>
       <td>false</td>
       <td>string</td>
       <td>Transfer fee</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>chain</td>
       <td>false</td>
       <td>string</td>
       <td>Value reference <code>GET /v2/reference/currencies</code>. For example, when withdrawing USDT to OMNI, this parameter must be set to “usdt”. When withdrawing USDT to TRX, this parameter must be set to “trc20usdt”. For other currencies, this parameter does not need to be set.</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>addr-tag</td>
       <td>false</td>
       <td>string</td>
       <td>Virtual currency shared address tag, suitable for xrp, xem, bts, steem, eos, xmr</td>
       <td>Integer string format, e.g., “123”</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<blockquote>
-  <p>Response:</p>
-</blockquote>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (    “status”: “ok”,)</p>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">91934214</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-13">Response data</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (    “data”: 91934214)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Data type</th>
-      <th>Description</th>
-      <th>Value range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>———–</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>data</td>
       <td>false</td>
       <td>long</td>
       <td>Withdrawal ID</td>
       <td> </td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="cancel-withdrawal">Cancel withdrawal</h2>
-
-<p>This node is used to cancel the submitted withdrawal request and is only available to parent users</p>
-
-<p>API Key Permission: Withdrawal<br />
-Frequency limit value (NEW): 20 times/2s</p>
-
-<h3 id="http-requests-16">HTTP requests</h3>
-
-<ul>
-  <li>POST <code>/v1/dw/withdraw-virtual/{withdraw-id}/cancel</code></li>
-</ul>
-
-<h3 id="request-parameters-17">Request parameters</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>—-</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>withdraw-id</td>
       <td>true</td>
       <td>long</td>
       <td>Withdrawal ID (to be filled in the path)</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<blockquote>
-  <p>Response:</p>
-</blockquote>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (    “status”: “ok”,)</p>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91934217"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-14">Response data</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (    “data”: “91934217”)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Data type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>data</td>
       <td>false</td>
       <td>long</td>
       <td>Withdrawal ID</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="deposit-and-withdrawal-record">Deposit and withdrawal record</h2>
-
-<p>This node is used to query deposit and withdrawal records, both parent and child users are available</p>
-
-<p>API Key Permission: Read<br />
-Frequency limit value (NEW): 20 times/2s</p>
-
-<h3 id="http-requests-17">HTTP requests</h3>
-
-<ul>
-  <li>GET <code>/v1/query/deposit-withdraw</code></li>
-</ul>
-
-<h3 id="request-parameters-18">Request parameters</h3>
-
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Data type</th>
-      <th>Description</th>
-      <th>Default value</th>
-      <th>Value range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>——–</td>
+      <td>———</td>
+      <td>———–</td>
+      <td>————-</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>false</td>
       <td>string</td>
       <td>Currency</td>
       <td> </td>
       <td>btc, ltc, bch, eth, etc … (Refer to <code>GET /v1/common/currencys</code>)</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Recharge or withdrawal</td>
       <td> </td>
       <td>deposit or withdraw</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>from</td>
       <td>false</td>
       <td>string</td>
       <td>Query starting ID</td>
       <td>By default, the default value is direct. When direct is ‘prev’, from is 1, return from old to new in ascending order; when direct is ‘next’, from is the ID of the latest record, and return from new to old in descending order</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>size</td>
       <td>false</td>
       <td>string</td>
       <td>Query record size</td>
       <td>100</td>
       <td>1-500</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>direct</td>
       <td>false</td>
       <td>string</td>
       <td>Return record sorting direction</td>
       <td>default</td>
       <td>“prev” (ascending) or “next” (descending)</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<blockquote>
-  <p>Response:</p>
-</blockquote>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (  “status”: “ok”,)</p>
 
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">105380410</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"deposit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"sub-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NORMAL"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdc"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"chain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usdc"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"tx-hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x2c7c448a32d754d8d680e43b0b0b49cf61c83750"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"address-tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"safe"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"wallet-confirm"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"created-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1752738144869</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"updated-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1752738289051</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<h3 id="response-data-15">Response data</h3>
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (  “data”: [)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “id”: 105380410,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “type”: “deposit”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “sub-type”: “NORMAL”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “request-id”: “usdc-244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf-171”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “currency”: “usdc”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “chain”: “usdc”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “tx-hash”: “244e6a20cb2dba99686e1ddc0247205ca98b8b9aaedb316d5110b7fecc6db4bf”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “amount”: 100,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “address”: “0x2c7c448a32d754d8d680e43b0b0b49cf61c83750”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “address-tag”: “”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “fee”: 0,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “state”: “safe”,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “wallet-confirm”: 12,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “created-at”: 1752738144869,)</p>
+
+<p><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (      “updated-at”: 1752738289051)</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>Parameter name</th>
-      <th>Required</th>
-      <th>Data type</th>
-      <th>Description</th>
-      <th>Value range</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>———-</td>
+      <td>———</td>
+      <td>——————————————————————————————————————————-</td>
+      <td>———–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>id</td>
       <td>true</td>
       <td>long</td>
       <td>Deposit order ID / Withdraw order ID</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Type</td>
       <td>‘deposit’, ‘withdraw’</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>sub-type</td>
       <td>false</td>
       <td>string</td>
       <td>sub-type reserved field</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>currency</td>
       <td>true</td>
       <td>string</td>
       <td>Currency</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>tx-hash</td>
       <td>true</td>
       <td>string</td>
       <td>Transaction hash</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>chain</td>
       <td>true</td>
       <td>string</td>
       <td>Chain name</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>amount</td>
       <td>true</td>
       <td>float</td>
       <td>Amount</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>address</td>
       <td>true</td>
       <td>string</td>
       <td>Destination address</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>address-tag</td>
       <td>true</td>
       <td>string</td>
       <td>Address tag</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>request-id</td>
       <td>false</td>
       <td>string</td>
       <td>reserved field</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>fee</td>
       <td>true</td>
       <td>float</td>
       <td>Handling fee</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>state</td>
       <td>true</td>
       <td>string</td>
       <td>State</td>
       <td>See table below</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>wallet-confirm</td>
       <td>false</td>
       <td>long</td>
       <td>wallet confirm times</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>error-code</td>
       <td>false</td>
       <td>string</td>
       <td>Withdrawal failure error code, only applicable when type is “withdraw” and state is “reject”, “wallet-reject”, or “failed”</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>error-msg</td>
       <td>false</td>
       <td>string</td>
       <td>Withdrawal failure error message, only applicable when type is “withdraw” and state is “reject”, “wallet-reject”, or “failed”</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>created-at</td>
       <td>true</td>
       <td>long</td>
       <td>Creation time</td>
       <td> </td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>updated-at</td>
       <td>true</td>
       <td>long</td>
       <td>Last updated time</td>
       <td> </td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<ul>
-  <li>Definition of virtual currency deposit status:</li>
-</ul>
-
 <table>
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>——–</td>
+      <td>————-</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>unknown</td>
       <td>Status unknown</td>
-    </tr>
-    <tr>
-      <td>confirming</td>
-      <td>Confirming</td>
-    </tr>
-    <tr>
-      <td>confirmed</td>
-      <td>Confirmed</td>
-    </tr>
-    <tr>
-      <td>safe</td>
-      <td>Completed</td>
-    </tr>
-    <tr>
-      <td>orphan</td>
-      <td>To be confirmed</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
-<ul>
-  <li>Definition of virtual currency withdrawal status:</li>
-</ul>
-
 <table>
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th>Description</th>
-    </tr>
-  </thead>
   <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>confirming</td>
+      <td>Confirming</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>confirmed</td>
+      <td>Confirmed</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>safe</td>
+      <td>Completed</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>orphan</td>
+      <td>To be confirmed</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
+      <td>————–</td>
+      <td>—————–</td>
+      <td>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>verifying</td>
       <td>Pending verification</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>failed</td>
       <td>Authentication failed</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>submitted</td>
       <td>Submitted</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>reexamine</td>
       <td>Under review</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>canceled</td>
       <td>Canceled</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>pass</td>
       <td>Approved</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>reject</td>
       <td>Approval rejected</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>pre-transfer</td>
       <td>Processing</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>wallet-transfer</td>
       <td>Sent</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>wallet-reject</td>
       <td>Wallet reject</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>confirmed</td>
       <td>Block confirmed</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>confirm-error</td>
       <td>Block confirmation error</td>
+      <td>)</td>
     </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
     <tr>
+      <td><a href="#%20(|%20Status%20%20%20%20%20%20%20%20|%20Description%20%20%20%20%20%20%20|)">//</a>: # (</td>
       <td>repealed</td>
       <td>Revoked</td>
+      <td>)</td>
     </tr>
   </tbody>
 </table>
 
 <h1 id="spot-trading">Spot Trading</h1>
 
-<h2 id="introduction-5">Introduction</h2>
+<h2 id="introduction-4">Introduction</h2>
 
 <p>The spot trading interface provides functions such as order placement, order cancellation, order query, transaction query, and commission rate query.</p>
 
@@ -4637,7 +5133,7 @@ Frequency limit value; 100 times/2s</p>
 
 <p>Send a new order for matching.</p>
 
-<h3 id="http-requests-18">HTTP requests</h3>
+<h3 id="http-requests-12">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/place</code></li>
@@ -4657,7 +5153,7 @@ Frequency limit value; 100 times/2s</p>
    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-19">Request parameters</h3>
+<h3 id="request-parameters-13">Request parameters</h3>
 
 <table>
   <thead>
@@ -4731,7 +5227,7 @@ Frequency limit value; 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-16">Response data</h3>
+<h3 id="response-data-10">Response data</h3>
 
 <p>The returned master data object is a string corresponding to the order number.</p>
 
@@ -4744,7 +5240,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
 
 <p>A batch of up to 10 orders</p>
 
-<h3 id="http-requests-19">HTTP requests</h3>
+<h3 id="http-requests-13">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/batch-orders</code></li>
@@ -4773,7 +5269,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
 </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-20">Request parameters</h3>
+<h3 id="request-parameters-14">Request parameters</h3>
 
 <table>
   <thead>
@@ -4856,7 +5352,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-17">Response data</h3>
+<h3 id="response-data-11">Response data</h3>
 
 <table>
   <thead>
@@ -4901,13 +5397,13 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <aside class="warning">This interface only submits cancellation requests, and the actual cancellation results need to be confirmed through interfaces such as order status and matching status. </aside>
 
-<h3 id="http-requests-20">HTTP requests</h3>
+<h3 id="http-requests-14">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
 
-<h3 id="request-parameters-21">Request parameters</h3>
+<h3 id="request-parameters-15">Request parameters</h3>
 
 <table>
   <thead>
@@ -4941,7 +5437,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-18">Response data</h3>
+<h3 id="response-data-12">Response data</h3>
 
 <p>The returned master data object is a string corresponding to the order number.</p>
 
@@ -5000,7 +5496,7 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <aside class="warning">This interface only submits cancellation requests, and the actual cancellation results need to be confirmed through interfaces such as order status and matching status. </aside>
 
-<h3 id="http-requests-21">HTTP requests</h3>
+<h3 id="http-requests-15">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
@@ -5014,7 +5510,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-22">Request parameters</h3>
+<h3 id="request-parameters-16">Request parameters</h3>
 
 <table>
   <thead>
@@ -5048,7 +5544,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-19">Response data</h3>
+<h3 id="response-data-13">Response data</h3>
 
 <table>
   <thead>
@@ -5109,7 +5605,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>Query the orders that have been submitted but have not been fully executed or canceled.</p>
 
-<h3 id="http-requests-22">HTTP requests</h3>
+<h3 id="http-requests-16">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/openOrders</code></li>
@@ -5125,7 +5621,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-23">Request parameters</h3>
+<h3 id="request-parameters-17">Request parameters</h3>
 
 <table>
   <thead>
@@ -5208,7 +5704,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-20">Response data</h3>
+<h3 id="response-data-14">Response data</h3>
 
 <table>
   <thead>
@@ -5296,13 +5792,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <aside class="warning">This interface only submits cancellation requests, and the actual cancellation results need to be confirmed through interfaces such as order status and matching status. </aside>
 
-<h3 id="http-requests-23">HTTP requests</h3>
+<h3 id="http-requests-17">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
 </ul>
 
-<h3 id="request-parameters-24">Request parameters</h3>
+<h3 id="request-parameters-18">Request parameters</h3>
 
 <table>
   <thead>
@@ -5364,7 +5860,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-21">Response data</h3>
+<h3 id="response-data-15">Response data</h3>
 
 <table>
   <thead>
@@ -5408,7 +5904,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface sends cancellation requests for multiple orders (based on id) at the same time.</p>
 
-<h3 id="http-requests-24">HTTP requests</h3>
+<h3 id="http-requests-18">HTTP requests</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchcancel</code></li>
@@ -5424,7 +5920,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-25">Request parameters</h3>
+<h3 id="request-parameters-19">Request parameters</h3>
 
 <table>
   <thead>
@@ -5492,7 +5988,7 @@ Frequency limit value (NEW): 50 times/2s</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-22">Response data</h3>
+<h3 id="response-data-16">Response data</h3>
 
 <table>
   <thead>
@@ -5595,13 +6091,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface returns the latest status and details of the specified order. Orders created through the API cannot be queried after being canceled for more than 2 hours.</p>
 
-<h3 id="http-requests-25">HTTP requests</h3>
+<h3 id="http-requests-19">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
 
-<h3 id="request-parameters-26">Request parameters</h3>
+<h3 id="request-parameters-20">Request parameters</h3>
 
 <table>
   <thead>
@@ -5652,7 +6148,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-23">Response data</h3>
+<h3 id="response-data-17">Response data</h3>
 
 <table>
   <thead>
@@ -5796,13 +6292,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface returns the latest order status and details of the specified user-defined order number (within 24 hours). Orders created through the API cannot be queried after being canceled for more than 2 hours.</p>
 
-<h3 id="http-requests-26">HTTP requests</h3>
+<h3 id="http-requests-20">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/getClientOrder</code></li>
 </ul>
 
-<h3 id="request-parameters-27">Request parameters</h3>
+<h3 id="request-parameters-21">Request parameters</h3>
 
 <table>
   <thead>
@@ -5850,7 +6346,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-24">Response data</h3>
+</span></code></pre></div><h3 id="response-data-18">Response data</h3>
 
 <table>
   <thead>
@@ -5986,13 +6482,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>This interface returns the transaction details of the specified order.</p>
 
-<h3 id="http-requests-27">HTTP requests</h3>
+<h3 id="http-requests-21">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
 
-<h3 id="request-parameters-28">Request parameters</h3>
+<h3 id="request-parameters-22">Request parameters</h3>
 
 <table>
   <thead>
@@ -6044,7 +6540,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-25">Response data</h3>
+<h3 id="response-data-19">Response data</h3>
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
@@ -6203,13 +6699,13 @@ Frequency limit value (NEW): 50 times/2s</p>
 
 <p>It is recommended that users query historical orders by “time range”.</p>
 
-<h3 id="http-requests-28">HTTP requests</h3>
+<h3 id="http-requests-22">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders</code></li>
 </ul>
 
-<h3 id="request-parameters-29">Request parameters</h3>
+<h3 id="request-parameters-23">Request parameters</h3>
 
 <table>
   <thead>
@@ -6318,7 +6814,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-26">Response data</h3>
+<h3 id="response-data-20">Response data</h3>
 
 <table>
   <thead>
@@ -6471,7 +6967,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>This interface queries historical orders within the last 48 hours based on search criteria. Orders created through the API cannot be queried after being canceled for more than 2 hours.</p>
 
-<h3 id="http-requests-29">HTTP requests</h3>
+<h3 id="http-requests-23">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/history</code></li>
@@ -6489,7 +6985,7 @@ Frequency limit value (NEW): 20 times/2s</p>
     </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-30">Request parameters</h3>
+<h3 id="request-parameters-24">Request parameters</h3>
 
 <table>
   <thead>
@@ -6572,7 +7068,7 @@ Frequency limit value (NEW): 20 times/2s</p>
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-27">Response data</h3>
+</span></code></pre></div><h3 id="response-data-21">Response data</h3>
 
 <table>
   <thead>
@@ -6707,13 +7203,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>This interface queries current and historical transaction records based on search criteria.</p>
 
-<h3 id="http-requests-30">HTTP requests</h3>
+<h3 id="http-requests-24">HTTP requests</h3>
 
 <ul>
   <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
 
-<h3 id="request-parameters-31">Request parameters</h3>
+<h3 id="request-parameters-25">Request parameters</h3>
 
 <table>
   <thead>
@@ -6814,7 +7310,7 @@ Frequency limit value (NEW): 20 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-28">Response data</h3>
+<h3 id="response-data-22">Response data</h3>
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
@@ -6977,7 +7473,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <h1 id="websocket-market-data">Websocket market data</h1>
 
-<h2 id="introduction-6">Introduction</h2>
+<h2 id="introduction-5">Introduction</h2>
 
 <h3 id="access-url">Access URL</h3>
 
@@ -8202,7 +8698,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span></code></pre></div>
 <h1 id="websocket-assets-and-orders">Websocket assets and orders</h1>
 
-<h2 id="introduction-7">Introduction</h2>
+<h2 id="introduction-6">Introduction</h2>
 
 <h3 id="access-url-1">Access URL</h3>
 

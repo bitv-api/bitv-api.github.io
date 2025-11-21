@@ -464,7 +464,7 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 
 ### Q1：一個用戶可以申請多少個Api Key？
 
-A:  每個母用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限。 每個母用戶還可創建200個子用戶，每個子用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限   
+A:  每個母用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限。 每個母用戶還可創建200個子用戶，每個子用戶可創建3組API Key，每個API Key可對應設置讀取、交易兩種權限。   
 
 以下是兩種權限的說明：  
 

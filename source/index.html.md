@@ -1055,7 +1055,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
       "low":1856.0000,
       "amount":81486.2926,
       "count":42122,
-      "vol":157052777.85708200,
+      "vol":157052788.85708200,
       "ask":[1885.0000,21.8804],
       "bid":[1884.0000,1.6702]
     }

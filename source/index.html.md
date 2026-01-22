@@ -1045,7 +1045,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 {
     "ch": "market.ethhkd.detail.merged",
     "status": "ok",
-    "ts": 176118565888,
+    "ts": 176118565999,
     "tick": {
       "id":1499225271,
       "version": 5104471,

@@ -12,3 +12,5 @@ gem 'nokogiri', '~> 1.13'
 
 # Javascript Runtime
 gem 'therubyracer', '~> 0.12.3'
+gem 'padrino-helpers', '~> 0.15.0'
+gem "kramdown-parser-gfm", "~> 1.1"

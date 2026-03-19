@@ -1344,7 +1344,7 @@ This node returns the account history based on the user account ID.
 | -------------- | -------- | --------- | ----------- | ------------- | ----------- |
 | account-id     | true     | string    | Account number, refer to `GET /v1/account/accounts` |               |             |
 | currency       | false    | string    | Currency, e.g., btc, ltc, bch, eth, etc... (refer to `GET /v1/common/currencys` for values) |               |             |
-| transact-types | false    | string    | Change types, multiple choices separated by commas | all           | trade, transact-fee, fee-deduction, transfer, deposit, withdraw, withdraw-fee, other-types |
+| transact-types | false    | string    | Change types, multiple choices separated by commas | all           | trade, transact-fee, fee-deduction, transfer, other-types |
 | start-time     | false    | long      | Unix time in milliseconds. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | ((end-time) - 1 hour) | [(end-time) - 1 hour, end-time] |
 | end-time       | false    | long      | Unix time in milliseconds. Use transact-time as the key to search. The maximum query window is 1 hour. The window translation range is the last 30 days. | current-time   | [(current-time) - 29 days, current-time] |
 | sort           | false    | string    | Search direction | asc           | asc, desc   |

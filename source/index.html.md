@@ -1343,7 +1343,7 @@ API Key 权限：读取<br>
 | -------------- | -------- | -------- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | account-id     | true     | string   | 账户编号,取值参考 `GET /v1/account/accounts`                 |                      |                                                              |
 | currency       | false    | string   | 币种,即btc, ltc, bch, eth, etc ...(取值参考`GET /v1/common/currencys`) |                      |                                                              |
-| transact-types | false    | string   | 变动类型，可多选，以逗号分隔                                 | all                  | trade (交易), transact-fee（交易手续费）, fee-deduction（手续费抵扣）, transfer（划转）, deposit（充币），withdraw（提币）, withdraw-fee（提币手续费）, other-types（其他） |
+| transact-types | false    | string   | 变动类型，可多选，以逗号分隔                                 | all                  | trade (交易), transact-fee（交易手续费）, fee-deduction（手续费抵扣）, transfer（划转）,  other-types（其他） |
 | start-time     | false    | long     | 远点时间 unix time in millisecond. 以transact-time为key进行检索. 查询窗口最大为1小时. 窗口平移范围为最近30天. | ((end-time) – 1hour) | [((end-time) – 1hour), (end-time)]                           |
 | end-time       | false    | long     | 近点时间unix time in millisecond. 以transact-time为key进行检索. 查询窗口最大为1小时. 窗口平移范围为最近30天. | current-time         | [(current-time) – 29days,(current-time)]                     |
 | sort           | false    | string   | 检索方向                                                     | asc                  | asc or desc                                                  |

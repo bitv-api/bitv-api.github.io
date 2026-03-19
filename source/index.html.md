@@ -45,7 +45,7 @@ Each parent user can create 3 groups of API Key, and each API Key can set two ki
 Permissions are described as follows:
 
 - Read permission: Read permission is used for the query interface of data, such as: order query, transaction query, etc.
-- Trading permission: Trading permission is used for placing, withdrawing and transferring orders.
+- Trading permission: Trading permission is used for placing,  and transferring orders.
 
 After successful creation, please make sure to remember the following information:
 
@@ -1390,7 +1390,7 @@ This node returns the account history based on the user account ID.
 | data          | object    |                                                         |             |
 | { account-id  | long      | Account number                                           |             |
 | currency      | string    | Currency                                                 |             |
-| transact-amt  | string    | Change amount (Positive for deposit or Negative for withdrawal) |             |
+| transact-amt  | string    | Change amount |             |
 | transact-type | string    | Transaction type                                         |             |
 | avail-balance | string    | Available balance                                        |             |
 | acct-balance  | string    | Account balance                                          |             |

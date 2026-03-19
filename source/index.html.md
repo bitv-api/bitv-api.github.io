@@ -1341,7 +1341,7 @@ API Key 權限：讀取<br>
 | -------------- | -------- | -------- | ------------------------------------------------------------ | -------------------- | ------------------------------------------------------------ |
 | account-id     | true     | string   | 賬戶編號,取值參考 `GET /v1/account/accounts`                 |                      |                                                              |
 | currency       | false    | string   | 幣種,即btc, ltc, bch, eth, etc ...(取值參考`GET /v1/common/currencys`) |                      |                                                              |
-| transact-types | false    | string   | 變動類型，可多選，以逗號分隔                                 | all                  | trade (交易), transact-fee（交易手續費）, fee-deduction（手續費抵扣）, transfer（划轉）, deposit（充幣），withdraw（提幣）, withdraw-fee（提幣手續費）, other-types（其他）|
+| transact-types | false    | string   | 變動類型，可多選，以逗號分隔                                 | all                  | trade (交易), transact-fee（交易手續費）, fee-deduction（手續費抵扣）, transfer（划轉）,  other-types（其他）|
 | start-time     | false    | long     | 遠點時間 unix time in millisecond. 以transact-time為key進行檢索. 查詢窗口最大為1小時. 窗口平移範圍為最近30天. | ((end-time) – 1hour) | [((end-time) – 1hour), (end-time)]                           |
 | end-time       | false    | long     | 近點時間unix time in millisecond. 以transact-time為key進行檢索. 查詢窗口最大為1小時. 窗口平移範圍為最近30天. | current-time         | [(current-time) – 29days,(current-time)]                     |
 | sort           | false    | string   | 檢索方向                                                     | asc                  | asc or desc                                                  |

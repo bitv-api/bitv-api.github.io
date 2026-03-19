@@ -323,9 +323,6 @@
                     <a href="#獲取所有幣種" class="toc-h2 toc-link" data-title="獲取所有幣種">獲取所有幣種</a>
                   </li>
                   <li>
-                    <a href="#apiv2-幣鏈參考信息" class="toc-h2 toc-link" data-title="APIv2 幣鏈參考信息">APIv2 幣鏈參考信息</a>
-                  </li>
-                  <li>
                     <a href="#獲取當前系統時間戳" class="toc-h2 toc-link" data-title="獲取當前系統時間戳">獲取當前系統時間戳</a>
                   </li>
               </ul>
@@ -1519,386 +1516,19 @@
 
 <aside class="notice">返回的「data」對象是一個字符串數組，每一個字符串代表一個支持的幣種。</aside>
 
-<h2 id="apiv2-幣鏈參考信息">APIv2 幣鏈參考信息</h2>
-
-<p>此節點用於查詢各幣種及其所在區塊鏈的靜態參考信息（公共數據）</p>
-
-<h3 id="http-請求-2">HTTP 請求</h3>
-
-<ul>
-  <li>GET <code>/v2/reference/currencies</code></li>
-</ul>
-
-<div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v2/reference/currencies?currency=usdt"</span>
-</code></pre></div>
-<h3 id="請求參數-2">請求參數</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>字段名稱</th>
-      <th>是否必需</th>
-      <th>類型</th>
-      <th>字段描述</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>currency</td>
-      <td>false</td>
-      <td>string</td>
-      <td>幣種</td>
-      <td>btc, ltc, bch, eth, etc …(取值參考<code>GET /v1/common/currencys</code>)</td>
-    </tr>
-  </tbody>
-</table>
-
-<blockquote>
-  <p>Response:</p>
-</blockquote>
-
-<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"code"</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"data"</span><span class="p">:[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"chains"</span><span class="p">:[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nl">"chain"</span><span class="p">:</span><span class="s2">"trc20usdt"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"displayName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"baseChain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRX"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"baseChainProtocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRC20"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"isDynamic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"depositStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"maxTransactFeeWithdraw"</span><span class="p">:</span><span class="s2">"1.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"maxWithdrawAmt"</span><span class="p">:</span><span class="s2">"280000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minDepositAmt"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minTransactFeeWithdraw"</span><span class="p">:</span><span class="s2">"0.10000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minWithdrawAmt"</span><span class="p">:</span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"numOfConfirmations"</span><span class="p">:</span><span class="mi">999</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"numOfFastConfirmations"</span><span class="p">:</span><span class="mi">999</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawFeeType"</span><span class="p">:</span><span class="s2">"circulated"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawPrecision"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"280000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"addrDepositTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nl">"chain"</span><span class="p">:</span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"displayName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"fullName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"baseChain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"baseChainProtocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OMNI"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"isDynamic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"depositStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"maxWithdrawAmt"</span><span class="p">:</span><span class="s2">"19000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minDepositAmt"</span><span class="p">:</span><span class="s2">"0.0001"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minWithdrawAmt"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"numOfConfirmations"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"numOfFastConfirmations"</span><span class="p">:</span><span class="mi">15</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"transactFeeRateWithdraw"</span><span class="p">:</span><span class="s2">"0.00100000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawFeeType"</span><span class="p">:</span><span class="s2">"ratio"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawPrecision"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"90000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"addrDepositTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nl">"chain"</span><span class="p">:</span><span class="s2">"usdterc20"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"displayName"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"baseChain"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"baseChainProtocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ERC20"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"isDynamic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"depositStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"maxWithdrawAmt"</span><span class="p">:</span><span class="s2">"18000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minDepositAmt"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"minWithdrawAmt"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"numOfConfirmations"</span><span class="p">:</span><span class="mi">999</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"numOfFastConfirmations"</span><span class="p">:</span><span class="mi">999</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">"0.10000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawFeeType"</span><span class="p">:</span><span class="s2">"fixed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawPrecision"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawQuotaPerDay"</span><span class="p">:</span><span class="s2">"180000.00000000"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"withdrawStatus"</span><span class="p">:</span><span class="s2">"allowed"</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"transactFeeWithdraw"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"addrWithTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-                    </span><span class="nl">"addrDepositTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">],</span><span class="w">
-            </span><span class="nl">"currency"</span><span class="p">:</span><span class="s2">"usdt"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"assetType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"instStatus"</span><span class="p">:</span><span class="s2">"normal"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre></div>
-<h3 id="響應數據">響應數據</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>字段名稱</th>
-      <th>是否必需</th>
-      <th>數據類型</th>
-      <th>字段描述</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>code</td>
-      <td>true</td>
-      <td>int</td>
-      <td>狀態碼</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>message</td>
-      <td>false</td>
-      <td>string</td>
-      <td>錯誤描述（如有）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>data</td>
-      <td>true</td>
-      <td>object</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>{ currency</td>
-      <td>true</td>
-      <td>string</td>
-      <td>幣種</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>{ chains</td>
-      <td>true</td>
-      <td>object</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>chain</td>
-      <td>true</td>
-      <td>string</td>
-      <td>鏈名稱</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>displayName</td>
-      <td>true</td>
-      <td>string</td>
-      <td>鏈顯示名稱</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>assetType</td>
-      <td>false</td>
-      <td>string</td>
-      <td>資產類型，1 虛擬幣 2 法幣</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>baseChain</td>
-      <td>false</td>
-      <td>string</td>
-      <td>底層鏈名稱</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>fullName</td>
-      <td>false</td>
-      <td>string</td>
-      <td>幣種全稱</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>baseChainProtocol</td>
-      <td>false</td>
-      <td>string</td>
-      <td>底層鏈協議</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>isDynamic</td>
-      <td>false</td>
-      <td>boolean</td>
-      <td>是否動態手續費（僅對固定類型有效，withdrawFeeType=fixed）</td>
-      <td>true,false</td>
-    </tr>
-    <tr>
-      <td>numOfConfirmations</td>
-      <td>true</td>
-      <td>int</td>
-      <td>安全上賬所需確認次數（達到確認次數後允許提幣）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>numOfFastConfirmations</td>
-      <td>true</td>
-      <td>int</td>
-      <td>快速上賬所需確認次數（達到確認次數後允許交易但不允許提幣）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>minDepositAmt</td>
-      <td>true</td>
-      <td>string</td>
-      <td>單次最小充幣金額</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>depositStatus</td>
-      <td>true</td>
-      <td>string</td>
-      <td>充幣狀態</td>
-      <td>allowed,prohibited</td>
-    </tr>
-    <tr>
-      <td>minWithdrawAmt</td>
-      <td>true</td>
-      <td>string</td>
-      <td>單次最小提幣金額</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>maxWithdrawAmt</td>
-      <td>true</td>
-      <td>string</td>
-      <td>單次最大提幣金額</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>withdrawQuotaPerDay</td>
-      <td>true</td>
-      <td>string</td>
-      <td>當日提幣額度（新加坡時區）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>withdrawPrecision</td>
-      <td>true</td>
-      <td>int</td>
-      <td>提幣精度</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>withdrawFeeType</td>
-      <td>true</td>
-      <td>string</td>
-      <td>提幣手續費類型（特定幣種在特定鏈上的提幣手續費類型唯一）</td>
-      <td>fixed,circulated,ratio</td>
-    </tr>
-    <tr>
-      <td>transactFeeWithdraw</td>
-      <td>false</td>
-      <td>string</td>
-      <td>單次提幣手續費（僅對固定類型有效，withdrawFeeType=fixed）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>minTransactFeeWithdraw</td>
-      <td>false</td>
-      <td>string</td>
-      <td>最小單次提幣手續費（僅對區間類型和有下限的比例類型有效，withdrawFeeType=circulated or ratio）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>maxTransactFeeWithdraw</td>
-      <td>false</td>
-      <td>string</td>
-      <td>最大單次提幣手續費（僅對區間類型和有上限的比例類型有效，withdrawFeeType=circulated or ratio）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>transactFeeRateWithdraw</td>
-      <td>false</td>
-      <td>string</td>
-      <td>單次提幣手續費率（僅對比例類型有效，withdrawFeeType=ratio）</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>addrDepositTag</td>
-      <td>false</td>
-      <td>boolean</td>
-      <td>提幣地址tag</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>addrWithTag</td>
-      <td>false</td>
-      <td>boolean</td>
-      <td>地址tag</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>withdrawStatus}</td>
-      <td>true</td>
-      <td>string</td>
-      <td>提幣狀態</td>
-      <td>allowed,prohibited</td>
-    </tr>
-    <tr>
-      <td>instStatus }</td>
-      <td>true</td>
-      <td>string</td>
-      <td>幣種狀態</td>
-      <td>normal,delisted</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="狀態碼">狀態碼</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>狀態碼</th>
-      <th>錯誤信息</th>
-      <th>錯誤場景描述</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>200</td>
-      <td>success</td>
-      <td>請求成功</td>
-    </tr>
-    <tr>
-      <td>500</td>
-      <td>error</td>
-      <td>系統錯誤</td>
-    </tr>
-    <tr>
-      <td>2002</td>
-      <td>invalid field value in “field name”</td>
-      <td>非法字段取值</td>
-    </tr>
-  </tbody>
-</table>
-
 <h2 id="獲取當前系統時間戳">獲取當前系統時間戳</h2>
 
 <p>此接口返回當前的系統時間戳，即從 <strong>UTC</strong> 1970年1月1日0時0分0秒0毫秒到現在的總<strong>毫秒</strong>數。</p>
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/v1/common/timestamp"</span>
 </code></pre></div>
-<h3 id="http-請求-3">HTTP 請求</h3>
+<h3 id="http-請求-2">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/common/timestamp</code></li>
 </ul>
 
-<h3 id="請求參數-3">請求參數</h3>
+<h3 id="請求參數-2">請求參數</h3>
 
 <p>此接口不接受任何參數。</p>
 
@@ -1972,13 +1602,13 @@
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/history/kline?period=1day&amp;size=200&amp;symbol=btcusdt"</span>
 </code></pre></div>
-<h3 id="http-請求-4">HTTP 請求</h3>
+<h3 id="http-請求-3">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/market/history/kline</code></li>
 </ul>
 
-<h3 id="請求參數-4">請求參數</h3>
+<h3 id="請求參數-3">請求參數</h3>
 
 <table>
   <thead>
@@ -2044,7 +1674,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-1">響應數據</h3>
+<h3 id="響應數據">響應數據</h3>
 
 <table>
   <thead>
@@ -2104,13 +1734,13 @@
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/detail/merged?symbol=ethusdt"</span>
 </code></pre></div>
-<h3 id="http-請求-5">HTTP 請求</h3>
+<h3 id="http-請求-4">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/market/detail/merged</code></li>
 </ul>
 
-<h3 id="請求參數-5">請求參數</h3>
+<h3 id="請求參數-4">請求參數</h3>
 
 <table>
   <thead>
@@ -2158,7 +1788,7 @@
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-2">響應數據</h3>
+<h3 id="響應數據-1">響應數據</h3>
 
 <table>
   <thead>
@@ -2233,13 +1863,13 @@
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/depth?symbol=btcusdt&amp;type=step2"</span>
 </code></pre></div>
-<h3 id="http-請求-6">HTTP 請求</h3>
+<h3 id="http-請求-5">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/market/depth</code></li>
 </ul>
 
-<h3 id="請求參數-6">請求參數</h3>
+<h3 id="請求參數-5">請求參數</h3>
 
 <table>
   <thead>
@@ -2349,7 +1979,7 @@
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-3">響應數據</h3>
+<h3 id="響應數據-2">響應數據</h3>
 
 <aside class="notice">返回的JSON頂級數據對象名為'tick'而不是通常的'data'。</aside>
 
@@ -2391,13 +2021,13 @@
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/trade?symbol=ethusdt"</span>
 </code></pre></div>
-<h3 id="http-請求-7">HTTP 請求</h3>
+<h3 id="http-請求-6">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/market/trade</code></li>
 </ul>
 
-<h3 id="請求參數-7">請求參數</h3>
+<h3 id="請求參數-6">請求參數</h3>
 
 <table>
   <thead>
@@ -2444,7 +2074,7 @@
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-4">響應數據</h3>
+<h3 id="響應數據-3">響應數據</h3>
 
 <aside class="notice">返回的JSON頂級數據對象名為'tick'而不是通常的'data'。</aside>
 
@@ -2496,13 +2126,13 @@
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/history/trade?symbol=ethusdt&amp;size=2"</span>
 </code></pre></div>
-<h3 id="http-請求-8">HTTP 請求</h3>
+<h3 id="http-請求-7">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/market/history/trade</code></li>
 </ul>
 
-<h3 id="請求參數-8">請求參數</h3>
+<h3 id="請求參數-7">請求參數</h3>
 
 <table>
   <thead>
@@ -2580,7 +2210,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-5">響應數據</h3>
+<h3 id="響應數據-4">響應數據</h3>
 
 <aside class="notice">返回的數據對象是一個對象數組，每個數組元素為一個調整為新加坡時間的時間戳（單位毫秒）下的所有交易記錄，這些交易記錄以數組形式呈現。</aside>
 
@@ -2632,13 +2262,13 @@
 
 <div class="highlight"><pre class="highlight shell"><code>curl <span class="s2">"https://api.bitv.com/market/detail?symbol=ethusdt"</span>
 </code></pre></div>
-<h3 id="http-請求-9">HTTP 請求</h3>
+<h3 id="http-請求-8">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/market/detail</code></li>
 </ul>
 
-<h3 id="請求參數-9">請求參數</h3>
+<h3 id="請求參數-8">請求參數</h3>
 
 <table>
   <thead>
@@ -2682,7 +2312,7 @@
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-6">響應數據</h3>
+<h3 id="響應數據-5">響應數據</h3>
 
 <aside class="notice">返回的JSON頂級數據對象名為'tick'而不是通常的'data'。</aside>
 
@@ -2817,13 +2447,13 @@
 
 <p>查詢當前用戶的所有賬戶 ID <code>account-id</code> 及其相關信息</p>
 
-<h3 id="http-請求-10">HTTP 請求</h3>
+<h3 id="http-請求-9">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/account/accounts</code></li>
 </ul>
 
-<h3 id="請求參數-10">請求參數</h3>
+<h3 id="請求參數-9">請求參數</h3>
 
 <p>無</p>
 
@@ -2842,7 +2472,7 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-7">響應數據</h3>
+<h3 id="響應數據-6">響應數據</h3>
 
 <table>
   <thead>
@@ -2888,13 +2518,13 @@
 
 <p>spot：現貨賬戶</p>
 
-<h3 id="http-請求-11">HTTP 請求</h3>
+<h3 id="http-請求-10">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/account/accounts/{account-id}/balance</code></li>
 </ul>
 
-<h3 id="請求參數-11">請求參數</h3>
+<h3 id="請求參數-10">請求參數</h3>
 
 <table>
   <thead>
@@ -2950,7 +2580,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-8">響應數據</h3>
+<h3 id="響應數據-7">響應數據</h3>
 
 <table>
   <thead>
@@ -3065,7 +2695,7 @@
   <li>GET <code>/v1/account/history</code></li>
 </ul>
 
-<h3 id="請求參數-12">請求參數</h3>
+<h3 id="請求參數-11">請求參數</h3>
 
 <table>
   <thead>
@@ -3176,7 +2806,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-9">響應數據</h3>
+<h3 id="響應數據-8">響應數據</h3>
 
 <table>
   <thead>
@@ -3473,7 +3103,7 @@
 
 <p>發送一個新訂單以進行撮合。</p>
 
-<h3 id="http-請求-12">HTTP 請求</h3>
+<h3 id="http-請求-11">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/place</code></li>
@@ -3493,7 +3123,7 @@
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-13">請求參數</h3>
+<h3 id="請求參數-12">請求參數</h3>
 
 <table>
   <thead>
@@ -3567,7 +3197,7 @@
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-10">響應數據</h3>
+<h3 id="響應數據-9">響應數據</h3>
 
 <p>返回的主數據對象是一個對應下單單號的字符串。</p>
 
@@ -3580,7 +3210,7 @@
 
 <p>一個批量最多10張訂單</p>
 
-<h3 id="http-請求-13">HTTP 請求</h3>
+<h3 id="http-請求-12">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/batch-orders</code></li>
@@ -3609,7 +3239,7 @@
 	</span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-14">請求參數</h3>
+<h3 id="請求參數-13">請求參數</h3>
 
 <table>
   <thead>
@@ -3692,7 +3322,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-11">響應數據</h3>
+<h3 id="響應數據-10">響應數據</h3>
 
 <table>
   <thead>
@@ -3737,13 +3367,13 @@
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-14">HTTP 請求</h3>
+<h3 id="http-請求-13">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
 
-<h3 id="請求參數-15">請求參數</h3>
+<h3 id="請求參數-14">請求參數</h3>
 
 <table>
   <thead>
@@ -3777,7 +3407,7 @@
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-12">響應數據</h3>
+<h3 id="響應數據-11">響應數據</h3>
 
 <p>返回的主數據對象是一個對應下單單號的字符串。</p>
 
@@ -3836,7 +3466,7 @@
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-15">HTTP 請求</h3>
+<h3 id="http-請求-14">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
@@ -3850,7 +3480,7 @@
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-16">請求參數</h3>
+<h3 id="請求參數-15">請求參數</h3>
 
 <table>
   <thead>
@@ -3884,7 +3514,7 @@
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-13">響應數據</h3>
+<h3 id="響應數據-12">響應數據</h3>
 
 <table>
   <thead>
@@ -3945,7 +3575,7 @@
 
 <p>查詢已提交但是仍未完全成交或未被撤銷的訂單。</p>
 
-<h3 id="http-請求-16">HTTP 請求</h3>
+<h3 id="http-請求-15">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/openOrders</code></li>
@@ -3961,7 +3591,7 @@
    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-17">請求參數</h3>
+<h3 id="請求參數-16">請求參數</h3>
 
 <table>
   <thead>
@@ -4044,7 +3674,7 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-14">響應數據</h3>
+<h3 id="響應數據-13">響應數據</h3>
 
 <table>
   <thead>
@@ -4132,13 +3762,13 @@
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-17">HTTP 請求</h3>
+<h3 id="http-請求-16">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
 </ul>
 
-<h3 id="請求參數-18">請求參數</h3>
+<h3 id="請求參數-17">請求參數</h3>
 
 <table>
   <thead>
@@ -4200,7 +3830,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-15">響應數據</h3>
+<h3 id="響應數據-14">響應數據</h3>
 
 <table>
   <thead>
@@ -4244,7 +3874,7 @@
 
 <p>此接口同時為多個訂單（基於id）發送取消請求。</p>
 
-<h3 id="http-請求-18">HTTP 請求</h3>
+<h3 id="http-請求-17">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchcancel</code></li>
@@ -4260,7 +3890,7 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-19">請求參數</h3>
+<h3 id="請求參數-18">請求參數</h3>
 
 <table>
   <thead>
@@ -4328,7 +3958,7 @@
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-16">響應數據</h3>
+<h3 id="響應數據-15">響應數據</h3>
 
 <table>
   <thead>
@@ -4431,13 +4061,13 @@
 
 <p>此接口返回指定訂單的最新狀態和詳情。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-19">HTTP 請求</h3>
+<h3 id="http-請求-18">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
 
-<h3 id="請求參數-20">請求參數</h3>
+<h3 id="請求參數-19">請求參數</h3>
 
 <table>
   <thead>
@@ -4488,7 +4118,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-17">響應數據</h3>
+<h3 id="響應數據-16">響應數據</h3>
 
 <table>
   <thead>
@@ -4616,13 +4246,13 @@
 
 <p>此接口返回指定用戶自編訂單號（24小時內）的訂單最新狀態和詳情。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-20">HTTP 請求</h3>
+<h3 id="http-請求-19">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/getClientOrder</code></li>
 </ul>
 
-<h3 id="請求參數-21">請求參數</h3>
+<h3 id="請求參數-20">請求參數</h3>
 
 <table>
   <thead>
@@ -4673,7 +4303,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-18">響應數據</h3>
+<h3 id="響應數據-17">響應數據</h3>
 
 <table>
   <thead>
@@ -4809,13 +4439,13 @@
 
 <p>此接口返回指定訂單的成交明細。</p>
 
-<h3 id="http-請求-21">HTTP 請求</h3>
+<h3 id="http-請求-20">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
 
-<h3 id="請求參數-22">請求參數</h3>
+<h3 id="請求參數-21">請求參數</h3>
 
 <table>
   <thead>
@@ -4869,7 +4499,7 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-19">響應數據</h3>
+<h3 id="響應數據-18">響應數據</h3>
 
 <aside class="notice">返回的主數據對象為一個對象數組，其中每一個元件代表一個交易結果。</aside>
 
@@ -5028,13 +4658,13 @@
 
 <p>建議用戶以「時間範圍「查詢歷史訂單。</p>
 
-<h3 id="http-請求-22">HTTP 請求</h3>
+<h3 id="http-請求-21">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders</code></li>
 </ul>
 
-<h3 id="請求參數-23">請求參數</h3>
+<h3 id="請求參數-22">請求參數</h3>
 
 <table>
   <thead>
@@ -5143,7 +4773,7 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-20">響應數據</h3>
+<h3 id="響應數據-19">響應數據</h3>
 
 <table>
   <thead>
@@ -5296,7 +4926,7 @@
 
 <p>此接口基於搜索條件查詢最近48小時內歷史訂單。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-23">HTTP 請求</h3>
+<h3 id="http-請求-22">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/history</code></li>
@@ -5314,7 +4944,7 @@
    </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-24">請求參數</h3>
+<h3 id="請求參數-23">請求參數</h3>
 
 <table>
   <thead>
@@ -5398,7 +5028,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-21">響應數據</h3>
+<h3 id="響應數據-20">響應數據</h3>
 
 <table>
   <thead>
@@ -5533,13 +5163,13 @@
 
 <p>此接口基於搜索條件查詢當前和歷史成交記錄。</p>
 
-<h3 id="http-請求-24">HTTP 請求</h3>
+<h3 id="http-請求-23">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
 
-<h3 id="請求參數-25">請求參數</h3>
+<h3 id="請求參數-24">請求參數</h3>
 
 <table>
   <thead>
@@ -5640,7 +5270,7 @@
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="響應數據-22">響應數據</h3>
+<h3 id="響應數據-21">響應數據</h3>
 
 <aside class="notice">返回的主數據對象為一個對象數組，其中每一個元件代表一個交易結果。</aside>
 

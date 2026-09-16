@@ -40,7 +40,7 @@ To use the API, please log in to the web terminal and complete the API key appli
 
 You can create an API key by clicking [here ](https://www.bitv.com/api/).
 
-Each parent user can create 3 groups of API Key, and each API Key can set two kinds of permissions: read and trade.
+Each user can create 3 groups of API Key, and each API Key can set two kinds of permissions: read and trade.
 
 Permissions are described as follows:
 
@@ -297,7 +297,7 @@ Order types:
 | ------------ | ---------------------------- | ---------------------------------------------------- |
 | Basic        | /v1/common/*                 | Basic APIs, including currency, trading pair, timestamp, etc. |
 | Market       | /market/*                    | Public market APIs, including trades, depth, market data, etc. |
-| Account      | /v1/account/*  /v1/subuser/* | Account APIs, including account information, subusers, etc. |
+| Account      | /v1/account/*                | Account APIs, including account information, etc. |
 | Order        | /v1/order/*                  | Order APIs, including order placement, cancellation, order query, trade query, etc. |
 
 This categorization provides a general overview, but some APIs may not follow this convention. Please refer to the corresponding API documentation based on your specific needs.
@@ -453,7 +453,7 @@ Announcements will be issued in advance to notify you of new API additions, upda
 
 ### Q1: How many Api Keys can a user apply for?
 
-A: Each parent user can create 3 groups of API Keys, and each API Key can be set with two permissions: reading and trading. Each parent user can also create 200 sub-users, and each sub-user can create 3 sets of API Keys, and each API Key can be set with two permissions for reading and trading.
+A: Each user can create 3 groups of API Keys, and each API Key can be set with two permissions: reading and trading.
 
 The following are descriptions of the two permissions:
 

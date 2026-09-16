@@ -2386,19 +2386,17 @@ Note: <br>
 
 # Websocket market data
 
-## Introduction
-
-### Access URL
+## Access URL
 
 **Quotation request address**
 
 **`wss://api.bitv.com/ws`**
 
-### data compression
+## data compression
 
 All data returned by the WebSocket market interface is compressed by GZIP, and the client needs to decompress it after receiving the data.
 
-### Heartbeat message
+## Heartbeat message
 
 ```json
 {"ping": 1492420473027}
@@ -2413,7 +2411,7 @@ When the user's Websocket client connects to the Websocket server, the server wi
 When the user's Websocket client receives this heartbeat message, it should return a `pong` message containing the same integer value.
 
 <aside class="warning">When the Websocket server sends `ping` messages twice but does not receive any `pong` messages back, the server will actively disconnect from the client. </aside>
-### Subscribe to topics
+## Subscribe to topics
 
 > Sub request:
 
@@ -2446,7 +2444,7 @@ After successfully subscribing, the Websocket client will receive an acknowledgm
 
 After that, once the subscribed topic is updated, the Websocket client will receive the update message (push) pushed by the server.
 
-### unsubscribe
+## unsubscribe
 
 > UnSub request:
 
@@ -2476,7 +2474,7 @@ The format for unsubscribing is as follows:
 ```
 
 Successful unsubscribe confirmation.
-### request data
+## request data
 
 The Websocket server also supports one-time request data (pull).
 
@@ -2489,13 +2487,13 @@ The format of a one-time request is as follows:
 
 For the specific format of the data returned at one time, see each topic.
 
-### Frequency Limit
+## Frequency Limit
 
 Data request (req) frequency limit rules
 
 Every two requests for a single connection cannot be less than 100ms.
 
-### error code
+## error code
 
 The following are the error codes, error messages and descriptions of the WebSocket market interface.
 
@@ -3164,19 +3162,17 @@ Support data request method to obtain market summary data at one time:
 
 # Websocket assets and orders
 
-## Introduction
-
-### Access URL
+## Access URL
 
 **Websocket assets and orders**
 
 **`wss://api.bitv.com/ws/v2`**
 
-### data compression
+## data compression
 
 Data is not GZIP compressed.
 
-### Heartbeat message
+## Heartbeat message
 
 When the user's Websocket client connects to the WebSocket server, the server will periodically (currently set to 20 seconds) send a `Ping` message to it and include an integer value as follows:
 
@@ -3200,7 +3196,7 @@ When the user's Websocket client receives this heartbeat message, it should retu
 }
 ```
 
-### Valid values for `action`
+## Valid values for `action`
 
 | Valid Values | Value Description |
 | ---------- | ------------------------------------ |
@@ -3209,7 +3205,7 @@ When the user's Websocket client receives this heartbeat message, it should retu
 | ping, pong | Heartbeat data |
 | push | Push data, the data type sent from the server to the client |
 
-### Frequency Limit
+## Frequency Limit
 
 This version adopts a multi-dimensional frequency limiting strategy for users. The specific strategy is as follows:
 
@@ -3217,7 +3213,7 @@ This version adopts a multi-dimensional frequency limiting strategy for users. T
 - Limit the total number of connections established with a single API Key to **10**. When this limit is exceeded, a "too many connection" error message is returned.
 - Limit the number of connections established by a single IP to **100 times/second**. When the limit is exceeded, a "too many request" error message will be returned.
 
-### Authentication
+## Authentication
 
 The authentication request format is as follows:
 
@@ -3263,13 +3259,13 @@ Parameter Description
 
 
 
-### Signature steps
+## Signature steps
 
 For the signature steps, you can view them in the [Quick Start - Signature Verification] section.
 
 Note: Data in JSON requests does not need to be URL encoded.
 
-### Subscribe to topics
+## Subscribe to topics
 
 After successfully establishing a connection with the Websocket server, the Websocket client sends a request like the following to subscribe to a specific topic:
 
@@ -3291,7 +3287,7 @@ If the subscription is successful, the Websocket client will receive the followi
 }
 ```
 
-### request data
+## request data
 
 After successfully establishing the connection to the Websocket server, the Websocket client sends the following request to obtain one-time data:
 
@@ -3313,7 +3309,7 @@ After the request is successful, the Websocket client will receive the following
 }
 ```
 
-### error code
+## error code
 
 The following are the error codes, error messages, and descriptions of the WebSocket asset and order interfaces.
 

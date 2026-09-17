@@ -421,7 +421,28 @@
             <a href="#websocket" class="toc-h1 toc-link" data-title="Websocket行情数据">Websocket行情数据</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#5ea2e0cde2-6" class="toc-h2 toc-link" data-title="简介">简介</a>
+                    <a href="#url" class="toc-h2 toc-link" data-title="接入URL">接入URL</a>
+                  </li>
+                  <li>
+                    <a href="#7ee1785123" class="toc-h2 toc-link" data-title="数据压缩">数据压缩</a>
+                  </li>
+                  <li>
+                    <a href="#1853724646" class="toc-h2 toc-link" data-title="心跳消息">心跳消息</a>
+                  </li>
+                  <li>
+                    <a href="#65cd7614bc" class="toc-h2 toc-link" data-title="订阅主题">订阅主题</a>
+                  </li>
+                  <li>
+                    <a href="#b109d834a1" class="toc-h2 toc-link" data-title="取消订阅">取消订阅</a>
+                  </li>
+                  <li>
+                    <a href="#db08fc8dfe" class="toc-h2 toc-link" data-title="请求数据">请求数据</a>
+                  </li>
+                  <li>
+                    <a href="#6bd80fc847" class="toc-h2 toc-link" data-title="限频">限频</a>
+                  </li>
+                  <li>
+                    <a href="#e08c1d4f9a-2" class="toc-h2 toc-link" data-title="错误码">错误码</a>
                   </li>
                   <li>
                     <a href="#k-2" class="toc-h2 toc-link" data-title="K线数据">K线数据</a>
@@ -450,7 +471,34 @@
             <a href="#websocket-2" class="toc-h1 toc-link" data-title="Websocket资产及订单">Websocket资产及订单</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#5ea2e0cde2-7" class="toc-h2 toc-link" data-title="简介">简介</a>
+                    <a href="#url-2" class="toc-h2 toc-link" data-title="接入URL">接入URL</a>
+                  </li>
+                  <li>
+                    <a href="#7ee1785123-2" class="toc-h2 toc-link" data-title="数据压缩">数据压缩</a>
+                  </li>
+                  <li>
+                    <a href="#1853724646-2" class="toc-h2 toc-link" data-title="心跳消息">心跳消息</a>
+                  </li>
+                  <li>
+                    <a href="#action" class="toc-h2 toc-link" data-title="action的有效取值"><code>action</code>的有效取值</a>
+                  </li>
+                  <li>
+                    <a href="#6bd80fc847-2" class="toc-h2 toc-link" data-title="限频">限频</a>
+                  </li>
+                  <li>
+                    <a href="#1da6708ecc" class="toc-h2 toc-link" data-title="鉴权">鉴权</a>
+                  </li>
+                  <li>
+                    <a href="#1fbac240b7-2" class="toc-h2 toc-link" data-title="签名步骤">签名步骤</a>
+                  </li>
+                  <li>
+                    <a href="#65cd7614bc-2" class="toc-h2 toc-link" data-title="订阅主题">订阅主题</a>
+                  </li>
+                  <li>
+                    <a href="#db08fc8dfe-2" class="toc-h2 toc-link" data-title="请求数据">请求数据</a>
+                  </li>
+                  <li>
+                    <a href="#e08c1d4f9a-3" class="toc-h2 toc-link" data-title="错误码">错误码</a>
                   </li>
                   <li>
                     <a href="#f810bc2ca6" class="toc-h2 toc-link" data-title="订阅订单更新">订阅订单更新</a>
@@ -488,13 +536,13 @@
 
 <p>您可以点击<a href='https://www.bitv.com/api/'>这里 </a> 创建 API Key。</p>
 
-<p>每个母用户可创建3组API Key，每个API Key可对应设置读取、交易两种权限。  </p>
+<p>每个用户可创建3组API Key，每个API Key可对应设置读取、交易两种权限。  </p>
 
 <p>权限说明如下：</p>
 
 <ul>
 <li>读取权限：读取权限用于对数据的查询接口，例如：订单查询、成交查询等。</li>
-<li>交易权限：交易权限用于下单、撤单、划转类接口。</li>
+<li>交易权限：交易权限用于下单、撤单类接口。</li>
 </ul>
 
 <p>创建成功后请务必记住以下信息：</p>
@@ -764,7 +812,7 @@
 </tr>
 <tr>
 <td>账户类</td>
-<td>/v1/account/*  /v1/subuser/*</td>
+<td>/v1/account/*</td>
 <td>账户类接口，包括账户信息等</td>
 </tr>
 <tr>
@@ -950,13 +998,13 @@
 <h1 id='0adb1147b3'>常见问题</h1><h2 id='api-2'>API信息通知</h2>
 <p>关于API新增、更新、下线等信息会提前发布公告进行通知，建议您关注和订阅我们的公告，及时获取相关信息。  </p>
 <h2 id='cb2d08126e'>接入、验签相关</h2><h3 id='q1-api-key'>Q1：一个用户可以申请多少个Api Key？</h3>
-<p>A:  每个母用户可创建3组API Key，每个API Key可对应设置读取、交易两种权限。 每个母用户还可创建200个子用户，每个子用户可创建3组API Key，每个API Key可对应设置读取、交易两种权限。   </p>
+<p>A:  每个用户可创建3组API Key，每个API Key可对应设置读取、交易两种权限。   </p>
 
 <p>以下是两种权限的说明：  </p>
 
 <ul>
 <li>读取权限：读取权限用于对数据的查询接口，例如：订单查询、成交查询等。<br></li>
-<li>交易权限：交易权限用于下单、撤单、划转类接口。<br></li>
+<li>交易权限：交易权限用于下单、撤单类接口。<br></li>
 </ul>
 <h3 id='q2'>Q2：为什么经常出现断线、超时的情况？</h3>
 <p>A：请检查是否属于以下情况：</p>
@@ -2075,7 +2123,7 @@
 </tr>
 </tbody></table>
 <h1 id='2a0d0be224'>账户相关</h1><h2 id='5ea2e0cde2-4'>简介</h2>
-<p>账户相关接口提供了账户、余额、历史等查询以及资产划转等功能。</p>
+<p>账户相关接口提供了账户、余额、历史等查询功能。</p>
 
 <aside class="notice">访问账户相关的接口需要进行签名认证。</aside>
 
@@ -4847,13 +4895,13 @@
 <td>end date 是一个61天之前的日期；或者end date是一个未来的日期</td>
 </tr>
 </tbody></table>
-<h1 id='websocket'>Websocket行情数据</h1><h2 id='5ea2e0cde2-6'>简介</h2><h3 id='url'>接入URL</h3>
+<h1 id='websocket'>Websocket行情数据</h1><h2 id='url'>接入URL</h2>
 <p><strong>行情请求地址</strong></p>
 
 <p><strong><code>wss://api.bitv.com/ws</code></strong>  </p>
-<h3 id='7ee1785123'>数据压缩</h3>
+<h2 id='7ee1785123'>数据压缩</h2>
 <p>WebSocket 行情接口返回的所有数据都进行了 GZIP 压缩，需要 client 在收到数据之后解压。</p>
-<h3 id='1853724646'>心跳消息</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1492420473027</span><span class="p">}</span><span class="w"> 
+<h2 id='1853724646'>心跳消息</h2><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1492420473027</span><span class="p">}</span><span class="w"> 
 </span></code></pre></div>
 <p>当用户的Websocket客户端连接到Websocket服务器后，服务器会定期（当前设为5秒）向其发送<code>ping</code>消息并包含一整数值。</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1492420473027</span><span class="p">}</span><span class="w"> 
@@ -4861,7 +4909,7 @@
 <p>当用户的Websocket客户端接收到此心跳消息后，应返回<code>pong</code>消息并包含同一整数值。</p>
 
 <aside class="warning">当Websocket服务器连续两次发送了`ping`消息却没有收到任何一次`pong`消息返回后，服务器将主动断开与此客户端的连接。</aside>
-<h3 id='65cd7614bc'>订阅主题</h3>
+<h2 id='65cd7614bc'>订阅主题</h2>
 <blockquote>
 <p>Sub request:</p>
 </blockquote>
@@ -4890,7 +4938,7 @@
 <p>成功订阅后，Websocket客户端将收到确认。</p>
 
 <p>之后, 一旦所订阅的主题有更新，Websocket客户端将收到服务器推送的更新消息（push）。</p>
-<h3 id='b109d834a1'>取消订阅</h3>
+<h2 id='b109d834a1'>取消订阅</h2>
 <blockquote>
 <p>UnSub request:</p>
 </blockquote>
@@ -4917,7 +4965,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>取消订阅成功确认。</p>
-<h3 id='db08fc8dfe'>请求数据</h3>
+<h2 id='db08fc8dfe'>请求数据</h2>
 <p>Websocket服务器同时支持一次性请求数据（pull）。</p>
 
 <p>一次性请求的格式如下：</p>
@@ -4928,11 +4976,11 @@
 }</p>
 
 <p>一次性返回数据的具体格式参见各个主题。</p>
-<h3 id='6bd80fc847'>限频</h3>
+<h2 id='6bd80fc847'>限频</h2>
 <p>数据请求（req）限频规则</p>
 
 <p>单个连接每两次请求不能小于100ms。</p>
-<h3 id='e08c1d4f9a-2'>错误码</h3>
+<h2 id='e08c1d4f9a-2'>错误码</h2>
 <p>以下是WebSocket行情接口的错误码、错误消息和说明。</p>
 
 <table><thead>
@@ -5902,13 +5950,13 @@
   </span><span class="nl">"req"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.detail"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"id11"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='websocket-2'>Websocket资产及订单</h1><h2 id='5ea2e0cde2-7'>简介</h2><h3 id='url-2'>接入URL</h3>
+</span></code></pre></div><h1 id='websocket-2'>Websocket资产及订单</h1><h2 id='url-2'>接入URL</h2>
 <p><strong>Websocket资产及订单</strong></p>
 
 <p><strong><code>wss://api.bitv.com/ws/v2</code></strong>  </p>
-<h3 id='7ee1785123-2'>数据压缩</h3>
+<h2 id='7ee1785123-2'>数据压缩</h2>
 <p>数据未进行 GZIP 压缩。</p>
-<h3 id='1853724646-2'>心跳消息</h3>
+<h2 id='1853724646-2'>心跳消息</h2>
 <p>当用户的Websocket客户端连接到WebSocket服务器后，服务器会定期（当前设为20秒）向其发送<code>Ping</code>消息并包含一整数值如下：</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
@@ -5924,7 +5972,7 @@
           </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1575537778295</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">使用Ping消息中的ts值</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='action'><code>action</code>的有效取值</h3>
+</span></code></pre></div><h2 id='action'><code>action</code>的有效取值</h2>
 <table><thead>
 <tr>
 <th>有效取值</th>
@@ -5948,7 +5996,7 @@
 <td>推送数据，服务端发送至客户端数据类型</td>
 </tr>
 </tbody></table>
-<h3 id='6bd80fc847-2'>限频</h3>
+<h2 id='6bd80fc847-2'>限频</h2>
 <p>此版本对用户采取了多维度的限频策略，具体策略如下：</p>
 
 <ul>
@@ -5956,7 +6004,7 @@
 <li>限制单API Key建连总数为<strong>10</strong>。当超过此限制时，会返回&quot;too many connection&quot;错误消息。</li>
 <li>限制单IP建立连接数为<strong>100次/秒</strong>。当超过次限制时，会返回&quot;too many request&quot;错误消息。</li>
 </ul>
-<h3 id='1da6708ecc'>鉴权</h3>
+<h2 id='1da6708ecc'>鉴权</h2>
 <p>鉴权请求格式如下：</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req"</span><span class="p">,</span><span class="w"> 
@@ -6039,11 +6087,11 @@
 <td>签名, 计算得出的值，用于确保签名有效和未被篡改</td>
 </tr>
 </tbody></table>
-<h3 id='1fbac240b7-2'>签名步骤</h3>
+<h2 id='1fbac240b7-2'>签名步骤</h2>
 <p>签名步骤,您可以在【快速入门-签名认证】部分进行查看。</p>
 
 <p>注：JSON请求中的数据不需要URL编码。</p>
-<h3 id='65cd7614bc-2'>订阅主题</h3>
+<h2 id='65cd7614bc-2'>订阅主题</h2>
 <p>成功建立与Websocket服务器的连接后，Websocket客户端发送如下请求以订阅特定主题：</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sub"</span><span class="p">,</span><span class="w">
@@ -6057,7 +6105,7 @@
     </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accounts.update#0"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='db08fc8dfe-2'>请求数据</h3>
+</span></code></pre></div><h2 id='db08fc8dfe-2'>请求数据</h2>
 <p>成功建立Websocket服务器的连接后，Websocket客户端发送如下请求用以获取一次性数据：</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req"</span><span class="p">,</span><span class="w"> 
@@ -6071,7 +6119,7 @@
     </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">请求数据体</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='e08c1d4f9a-3'>错误码</h3>
+</span></code></pre></div><h2 id='e08c1d4f9a-3'>错误码</h2>
 <p>以下是WebSocket资产和订单接口的错误码、错误消息和说明。</p>
 
 <table><thead>

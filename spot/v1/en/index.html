@@ -421,7 +421,28 @@
             <a href="#websocket-market-data" class="toc-h1 toc-link" data-title="Websocket market data">Websocket market data</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#introduction-5" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                    <a href="#access-url" class="toc-h2 toc-link" data-title="Access URL">Access URL</a>
+                  </li>
+                  <li>
+                    <a href="#data-compression" class="toc-h2 toc-link" data-title="data compression">data compression</a>
+                  </li>
+                  <li>
+                    <a href="#heartbeat-message" class="toc-h2 toc-link" data-title="Heartbeat message">Heartbeat message</a>
+                  </li>
+                  <li>
+                    <a href="#subscribe-to-topics" class="toc-h2 toc-link" data-title="Subscribe to topics">Subscribe to topics</a>
+                  </li>
+                  <li>
+                    <a href="#unsubscribe" class="toc-h2 toc-link" data-title="unsubscribe">unsubscribe</a>
+                  </li>
+                  <li>
+                    <a href="#request-data" class="toc-h2 toc-link" data-title="request data">request data</a>
+                  </li>
+                  <li>
+                    <a href="#frequency-limit" class="toc-h2 toc-link" data-title="Frequency Limit">Frequency Limit</a>
+                  </li>
+                  <li>
+                    <a href="#error-code-1" class="toc-h2 toc-link" data-title="error code">error code</a>
                   </li>
                   <li>
                     <a href="#k-line-data" class="toc-h2 toc-link" data-title="K line data">K line data</a>
@@ -450,7 +471,34 @@
             <a href="#websocket-assets-and-orders" class="toc-h1 toc-link" data-title="Websocket assets and orders">Websocket assets and orders</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#introduction-6" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                    <a href="#access-url-1" class="toc-h2 toc-link" data-title="Access URL">Access URL</a>
+                  </li>
+                  <li>
+                    <a href="#data-compression-1" class="toc-h2 toc-link" data-title="data compression">data compression</a>
+                  </li>
+                  <li>
+                    <a href="#heartbeat-message-1" class="toc-h2 toc-link" data-title="Heartbeat message">Heartbeat message</a>
+                  </li>
+                  <li>
+                    <a href="#valid-values-for-action" class="toc-h2 toc-link" data-title="Valid values for action">Valid values for <code>action</code></a>
+                  </li>
+                  <li>
+                    <a href="#frequency-limit-1" class="toc-h2 toc-link" data-title="Frequency Limit">Frequency Limit</a>
+                  </li>
+                  <li>
+                    <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
+                  </li>
+                  <li>
+                    <a href="#signature-steps" class="toc-h2 toc-link" data-title="Signature steps">Signature steps</a>
+                  </li>
+                  <li>
+                    <a href="#subscribe-to-topics-1" class="toc-h2 toc-link" data-title="Subscribe to topics">Subscribe to topics</a>
+                  </li>
+                  <li>
+                    <a href="#request-data-1" class="toc-h2 toc-link" data-title="request data">request data</a>
+                  </li>
+                  <li>
+                    <a href="#error-code-2" class="toc-h2 toc-link" data-title="error code">error code</a>
                   </li>
                   <li>
                     <a href="#subscribe-to-order-updates" class="toc-h2 toc-link" data-title="Subscribe to order updates">Subscribe to order updates</a>
@@ -499,13 +547,13 @@
 
 <p>You can create an API key by clicking <a href="https://www.bitv.com/api/">here </a>.</p>
 
-<p>Each parent user can create 3 groups of API Key, and each API Key can set two kinds of permissions: read and trade.</p>
+<p>Each user can create 3 groups of API Key, and each API Key can set two kinds of permissions: read and trade.</p>
 
 <p>Permissions are described as follows:</p>
 
 <ul>
   <li>Read permission: Read permission is used for the query interface of data, such as: order query, transaction query, etc.</li>
-  <li>Trading permission: Trading permission is used for placing,  and transferring orders.</li>
+  <li>Trading permission: Trading permission is used for placing and canceling orders.</li>
 </ul>
 
 <p>After successful creation, please make sure to remember the following information:</p>
@@ -800,8 +848,8 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
     </tr>
     <tr>
       <td>Account</td>
-      <td>/v1/account/*  /v1/subuser/*</td>
-      <td>Account APIs, including account information, subusers, etc.</td>
+      <td>/v1/account/*</td>
+      <td>Account APIs, including account information, etc.</td>
     </tr>
     <tr>
       <td>Order</td>
@@ -1026,13 +1074,13 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 
 <h3 id="q1-how-many-api-keys-can-a-user-apply-for">Q1: How many Api Keys can a user apply for?</h3>
 
-<p>A: Each parent user can create 3 groups of API Keys, and each API Key can be set with two permissions: reading and trading. Each parent user can also create 200 sub-users, and each sub-user can create 3 sets of API Keys, and each API Key can be set with two permissions for reading and trading.</p>
+<p>A: Each user can create 3 groups of API Keys, and each API Key can be set with two permissions: reading and trading.</p>
 
 <p>The following are descriptions of the two permissions:</p>
 
 <ul>
   <li>Read permission: read permission is used for data query interface, such as: order query, transaction query, etc.</li>
-  <li>Transaction authority: transaction authority is used for placing orders, canceling orders, and transferring interfaces.</li>
+  <li>Transaction authority: transaction authority is used for placing orders and canceling orders.</li>
 </ul>
 
 <h3 id="q2-why-do-disconnections-and-timeouts-often-occur">Q2: Why do disconnections and timeouts often occur?</h3>
@@ -2374,7 +2422,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 
 <h2 id="introduction-3">Introduction</h2>
 
-<p>The account-related interface provides functions such as account, balance, history query and asset transfer.</p>
+<p>The account-related interface provides functions such as account, balance and history query.</p>
 
 <aside class="notice">Access to account-related interfaces requires signature authentication. </aside>
 
@@ -5438,19 +5486,17 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <h1 id="websocket-market-data">Websocket market data</h1>
 
-<h2 id="introduction-5">Introduction</h2>
-
-<h3 id="access-url">Access URL</h3>
+<h2 id="access-url">Access URL</h2>
 
 <p><strong>Quotation request address</strong></p>
 
 <p><strong><code>wss://api.bitv.com/ws</code></strong></p>
 
-<h3 id="data-compression">data compression</h3>
+<h2 id="data-compression">data compression</h2>
 
 <p>All data returned by the WebSocket market interface is compressed by GZIP, and the client needs to decompress it after receiving the data.</p>
 
-<h3 id="heartbeat-message">Heartbeat message</h3>
+<h2 id="heartbeat-message">Heartbeat message</h2>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1492420473027</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -5461,7 +5507,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 <p>When the user’s Websocket client receives this heartbeat message, it should return a <code>pong</code> message containing the same integer value.</p>
 
 <aside class="warning">When the Websocket server sends `ping` messages twice but does not receive any `pong` messages back, the server will actively disconnect from the client. </aside>
-<h3 id="subscribe-to-topics">Subscribe to topics</h3>
+<h2 id="subscribe-to-topics">Subscribe to topics</h2>
 
 <blockquote>
   <p>Sub request:</p>
@@ -5494,7 +5540,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>After that, once the subscribed topic is updated, the Websocket client will receive the update message (push) pushed by the server.</p>
 
-<h3 id="unsubscribe">unsubscribe</h3>
+<h2 id="unsubscribe">unsubscribe</h2>
 
 <blockquote>
   <p>UnSub request:</p>
@@ -5524,7 +5570,7 @@ Frequency limit value (NEW): 20 times/2s</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p>Successful unsubscribe confirmation.</p>
-<h3 id="request-data">request data</h3>
+<h2 id="request-data">request data</h2>
 
 <p>The Websocket server also supports one-time request data (pull).</p>
 
@@ -5537,13 +5583,13 @@ Frequency limit value (NEW): 20 times/2s</p>
 
 <p>For the specific format of the data returned at one time, see each topic.</p>
 
-<h3 id="frequency-limit">Frequency Limit</h3>
+<h2 id="frequency-limit">Frequency Limit</h2>
 
 <p>Data request (req) frequency limit rules</p>
 
 <p>Every two requests for a single connection cannot be less than 100ms.</p>
 
-<h3 id="error-code-1">error code</h3>
+<h2 id="error-code-1">error code</h2>
 
 <p>The following are the error codes, error messages and descriptions of the WebSocket market interface.</p>
 
@@ -6663,19 +6709,17 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span></code></pre></div>
 <h1 id="websocket-assets-and-orders">Websocket assets and orders</h1>
 
-<h2 id="introduction-6">Introduction</h2>
-
-<h3 id="access-url-1">Access URL</h3>
+<h2 id="access-url-1">Access URL</h2>
 
 <p><strong>Websocket assets and orders</strong></p>
 
 <p><strong><code>wss://api.bitv.com/ws/v2</code></strong></p>
 
-<h3 id="data-compression-1">data compression</h3>
+<h2 id="data-compression-1">data compression</h2>
 
 <p>Data is not GZIP compressed.</p>
 
-<h3 id="heartbeat-message-1">Heartbeat message</h3>
+<h2 id="heartbeat-message-1">Heartbeat message</h2>
 
 <p>When the user’s Websocket client connects to the WebSocket server, the server will periodically (currently set to 20 seconds) send a <code>Ping</code> message to it and include an integer value as follows:</p>
 
@@ -6695,7 +6739,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="valid-values-for-action">Valid values for <code>action</code></h3>
+<h2 id="valid-values-for-action">Valid values for <code>action</code></h2>
 
 <table>
   <thead>
@@ -6724,7 +6768,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
   </tbody>
 </table>
 
-<h3 id="frequency-limit-1">Frequency Limit</h3>
+<h2 id="frequency-limit-1">Frequency Limit</h2>
 
 <p>This version adopts a multi-dimensional frequency limiting strategy for users. The specific strategy is as follows:</p>
 
@@ -6734,7 +6778,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
   <li>Limit the number of connections established by a single IP to <strong>100 times/second</strong>. When the limit is exceeded, a “too many request” error message will be returned.</li>
 </ul>
 
-<h3 id="authentication">Authentication</h3>
+<h2 id="authentication">Authentication</h2>
 
 <p>The authentication request format is as follows:</p>
 
@@ -6824,13 +6868,13 @@ In the future, the data behavior of 150 increments will be consistent with that 
   </tbody>
 </table>
 
-<h3 id="signature-steps">Signature steps</h3>
+<h2 id="signature-steps">Signature steps</h2>
 
 <p>For the signature steps, you can view them in the [Quick Start - Signature Verification] section.</p>
 
 <p>Note: Data in JSON requests does not need to be URL encoded.</p>
 
-<h3 id="subscribe-to-topics-1">Subscribe to topics</h3>
+<h2 id="subscribe-to-topics-1">Subscribe to topics</h2>
 
 <p>After successfully establishing a connection with the Websocket server, the Websocket client sends a request like the following to subscribe to a specific topic:</p>
 
@@ -6848,7 +6892,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
 </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-data-1">request data</h3>
+<h2 id="request-data-1">request data</h2>
 
 <p>After successfully establishing the connection to the Websocket server, the Websocket client sends the following request to obtain one-time data:</p>
 
@@ -6866,7 +6910,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
      </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">request</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">body</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="error-code-2">error code</h3>
+<h2 id="error-code-2">error code</h2>
 
 <p>The following are the error codes, error messages, and descriptions of the WebSocket asset and order interfaces.</p>
 

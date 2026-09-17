@@ -45,7 +45,7 @@ Each user can create 3 groups of API Key, and each API Key can set two kinds of 
 Permissions are described as follows:
 
 - Read permission: Read permission is used for the query interface of data, such as: order query, transaction query, etc.
-- Trading permission: Trading permission is used for placing,  and transferring orders.
+- Trading permission: Trading permission is used for placing and canceling orders.
 
 After successful creation, please make sure to remember the following information:
 
@@ -458,7 +458,7 @@ A: Each user can create 3 groups of API Keys, and each API Key can be set with t
 The following are descriptions of the two permissions:
 
 - Read permission: read permission is used for data query interface, such as: order query, transaction query, etc.
-- Transaction authority: transaction authority is used for placing orders, canceling orders, and transferring interfaces.
+- Transaction authority: transaction authority is used for placing orders and canceling orders.
 
 ### Q2: Why do disconnections and timeouts often occur?
 
@@ -1198,7 +1198,7 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 
 ## Introduction
 
-The account-related interface provides functions such as account, balance, history query and asset transfer.
+The account-related interface provides functions such as account, balance and history query.
 
 <aside class="notice">Access to account-related interfaces requires signature authentication. </aside>
 

@@ -1,0 +1,15 @@
+# Text in this repository is stored with LF endings.
+# Without this, Git on Windows checks files out as CRLF and warns on every add.
+* text=auto eol=lf
+
+# Binary assets: never normalise.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+*.otf   binary

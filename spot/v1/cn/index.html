@@ -351,6 +351,9 @@
                   <li>
                     <a href="#24" class="toc-h2 toc-link" data-title="最近24小时行情数据">最近24小时行情数据</a>
                   </li>
+                  <li>
+                    <a href="#aaa2bc6b68" class="toc-h2 toc-link" data-title="全市场行情快照">全市场行情快照</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2122,6 +2125,114 @@
 <td>内部数据</td>
 </tr>
 </tbody></table>
+<h2 id='aaa2bc6b68'>全市场行情快照</h2>
+<p>此接口返回全部交易对最近 24 小时的行情快照。</p>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.bitv.com/market/tickers"</span>
+</code></pre></div><h3 id='http-10'>HTTP 请求</h3>
+<ul>
+<li>GET <code>/market/tickers</code></li>
+</ul>
+<h3 id='1f9ac54b15-10'>请求参数</h3>
+<p>此接口不接受任何参数。</p>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btcusdt"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">77156.04</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">78016.87</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">76887.24</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">77147.22</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">116.20531</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vol"</span><span class="p">:</span><span class="w"> </span><span class="mf">8955761.7918483</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">7747</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bid"</span><span class="p">:</span><span class="w"> </span><span class="mf">77147.17</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bidSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00051</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"ask"</span><span class="p">:</span><span class="w"> </span><span class="mf">77147.28</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"askSize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00117</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bidAmount"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.775749999999999</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"askAmount"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0601599999999993</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1787542101800</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='2213f4c32f-7'>响应数据</h3>
+<aside class="notice">返回的'data'对象是一个数组，每一个元素代表一个交易对的行情快照。</aside>
+
+<table><thead>
+<tr>
+<th>字段名称</th>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>交易对</td>
+</tr>
+<tr>
+<td>open</td>
+<td>float</td>
+<td>本阶段开盘价（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>close</td>
+<td>float</td>
+<td>本阶段收盘价（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>high</td>
+<td>float</td>
+<td>本阶段最高价（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>low</td>
+<td>float</td>
+<td>本阶段最低价（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>float</td>
+<td>以基础币种计量的交易量（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>vol</td>
+<td>float</td>
+<td>以报价币种计量的交易量（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>count</td>
+<td>integer</td>
+<td>交易次数（以滚动24小时计）</td>
+</tr>
+<tr>
+<td>bid</td>
+<td>float</td>
+<td>当前最优买一价</td>
+</tr>
+<tr>
+<td>bidSize</td>
+<td>float</td>
+<td>当前最优买一量</td>
+</tr>
+<tr>
+<td>ask</td>
+<td>float</td>
+<td>当前最优卖一价</td>
+</tr>
+<tr>
+<td>askSize</td>
+<td>float</td>
+<td>当前最优卖一量</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">本接口一次性返回全部交易对，数据量较大，不建议高频轮询。需要单个交易对的24小时行情，请使用「最近24小时行情数据」；需要单个交易对的聚合盘口，请使用「聚合行情（Ticker）」。</aside>
 <h1 id='2a0d0be224'>账户相关</h1><h2 id='5ea2e0cde2-4'>简介</h2>
 <p>账户相关接口提供了账户、余额、历史等查询功能。</p>
 
@@ -2187,11 +2298,11 @@
 限频值（NEW）：100次/2s</p>
 
 <p>查询当前用户的所有账户 ID <code>account-id</code> 及其相关信息</p>
-<h3 id='http-10'>HTTP 请求</h3>
+<h3 id='http-11'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/account/accounts</code></li>
 </ul>
-<h3 id='1f9ac54b15-10'>请求参数</h3>
+<h3 id='1f9ac54b15-11'>请求参数</h3>
 <p>无</p>
 
 <blockquote>
@@ -2207,7 +2318,7 @@
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-7'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-8'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -2246,11 +2357,11 @@
 <p>查询指定账户的余额，支持以下账户：</p>
 
 <p>spot：现货账户</p>
-<h3 id='http-11'>HTTP 请求</h3>
+<h3 id='http-12'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/account/accounts/{account-id}/balance</code></li>
 </ul>
-<h3 id='1f9ac54b15-11'>请求参数</h3>
+<h3 id='1f9ac54b15-12'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -2300,7 +2411,7 @@
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-8'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-9'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -2403,7 +2514,7 @@
 <ul>
 <li>GET <code>/v1/account/history</code></li>
 </ul>
-<h3 id='1f9ac54b15-12'>请求参数</h3>
+<h3 id='1f9ac54b15-13'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -2511,7 +2622,7 @@
         </span><span class="nl">"next-id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-9'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-10'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -2800,7 +2911,7 @@
 限频值；100次/2s</p>
 
 <p>发送一个新订单以进行撮合。</p>
-<h3 id='http-12'>HTTP 请求</h3>
+<h3 id='http-13'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/place</code></li>
 </ul>
@@ -2817,7 +2928,7 @@
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-13'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-14'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -2885,7 +2996,7 @@
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-10'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-11'>响应数据</h3>
 <p>返回的主数据对象是一个对应下单单号的字符串。</p>
 
 <p>如client order ID（在24小时内）被复用，节点将返回错误消息invalid.client.order.id。</p>
@@ -2894,7 +3005,7 @@
 限频值（NEW）：50次/2s<br></p>
 
 <p>一个批量最多10张订单</p>
-<h3 id='http-13'>HTTP 请求</h3>
+<h3 id='http-14'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/batch-orders</code></li>
 </ul>
@@ -2920,7 +3031,7 @@
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d2"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-14'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-15'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -2997,7 +3108,7 @@
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-11'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-12'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3035,11 +3146,11 @@
 <p>此接口发送一个撤销订单的请求。</p>
 
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
-<h3 id='http-14'>HTTP 请求</h3>
+<h3 id='http-15'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
-<h3 id='1f9ac54b15-15'>请求参数</h3>
+<h3 id='1f9ac54b15-16'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3067,7 +3178,7 @@
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-12'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-13'>响应数据</h3>
 <p>返回的主数据对象是一个对应下单单号的字符串。</p>
 <h3 id='e08c1d4f9a'>错误码</h3>
 <blockquote>
@@ -3116,7 +3227,7 @@
 <p>此接口发送一个撤销订单的请求。</p>
 
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
-<h3 id='http-15'>HTTP 请求</h3>
+<h3 id='http-16'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
 </ul>
@@ -3127,7 +3238,7 @@
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-16'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-17'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3155,7 +3266,7 @@
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-13'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-14'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3206,7 +3317,7 @@
 限频值（NEW）：50次/2s</p>
 
 <p>查询已提交但是仍未完全成交或未被撤销的订单。</p>
-<h3 id='http-16'>HTTP 请求</h3>
+<h3 id='http-17'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/openOrders</code></li>
 </ul>
@@ -3219,7 +3330,7 @@
    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-17'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-18'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3296,7 +3407,7 @@
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-14'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-15'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3377,11 +3488,11 @@
 <p>此接口发送批量撤销订单的请求。</p>
 
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
-<h3 id='http-17'>HTTP 请求</h3>
+<h3 id='http-18'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
 </ul>
-<h3 id='1f9ac54b15-18'>请求参数</h3>
+<h3 id='1f9ac54b15-19'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3437,7 +3548,7 @@
     </span><span class="nl">"next-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5454600</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-15'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-16'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3474,7 +3585,7 @@
 限频值（NEW）：50次/2s</p>
 
 <p>此接口同时为多个订单（基于id）发送取消请求。</p>
-<h3 id='http-18'>HTTP 请求</h3>
+<h3 id='http-19'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/batchcancel</code></li>
 </ul>
@@ -3487,7 +3598,7 @@
    </span><span class="s2">"5983466"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5722939"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5721027"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5719487"</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-19'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-20'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3549,7 +3660,7 @@
           </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-16'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-17'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3639,11 +3750,11 @@
 限频值（NEW）：50次/2s</p>
 
 <p>此接口返回指定订单的最新状态和详情。通过API创建的订单，撤销超过2小时后无法查询。</p>
-<h3 id='http-19'>HTTP 请求</h3>
+<h3 id='http-20'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
-<h3 id='1f9ac54b15-20'>请求参数</h3>
+<h3 id='1f9ac54b15-21'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3688,7 +3799,7 @@
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-17'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-18'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3809,11 +3920,11 @@
 限频值（NEW）：50次/2s</p>
 
 <p>此接口返回指定用户自编订单号（24小时内）的订单最新状态和详情。通过API创建的订单，撤销超过2小时后无法查询。</p>
-<h3 id='http-20'>HTTP 请求</h3>
+<h3 id='http-21'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders/getClientOrder</code></li>
 </ul>
-<h3 id='1f9ac54b15-21'>请求参数</h3>
+<h3 id='1f9ac54b15-22'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3858,7 +3969,7 @@
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-18'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-19'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3987,11 +4098,11 @@
 限频值（NEW）：50次/2s</p>
 
 <p>此接口返回指定订单的成交明细。</p>
-<h3 id='http-21'>HTTP 请求</h3>
+<h3 id='http-22'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
-<h3 id='1f9ac54b15-22'>请求参数</h3>
+<h3 id='1f9ac54b15-23'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4039,7 +4150,7 @@
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-19'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-20'>响应数据</h3>
 <aside class="notice">返回的主数据对象为一个对象数组，其中每一个元件代表一个交易结果。</aside>
 
 <table><thead>
@@ -4185,11 +4296,11 @@
 </ul>
 
 <p>建议用户以“时间范围“查询历史订单。</p>
-<h3 id='http-22'>HTTP 请求</h3>
+<h3 id='http-23'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders</code></li>
 </ul>
-<h3 id='1f9ac54b15-23'>请求参数</h3>
+<h3 id='1f9ac54b15-24'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4292,7 +4403,7 @@
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-20'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-21'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4433,7 +4544,7 @@
 限频值（NEW）：20次/2s</p>
 
 <p>此接口基于搜索条件查询最近48小时内历史订单。通过API创建的订单，撤销超过2小时后无法查询。</p>
-<h3 id='http-23'>HTTP 请求</h3>
+<h3 id='http-24'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/history</code></li>
 </ul>
@@ -4448,7 +4559,7 @@
    </span><span class="nl">"direct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prev"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-24'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-25'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4526,7 +4637,7 @@
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-21'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-22'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4654,11 +4765,11 @@
 限频值（NEW）：20次/2s</p>
 
 <p>此接口基于搜索条件查询当前和历史成交记录。</p>
-<h3 id='http-24'>HTTP 请求</h3>
+<h3 id='http-25'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
-<h3 id='1f9ac54b15-25'>请求参数</h3>
+<h3 id='1f9ac54b15-26'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4753,7 +4864,7 @@
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-22'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-23'>响应数据</h3>
 <aside class="notice">返回的主数据对象为一个对象数组，其中每一个元件代表一个交易结果。</aside>
 
 <table><thead>

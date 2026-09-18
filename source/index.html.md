@@ -1469,7 +1469,7 @@ API Key 权限：交易
 
 ### HTTP 请求
 
-- POST ` /v1/order/orders/place`
+- POST `/v1/order/orders/place`
 
 > Request:
 
@@ -1521,7 +1521,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST ` /v1/order/batch-orders`
+- POST `/v1/order/batch-orders`
 
 > Request:
 
@@ -1598,7 +1598,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST ` /v1/order/orders/{order-id}/submitcancel`
+- POST `/v1/order/orders/{order-id}/submitcancel`
 
 
 ### 请求参数
@@ -1655,7 +1655,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST ` /v1/order/orders/submitCancelClientOrder`
+- POST `/v1/order/orders/submitCancelClientOrder`
 
 > Request:
 
@@ -1783,7 +1783,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST ` /v1/order/orders/batchCancelOpenOrders`
+- POST `/v1/order/orders/batchCancelOpenOrders`
 
 
 ### 请求参数
@@ -1828,7 +1828,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST ` /v1/order/orders/batchcancel`
+- POST `/v1/order/orders/batchcancel`
 
 > Request:
 

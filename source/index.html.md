@@ -781,7 +781,7 @@ This interface does not accept any parameters.
 ```json
   {
     "status": "ok",
-    "data": 1494900087022
+    "data": 1494900087029
   }
 ```
 
@@ -1092,7 +1092,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
                  "ts":1544390317905,
                  "trade-id": 102043483472,
                  "id":3161878751418918529341,
-                 "price": 94.6900000000000000000,
+                 "price": 94.690000000000000000,
                  "direction": "sell"
               },
               {
@@ -1100,7 +1100,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
                  "ts":1544390317905,
                  "trade-id": 102043483473
                  "id":3161878751418918532514,
-                 "price": 94.6600000000000000000,
+                 "price": 94.660000000000000000,
                  "direction": "sell"
               }
            ]
@@ -1110,7 +1110,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
            "ts":1544390311353,
            "data":[
               {
-                 "amount": 1.0000000000000000000,
+                 "amount": 1.000000000000000000,
                  "ts":1544390311353,
                  "trade-id": 102043494568,
                  "id":3161877698918918522622,

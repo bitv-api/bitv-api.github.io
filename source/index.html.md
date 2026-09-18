@@ -1289,7 +1289,7 @@ spot: spot account
        {
          "currency": "usdt",
          "type": "trade",
-         "balance": "5007.4362812650",
+         "balance": "5007.4362872650",
          "available": "0",
          "debt": "0",
          "seq-num": "0"
@@ -1297,7 +1297,7 @@ spot: spot account
        {
          "currency": "usdt",
          "type": "frozen",
-         "balance": "348.11999203300",
+         "balance": "348.1199920000",
          "available": "0",
          "debt": "0",
          "seq-num": "0"
@@ -1744,7 +1744,7 @@ Query the orders that have been submitted but have not been fully executed or ca
        "id": 5454937,
        "symbol": "ethusdt",
        "account-id": 30925,
-       "amount": "1.0000000000000000000",
+       "amount": "1.000000000000000000",
        "price": "0.453000000000000000",
        "created-at": 1530604762277,
        "type": "sell-limit",

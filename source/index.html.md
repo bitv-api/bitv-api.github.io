@@ -1355,28 +1355,31 @@ API Key 权限：读取<br>
 ```json
 {
     "status": "ok",
-    "data": [
-        {
-            "account-id": 5260185,
-            "currency": "btc",
-            "transact-amt": "0.002393000000000000",
-            "transact-type": "transfer",
-            "record-id": 89373333576,
-            "avail-balance": "0.002393000000000000",
-            "acct-balance": "0.002393000000000000",
-            "transact-time": 1571393524526
-        },
-        {
-            "account-id": 5260185,
-            "currency": "btc",
-            "transact-amt": "-0.002393000000000000",
-            "transact-type": "transfer",
-            "record-id": 89373382631,
-            "avail-balance": "0E-18",
-            "acct-balance": "0E-18",
-            "transact-time": 1571393578496
-        }
-    ]
+    "data": {
+        "data": [
+            {
+                "account-id": 5260185,
+                "currency": "btc",
+                "transact-amt": "0.002393000000000000",
+                "transact-type": "transfer",
+                "record-id": 89373333576,
+                "avail-balance": "0.002393000000000000",
+                "acct-balance": "0.002393000000000000",
+                "transact-time": 1571393524526
+            },
+            {
+                "account-id": 5260185,
+                "currency": "btc",
+                "transact-amt": "-0.002393000000000000",
+                "transact-type": "transfer",
+                "record-id": 89373382631,
+                "avail-balance": "0E-18",
+                "acct-balance": "0E-18",
+                "transact-time": 1571393578496
+            }
+        ],
+        "next-id": null
+    }
 }
 ```
 
@@ -1386,15 +1389,16 @@ API Key 权限：读取<br>
 | ------------- | -------- | ---------------------------------------------------- | -------- |
 | status        | string   | 状态码                                               |          |
 | data          | object   |                                                      |          |
-| { account-id  | long     | 账户编号                                             |          |
+| { data        | array    | 流水记录数组                                           |          |
+| [ account-id  | long     | 账户编号                                             |          |
 | currency      | string   | 币种                                                 |          |
 | transact-amt  | string   | 变动金额（入账为正 or 出账为负）                     |          |
 | transact-type | string   | 变动类型                                             |          |
 | avail-balance | string   | 可用余额                                             |          |
 | acct-balance  | string   | 账户余额                                             |          |
 | transact-time | long     | 交易时间（数据库记录时间）                           |          |
-| record-id }   | long     | 数据库记录编号（全局唯一）                           |          |
-| next-id       | long     | 下页起始编号（仅在查询结果需要分页返回时包含此字段） |          |
+| record-id ]   | long     | 数据库记录编号（全局唯一）                           |          |
+| next-id }     | long     | 下页起始编号（仅在查询结果需要分页返回时包含此字段） |          |
 
 # 现货交易
 

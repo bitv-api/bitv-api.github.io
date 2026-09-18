@@ -1194,6 +1194,71 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 | version | integer | Internal data |
 
 
+## Market snapshot of all trading pairs
+
+This interface returns the market snapshot of all trading pairs in the last 24 hours.
+
+```shell
+curl "https://api.bitv.com/market/tickers"
+```
+
+### HTTP requests
+
+- GET `/market/tickers`
+
+### Request parameters
+
+This interface does not accept any parameters.
+
+> Response:
+
+```json
+{
+  "data": [
+    {
+      "symbol": "btcusdt",
+      "open": 77156.04,
+      "high": 78016.87,
+      "low": 76887.24,
+      "close": 77147.22,
+      "amount": 116.20531,
+      "vol": 8955761.7918483,
+      "count": 7747,
+      "bid": 77147.17,
+      "bidSize": 0.00051,
+      "ask": 77147.28,
+      "askSize": 0.00117,
+      "bidAmount": 3.775749999999999,
+      "askAmount": 2.0601599999999993
+    }
+  ],
+  "status": "ok",
+  "ts": 1787542101800
+}
+```
+
+### Response data
+
+<aside class="notice">The returned 'data' object is an array, and each element represents the market snapshot of one trading pair.</aside>
+
+| Field Name | Data Type | Description |
+| ---------- | --------- | ----------- |
+| symbol | string | Trading pair |
+| open | float | Opening price of this stage (according to rolling 24 hours) |
+| close | float | Closing price of this stage (according to rolling 24 hours) |
+| high | float | Highest price of this stage (according to rolling 24 hours) |
+| low | float | Lowest price of this stage (according to rolling 24 hours) |
+| amount | float | Transaction volume in base currency (rolling 24 hours) |
+| vol | float | Volume in quote currency (rolling 24 hours) |
+| count | integer | Number of transactions (according to rolling 24 hours) |
+| bid | float | Current best bid price |
+| bidSize | float | Current best bid size |
+| ask | float | Current best ask price |
+| askSize | float | Current best ask size |
+
+<aside class="notice">This interface returns all trading pairs at once and the data volume is large, so frequent polling is not recommended. For the 24-hour market data of a single trading pair, please use "Last 24 hours market data"; for the aggregated order book of a single trading pair, please use "Aggregation Quotes (Ticker)".</aside>
+
+
 # Account related
 
 ## Introduction

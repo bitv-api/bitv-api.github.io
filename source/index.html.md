@@ -897,7 +897,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 {
     "ch": "market.ethhkd.detail.merged",
     "status": "ok",
-    "ts": 1761185654000,
+    "ts": 1761185653000,
     "tick": {
       "id":1499225271,
       "version":5104471,
@@ -907,7 +907,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
       "low":1856.0000,
       "amount":81486.2926,
       "count":42122,
-      "vol":157052555.85708200,
+      "vol":157052799.85708200,
       "ask":[1885.0000,21.8804],
       "bid":[1884.0000,1.6702]
     }

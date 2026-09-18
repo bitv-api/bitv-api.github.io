@@ -1196,6 +1196,71 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 | vol      | float    | 以报价币种计量的交易量（以滚动24小时计） |
 | version  | integer  | 内部数据                                 |
 
+## 全市场行情快照
+
+此接口返回全部交易对最近 24 小时的行情快照。
+
+```shell
+curl "https://api.bitv.com/market/tickers"
+```
+
+### HTTP 请求
+
+- GET `/market/tickers`
+
+### 请求参数
+
+此接口不接受任何参数。
+
+> Response:
+
+```json
+{
+  "data": [
+    {
+      "symbol": "btcusdt",
+      "open": 77156.04,
+      "high": 78016.87,
+      "low": 76887.24,
+      "close": 77147.22,
+      "amount": 116.20531,
+      "vol": 8955761.7918483,
+      "count": 7747,
+      "bid": 77147.17,
+      "bidSize": 0.00051,
+      "ask": 77147.28,
+      "askSize": 0.00117,
+      "bidAmount": 3.775749999999999,
+      "askAmount": 2.0601599999999993
+    }
+  ],
+  "status": "ok",
+  "ts": 1787542101800
+}
+```
+
+### 响应数据
+
+<aside class="notice">返回的'data'对象是一个数组，每一个元素代表一个交易对的行情快照。</aside>
+
+| 字段名称 | 数据类型 | 描述 |
+| -------- | -------- | ---------------------------------------- |
+| symbol   | string   | 交易对                                   |
+| open     | float    | 本阶段开盘价（以滚动24小时计）           |
+| close    | float    | 本阶段收盘价（以滚动24小时计）           |
+| high     | float    | 本阶段最高价（以滚动24小时计）           |
+| low      | float    | 本阶段最低价（以滚动24小时计）           |
+| amount   | float    | 以基础币种计量的交易量（以滚动24小时计） |
+| vol      | float    | 以报价币种计量的交易量（以滚动24小时计） |
+| count    | integer  | 交易次数（以滚动24小时计）               |
+| bid      | float    | 当前最优买一价                           |
+| bidSize  | float    | 当前最优买一量                           |
+| ask      | float    | 当前最优卖一价                           |
+| askSize  | float    | 当前最优卖一量                           |
+
+<aside class="notice">本接口一次性返回全部交易对，数据量较大，不建议高频轮询。需要单个交易对的24小时行情，请使用「最近24小时行情数据」；需要单个交易对的聚合盘口，请使用「聚合行情（Ticker）」。</aside>
+
+
 # 账户相关
 
 ## 简介

@@ -1,60 +1,44 @@
-# Huobi API Documentation Project
+# BitV API Documentation
 
-## Introduction
+Source for the BitV public API documentation site.
 
-This is the project for the official API documents of Huobi. This README will introduce how this project is structured and how to work with it.
+**Live site**
 
-## API Tool
+- Simplified Chinese — <https://bitv-api.github.io/spot/v1/cn/>
+- English — <https://bitv-api.github.io/spot/v1/en/>
+- Traditional Chinese — <https://bitv-api.github.io/spot/v1/hk/>
 
-Huobi's API documentation is generated with Slate. This project is an fork of <https://github.com/lord/slate> slate.
+## Branches
 
-## Repo Structure and Overall Workflow
+| Branch | Purpose |
+| ------ | ------- |
+| `v1_cn` / `v1_en` / `v1_hk` | Documentation source, one branch per language |
+| `gh-pages` | Generated static site (this is what the live site serves) |
 
-Huobi currently supports two versions of API (v1, v2) and two languages of API documents (English, Chinese), so we have a total of four versions of API documents sit in four branches: v1_en, v1_cn, v2_en, v2_cn. To access the web page of a specific version you can visit <https://huobi.github.io/api_doc/{version}/{language}>, e.g. for v1 english version visit https://huobi.github.io/api_doc/v1/en.
+Each language branch holds its own copy of the content. A change that applies to
+all languages has to be made on each branch.
 
-### *Recommended way to make a change by CI*
+## Editing
 
-- Just need to make changes to `./source/index.html.md` in specific branch and commit, let CI complete next two steps.
+All documentation content lives in a single file per branch:
 
-### To make a change to a specific version of the documentation
+```
+source/index.html.md
+```
 
-1. Checkout the target version's branch, e.g. if you want to update v1 chinese documents, checkout v1_cn
+## Building
 
-2. Make changes to source/index.html.md in this branch and commit
+Requires Ruby and [Middleman](https://middlemanapp.com/).
 
-3. Run deploy.sh to deploy the changes to the website.
+```bash
+bundle install
+bundle exec middleman build
+```
 
-4. Confirm the result on the web page, if all look good, push the changes.
+The generated site is written to `build/`, which is then published to the
+`gh-pages` branch.
 
-### To make a change to common files (logo, style, layout)
+## License
 
-1. Checkout master branch
-
-2. Make the common file changes
-
-3. Commit and push the changes
-
-4. Checkout each version's branch, merge/cherry-pick, then run deploy.sh
-
-## Make Changes
-
-There are two main types of changes: appearance and content.
-
-### Appearance Change
-
-* Change logo: <https://github.com/lord/slate/wiki/Changing-the-Logo>
-* Customize style: <https://github.com/lord/slate/wiki/Custom-Slate-Themes>
-
-### Content Change
-
-* Change content markdown: <https://github.com/lord/slate/wiki/Markdown-Syntax>
-
-## Build and Deploy the API
-
-### Set Up Slate Build and Deploy Environment Locally
-
-<https://github.com/lord/slate/wiki/Installing-Slate>
-
-### Publish API Documents
-
-<https://github.com/lord/slate/wiki/Deploying-Slate>
+This site is built on [Slate](https://github.com/slatedocs/slate), which is
+licensed under the Apache License, Version 2.0. See `LICENSE` for the full text.

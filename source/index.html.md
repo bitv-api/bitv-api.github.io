@@ -1357,28 +1357,31 @@ This node returns the account history based on the user account ID.
 ```json
 {
      "status": "ok",
-     "data": [
-         {
-             "account-id": 5260185,
-             "currency": "btc",
-             "transact-amt": "0.002393000000000000",
-             "transact-type": "transfer",
-             "record-id": 89373333576,
-             "avail-balance": "0.002393000000000000",
-             "acct-balance": "0.002393000000000000",
-             "transact-time": 1571393524526
-         },
-         {
-             "account-id": 5260185,
-             "currency": "btc",
-             "transact-amt": "-0.002393000000000000",
-             "transact-type": "transfer",
-             "record-id": 89373382631,
-             "avail-balance": "0E-18",
-             "acct-balance": "0E-18",
-             "transact-time": 1571393578496
-         }
-     ]
+     "data": {
+          "data": [
+              {
+                  "account-id": 5260185,
+                  "currency": "btc",
+                  "transact-amt": "0.002393000000000000",
+                  "transact-type": "transfer",
+                  "record-id": 89373333576,
+                  "avail-balance": "0.002393000000000000",
+                  "acct-balance": "0.002393000000000000",
+                  "transact-time": 1571393524526
+              },
+              {
+                  "account-id": 5260185,
+                  "currency": "btc",
+                  "transact-amt": "-0.002393000000000000",
+                  "transact-type": "transfer",
+                  "record-id": 89373382631,
+                  "avail-balance": "0E-18",
+                  "acct-balance": "0E-18",
+                  "transact-time": 1571393578496
+              }
+          ],
+          "next-id": null
+     }
 }
 ```
 
@@ -1388,15 +1391,16 @@ This node returns the account history based on the user account ID.
 | ------------- | --------- | -------------------------------------------------------| ------------|
 | status        | string    | Status code                                              |             |
 | data          | object    |                                                         |             |
-| { account-id  | long      | Account number                                           |             |
+| { data        | array     | Array of transaction records                             |             |
+| [ account-id  | long      | Account number                                           |             |
 | currency      | string    | Currency                                                 |             |
 | transact-amt  | string    | Change amount |             |
 | transact-type | string    | Transaction type                                         |             |
 | avail-balance | string    | Available balance                                        |             |
 | acct-balance  | string    | Account balance                                          |             |
 | transact-time | long      | Transaction time (database record time)                  |             |
-| record-id }   | long      | Database record ID (globally unique)                     |             |
-| next-id       | long      | The start number of the next page (included when the query results need to be returned in pages) |             |
+| record-id ]   | long      | Database record ID (globally unique)                     |             |
+| next-id }     | long      | The start number of the next page (included when the query results need to be returned in pages) |             |
 
 # Spot Trading
 

@@ -56,7 +56,7 @@ API 使用中如有疑问或咨询事项，请参考`咨询事项 Q&A`进行咨�
 - `Secret Key`  签名认证加密所使用的密钥（仅申请时可见）
 
 <aside class="notice">
-每个 API Key 最多可绑定 10个IP 地址(主机地址或网络地址)。出于安全考虑，强烈建议您绑定 IP 地址。
+每个 API Key 最多可绑定 10 个 IP 地址，仅支持单个主机地址，不支持网段。创建 API Key 时必须绑定 IP 地址。
 </aside>
 <aside class="warning">
 <red><b>风险提示</b></red>：这两个密钥与账号安全紧密相关，无论何时都请勿将二者<b>同时</b>向其它人透露。API Key的泄露可能会造成您的资产损失，若发现API Key泄露请尽快删除该API Key。
@@ -301,7 +301,6 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 * market : 市价单，该类型订单仅需指定下单金额或下单数量，不需要指定价格，订单在进入撮合时，会直接与对手方进行成交，直至金额或数量低于最小成交金额或成交数量为止。  
 * limit-maker : 限价挂单，该订单在进入撮合时，只能作为maker进入市场深度,若订单会被成交，则撮合会直接拒绝该订单。  
 * ioc : 立即成交或取消（immediately or cancel），该订单在进入撮合后，若不能直接成交，则会被直接取消（部分成交后，剩余部分也会被取消）。  
-* stop-limit : 止盈止损单，设置高于或低于市场价格的订单，当订单到达触发价格后，才会正式的进入撮合队列。  
 
 ### 订单状态
 
@@ -409,7 +408,7 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 
 ###安全类
 
-- 强烈建议：在申请API Key时，请绑定您的IP地址，以此来保证您的API Key仅能在您自己的IP上使用。
+- 必须绑定 IP：在申请 API Key 时，必须绑定您的 IP 地址，以此来保证您的 API Key 仅能在您自己的 IP 上使用。
 - 强烈建议：不要将API Key暴露给任何人（包括第三方软件或机构），API Key代表了您的账户权限，API Key的暴露可能会对您的信息、资金造成损失，若API Key泄露，请尽快删除并重新创建。
 
 ###公共类
@@ -1489,7 +1488,7 @@ API Key 权限：读取<br>
 | base-argument-unsupported                                    | 某参数不支持，请检查参数                                     |
 | base-system-error                                            | 系统错误，如果是撤单：缓存中查不到订单状态，该订单无法撤单；如果是下单：订单入缓存失败，请再次尝试 |
 | login-required                                               | url中没有Signature参数或找不到此用户（key与账户id不对应等情况） |
-| parameter-required                                           | 止盈止损订单缺少参数 stop-price或operator                    |
+| parameter-required                                           | 必填参数缺失，请检查参数                                      |
 | base-record-invalid                                          | 暂时未找到数据，请稍后重试                                   |
 | order-amount-over-limit                                      | 订单数量超出限额                                             |
 | base-symbol-trade-disabled                                   | 该交易对被禁止交易                                           |
@@ -1521,7 +1520,6 @@ API Key 权限：读取<br>
 | order-user-cancel-forbidden                                  | 订单类型为IOC 不允许撤单                                     |
 | order-price-greater-than-limit                               | 下单价格高于开盘前下单限制价格，请重新下单                   |
 | order-price-less-than-limit                                  | 下单价格低于开盘前下单限制价格，请重新下单                   |
-| order-stop-order-hit-trigger                                 | 止盈止损单下单被当前价触发                                   |
 | market-orders-not-support-during-limit-price-trading         | 限时下单不支持市价单                                         |
 | price-exceeds-the-protective-price-during-limit-price-trading | 限价时间内价格超出保护价                                     |
 | invalid-client-order-id                                      | client order id 已重复                                       |
@@ -2045,7 +2043,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | api                                                          |
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销， created |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type              | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖  |
 
 
@@ -2109,7 +2107,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | api                                                          |
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type              | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖 |
 
 如client order ID不存在，返回如下错误信息 
@@ -2183,7 +2181,7 @@ API Key 权限：读取<br>
 | trade-id            | false    | integer  | Unique trade ID (NEW)唯一成交编号，成交时产生的唯一编号ID    |                                                              |
 | price               | true     | string   | 成交价格                                                     |                                                              |
 | source              | true     | string   | 订单来源                                                     | api                                                          |
-| symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
+| symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type                | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖  |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
 | filled-points       | true     | string   | 抵扣数量                                 |                                                              |
@@ -2275,7 +2273,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | api                                                          |
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type              | true     | string   | 订单类型                                                     | submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖  |
 
 ### start-date, end-date相关错误码
@@ -2363,7 +2361,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | api                                                          |
 | state             | true     | string   | 订单状态                                                     | partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销 |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type}             | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖 |
 | next-time         | false    | long     | 下一查询起始时间（当请求字段”direct”为”prev”时有效）, 下一查询结束时间（当请求字段”direct”为”next”时有效）。注：仅在检索出的总条目数量超出size字段限定时，此返回字段存在。 | UTC time in millisecond                                      |
 
@@ -2436,7 +2434,7 @@ API Key 权限：读取<br>
 | trade-id            | false    | integer  | 唯一成交编号                                                 |                                                              |
 | price               | true     | string   | 成交价格                                                     |                                                              |
 | source              | true     | string   | 订单来源                                                     | api                                                          |
-| symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, rcneth ...                                  |
+| symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type                | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖 |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
 | filled-points       | true     | string   | 抵扣数量                                |                                                              |
@@ -2721,7 +2719,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 
 ```json
 {
-  "ch": "market.htusdt.depth.step0",
+  "ch": "market.btcusdt.depth.step0",
   "ts": 1572362902028, //system update time
   "tick": {
     "bids": [
@@ -3495,9 +3493,7 @@ API Key 权限：读取
 
 注：<BR>
 
-- 止盈止损订单在尚未被触发时，接口将不会推送此订单的创建；<br>
 - Taker订单在成交前，接口首先推送其创建事件。<br>
-- 止盈止损订单的订单类型不再是原始订单类型“buy-stop-limit”或“sell-stop-limit”，而是变为“buy-limit”或“sell-limit”。<BR>
 
 > Update example
 
@@ -3551,7 +3547,6 @@ API Key 权限：读取
 
 注：<BR>
 
-- 止盈止损订单的订单类型不再是原始订单类型“buy-stop-limit”或“sell-stop-limit”，而是变为“buy-limit”或“sell-limit”。<BR>
 - 当一张taker订单同时与对手方多张订单成交后，所产生的每笔成交（tradePrice, tradeVolume, tradeTime, tradeId, aggressor）将被分别推送（而不是合并推送一笔）。<BR>
 
 > Update example
@@ -3590,10 +3585,6 @@ API Key 权限：读取
 | orderStatus   | string   | 订单状态，有效值：partial-canceled, canceled                 |
 | remainAmt     | string   | 未成交数量（市价买单为未成交金额）                           |
 | lastActTime   | long     | 订单最近更新时间                                             |
-
-注：<BR>
-
-- 止盈止损订单的订单类型不再是原始订单类型“buy-stop-limit”或“sell-stop-limit”，而是变为“buy-limit”或“sell-limit”。<BR>
 
 ## 订阅清算后成交及撤单更新
 

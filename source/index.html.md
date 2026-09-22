@@ -54,7 +54,7 @@ After successful creation, please make sure to remember the following informatio
 - `Secret Key` The key used for signature authentication encryption (only visible when applying)
 
 <aside class="notice">
-Each API Key can be bound to a maximum of 10 IP addresses (host or network addresses). For security reasons, it is strongly recommended that you bind an IP address.
+Each API Key can be bound to a maximum of 10 IP addresses. Only individual host addresses are supported; network segments (CIDR) are not supported. You must bind an IP address when creating an API Key.
 </aside>
 <aside class="warning"> 
  <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets , if you find API Key leakage, please delete the API Key as soon as possible.
@@ -281,7 +281,6 @@ Order types:
 - Market: A market order only requires specifying the order amount or quantity, without specifying a price. The order is matched directly with the counterparty until the amount or quantity is lower than the minimum trade amount or quantity.
 - Limit-maker: A limit order that can only enter the market depth as a maker. If the order would result in a match, the matching process will directly reject the order.
 - IOC: Immediate or cancel. After entering the matching process, if the order cannot be immediately matched, it will be canceled (the remaining part will also be canceled after partial fulfillment).
-- Stop-limit: A stop-loss or take-profit order that is set above or below the market price. The order is only officially placed in the matching queue when the trigger price is reached.
 
 ### Order Status
 
@@ -396,7 +395,7 @@ This document describes the conventions for data types in the JSON format:
 
 ### Security
 
-- Strongly recommended: When applying for an API Key, bind it to your IP address to ensure that your API Key can only be used from your own IP. 
+- IP binding is mandatory: When applying for an API Key, you must bind it to your IP address to ensure that your API Key can only be used from your own IP. 
 - Strongly recommended: Do not expose your API Key to anyone, including third-party software or organizations. The API Key represents your account privileges, and its exposure may result in loss of information and funds. If your API Key is compromised, please delete it promptly and create a new one.
 
 ### Public
@@ -1489,7 +1488,7 @@ The spot trading interface provides functions such as order placement, order can
 | base-argument-unsupported | A parameter is not supported, please check the parameter |
 | base-system-error | System error, if the order is canceled: the order status cannot be found in the cache, the order cannot be canceled; if the order is placed: the order failed to enter the cache, please try again |
 | login-required | There is no Signature parameter in the URL or the user cannot be found (the key does not correspond to the account ID, etc.) |
-| parameter-required | Take Profit Stop Loss order lacks parameter stop-price or operator |
+| parameter-required | Required parameter is missing, please check the parameters         |
 | base-record-invalid | No data found yet, please try again later |
 | order-amount-over-limit | Order quantity over limit |
 | base-symbol-trade-disabled | The trading pair is disabled |
@@ -1521,7 +1520,6 @@ The spot trading interface provides functions such as order placement, order can
 | order-user-cancel-forbidden | The order type is IOC and cancellation is not allowed |
 | order-price-greater-than-limit | The order price is higher than the order limit price before the opening, please place a new order |
 | order-price-less-than-limit | The order price is lower than the order limit price before the opening, please place a new order |
-| order-stop-order-hit-trigger | The stop loss order is triggered by the current price |
 | market-orders-not-support-during-limit-price-trading | Market orders are not supported for time-limited orders |
 | price-exceeds-the-protective-price-during-limit-price-trading | The price exceeds the protective price during the price limit |
 | invalid-client-order-id | Client order ID duplicated |
@@ -2052,7 +2050,7 @@ This interface returns the latest status and details of the specified order. Ord
 | price              | true     | string    | Order price                                                                                      |                                                                                                    |
 | source             | true     | string    | Order source                                                                                     | api                                                                                                |
 | state              | true     | string    | Order status                                                                                     | submitted, partial-filled, partially-canceled, filled, canceled, created                            |
-| symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, rcneth ...                                                                         |
+| symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, ethhkd ...                                                                         |
 | type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price                                                 |                                                                                                    |
 
 
@@ -2116,7 +2114,7 @@ This interface returns the latest order status and details of the specified user
 | price              | true     | string    | Order price                                                                                    |             |
 | source             | true     | string    | Order source                                                                                   | api         |
 | state              | true     | string    | Order status                                                                                   | submitted, partial-filled, partially-canceled, filled, canceled, created            |
-| symbol             | true     | string    | Trading pair                                                                                   | btcusdt, ethbtc, rcneth …             |
+| symbol             | true     | string    | Trading pair                                                                                   | btcusdt, ethbtc, ethhkd …             |
 | type               | true     | string    | Order type                                                                                     | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price            |
 
 
@@ -2192,7 +2190,7 @@ This interface returns the transaction details of the specified order.
 | trade-id           | false    | integer   | Unique trade ID                                         |              |
 | price              | true     | string    | Transaction price                                       |              |
 | source             | true     | string    | Order source                                            | api          |
-| symbol             | true     | string    | Trading pair                                            | btcusdt, ethbtc, rcneth, ... |
+| symbol             | true     | string    | Trading pair                                            | btcusdt, ethbtc, ethhkd, ... |
 | type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit  |
 | role               | true     | string    | Transaction role                                        | maker, taker |
 | filled-points      | true     | string    | Deduction amount                                        |              |
@@ -2284,7 +2282,7 @@ It is recommended that users query historical orders by "time range".
 | price            | true     | string    | Order price                                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                    |
 | source           | true     | string    | Order source                                                                                                                                                                                                                                                                                                                                                                         | api                                                                                                |
 | state            | true     | string    | Order status                                                                                                                                                                                                                                                                                                                                                                         | submitted, partial-filled, partially-canceled, filled, canceled, created                                                                    |
-| symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, rcneth ...                                                                         |
+| symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, ethhkd ...                                                                         |
 | type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price|
 
 ### Error codes related to start-date and end-date:
@@ -2371,7 +2369,7 @@ This interface queries historical orders within the last 48 hours based on searc
 | price              | true     | string    | Order price                                                                                                                                                                         |                                                                         |
 | source             | true     | string    | Order source                                                                                                                                                                        | api                                                                     |
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
-| symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, rcneth, etc.                                            |
+| symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, ethhkd, etc.                                            |
 | type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, etc. |
 | next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next").Note: Only when the total number of items in the search result exceeded the limitation defined in "size", this field exists.                                       | UTC time in milliseconds                                                |
 
@@ -2443,7 +2441,7 @@ This interface queries current and historical transaction records based on searc
 | trade-id              | false    | integer   | Unique trade ID.                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | price                 | true     | string    | Transaction price.                                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | source                | true     | string    | Order source.                                                                                                                                                                                                                                                          | api                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethbtc, rcneth ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethbtc, ethhkd ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | type                  | true     | string    | Order type.                                                                                                                                                                                                                                                            | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price                                                                                                                                                                                                                                                    |
 | role                  | true     | string    | Transaction role.                                                                                                                                                                                                                                                      | maker, taker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | filled-points         | true     | string    | Deduction amount .                                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -2727,7 +2725,7 @@ When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default 
 
 ```json
 {
-  "ch": "market.htusdt.depth.step0",
+  "ch": "market.btcusdt.depth.step0",
   "ts": 1572362902027, //system update time
   "tick": {
     "bids": [
@@ -3509,9 +3507,7 @@ When an order is placed –
 
 Note: <BR>
 
-- When the take profit and stop loss order has not been triggered, the interface will not push the creation of this order;<br>
 - Before the Taker order is completed, the interface will first push its creation event. <br>
-- The order type of the stop loss order is no longer the original order type "buy-stop-limit" or "sell-stop-limit", but becomes "buy-limit" or "sell-limit". <BR>
 
 > Update example
 
@@ -3565,7 +3561,6 @@ When the order is filled –
 
 Note: <BR>
 
-- The order type of the stop loss order is no longer the original order type "buy-stop-limit" or "sell-stop-limit", but becomes "buy-limit" or "sell-limit". <BR>
 - When a taker order is executed with multiple orders of the counterparty at the same time, each resulting transaction (tradePrice, tradeVolume, tradeTime, tradeId, aggressor) will be pushed separately (instead of combined push). <BR>
 
 > Update example
@@ -3604,10 +3599,6 @@ When an order is canceled -
 | orderStatus | string    | Order status, valid values: partial-canceled, canceled                            |
 | remainAmt   | string    | Unexecuted quantity (buy order at market price is the unexecuted amount)          |
 | lastActTime | long      | Last update time of the order                                                     |
-
-Note: <BR>
-
-- The order type of the stop loss order is no longer the original order type "buy-stop-limit" or "sell-stop-limit", but becomes "buy-limit" or "sell-limit". <BR>
 
 ## Subscribe to update transactions and cancellations after liquidation
 

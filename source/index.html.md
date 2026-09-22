@@ -254,7 +254,10 @@ The `account-id` can be obtained through the `/v1/account/accounts` interface, a
 
 Account types include:
 
-- Spot: Spot trading account
+- spot: spot account
+- depository: depository account
+- monetary: monetary account
+- intermediary: intermediary account
 
 ### Order and Trade-related ID Explanation
 
@@ -574,7 +577,7 @@ A: It is recommended to use the REST API `GET /market/trade` interface to reques
 
 ### Q4: When is the K-line calculated?
 
-A: The K-line period is calculated based on Singapore time. For example, the starting period of the daily K-line is from 0:00 Singapore time to 0:00 Singapore time the next day.
+A: The K-line period is calculated based on UTC+8. For example, the starting period of the daily K-line is from 00:00 UTC+8 to 00:00 UTC+8 the next day.
 
 ## Transaction related
 
@@ -584,7 +587,10 @@ A: account-id corresponds to the ID of different business accounts of the user, 
 
 Account types include:
 
-- spot spot account
+- spot: spot account
+- depository: depository account
+- monetary: monetary account
+- intermediary: intermediary account
 
 ### Q2: What is client-order-id?
 
@@ -827,7 +833,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
-<aside class="notice">The K-line period is calculated based on Singapore time. For example, the starting period of the daily K-line is from 0:00 Singapore time to 0:00 Singapore time the next day. </aside>
+<aside class="notice">The K-line period is calculated based on UTC+8. For example, the starting period of the daily K-line is from 00:00 UTC+8 to 00:00 UTC+8 the next day. </aside>
 
 > Response:
 
@@ -855,7 +861,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
-| id         | long      | The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick |
+| id         | long      | The timestamp adjusted to UTC+8, in seconds, used as the id of this candlestick |
 | amount     | float     | Transaction amount in base currency |
 | count      | integer   | Transaction count |
 | open       | float     | Opening price of this candlestick |
@@ -993,7 +999,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
-| ts         | integer   | Timestamp adjusted to Singapore time, in milliseconds |
+| ts         | integer   | Timestamp adjusted to UTC+8, in milliseconds |
 | version    | integer   | Internal field |
 | bids       | object    | All current bids [price, size] |
 | asks       | object    | All current ask orders [price, size] |
@@ -1053,7 +1059,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 | trade-id   | integer   | unique transaction ID (NEW) |
 | amount     | float     | transaction amount in base currency |
 | price      | float     | transaction price in quote currency |
-| ts         | integer   | Timestamp adjusted to Singapore time, in milliseconds |
+| ts         | integer   | Timestamp adjusted to UTC+8, in milliseconds |
 | direction  | string    | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
 
 ## Get recent transaction records
@@ -1125,7 +1131,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 ### Response data
 
-<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to Singapore time, and these transaction records are presented in the form of an array. </aside>
+<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to UTC+8, and these transaction records are presented in the form of an array. </aside>
 
 | Parameter | Data Type | Description |
 | --------- | -------- | --------------------------- |
@@ -1133,7 +1139,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 | trade-id | integer | unique transaction ID (NEW) |
 | amount | float | transaction amount in base currency |
 | price | float | transaction price in quote currency |
-| ts | integer | Timestamp adjusted to Singapore time, in milliseconds |
+| ts | integer | Timestamp adjusted to UTC+8, in milliseconds |
 | direction | string | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
 
 
@@ -1318,7 +1324,7 @@ none
 | -------------- | -------- | --------- | ----------- | ----------- |
 | id | true | long | account-id | |
 | state | true | string | account status | working: normal, lock: account is locked |
-| type | true | string | account type | spot: spot account |
+| type | true | string | account type | spot: spot account, depository: depository account, monetary: monetary account, intermediary: intermediary account |
 
 
 ## Account Balance
@@ -1329,6 +1335,9 @@ Frequency limit value (NEW): 100 times/2s
 Query the balance of the specified account, the following accounts are supported:
 
 spot: spot account
+depository: depository account
+monetary: monetary account
+intermediary: intermediary account
 
 ### HTTP requests
 
@@ -1378,7 +1387,7 @@ spot: spot account
 | -------------- | -------- | --------- | ----------- | ----------- |
 | id | true | long | Account ID | |
 | state | true | string | Account status | working: normal, lock: account is locked |
-| type | true | string | Account type | spot: spot account |
+| type | true | string | Account type | spot: spot account, depository: depository account, monetary: monetary account, intermediary: intermediary account |
 | list | false | Array | | |
 
 **list** field description:
@@ -1832,7 +1841,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | client-order-id    | string    | User-defined order number (available for all open orders)      |
 | symbol             | string    | Trading pair, such as btcusdt, ethbtc                          |
 | price              | string    | Transaction price of limit order                              |
-| created-at         | int       | Timestamp of order creation adjusted to Singapore time, in milliseconds |
+| created-at         | int       | Timestamp of order creation adjusted to UTC+8, in milliseconds |
 | type               | string    | Order type                                                    |
 | filled-amount      | string    | Amount of the filled part of the order                         |
 | filled-cash-amount | string    | The total price of the filled portion of the order             |
@@ -2384,8 +2393,8 @@ This interface queries current and historical transaction records based on searc
 | -------------- | -------- | ------ | ----------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | symbols         | false     | string | Trading pair                                                | N/A           | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                      |
 | types          | false    | string | Combination of order types to query, separated by ','        | all           | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price  |
-| start-date     | false    | string | Query start date (Singapore time zone), date format yyyy-mm-dd | -1d           | Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.                          |
-| end-date       | false    | string | Query end date (Singapore time zone), date format yyyy-mm-dd   | today         | Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.                                          |
+| start-date     | false    | string | Query start date (UTC+8), date format yyyy-mm-dd | -1d           | Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.                          |
+| end-date       | false    | string | Query end date (UTC+8), date format yyyy-mm-dd   | today         | Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.                                          |
 | from           | false    | string | Query start ID                                               | N/A           | If it is a backward query, it will be assigned the last ID (not trade-id) obtained in the last query result; if it is a forward query, it will be assigned the first ID (not trade-id) obtained in the last query result. |
 | direct         | false    | string | Query direction                                              | next          | prev (forward), next (backward)                                                                                                                                   |
 | size           | false    | string | Query record size                                            | 100           | [1, 500]                                                                                                                                                          |
@@ -2744,7 +2753,7 @@ When the type value is 'step1', 'step2', 'step3', 'step4', 'step5', the default 
 | bids    | object   | All current bids [price, size]            |
 | asks    | object   | All current ask orders [price, size]      |
 | version | integer  | Internal field                            |
-| ts      | integer  | Timestamp of Singapore time in milliseconds |
+| ts      | integer  | Timestamp of UTC+8 in milliseconds |
 
 ### Data Request
 

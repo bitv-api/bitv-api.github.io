@@ -384,6 +384,58 @@ Here is an example of the response format:
 
 
 
+### Error Response Format
+
+<aside class="warning">
+The HTTP status code is always <code>200</code>, whether the request succeeds or fails. Do not rely on the HTTP status code to determine the result; always read the <code>status</code> field in the response body.
+</aside>
+
+When a request fails, the response body has the following structure:
+
+```json
+{
+  "status": "error",
+  "data": null,
+  "err-code": "api-signature-not-valid",
+  "err-msg": "Signature not valid",
+  "path": "/v1/account/accounts",
+  "timestamp": 1790067073324
+}
+```
+
+| Field     | Data Type | Description                                                   |
+| --------- | --------- | ------------------------------------------------------------- |
+| status    | string    | `error` when the request fails; `ok` when it succeeds         |
+| data      | object    | `null` when the request fails                                 |
+| err-code  | string    | Error code, intended for programmatic handling                |
+| err-msg   | string    | Error description, intended for manual troubleshooting        |
+| path      | string    | The endpoint path where the error occurred. **Returned only on failure** |
+| timestamp | long      | Server timestamp in milliseconds. **Returned only on failure** |
+
+<aside class="notice">
+<code>path</code> and <code>timestamp</code> appear only in failed responses and are not included in successful ones. The wording of <code>err-msg</code> may change between versions; use <code>err-code</code> for programmatic checks.
+</aside>
+
+### Troubleshooting Authentication Failures
+
+There are two authentication-related error codes:
+
+| err-code                | Meaning                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| token-not-valid         | The request does not carry the parameters required for signature authentication |
+| api-signature-not-valid | Signature verification failed                                                   |
+
+`api-signature-not-valid` covers several failure cases and does not distinguish between them. Check the following in order:
+
+1. **Signature calculation** — whether the signed parameters are sorted as required, whether URL encoding is correct, and whether the correct Secret Key was used
+2. **AccessKeyId** — whether it is correct, and whether the API Key has been deleted or has expired
+3. **Timestamp** — whether `Timestamp` is in UTC, whether the format is `2017-05-11T16:22:06`, and whether it deviates too much from server time
+4. **Request parameters** — whether the parameters used in the signature match those actually sent
+
+<aside class="notice">
+If all of the above are correct, check whether the outbound IP address of your request has been bound to the API Key.
+</aside>
+
 ## Data Types
 
 This document describes the conventions for data types in the JSON format:

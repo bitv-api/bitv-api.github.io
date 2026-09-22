@@ -396,6 +396,58 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 | message  | string   | 錯誤消息（如果有） |
 | data     | object   | 接口返回數據主體   |
 
+### 錯誤返回格式
+
+<aside class="warning">
+無論請求成功或失敗，HTTP 狀態碼均為 <code>200</code>。請勿依據 HTTP 狀態碼判斷請求是否成功，必須讀取返回體中的 <code>status</code> 欄位。
+</aside>
+
+請求失敗時，返回體結構如下：
+
+```json
+{
+  "status": "error",
+  "data": null,
+  "err-code": "api-signature-not-valid",
+  "err-msg": "Signature not valid",
+  "path": "/v1/account/accounts",
+  "timestamp": 1790067073324
+}
+```
+
+| 參數名稱  | 數據類型 | 描述                                         |
+| --------- | -------- | -------------------------------------------- |
+| status    | string   | 請求失敗時固定為 `error`，成功時為 `ok`      |
+| data      | object   | 請求失敗時為 `null`                          |
+| err-code  | string   | 錯誤碼，供程序判斷使用                       |
+| err-msg   | string   | 錯誤描述，供人工排查使用                     |
+| path      | string   | 發生錯誤的接口路徑，**僅請求失敗時返回**     |
+| timestamp | long     | 服務端時間戳，單位毫秒，**僅請求失敗時返回** |
+
+<aside class="notice">
+<code>path</code> 與 <code>timestamp</code> 僅在請求失敗時出現，成功響應中不包含這兩個欄位。<code>err-msg</code> 的文案可能隨版本調整，程序判斷請以 <code>err-code</code> 為準。
+</aside>
+
+### 鑑權失敗的排查
+
+鑑權相關的錯誤碼有兩個：
+
+| err-code                | 含義                           |
+| ----------------------- | ------------------------------ |
+| token-not-valid         | 請求中未攜帶簽名認證所需的參數 |
+| api-signature-not-valid | 簽名校驗未通過                 |
+
+`api-signature-not-valid` 涵蓋多種失敗情形，不區分具體原因。請按以下順序自查：
+
+1. **簽名計算** —— 參與簽名的參數是否按要求排序、URL 編碼是否正確、是否使用了正確的 Secret Key
+2. **AccessKeyId** —— 是否填寫正確，該 API Key 是否已被刪除或已過有效期
+3. **時間戳** —— `Timestamp` 是否為 UTC 時間、格式是否為 `2017-05-11T16:22:06`、與服務端時間的偏差是否過大
+4. **請求參數** —— 參與簽名計算的參數與實際發送的參數是否完全一致
+
+<aside class="notice">
+若以上各項均已確認無誤，請檢查發起請求的出口 IP 是否已綁定到該 API Key。
+</aside>
+
 ## 數據類型
 
 本文檔對JSON格式中數據類型的描述做如下約定：

@@ -397,6 +397,58 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 | message  | string   | 错误消息（如果有） |
 | data     | object   | 接口返回数据主体   |
 
+### 错误返回格式
+
+<aside class="warning">
+无论请求成功或失败，HTTP 状态码均为 <code>200</code>。请勿依据 HTTP 状态码判断请求是否成功，必须读取返回体中的 <code>status</code> 字段。
+</aside>
+
+请求失败时，返回体结构如下：
+
+```json
+{
+  "status": "error",
+  "data": null,
+  "err-code": "api-signature-not-valid",
+  "err-msg": "Signature not valid",
+  "path": "/v1/account/accounts",
+  "timestamp": 1790067073324
+}
+```
+
+| 参数名称  | 数据类型 | 描述                                         |
+| --------- | -------- | -------------------------------------------- |
+| status    | string   | 请求失败时固定为 `error`，成功时为 `ok`      |
+| data      | object   | 请求失败时为 `null`                          |
+| err-code  | string   | 错误码，供程序判断使用                       |
+| err-msg   | string   | 错误描述，供人工排查使用                     |
+| path      | string   | 发生错误的接口路径，**仅请求失败时返回**     |
+| timestamp | long     | 服务端时间戳，单位毫秒，**仅请求失败时返回** |
+
+<aside class="notice">
+<code>path</code> 与 <code>timestamp</code> 仅在请求失败时出现，成功响应中不包含这两个字段。<code>err-msg</code> 的文案可能随版本调整，程序判断请以 <code>err-code</code> 为准。
+</aside>
+
+### 鉴权失败的排查
+
+鉴权相关的错误码有两个：
+
+| err-code                | 含义                           |
+| ----------------------- | ------------------------------ |
+| token-not-valid         | 请求中未携带签名认证所需的参数 |
+| api-signature-not-valid | 签名校验未通过                 |
+
+`api-signature-not-valid` 涵盖多种失败情形，不区分具体原因。请按以下顺序自查：
+
+1. **签名计算** —— 参与签名的参数是否按要求排序、URL 编码是否正确、是否使用了正确的 Secret Key
+2. **AccessKeyId** —— 是否填写正确，该 API Key 是否已被删除或已过有效期
+3. **时间戳** —— `Timestamp` 是否为 UTC 时间、格式是否为 `2017-05-11T16:22:06`、与服务端时间的偏差是否过大
+4. **请求参数** —— 参与签名计算的参数与实际发送的参数是否完全一致
+
+<aside class="notice">
+若以上各项均已确认无误，请检查发起请求的出口 IP 是否已绑定到该 API Key。
+</aside>
+
 ## 数据类型
 
 本文档对JSON格式中数据类型的描述做如下约定：

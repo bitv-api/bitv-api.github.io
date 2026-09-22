@@ -11,6 +11,7 @@ Options:
   -h, --help               Show this help information.
   -v, --verbose            Increase verbosity. Useful for debugging.
   -e, --allow-empty        Allow deployment of an empty directory.
+      --allow-delete       Allow a deploy that deletes files (see guard_no_deletions).
   -m, --message MESSAGE    Specify the message used when committing on the
                            deploy branch.
   -n, --no-hash            Don't append the source commit's hash to the deploy
@@ -50,6 +51,9 @@ parse_args() {
       shift
     elif [[ $1 = "-e" || $1 = "--allow-empty" ]]; then
       allow_empty=true
+      shift
+    elif [[ $1 = "--allow-delete" ]]; then
+      allow_delete=true
       shift
     elif [[ ( $1 = "-m" || $1 = "--message" ) && -n $2 ]]; then
       commit_message=$2
@@ -201,7 +205,36 @@ handle_deploy_files() {
   cp -r $build_directory/* $gh_pages_directory
 }
 
+guard_no_deletions() {
+  # 🔴 2026-09-22 加入。背景：一次真实的发布事故（未造成损失，被推送凭据缺失挡住）。
+  #
+  # incremental_deploy 假定 ./gh-pages 已经是一份完整的 gh-pages 检出，
+  # 但上文只在该目录不存在时 mkdir 了一个空目录（initial_deploy 才有 checkout 那一步）。
+  # 于是在新 clone 的机器上：索引里是 gh-pages 全量，工作目录里只有本次语言的产物，
+  # add --all 就把其余语言的整站文件全部登记为删除。
+  # 那次本地 commit 的实际内容是 30 files changed, 146 insertions(+), 16759 deletions(-)，
+  # 含 spot/v1/en 与 spot/v1/hk 的全部文件 —— 推上去线上英文站和繁中站会整个消失。
+  #
+  # 处理：先把 gh-pages 完整检出到 ./gh-pages，例如
+  #     git worktree add gh-pages gh-pages
+  # 确实需要删除文件时，用 --allow-delete 跳过本检查。
+  local deleted
+  deleted=$(git --work-tree "$gh_pages_directory" diff --cached --name-only --diff-filter=D)
+  if [[ -n $deleted && -z $allow_delete ]]; then
+    echo "" >&2
+    echo "🔴 中止：本次发布会删除以下文件。" >&2
+    echo "   这通常意味着 ./$gh_pages_directory 不是一份完整的 $deploy_branch 检出。" >&2
+    echo "" >&2
+    echo "$deleted" >&2
+    echo "" >&2
+    echo "   先补全检出再重跑：git worktree add $gh_pages_directory $deploy_branch" >&2
+    echo "   若确实要删除这些文件，加 --allow-delete 跳过本检查。" >&2
+    exit 1
+  fi
+}
+
 check_diff() {
+  guard_no_deletions
   set +o errexit
   diff=$(git --work-tree "$gh_pages_directory" diff --exit-code --quiet HEAD --)$?
   set -o errexit

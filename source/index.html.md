@@ -275,6 +275,9 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 账户类型包括：   
 
 * spot：现货账户  
+* depository：存管账户  
+* monetary：法币账户  
+* intermediary：经纪账户  
 
 ### 订单、成交相关ID说明  
 
@@ -586,7 +589,7 @@ A：推荐使用REST API `GET /market/trade` 接口请求最新成交，或使�
 
 ### Q4：K线是按照什么时间开始计算的？
 
-A： K线周期以新加坡时间为基准开始计算，例如日K线的起始周期为新加坡时间0时-新加坡时间次日0时。
+A： K线周期以 UTC+8 为基准开始计算，例如日K线的起始周期为 UTC+8 当日0时至次日0时。
 
 ## 交易相关
 
@@ -596,7 +599,10 @@ A： account-id对应用户不同业务账户的ID，可通过/v1/account/accoun
 
 账户类型包括：
 
-- spot 现货账户  
+- spot：现货账户  
+- depository：存管账户  
+- monetary：法币账户  
+- intermediary：经纪账户  
 
 ### Q2：client-order-id是什么？
 
@@ -838,7 +844,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 | size   | integer  | false    | 150    | 返回 K 线数据条数                          | [1, 2000]                                                    |
 
 <aside class="notice">当前 REST API 不支持自定义时间区间，如需要历史固定时间范围的数据，请参考 Websocket API 中的 K 线接口。</aside>
-<aside class="notice">K线周期以新加坡时间为基准开始计算，例如日K线的起始周期为新加坡时间0时-新加坡时间次日0时。</aside>
+<aside class="notice">K线周期以 UTC+8 为基准开始计算，例如日K线的起始周期为 UTC+8 当日0时至次日0时。</aside>
 
 > Response:
 
@@ -866,7 +872,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | 字段名称 | 数据类型 | 描述                                                    |
 | -------- | -------- | ------------------------------------------------------- |
-| id       | long     | 调整为新加坡时间的时间戳，单位秒，并以此作为此K线柱的id |
+| id       | long     | 调整为 UTC+8 的时间戳，单位秒，并以此作为此K线柱的id |
 | amount   | float    | 以基础币种计量的交易量                                  |
 | count    | integer  | 交易次数                                                |
 | open     | float    | 本阶段开盘价                                            |
@@ -1001,7 +1007,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 | 字段名称 | 数据类型 | 描述                               |
 | -------- | -------- | ---------------------------------- |
-| ts       | integer  | 调整为新加坡时间的时间戳，单位毫秒 |
+| ts       | integer  | 调整为 UTC+8 的时间戳，单位毫秒 |
 | version  | integer  | 内部字段                           |
 | bids     | object   | 当前的所有买单 [price, size]       |
 | asks     | object   | 当前的所有卖单 [price, size]       |
@@ -1058,7 +1064,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 | trade-id  | integer  | 唯一成交ID（NEW）                                  |
 | amount    | float    | 以基础币种为单位的交易量                           |
 | price     | float    | 以报价币种为单位的成交价格                         |
-| ts        | integer  | 调整为新加坡时间的时间戳，单位毫秒                 |
+| ts        | integer  | 调整为 UTC+8 的时间戳，单位毫秒                 |
 | direction | string   | 交易方向：“buy” 或 “sell”, “buy” 即买，“sell” 即卖 |
 
 ## 获得近期交易记录
@@ -1130,7 +1136,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 ### 响应数据
 
-<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个调整为新加坡时间的时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
+<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个调整为 UTC+8 的时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
 
 | 参数      | 数据类型 | 描述                                               |
 | --------- | -------- | -------------------------------------------------- |
@@ -1138,7 +1144,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 | trade-id  | integer  | 唯一成交ID（NEW）                                  |
 | amount    | float    | 以基础币种为单位的交易量                           |
 | price     | float    | 以报价币种为单位的成交价格                         |
-| ts        | integer  | 调整为新加坡时间的时间戳，单位毫秒                 |
+| ts        | integer  | 调整为 UTC+8 的时间戳，单位毫秒                 |
 | direction | string   | 交易方向：“buy” 或 “sell”, “buy” 即买，“sell” 即卖 |
 
 ## 最近24小时行情数据
@@ -1319,7 +1325,7 @@ API Key 权限：读取<br>
 | -------- | -------- | -------- | ---------- | ------------------------------- |
 | id       | true     | long     | account-id |                                 |
 | state    | true     | string   | 账户状态   | working：正常, lock：账户被锁定 |
-| type     | true     | string   | 账户类型   | spot：现货账户                  |
+| type     | true     | string   | 账户类型   | spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户                  |
 
 ## 账户余额
 
@@ -1329,6 +1335,9 @@ API Key 权限：读取<br>
 查询指定账户的余额，支持以下账户：
 
 spot：现货账户
+depository：存管账户
+monetary：法币账户
+intermediary：经纪账户
 
 ### HTTP 请求
 
@@ -1377,7 +1386,7 @@ spot：现货账户
 | -------- | -------- | -------- | -------- | ------------------------------- |
 | id       | true     | long     | 账户 ID  |                                 |
 | state    | true     | string   | 账户状态 | working：正常  lock：账户被锁定 |
-| type     | true     | string   | 账户类型 | spot：现货账户                  |
+| type     | true     | string   | 账户类型 | spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户                  |
 | list     | false    | Array    |          |                                 |
 
 list字段说明
@@ -1827,7 +1836,7 @@ API Key 权限：读取<br>
 | client-order-id    | string   | 用户自编订单号（所有open订单可返回client-order-id）          |
 | symbol             | string   | 交易对, 例如btcusdt, ethbtc                                  |
 | price              | string   | limit order的交易价格                                        |
-| created-at         | int      | 订单创建的调整为新加坡时间的时间戳，单位毫秒                 |
+| created-at         | int      | 订单创建的调整为 UTC+8 的时间戳，单位毫秒                 |
 | type               | string   | 订单类型                                                     |
 | filled-amount      | string   | 订单中已成交部分的数量                                       |
 | filled-cash-amount | string   | 订单中已成交部分的总价格                                     |
@@ -2377,8 +2386,8 @@ API Key 权限：读取<br>
 | ---------- | -------- | ------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
 | symbols     | false     | string | 交易对                                         | N/A                     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查询的订单类型组合，使用','分割                | all                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖 |
-| start-date | false    | string | 查询开始日期（新加坡时区）日期格式yyyy-mm-dd   | -1d 查询结束日期的前1天 | 取值范围 [((end-date) – 1), (end-date)] ，查询窗口最大为2天，窗口平移范围为最近61天。 |
-| end-date   | false    | string | 查询结束日期（新加坡时区）, 日期格式yyyy-mm-dd | today                   | 取值范围 [(today-60), today] ，查询窗口最大为2天，窗口平移范围为最近61天 |
+| start-date | false    | string | 查询开始日期（UTC+8）日期格式yyyy-mm-dd   | -1d 查询结束日期的前1天 | 取值范围 [((end-date) – 1), (end-date)] ，查询窗口最大为2天，窗口平移范围为最近61天。 |
+| end-date   | false    | string | 查询结束日期（UTC+8）, 日期格式yyyy-mm-dd | today                   | 取值范围 [(today-60), today] ，查询窗口最大为2天，窗口平移范围为最近61天 |
 | from       | false    | string | 查询起始 ID                                    | N/A                     | 如果是向后查询，则赋值为上一次查询结果中得到的最后一条id（不是trade-id） ；如果是向前查询，则赋值为上一次查询结果中得到的第一条id（不是trade-id） |
 | direct     | false    | string | 查询方向                                       | next                    | prev 向前；next 向后                                         |
 | size       | false    | string | 查询记录大小                                   | 100                     | [1，500]                                                     |
@@ -2738,7 +2747,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 | bids    | object   | 当前的所有买单 [price, size] |
 | asks    | object   | 当前的所有卖单 [price, size] |
 | version | integer  | 内部字段                     |
-| ts      | integer  | 新加坡时间的时间戳，单位毫秒 |
+| ts      | integer  | UTC+8 的时间戳，单位毫秒 |
 
 ### 数据请求
 

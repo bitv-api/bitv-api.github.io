@@ -88,16 +88,39 @@ parse_args() {
 
 check_version_lang() {
   #
-  branch=$(git describe --contains --all HEAD)
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  # detached HEAD（例如做基线比对时 checkout 某个具体 commit）无法从 HEAD 推断分支名。
+  # 旧实现用 git describe --contains --all HEAD，在这种情况下会返回类似
+  # remotes/origin/v1_cn~4 的字符串，经 cut 解析后产出 version=emotes/origin/v1，
+  # 于是静默构建到 build/spot/vemotes/origin/v1/cn~4 —— 路径错了却不报错。
+  # 现在改为显式要求指定分支名，推断不出就停。
+  if [[ $branch = "HEAD" ]]; then
+    branch=${DEPLOY_BRANCH:-}
+    if [[ -z $branch ]]; then
+      echo "当前处于 detached HEAD，无法推断语言与版本。" >&2
+      echo "请显式指定分支名后重试，例如：DEPLOY_BRANCH=v1_cn $0 --source-only" >&2
+      exit 1
+    fi
+  fi
   echo "branch="$branch""
   #
   language=$(echo $branch | cut -d '_' -f 2)
   version=$(echo $branch | cut -d '_' -f 1)
-  
+
   if [[ $version = dm ]]; then
     version=${version}
   else
     version=${version:1}
+  fi
+  #
+  # 防呆：解析结果必须是预期形态，否则中止，不要带着错误的路径继续构建
+  if [[ ! $language =~ ^(cn|en|hk|kr)$ ]]; then
+    echo "解析出的 language=\"$language\" 不是预期值（cn/en/hk/kr），中止。branch=\"$branch\"" >&2
+    exit 1
+  fi
+  if [[ ! $version =~ ^([0-9]+|dm)$ ]]; then
+    echo "解析出的 version=\"$version\" 不是预期值（数字或 dm），中止。branch=\"$branch\"" >&2
+    exit 1
   fi
   #
   echo "language="$language""

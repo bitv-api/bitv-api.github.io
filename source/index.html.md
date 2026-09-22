@@ -274,6 +274,9 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 賬戶類型包括：   
 
 * spot：現貨賬戶  
+* depository：存管賬戶  
+* monetary：法幣賬戶  
+* intermediary：經紀賬戶  
 
 ### 訂單、成交相關ID說明  
 
@@ -585,7 +588,7 @@ A：推薦使用REST API `GET /market/trade` 接口請求最新成交，或使�
 
 ### Q4：K線是按照什麼時間開始計算的？
 
-A： K線週期以新加坡時間為基準開始計算，例如日K線的起始週期為新加坡時間0時-新加坡時間次日0時。
+A： K線週期以 UTC+8 為基準開始計算，例如日K線的起始週期為 UTC+8 當日0時至次日0時。
 
 ## 交易相關
 
@@ -595,7 +598,10 @@ A： account-id對應用戶不同業務賬戶的ID，可通過/v1/account/accoun
 
 賬戶類型包括：
 
-- spot 現貨賬戶  
+- spot：現貨賬戶  
+- depository：存管賬戶  
+- monetary：法幣賬戶  
+- intermediary：經紀賬戶  
 
 ### Q2：client-order-id是什麼？
 
@@ -836,7 +842,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 | size   | integer  | false    | 150    | 返回 K 線數據條數                          | [1, 2000]                                                    |
 
 <aside class="notice">當前 REST API 不支持自定義時間區間，如需要歷史固定時間範圍的數據，請參考 Websocket API 中的 K 線接口。</aside>
-<aside class="notice">K線週期以新加坡時間為基準開始計算，例如日K線的起始週期為新加坡時間0時-新加坡時間次日0時。</aside>
+<aside class="notice">K線週期以 UTC+8 為基準開始計算，例如日K線的起始週期為 UTC+8 當日0時至次日0時。</aside>
 
 > Response:
 
@@ -864,7 +870,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | 字段名稱 | 數據類型 | 描述                                                    |
 | -------- | -------- | ------------------------------------------------------- |
-| id       | long     | 調整為新加坡時間的時間戳，單位秒，並以此作為此K線柱的id |
+| id       | long     | 調整為 UTC+8 的時間戳，單位秒，並以此作為此K線柱的id |
 | amount   | float    | 以基礎幣種計量的交易量                                  |
 | count    | integer  | 交易次數                                                |
 | open     | float    | 本階段開盤價                                            |
@@ -999,7 +1005,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 | 字段名稱 | 數據類型 | 描述                               |
 | -------- | -------- | ---------------------------------- |
-| ts       | integer  | 調整為新加坡時間的時間戳，單位毫秒 |
+| ts       | integer  | 調整為 UTC+8 的時間戳，單位毫秒 |
 | version  | integer  | 內部字段                           |
 | bids     | object   | 當前的所有買單 [price, size]       |
 | asks     | object   | 當前的所有賣單 [price, size]       |
@@ -1056,7 +1062,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 | trade-id  | integer  | 唯一成交ID（NEW）                                  |
 | amount    | float    | 以基礎幣種為單位的交易量                           |
 | price     | float    | 以報價幣種為單位的成交價格                         |
-| ts        | integer  | 調整為新加坡時間的時間戳，單位毫秒                 |
+| ts        | integer  | 調整為 UTC+8 的時間戳，單位毫秒                 |
 | direction | string   | 交易方向：「buy」 或 「sell」, 「buy」 即買，「sell」 即賣 |
 
 ## 獲得近期交易記錄
@@ -1128,7 +1134,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 ### 響應數據
 
-<aside class="notice">返回的數據對象是一個對象數組，每個數組元素為一個調整為新加坡時間的時間戳（單位毫秒）下的所有交易記錄，這些交易記錄以數組形式呈現。</aside>
+<aside class="notice">返回的數據對象是一個對象數組，每個數組元素為一個調整為 UTC+8 的時間戳（單位毫秒）下的所有交易記錄，這些交易記錄以數組形式呈現。</aside>
 
 | 參數      | 數據類型 | 描述                                               |
 | --------- | -------- | -------------------------------------------------- |
@@ -1136,7 +1142,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 | trade-id  | integer  | 唯一成交ID（NEW）                                  |
 | amount    | float    | 以基礎幣種為單位的交易量                           |
 | price     | float    | 以報價幣種為單位的成交價格                         |
-| ts        | integer  | 調整為新加坡時間的時間戳，單位毫秒                 |
+| ts        | integer  | 調整為 UTC+8 的時間戳，單位毫秒                 |
 | direction | string   | 交易方向：「buy」 或 「sell」, 「buy」 即買，「sell」 即賣 |
 
 ## 最近24小時行情數據
@@ -1317,7 +1323,7 @@ API Key 權限：讀取<br>
 | -------- | -------- | -------- | ---------- | ------------------------------- |
 | id       | true     | long     | account-id |                                 |
 | state    | true     | string   | 賬戶狀態   | working：正常, lock：賬戶被鎖定 |
-| type     | true     | string   | 賬戶類型   | spot：現貨賬戶                  |
+| type     | true     | string   | 賬戶類型   | spot：現貨賬戶, depository：存管賬戶, monetary：法幣賬戶, intermediary：經紀賬戶                  |
 
 ## 賬戶餘額
 
@@ -1327,6 +1333,9 @@ API Key 權限：讀取<br>
 查詢指定賬戶的餘額，支持以下賬戶：
 
 spot：現貨賬戶
+depository：存管賬戶
+monetary：法幣賬戶
+intermediary：經紀賬戶
 
 ### HTTP 請求
 
@@ -1375,7 +1384,7 @@ spot：現貨賬戶
 | -------- | -------- | -------- | -------- | ------------------------------- |
 | id       | true     | long     | 賬戶 ID  |                                 |
 | state    | true     | string   | 賬戶狀態 | working：正常  lock：賬戶被鎖定 |
-| type     | true     | string   | 賬戶類型 | spot：現貨賬戶                  |
+| type     | true     | string   | 賬戶類型 | spot：現貨賬戶, depository：存管賬戶, monetary：法幣賬戶, intermediary：經紀賬戶                  |
 | list     | false    | Array    |          |                                 |
 
 list字段說明
@@ -1825,7 +1834,7 @@ API Key 權限：讀取<br>
 | client-order-id    | string   | 用戶自編訂單號（所有open訂單可返回client-order-id）          |
 | symbol             | string   | 交易對, 例如btcusdt, ethbtc                                  |
 | price              | string   | limit order的交易價格                                        |
-| created-at         | int      | 訂單創建的調整為新加坡時間的時間戳，單位毫秒                 |
+| created-at         | int      | 訂單創建的調整為 UTC+8 的時間戳，單位毫秒                 |
 | type               | string   | 訂單類型                                                     |
 | filled-amount      | string   | 訂單中已成交部分的數量                                       |
 | filled-cash-amount | string   | 訂單中已成交部分的總價格                                     |
@@ -2374,8 +2383,8 @@ API Key 權限：讀取<br>
 | ---------- | -------- | ------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
 | symbols     | false    | string | 交易對                                         | N/A                     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查詢的訂單類型組合，使用','分割                | all                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣  |
-| start-date | false    | string | 查詢開始日期（新加坡時區）日期格式yyyy-mm-dd   | -1d 查詢結束日期的前1天 | 取值範圍 [((end-date) – 1), (end-date)] ，查詢窗口最大為2天，窗口平移範圍為最近61天。 |
-| end-date   | false    | string | 查詢結束日期（新加坡時區）, 日期格式yyyy-mm-dd | today                   | 取值範圍 [(today-60), today] ，查詢窗口最大為2天，窗口平移範圍為最近61天 |
+| start-date | false    | string | 查詢開始日期（UTC+8）日期格式yyyy-mm-dd   | -1d 查詢結束日期的前1天 | 取值範圍 [((end-date) – 1), (end-date)] ，查詢窗口最大為2天，窗口平移範圍為最近61天。 |
+| end-date   | false    | string | 查詢結束日期（UTC+8）, 日期格式yyyy-mm-dd | today                   | 取值範圍 [(today-60), today] ，查詢窗口最大為2天，窗口平移範圍為最近61天 |
 | from       | false    | string | 查詢起始 ID                                    | N/A                     | 如果是向後查詢，則賦值為上一次查詢結果中得到的最後一條id（不是trade-id） ；如果是向前查詢，則賦值為上一次查詢結果中得到的第一條id（不是trade-id） |
 | direct     | false    | string | 查詢方向                                       | next                    | prev 向前；next 向後                                         |
 | size       | false    | string | 查詢記錄大小                                   | 100                     | [1，500]                                                     |
@@ -2735,7 +2744,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 | bids    | object   | 當前的所有買單 [price, size] |
 | asks    | object   | 當前的所有賣單 [price, size] |
 | version | integer  | 內部字段                     |
-| ts      | integer  | 新加坡時間的時間戳，單位毫秒 |
+| ts      | integer  | UTC+8 的時間戳，單位毫秒 |
 
 ### 數據請求
 

@@ -358,15 +358,29 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 
 所有的接口都是JSON格式。其中v1和v2接口的JSON定義略有區別。
 
-**v1接口返回格式**：最上層有四個字段：`status`, `ch`,  `ts` 和 `data`。前三個字段表示請求狀態和屬性，實際的業務數據在`data`字段裡。
+**v1接口返回格式**：最上層欄位**按接口類型分為兩種**，並非所有接口都返回相同的欄位。
 
-以下是一個返回格式的樣例：
+| 接口類型 | 最上層欄位 |
+| -------- | ---------- |
+| 行情類（`/market/*`） | `status`、`ch`、`ts`，以及 `data` 或 `tick` |
+| 賬戶、訂單等其他接口 | `status`、`data` |
+
+行情類接口樣例：
 
 ```json
 {
   "status": "ok",
-  "ch": "market.btcusdt.kline.1day",
+  "ch": "market.btchkd.kline.1day",
   "ts": 1499223904680,
+  "data": // per API response data in nested JSON object
+}
+```
+
+賬戶、訂單等接口樣例：
+
+```json
+{
+  "status": "ok",
   "data": // per API response data in nested JSON object
 }
 ```
@@ -374,9 +388,10 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 | 參數名稱 | 數據類型 | 描述                                                         |
 | -------- | -------- | ------------------------------------------------------------ |
 | status   | string   | API接口返回狀態                                              |
-| ch       | string   | 接口數據對應的數據流。部分接口沒有對應數據流因此不返回此字段 |
-| ts       | long     | 接口返回的UTC時間的時間戳，單位毫秒                          |
+| ch       | string   | 接口數據對應的數據流。**僅行情類接口返回**                   |
+| ts       | long     | 接口返回的UTC時間的時間戳，單位毫秒。**僅行情類接口返回**    |
 | data     | object   | 接口返回數據主體                                             |
+| tick     | object   | 行情數據主體。**部分行情接口（如 `GET /market/detail/merged`）用此欄位代替 `data`** |
 
 **v2接口返回格式**：最上層有三個字段：`code`, `message` 和 `data`。前兩個字段表示返回碼和錯誤消息，實際的業務數據在`data`字段裡。
 
@@ -421,11 +436,20 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 | data      | object   | 請求失敗時為 `null`                          |
 | err-code  | string   | 錯誤碼，供程序判斷使用                       |
 | err-msg   | string   | 錯誤描述，供人工排查使用                     |
-| path      | string   | 發生錯誤的接口路徑，**僅請求失敗時返回**     |
-| timestamp | long     | 服務端時間戳，單位毫秒，**僅請求失敗時返回** |
+| path      | string   | 發生錯誤的接口路徑。**僅網關層錯誤返回**     |
+| timestamp | long     | 服務端時間戳，單位毫秒。**僅網關層錯誤返回** |
 
 <aside class="notice">
-<code>path</code> 與 <code>timestamp</code> 僅在請求失敗時出現，成功響應中不包含這兩個欄位。<code>err-msg</code> 的文案可能隨版本調整，程序判斷請以 <code>err-code</code> 為準。
+錯誤響應有兩種結構，取決於請求在哪一層被拒絕：
+</aside>
+
+| 出錯層次 | 典型 err-code | 返回欄位 |
+| -------- | ------------- | -------- |
+| 網關層（鑑權、參數格式） | `token-not-valid`、`api-signature-not-valid`、`validation-format-error` | `status`、`data`、`err-code`、`err-msg`、`path`、`timestamp` |
+| 業務層（賬戶、訂單等業務校驗） | `invalid-account-type` 等 | `status`、`data`、`err-code`、`err-msg` |
+
+<aside class="notice">
+<b>業務層錯誤不返回 <code>path</code> 與 <code>timestamp</code></b>，解析時請勿假定這兩個欄位一定存在。<code>err-msg</code> 的文案可能隨版本調整，程序判斷請以 <code>err-code</code> 為準。
 </aside>
 
 ### 鑑權失敗的排查
@@ -1570,6 +1594,7 @@ API Key 權限：讀取<br>
 | order-marketorder-amount-sell-max-error                      | 市價單賣出數量不能高於指定數量                               |
 | order-holding-limit-failed                                   | 下單超出該幣種的持倉限額                                     |
 | order-type-invalid                                           | 訂單類型非法                                                 |
+| invalid-account-type                                         | 賬戶類型不支持該操作。下單須使用 spot 賬戶的 account-id      |
 | order-orderstate-error                                       | 訂單狀態錯誤                                                 |
 | order-date-limit-error                                       | 查詢時間不能超過系統限制                                     |
 | order-source-invalid                                         | 訂單來源非法                                                 |

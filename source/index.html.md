@@ -339,24 +339,40 @@ All API requests are RESTful and currently support two methods: GET and POST.
 
 All APIs return data in JSON format. There are slight differences in the JSON structure between v1 and v2 APIs.
 
-**v1 API response format**: The top-level structure consists of four fields: `status`, `ch`, `ts`, and `data`. The first three fields represent the request status and attributes, and the actual business data is contained in the `data` field.
+**v1 API response format**: the top-level fields **differ by endpoint category** — not all endpoints return the same set.
 
-Here is an example of the response format:
+| Endpoint category | Top-level fields |
+| ----------------- | ---------------- |
+| Market data (`/market/*`) | `status`, `ch`, `ts`, plus either `data` or `tick` |
+| Account, order and other endpoints | `status`, `data` |
+
+Market data endpoint example:
 
 ```json
 {
   "status": "ok",
-  "ch": "market.btcusdt.kline.1day",
+  "ch": "market.btchkd.kline.1day",
   "ts": 1499223904680,
   "data": // per API response data in nested JSON object
 }
 ```
-  
+
+Account / order endpoint example:
+
+```json
+{
+  "status": "ok",
+  "data": // per API response data in nested JSON object
+}
+```
+
 | Field Name | Data Type | Description                                                  |
 | ---------- | --------- | ------------------------------------------------------------ |
-| code       | int       | API interface response code                                  |
-| message    | string    | Error message (if any)                                       |
+| status     | string    | API response status                                          |
+| ch         | string    | The data stream this response corresponds to. **Market data endpoints only** |
+| ts         | long      | Response timestamp in UTC, in milliseconds. **Market data endpoints only** |
 | data       | object    | Main data returned by the interface                          |
+| tick       | object    | Market data payload. **Some market endpoints (e.g. `GET /market/detail/merged`) return this field instead of `data`** |
 
 
 **v2 API response format**: The top-level structure consists of three fields: `code`, `message`, and `data`. The first two fields represent the response code and the error message, respectively. The actual business data is contained in the `data` field.
@@ -409,11 +425,20 @@ When a request fails, the response body has the following structure:
 | data      | object    | `null` when the request fails                                 |
 | err-code  | string    | Error code, intended for programmatic handling                |
 | err-msg   | string    | Error description, intended for manual troubleshooting        |
-| path      | string    | The endpoint path where the error occurred. **Returned only on failure** |
-| timestamp | long      | Server timestamp in milliseconds. **Returned only on failure** |
+| path      | string    | The endpoint path where the error occurred. **Returned for gateway-level errors only** |
+| timestamp | long      | Server timestamp in milliseconds. **Returned for gateway-level errors only** |
 
 <aside class="notice">
-<code>path</code> and <code>timestamp</code> appear only in failed responses and are not included in successful ones. The wording of <code>err-msg</code> may change between versions; use <code>err-code</code> for programmatic checks.
+Error responses come in two shapes, depending on which layer rejected the request:
+</aside>
+
+| Layer | Typical err-code | Fields returned |
+| ----- | ---------------- | --------------- |
+| Gateway (authentication, parameter format) | `token-not-valid`, `api-signature-not-valid`, `validation-format-error` | `status`, `data`, `err-code`, `err-msg`, `path`, `timestamp` |
+| Business (account, order and other business checks) | `invalid-account-type`, etc. | `status`, `data`, `err-code`, `err-msg` |
+
+<aside class="notice">
+<b>Business-layer errors do not return <code>path</code> or <code>timestamp</code></b>. Do not assume these two fields are always present. The wording of <code>err-msg</code> may change between versions; use <code>err-code</code> for programmatic checks.
 </aside>
 
 ### Troubleshooting Authentication Failures
@@ -1572,6 +1597,7 @@ The spot trading interface provides functions such as order placement, order can
 | order-marketorder-amount-sell-max-error | The sell amount of a market order cannot be higher than the specified amount |
 | order-holding-limit-failed | The order exceeds the position limit of the currency |
 | order-type-invalid | Invalid order type |
+| invalid-account-type | The account type does not support this operation. Placing an order requires the account-id of a spot account |
 | order-orderstate-error | Order state error |
 | order-date-limit-error | The query time cannot exceed the system limit |
 | order-source-invalid | Invalid order source |

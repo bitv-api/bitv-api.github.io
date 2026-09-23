@@ -3775,8 +3775,6 @@ API Key 权限：读取
 | orderSize       | string   | 订单数量（市价买单无此字段）                                 |
 | orderValue      | string   | 订单金额（仅市价买单有此字段）                               |
 | clientOrderId   | string   | 用户自编订单号                                               |
-| stopPrice       | string   | 订单触发价（仅止盈止损订单有此字段）                         |
-| operator        | string   | 订单触发方向（仅止盈止损订单有此字段）                       |
 | orderCreateTime | long     | 订单创建时间                                                 |
 | orderStatus     | string   | 订单状态，有效值：filled, partial-filled                     |
 
@@ -3799,8 +3797,6 @@ API Key 权限：读取
 | orderSize       | string   | 订单数量（市价买单无此字段）                                 |
 | orderValue      | string   | 订单金额（仅市价买单有此字段）                               |
 | clientOrderId   | string   | 用户自编订单号                                               |
-| stopPrice       | string   | 订单触发价（仅止盈止损订单有此字段）                         |
-| operator        | string   | 订单触发方向（仅止盈止损订单有此字段）                       |
 | orderCreateTime | long     | 订单创建时间                                                 |
 | remainAmt       | string   | 未成交量（对于市价买单，该字段定义为未成交额）               |
 | orderStatus     | string   | 订单状态，有效值：canceled, partial-canceled                 |

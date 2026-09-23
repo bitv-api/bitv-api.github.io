@@ -1378,9 +1378,12 @@ API Key 权限：读取<br>
 
 | 参数名称 | 是否必须 | 数据类型 | 描述       | 取值范围                        |
 | -------- | -------- | -------- | ---------- | ------------------------------- |
-| id       | true     | long     | account-id |                                 |
+| id       | true     | string   | account-id |                                 |
 | state    | true     | string   | 账户状态   | working：正常, lock：账户被锁定 |
 | type     | true     | string   | 账户类型   | spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户                  |
+<aside class="notice">
+<code>id</code>（即 <code>account-id</code>）是长度约 19 位的<b>数字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整数范围（<code>9007199254740991</code>）。请按字符串处理，<b>不要转换为整数类型</b>，否则会发生精度丢失，导致后续请求携带的 <code>account-id</code> 不正确。
+</aside>
 
 ## 账户余额
 
@@ -1439,7 +1442,7 @@ intermediary：经纪账户
 
 | 参数名称 | 是否必须 | 数据类型 | 描述     | 取值范围                        |
 | -------- | -------- | -------- | -------- | ------------------------------- |
-| id       | true     | long     | 账户 ID  |                                 |
+| id       | true     | string   | 账户 ID  |                                 |
 | state    | true     | string   | 账户状态 | working：正常  lock：账户被锁定 |
 | type     | true     | string   | 账户类型 | spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户                  |
 | list     | false    | Array    |          |                                 |
@@ -1519,7 +1522,7 @@ API Key 权限：读取<br>
 | status        | string   | 状态码                                               |          |
 | data          | object   |                                                      |          |
 | { data        | array    | 流水记录数组                                           |          |
-| [ account-id  | long     | 账户编号                                             |          |
+| [ account-id  | string   | 账户编号                                             |          |
 | currency      | string   | 币种                                                 |          |
 | transact-amt  | string   | 变动金额（入账为正 or 出账为负）                     |          |
 | transact-type | string   | 变动类型                                             |          |
@@ -1897,7 +1900,7 @@ API Key 权限：读取<br>
 | filled-fees        | string   | 已交交易手续费总额                                           |
 | source             | string   | 现货交易填写“api”                                            |
 | state              | string   | 订单状态，包括submitted, partial-filled, cancelling, created, pre-submitted, submitting, failed, place_timeout |
-| account-id           | long   | 账户 ID                                        |
+| account-id           | string | 账户 ID                                        |
 | amount           | string   | 订单数量                                     |
 
 ## 批量撤销订单（open orders）
@@ -2086,7 +2089,7 @@ API Key 权限：读取<br>
 
 | 字段名称          | 是否必须 | 数据类型 | 描述                                                         | 取值范围                                                     |
 | ----------------- | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| account-id        | true     | long     | 账户 ID                                                      |                                                              |
+| account-id        | true     | string   | 账户 ID                                                      |                                                              |
 | amount            | true     | string   | 订单数量                                                     |                                                              |
 | canceled-at       | false    | long     | 订单撤销时间                                                 |                                                              |
 | created-at        | true     | long     | 订单创建时间                                                 |                                                              |
@@ -2150,7 +2153,7 @@ API Key 权限：读取<br>
 
 | 字段名称          | 是否必须 | 数据类型 | 描述                                                         | 取值范围                                                     |
 | ----------------- | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| account-id        | true     | long     | 账户 ID                                                      |                                                              |
+| account-id        | true     | string   | 账户 ID                                                      |                                                              |
 | amount            | true     | string   | 订单数量                                                     |                                                              |
 | canceled-at       | false    | long     | 订单撤销时间                                                 |                                                              |
 | created-at        | true     | long     | 订单创建时间                                                 |                                                              |
@@ -2316,7 +2319,7 @@ API Key 权限：读取<br>
 
 | 参数名称          | 是否必须 | 数据类型 | 描述                                                         | 取值范围                                                     |
 | ----------------- | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| account-id        | true     | long     | 账户 ID                                                      |                                                              |
+| account-id        | true     | string   | 账户 ID                                                      |                                                              |
 | amount            | true     | string   | 订单数量                                                     |                                                              |
 | canceled-at       | false    | long     | 接到撤单申请的时间                                           |                                                              |
 | created-at        | true     | long     | 订单创建时间                                                 |                                                              |

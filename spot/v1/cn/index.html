@@ -556,7 +556,7 @@
 </ul>
 
 <aside class="notice">
-每个 API Key 最多可绑定 10个IP 地址(主机地址或网络地址)。出于安全考虑，强烈建议您绑定 IP 地址。
+每个 API Key 最多可绑定 10 个 IP 地址，仅支持单个主机地址，不支持网段。创建 API Key 时必须绑定 IP 地址。
 </aside>
 
 <aside class="warning">
@@ -759,6 +759,9 @@
 
 <ul>
 <li>spot：现货账户<br></li>
+<li>depository：存管账户<br></li>
+<li>monetary：法币账户<br></li>
+<li>intermediary：经纪账户<br></li>
 </ul>
 <h3 id='id'>订单、成交相关ID说明</h3>
 <ul>
@@ -784,7 +787,6 @@
 <li>market : 市价单，该类型订单仅需指定下单金额或下单数量，不需要指定价格，订单在进入撮合时，会直接与对手方进行成交，直至金额或数量低于最小成交金额或成交数量为止。<br></li>
 <li>limit-maker : 限价挂单，该订单在进入撮合时，只能作为maker进入市场深度,若订单会被成交，则撮合会直接拒绝该订单。<br></li>
 <li>ioc : 立即成交或取消（immediately or cancel），该订单在进入撮合后，若不能直接成交，则会被直接取消（部分成交后，剩余部分也会被取消）。<br></li>
-<li>stop-limit : 止盈止损单，设置高于或低于市场价格的订单，当订单到达触发价格后，才会正式的进入撮合队列。<br></li>
 </ul>
 <h3 id='4e4ca9ca80'>订单状态</h3>
 <ul>
@@ -794,6 +796,10 @@
 <li>partial-canceled : 部分成交撤销。该状态订单不在撮合队列中，此状态由partial-filled转化而来，订单数量有部分被成交，但是被撤销。<br></li>
 <li>canceled : 已撤销。该状态订单不在撮合订单中，此状态订单没有任何成交数量，且被成功撤销。<br></li>
 <li>canceling : 撤销中。该状态订单正在被撤销的过程中，因订单最终需在撮合队列中剔除才会被真正撤销，所以此状态为中间过渡态。<br></li>
+<li>pre-submitted : 准备提交。订单已接收，尚未进入撮合队列。<br></li>
+<li>submitting : 提交中。订单正在提交至撮合队列。<br></li>
+<li>failed : 失败。订单未能成功提交。<br></li>
+<li>place_timeout : 下单超时。下单请求未在规定时间内完成。<br></li>
 </ul>
 <h1 id='2d07d50c97'>接入说明</h1><h2 id='3951e02bdc'>接口概览</h2>
 <table><thead>
@@ -927,6 +933,94 @@
 <td>接口返回数据主体</td>
 </tr>
 </tbody></table>
+<h3 id='fd13cd450e'>错误返回格式</h3>
+<aside class="warning">
+无论请求成功或失败，HTTP 状态码均为 <code>200</code>。请勿依据 HTTP 状态码判断请求是否成功，必须读取返回体中的 <code>status</code> 字段。
+</aside>
+
+<p>请求失败时，返回体结构如下：</p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"err-code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api-signature-not-valid"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"err-msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Signature not valid"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/account/accounts"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1790067073324</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<table><thead>
+<tr>
+<th>参数名称</th>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>请求失败时固定为 <code>error</code>，成功时为 <code>ok</code></td>
+</tr>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>请求失败时为 <code>null</code></td>
+</tr>
+<tr>
+<td>err-code</td>
+<td>string</td>
+<td>错误码，供程序判断使用</td>
+</tr>
+<tr>
+<td>err-msg</td>
+<td>string</td>
+<td>错误描述，供人工排查使用</td>
+</tr>
+<tr>
+<td>path</td>
+<td>string</td>
+<td>发生错误的接口路径，<strong>仅请求失败时返回</strong></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>long</td>
+<td>服务端时间戳，单位毫秒，<strong>仅请求失败时返回</strong></td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+<code>path</code> 与 <code>timestamp</code> 仅在请求失败时出现，成功响应中不包含这两个字段。<code>err-msg</code> 的文案可能随版本调整，程序判断请以 <code>err-code</code> 为准。
+</aside>
+<h3 id='895c8313f5'>鉴权失败的排查</h3>
+<p>鉴权相关的错误码有两个：</p>
+
+<table><thead>
+<tr>
+<th>err-code</th>
+<th>含义</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>token-not-valid</td>
+<td>请求中未携带签名认证所需的参数</td>
+</tr>
+<tr>
+<td>api-signature-not-valid</td>
+<td>签名校验未通过</td>
+</tr>
+</tbody></table>
+
+<p><code>api-signature-not-valid</code> 涵盖多种失败情形，不区分具体原因。请按以下顺序自查：</p>
+
+<ol>
+<li><strong>签名计算</strong> —— 参与签名的参数是否按要求排序、URL 编码是否正确、是否使用了正确的 Secret Key</li>
+<li><strong>AccessKeyId</strong> —— 是否填写正确，该 API Key 是否已被删除或已过有效期</li>
+<li><strong>时间戳</strong> —— <code>Timestamp</code> 是否为 UTC 时间、格式是否为 <code>2017-05-11T16:22:06</code>、与服务端时间的偏差是否过大</li>
+<li><strong>请求参数</strong> —— 参与签名计算的参数与实际发送的参数是否完全一致</li>
+</ol>
+
+<aside class="notice">
+若以上各项均已确认无误，请检查发起请求的出口 IP 是否已绑定到该 API Key。
+</aside>
 <h2 id='b031dc9a85'>数据类型</h2>
 <p>本文档对JSON格式中数据类型的描述做如下约定：</p>
 
@@ -940,7 +1034,7 @@
 </ul>
 <h2 id='e01e16de50'>最佳实践</h2><h3 id='9f100d1da9'>安全类</h3>
 <ul>
-<li>强烈建议：在申请API Key时，请绑定您的IP地址，以此来保证您的API Key仅能在您自己的IP上使用。</li>
+<li>必须绑定 IP：在申请 API Key 时，必须绑定您的 IP 地址，以此来保证您的 API Key 仅能在您自己的 IP 上使用。</li>
 <li>强烈建议：不要将API Key暴露给任何人（包括第三方软件或机构），API Key代表了您的账户权限，API Key的暴露可能会对您的信息、资金造成损失，若API Key泄露，请尽快删除并重新创建。</li>
 </ul>
 <h3 id='7312d1c8d6'>公共类</h3>
@@ -1104,14 +1198,17 @@
 <h3 id='q3'>Q3：如何获取最新成交价格？</h3>
 <p>A：推荐使用REST API <code>GET /market/trade</code> 接口请求最新成交，或使用WebSocket订阅market.$symbol.trade.detail主题，根据返回数据中的price获取。</p>
 <h3 id='q4-k'>Q4：K线是按照什么时间开始计算的？</h3>
-<p>A： K线周期以新加坡时间为基准开始计算，例如日K线的起始周期为新加坡时间0时-新加坡时间次日0时。</p>
+<p>A： K线周期以 UTC+8 为基准开始计算，例如日K线的起始周期为 UTC+8 当日0时至次日0时。</p>
 <h2 id='d9c242c3fe'>交易相关</h2><h3 id='q1-account-id'>Q1：account-id是什么？</h3>
 <p>A： account-id对应用户不同业务账户的ID，可通过/v1/account/accounts接口获取，并根据account-type区分具体账户。</p>
 
 <p>账户类型包括：</p>
 
 <ul>
-<li>spot 现货账户<br></li>
+<li>spot：现货账户<br></li>
+<li>depository：存管账户<br></li>
+<li>monetary：法币账户<br></li>
+<li>intermediary：经纪账户<br></li>
 </ul>
 <h3 id='q2-client-order-id'>Q2：client-order-id是什么？</h3>
 <p>A： client-order-id作为下单请求标识的一个参数，类型为字符串，长度为64。 此id为用户自己生成，24小时内有效。</p>
@@ -1492,7 +1589,7 @@
 
 <aside class="notice">当前 REST API 不支持自定义时间区间，如需要历史固定时间范围的数据，请参考 Websocket API 中的 K 线接口。</aside>
 
-<aside class="notice">K线周期以新加坡时间为基准开始计算，例如日K线的起始周期为新加坡时间0时-新加坡时间次日0时。</aside>
+<aside class="notice">K线周期以 UTC+8 为基准开始计算，例如日K线的起始周期为 UTC+8 当日0时至次日0时。</aside>
 
 <blockquote>
 <p>Response:</p>
@@ -1525,7 +1622,7 @@
 <tr>
 <td>id</td>
 <td>long</td>
-<td>调整为新加坡时间的时间戳，单位秒，并以此作为此K线柱的id</td>
+<td>调整为 UTC+8 的时间戳，单位秒，并以此作为此K线柱的id</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -1797,7 +1894,7 @@
 <tr>
 <td>ts</td>
 <td>integer</td>
-<td>调整为新加坡时间的时间戳，单位毫秒</td>
+<td>调整为 UTC+8 的时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>version</td>
@@ -1896,7 +1993,7 @@
 <tr>
 <td>ts</td>
 <td>integer</td>
-<td>调整为新加坡时间的时间戳，单位毫秒</td>
+<td>调整为 UTC+8 的时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>direction</td>
@@ -1984,7 +2081,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-5'>响应数据</h3>
-<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个调整为新加坡时间的时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
+<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个调整为 UTC+8 的时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
 
 <table><thead>
 <tr>
@@ -2016,7 +2113,7 @@
 <tr>
 <td>ts</td>
 <td>integer</td>
-<td>调整为新加坡时间的时间戳，单位毫秒</td>
+<td>调整为 UTC+8 的时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>direction</td>
@@ -2347,7 +2444,7 @@
 <td>true</td>
 <td>string</td>
 <td>账户类型</td>
-<td>spot：现货账户</td>
+<td>spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户</td>
 </tr>
 </tbody></table>
 <h2 id='870c0ab88b'>账户余额</h2>
@@ -2356,7 +2453,10 @@
 
 <p>查询指定账户的余额，支持以下账户：</p>
 
-<p>spot：现货账户</p>
+<p>spot：现货账户
+depository：存管账户
+monetary：法币账户
+intermediary：经纪账户</p>
 <h3 id='http-12'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/account/accounts/{account-id}/balance</code></li>
@@ -2440,7 +2540,7 @@
 <td>true</td>
 <td>string</td>
 <td>账户类型</td>
-<td>spot：现货账户</td>
+<td>spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户</td>
 </tr>
 <tr>
 <td>list</td>
@@ -2731,7 +2831,7 @@
 </tr>
 <tr>
 <td>parameter-required</td>
-<td>止盈止损订单缺少参数 stop-price或operator</td>
+<td>必填参数缺失，请检查参数</td>
 </tr>
 <tr>
 <td>base-record-invalid</td>
@@ -2858,10 +2958,6 @@
 <td>下单价格低于开盘前下单限制价格，请重新下单</td>
 </tr>
 <tr>
-<td>order-stop-order-hit-trigger</td>
-<td>止盈止损单下单被当前价触发</td>
-</tr>
-<tr>
 <td>market-orders-not-support-during-limit-price-trading</td>
 <td>限时下单不支持市价单</td>
 </tr>
@@ -2957,7 +3053,7 @@
 <td>string</td>
 <td>true</td>
 <td>NA</td>
-<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit</td>
+<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -3060,7 +3156,7 @@
 <td>string</td>
 <td>true</td>
 <td>NA</td>
-<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit</td>
+<td>订单类型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -3438,7 +3534,7 @@
 <tr>
 <td>created-at</td>
 <td>int</td>
-<td>订单创建的调整为新加坡时间的时间戳，单位毫秒</td>
+<td>订单创建的调整为 UTC+8 的时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>type</td>
@@ -3468,7 +3564,7 @@
 <tr>
 <td>state</td>
 <td>string</td>
-<td>订单状态，包括submitted, partial-filled, cancelling, created</td>
+<td>订单状态，包括submitted, partial-filled, cancelling, created, pre-submitted, submitting, failed, place_timeout</td>
 </tr>
 <tr>
 <td>account-id</td>
@@ -3898,21 +3994,21 @@
 <td>true</td>
 <td>string</td>
 <td>订单状态</td>
-<td>submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销， created</td>
+<td>submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销， created, pre-submitted 准备提交, submitting 提交中, failed 失败, place_timeout 下单超时</td>
 </tr>
 <tr>
 <td>symbol</td>
 <td>true</td>
 <td>string</td>
 <td>交易对</td>
-<td>btcusdt, ethbtc, rcneth ...</td>
+<td>btcusdt, ethbtc, ethhkd ...</td>
 </tr>
 <tr>
 <td>type</td>
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 </tbody></table>
 <h2 id='client-order-id-2'>查询订单详情（基于client order ID）</h2>
@@ -4068,21 +4164,21 @@
 <td>true</td>
 <td>string</td>
 <td>订单状态</td>
-<td>submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created</td>
+<td>submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created, pre-submitted 准备提交, submitting 提交中, failed 失败, place_timeout 下单超时</td>
 </tr>
 <tr>
 <td>symbol</td>
 <td>true</td>
 <td>string</td>
 <td>交易对</td>
-<td>btcusdt, ethbtc, rcneth ...</td>
+<td>btcusdt, ethbtc, ethhkd ...</td>
 </tr>
 <tr>
 <td>type</td>
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 </tbody></table>
 
@@ -4237,14 +4333,14 @@
 <td>true</td>
 <td>string</td>
 <td>交易对</td>
-<td>btcusdt, ethbtc, rcneth ...</td>
+<td>btcusdt, ethbtc, ethhkd ...</td>
 </tr>
 <tr>
 <td>type</td>
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 <tr>
 <td>role</td>
@@ -4325,7 +4421,7 @@
 <td>string</td>
 <td>查询的订单类型组合，使用逗号分割</td>
 <td></td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 <tr>
 <td>start-time</td>
@@ -4502,21 +4598,21 @@
 <td>true</td>
 <td>string</td>
 <td>订单状态</td>
-<td>submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created</td>
+<td>submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created, pre-submitted 准备提交, submitting 提交中, failed 失败, place_timeout 下单超时</td>
 </tr>
 <tr>
 <td>symbol</td>
 <td>true</td>
 <td>string</td>
 <td>交易对</td>
-<td>btcusdt, ethbtc, rcneth ...</td>
+<td>btcusdt, ethbtc, ethhkd ...</td>
 </tr>
 <tr>
 <td>type</td>
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 </tbody></table>
 <h3 id='start-date-end-date'>start-date, end-date相关错误码</h3>
@@ -4743,14 +4839,14 @@
 <td>true</td>
 <td>string</td>
 <td>交易对</td>
-<td>btcusdt, ethbtc, rcneth ...</td>
+<td>btcusdt, ethbtc, ethhkd ...</td>
 </tr>
 <tr>
 <td>type}</td>
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 <tr>
 <td>next-time</td>
@@ -4794,13 +4890,13 @@
 <td>string</td>
 <td>查询的订单类型组合，使用&#39;,&#39;分割</td>
 <td>all</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 <tr>
 <td>start-date</td>
 <td>false</td>
 <td>string</td>
-<td>查询开始日期（新加坡时区）日期格式yyyy-mm-dd</td>
+<td>查询开始日期（UTC+8）日期格式yyyy-mm-dd</td>
 <td>-1d 查询结束日期的前1天</td>
 <td>取值范围 [((end-date) – 1), (end-date)] ，查询窗口最大为2天，窗口平移范围为最近61天。</td>
 </tr>
@@ -4808,7 +4904,7 @@
 <td>end-date</td>
 <td>false</td>
 <td>string</td>
-<td>查询结束日期（新加坡时区）, 日期格式yyyy-mm-dd</td>
+<td>查询结束日期（UTC+8）, 日期格式yyyy-mm-dd</td>
 <td>today</td>
 <td>取值范围 [(today-60), today] ，查询窗口最大为2天，窗口平移范围为最近61天</td>
 </tr>
@@ -4951,14 +5047,14 @@
 <td>true</td>
 <td>string</td>
 <td>交易对</td>
-<td>btcusdt, ethbtc, rcneth ...</td>
+<td>btcusdt, ethbtc, ethhkd ...</td>
 </tr>
 <tr>
 <td>type</td>
 <td>true</td>
 <td>string</td>
 <td>订单类型</td>
-<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖</td>
+<td>buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）</td>
 </tr>
 <tr>
 <td>role</td>
@@ -5394,7 +5490,7 @@
 <p>Update example</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.htusdt.depth.step0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.depth.step0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1572362902028</span><span class="p">,</span><span class="w"> </span><span class="err">//system</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">time</span><span class="w">
   </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -5437,7 +5533,7 @@
 <tr>
 <td>ts</td>
 <td>integer</td>
-<td>新加坡时间的时间戳，单位毫秒</td>
+<td>UTC+8 的时间戳，单位毫秒</td>
 </tr>
 </tbody></table>
 <h3 id='212e038c24-2'>数据请求</h3>
@@ -5504,7 +5600,7 @@
 </span></code></pre></div>
 <p>而5档/20档MBP逐笔增量，在订单簿未发生变化时，不推送数据；<br>
 未来，150档增量推送的数据行为将与5档增量保持一致，即，在订单簿未发生变化时，不再推送空消息；<br>
-5）5档/20档逐笔增量行情仅支持部分交易对（btcusdt,ethusdt,xrpusdt,eosusdt,ltcusdt,etcusdt,adausdt,dashusdt,bsvusdt），150档快照增量支持全部交易对。<br></p>
+5）5档/20档逐笔增量行情仅支持部分交易对；150档快照增量支持全部交易对。<br></p>
 
 <p>REQ频道支持5档/20档/150档全量数据的获取。<br></p>
 <h3 id='e35ffbc8db'>订阅增量推送</h3>
@@ -6475,7 +6571,7 @@
 <tr>
 <td>type</td>
 <td>string</td>
-<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
+<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
 </tr>
 <tr>
 <td>orderStatus</td>
@@ -6497,9 +6593,7 @@
 <p>注：<BR></p>
 
 <ul>
-<li>止盈止损订单在尚未被触发时，接口将不会推送此订单的创建；<br></li>
 <li>Taker订单在成交前，接口首先推送其创建事件。<br></li>
-<li>止盈止损订单的订单类型不再是原始订单类型“buy-stop-limit”或“sell-stop-limit”，而是变为“buy-limit”或“sell-limit”。<BR></li>
 </ul>
 
 <blockquote>
@@ -6566,7 +6660,7 @@
 <tr>
 <td>type</td>
 <td>string</td>
-<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
+<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
 </tr>
 <tr>
 <td>clientOrderId</td>
@@ -6628,7 +6722,6 @@
 <p>注：<BR></p>
 
 <ul>
-<li>止盈止损订单的订单类型不再是原始订单类型“buy-stop-limit”或“sell-stop-limit”，而是变为“buy-limit”或“sell-limit”。<BR></li>
 <li>当一张taker订单同时与对手方多张订单成交后，所产生的每笔成交（tradePrice, tradeVolume, tradeTime, tradeId, aggressor）将被分别推送（而不是合并推送一笔）。<BR></li>
 </ul>
 
@@ -6682,7 +6775,7 @@
 <tr>
 <td>type</td>
 <td>string</td>
-<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit</td>
+<td>订单类型，有效值：buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
 </tr>
 <tr>
 <td>clientOrderId</td>
@@ -6705,12 +6798,6 @@
 <td>订单最近更新时间</td>
 </tr>
 </tbody></table>
-
-<p>注：<BR></p>
-
-<ul>
-<li>止盈止损订单的订单类型不再是原始订单类型“buy-stop-limit”或“sell-stop-limit”，而是变为“buy-limit”或“sell-limit”。<BR></li>
-</ul>
 <h2 id='7ae76c1c98'>订阅清算后成交及撤单更新</h2>
 <p>API Key 权限：读取</p>
 
@@ -6834,7 +6921,7 @@
 <tr>
 <td>orderType</td>
 <td>string</td>
-<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit</td>
+<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit,buy-ioc,sell-ioc,buy-limit-maker,sell-limit-maker</td>
 </tr>
 <tr>
 <td>aggressor</td>
@@ -6959,7 +7046,7 @@
 <tr>
 <td>orderType</td>
 <td>string</td>
-<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit</td>
+<td>订单类型，有效值： buy-market, sell-market,buy-limit,sell-limit,buy-ioc,sell-ioc,buy-limit-maker,sell-limit-maker</td>
 </tr>
 <tr>
 <td>accountId</td>

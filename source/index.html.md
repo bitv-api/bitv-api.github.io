@@ -919,7 +919,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | 参数   | 数据类型 | 是否必须 | 默认值 | 描述                                       | 取值范围                                                     |
 | ------ | -------- | -------- | ------ | ------------------------------------------ | ------------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易对                                     | btcusdt, ethbtc等                                            |
+| symbol | string   | true     | NA     | 交易对                                     | btcusdt, ethhkd等                                            |
 | period | string   | false     | 1min     | 返回数据时间粒度，也就是每根蜡烛的时间区间 | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 | size   | integer  | false    | 150    | 返回 K 线数据条数                          | [1, 2000]                                                    |
 
@@ -977,7 +977,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 
 | 参数   | 数据类型 | 是否必须 | 默认值 | 描述   | 取值范围                                               |
 | ------ | -------- | -------- | ------ | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易对 | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易对 | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 
 > Response:
 
@@ -1034,7 +1034,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 | 参数   | 数据类型 | 必须  | 默认值 | 描述                             | 取值范围                                               |
 | ------ | -------- | ----- | ------ | -------------------------------- | ------------------------------------------------------ |
-| symbol | string   | true  | NA     | 交易对                           | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true  | NA     | 交易对                           | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | depth  | integer  | false | 20     | 返回深度的数量                   | 5，10，20                                              |
 | type   | string   | true  | step0  | 深度的价格聚合度，具体说明见下方 | step0，step1，step2，step3，step4，step5               |
 
@@ -1108,7 +1108,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 
 | 参数   | 数据类型 | 是否必须 | 默认值 | 描述                                                   |
 | ------ | -------- | -------- | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 
 > Response:
 
@@ -1163,7 +1163,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 | 参数   | 数据类型 | 是否必须 | 默认值 | 描述                                                   |
 | ------ | -------- | -------- | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | size   | integer  | false    | 1      | 返回的交易记录数量，最大值2000                         |
 
 > Response:
@@ -1243,7 +1243,7 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 
 | 参数   | 数据类型 | 是否必须 | 默认值 | 描述                                                   |
 | ------ | -------- | -------- | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 
 > Response:
 
@@ -1650,7 +1650,7 @@ API Key 权限：交易
 | 参数名称        | 数据类型 | 是否必需 | 默认值   | 描述                                                         |
 | --------------- | -------- | -------- | -------- | ------------------------------------------------------------ |
 | account-id      | string   | true     | NA       | 账户 ID，取值参考 `GET /v1/account/accounts`。现货交易使用 ‘spot’ 账户的 account-id |
-| symbol          | string   | true     | NA       | 交易对,即btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol          | string   | true     | NA       | 交易对,即btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | type            | string   | true     | NA       | 订单类型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker |
 | amount          | string   | true     | NA       | 订单交易量（市价买单为订单交易额）                           |
 | price           | string   | false    | NA       | 订单价格（对市价单无效）                                     |
@@ -1714,7 +1714,7 @@ API Key 权限：交易<br>
 | 参数名称        | 数据类型 | 是否必需 | 默认值   | 描述                                                         |
 | --------------- | -------- | -------- | -------- | ------------------------------------------------------------ |
 | [{ account-id   | string   | true     | NA       | 账户 ID，取值参考 `GET /v1/account/accounts`。现货交易使用 ‘spot’ 账户的 account-id； |
-| symbol          | string   | true     | NA       | 交易对,即btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol          | string   | true     | NA       | 交易对,即btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | type            | string   | true     | NA       | 订单类型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker  |
 | amount          | string   | true     | NA       | 订单交易量（市价买单为订单交易额）                           |
 | price           | string   | false    | NA       | 订单价格（对市价单无效）                                     |
@@ -1886,7 +1886,7 @@ API Key 权限：读取<br>
 | 参数名称   | 数据类型 | 是否必需                                         | 默认值 | 描述                                                         |
 | ---------- | -------- | ------------------------------------------------ | ------ | ------------------------------------------------------------ |
 | account-id | string   | false                                             | NA     | 账户 ID，取值参考 `GET /v1/account/accounts`。现货交易使用‘spot’账户的 account-id |
-| symbol     | string   | false                                             | NA     | 交易对,即btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol     | string   | false                                             | NA     | 交易对,即btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | side       | string   | false                                            | both   | 指定只返回某一个方向的订单，可能的值有: buy, sell. 默认两个方向都返回。 |
 | from       | string   | false                                            |        | 查询起始 ID                                                  |
 | direct     | string   | false (如字段'from'已设定，此字段'direct'为必填) |        | 查询方向，prev 向前；next 向后                               |
@@ -1923,7 +1923,7 @@ API Key 权限：读取<br>
 | ------------------ | -------- | ------------------------------------------------------------ |
 | id                 | string   | 订单id，无大小顺序，可作为下一次翻页查询请求的from字段       |
 | client-order-id    | string   | 用户自编订单号（所有open订单可返回client-order-id）          |
-| symbol             | string   | 交易对, 例如btcusdt, ethbtc                                  |
+| symbol             | string   | 交易对, 例如btcusdt, ethhkd                                  |
 | price              | string   | limit order的交易价格                                        |
 | created-at         | int      | 订单创建的调整为 UTC+8 的时间戳，单位毫秒                 |
 | type               | string   | 订单类型                                                     |
@@ -1954,7 +1954,7 @@ API Key 权限：交易<br>
 | 参数名称   | 是否必须 | 类型   | 描述                                                         | 默认值 | 取值范围                                          |
 | ---------- | -------- | ------ | ------------------------------------------------------------ | ------ | ------------------------------------------------- |
 | account-id | false    | string | 账户ID，取值参考 `GET /v1/account/accounts`                  |        |                                                   |
-| symbol     | false    | string | 交易代码列表（最多10 个symbols，多个交易代码间以逗号分隔），btcusdt, ethbtc...（取值参考`/v1/common/symbols`） | all    |                                                   |
+| symbol     | false    | string | 交易代码列表（最多10 个symbols，多个交易代码间以逗号分隔），btcusdt, ethhkd...（取值参考`/v1/common/symbols`） | all    |                                                   |
 | side       | false    | string | 主动交易方向                                                 |        | “buy”或“sell”，缺省将返回所有符合条件尚未成交订单 |
 | size       | false    | int    | 所需返回记录数                                               | 100    | [1,100]                                           |
 
@@ -2134,7 +2134,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | spot-api, web                                                |
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销， created, pre-submitted 准备提交, submitting 提交中, failed 失败, place_timeout 下单超时 |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethhkd         ...                                  |
 | type              | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）  |
 
 
@@ -2198,7 +2198,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | spot-api, web                                                |
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created, pre-submitted 准备提交, submitting 提交中, failed 失败, place_timeout 下单超时 |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethhkd         ...                                  |
 | type              | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker） |
 
 如client order ID不存在，返回如下错误信息 
@@ -2272,7 +2272,7 @@ API Key 权限：读取<br>
 | trade-id            | false    | integer  | Unique trade ID (NEW)唯一成交编号，成交时产生的唯一编号ID    |                                                              |
 | price               | true     | string   | 成交价格                                                     |                                                              |
 | source              | true     | string   | 订单来源                                                     | spot-api, web                                                |
-| symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol              | true     | string   | 交易对                                                       | btcusdt, ethhkd         ...                                  |
 | type                | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）  |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
 | filled-points       | true     | string   | 抵扣数量                                 |                                                              |
@@ -2309,7 +2309,7 @@ API Key 权限：读取<br>
 
 | 参数名称   | 是否必须 | 类型   | 描述                                                         | 默认值                      | 取值范围                                                     |
 | ---------- | -------- | ------ | ------------------------------------------------------------ | --------------------------- | ------------------------------------------------------------ |
-| symbol     | true     | string | 交易对                                                       |                             | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`）       |
+| symbol     | true     | string | 交易对                                                       |                             | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查询的订单类型组合，使用逗号分割                             |                             | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）  |
 | start-time | false    | long   | 查询开始时间, 时间格式UTC time in millisecond。 以订单生成时间进行查询 | -48h 查询结束时间的前48小时 | 取值范围 [((end-time) – 48h), (end-time)] ，查询窗口最大为48小时，窗口平移范围为最近180天，已完全撤销的历史订单的查询窗口平移范围只有最近2小时(state="canceled") |
 | end-time   | false    | long   | 查询结束时间, 时间格式UTC time in millisecond。 以订单生成时间进行查询 | present                     | 取值范围 [(present-179d), present] ，查询窗口最大为48小时，窗口平移范围为最近180天，已完全撤销的历史订单的查询窗口平移范围只有最近2小时(state="canceled") |
@@ -2364,7 +2364,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | spot-api, web                                                |
 | state             | true     | string   | 订单状态                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销，created, pre-submitted 准备提交, submitting 提交中, failed 失败, place_timeout 下单超时 |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethhkd         ...                                  |
 | type              | true     | string   | 订单类型                                                     | submit-cancel：已提交撤单申请  ,buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker）  |
 
 ### start-date, end-date相关错误码
@@ -2402,7 +2402,7 @@ API Key 权限：读取<br>
 
 | 参数名称   | 是否必须 | 类型   | 描述                                                         | 默认值         | 取值范围                                               |
 | ---------- | -------- | ------ | ------------------------------------------------------------ | -------------- | ------------------------------------------------------ |
-| symbol     | false    | string | 交易对                                                       | all            | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol     | false    | string | 交易对                                                       | all            | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | start-time | false    | long   | 查询起始时间（含）                                           | 48小时前的时刻 | UTC time in millisecond                                |
 | end-time   | false    | long   | 查询结束时间（含）                                           | 查询时刻       | UTC time in millisecond                                |
 | direct     | false    | string | 订单查询方向（注：仅在检索出的总条目数量超出size字段限定时起作用；如果检索出的总条目数量在size 字段限定内，direct 字段不起作用。） | next           | prev 向前, next 向后                                   |
@@ -2452,7 +2452,7 @@ API Key 权限：读取<br>
 | price             | true     | string   | 订单价格                                                     |                                                              |
 | source            | true     | string   | 订单来源                                                     | spot-api, web                                                |
 | state             | true     | string   | 订单状态                                                     | partial-canceled 部分成交撤销, filled 完全成交, canceled 已撤销 |
-| symbol            | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易对                                                       | btcusdt, ethhkd         ...                                  |
 | type}             | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker） |
 | next-time         | false    | long     | 下一查询起始时间（当请求字段”direct”为”prev”时有效）, 下一查询结束时间（当请求字段”direct”为”next”时有效）。注：仅在检索出的总条目数量超出size字段限定时，此返回字段存在。 | UTC time in millisecond                                      |
 
@@ -2473,7 +2473,7 @@ API Key 权限：读取<br>
 
 | 参数名称   | 是否必须 | 类型   | 描述                                           | 默认值                  | 取值范围                                                     |
 | ---------- | -------- | ------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
-| symbols     | false     | string | 交易对                                         | N/A                     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`）       |
+| symbols     | false     | string | 交易对                                         | N/A                     | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查询的订单类型组合，使用','分割                | all                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker） |
 | start-date | false    | string | 查询开始日期（UTC+8）日期格式yyyy-mm-dd   | -1d 查询结束日期的前1天 | 取值范围 [((end-date) – 1), (end-date)] ，查询窗口最大为2天，窗口平移范围为最近61天。 |
 | end-date   | false    | string | 查询结束日期（UTC+8）, 日期格式yyyy-mm-dd | today                   | 取值范围 [(today-60), today] ，查询窗口最大为2天，窗口平移范围为最近61天 |
@@ -2525,7 +2525,7 @@ API Key 权限：读取<br>
 | trade-id            | false    | integer  | 唯一成交编号                                                 |                                                              |
 | price               | true     | string   | 成交价格                                                     |                                                              |
 | source              | true     | string   | 订单来源                                                     | spot-api, web                                                |
-| symbol              | true     | string   | 交易对                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol              | true     | string   | 交易对                                                       | btcusdt, ethhkd         ...                                  |
 | type                | true     | string   | 订单类型                                                     | buy-market：市价买, sell-market：市价卖, buy-limit：限价买, sell-limit：限价卖, buy-ioc：IOC 买, sell-ioc：IOC 卖, buy-limit-maker：限价买（只做 maker）, sell-limit-maker：限价卖（只做 maker） |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
 | filled-points       | true     | string   | 抵扣数量                                |                                                              |
@@ -2682,7 +2682,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 
 ```json
 {
-  "sub": "market.ethbtc.kline.1min",
+  "sub": "market.btcusdt.kline.1min",
   "id": "id1"
 }
 ```
@@ -2691,7 +2691,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 
 | 参数   | 数据类型 | 是否必需 | 描述     | 取值范围                                                     |
 | ------ | -------- | -------- | -------- | ------------------------------------------------------------ |
-| symbol | string   | true     | 交易代码 | btcusdt, ethbtc...等                                         |
+| symbol | string   | true     | 交易代码 | btcusdt, ethhkd...等                                         |
 | period | string   | true     | K线周期  | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 
 > Response
@@ -2700,7 +2700,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 {
   "id": "id1",
   "status": "ok",
-  "subbed": "market.ethbtc.kline.1min",
+  "subbed": "market.btcusdt.kline.1min",
   "ts": 1489474081631 //system response time
 }
 ```
@@ -2709,7 +2709,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 
 ```json
 {
-  "ch": "market.ethbtc.kline.1min",
+  "ch": "market.btcusdt.kline.1min",
   "ts": 1489474082831, //system update time
   "tick": {
     "id": 1489464480,
@@ -2778,7 +2778,7 @@ Websocket服务器同时支持一次性请求数据（pull）。
 
 | 参数   | 数据类型 | 是否必需 | 缺省值 | 描述         | 取值范围                                               |
 | ------ | -------- | -------- | ------ | ------------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易代码     | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易代码     | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 | type   | string   | true     | step0  | 合并深度类型 | step0, step1, step2, step3, step4, step5               |
 
 **"type" 合并深度类型**
@@ -3109,7 +3109,7 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
 
 | 参数   | 数据类型 | 是否必需 | 缺省值 | 描述     | 取值范围                                               |
 | ------ | -------- | -------- | ------ | -------- | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易代码 | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易代码 | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 
 > Response
 
@@ -3175,7 +3175,7 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
 
 | 参数   | 数据类型 | 是否必需 | 缺省值 | 描述     | 取值范围                                               |
 | ------ | -------- | -------- | ------ | -------- | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易代码 | btcusdt, ethbtc...（取值参考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易代码 | btcusdt, ethhkd...（取值参考`GET /v1/common/symbols`） |
 
 > Response
 
@@ -3255,7 +3255,7 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
 
 | 参数   | 数据类型 | 是否必需 | 缺省值 | 描述     | 取值范围             |
 | ------ | -------- | -------- | ------ | -------- | -------------------- |
-| symbol | string   | true     | NA     | 交易代码 | btcusdt, ethbtc...等 |
+| symbol | string   | true     | NA     | 交易代码 | btcusdt, ethhkd...等 |
 
 > Response
 

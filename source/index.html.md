@@ -467,6 +467,7 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 2. **AccessKeyId** —— 是否填寫正確，該 API Key 是否已被刪除或已過有效期
 3. **時間戳** —— `Timestamp` 是否為 UTC 時間、格式是否為 `2017-05-11T16:22:06`、與服務端時間的偏差是否過大
 4. **請求參數** —— 參與簽名計算的參數與實際發送的參數是否完全一致
+5. **API Key 權限** —— 若 `err-msg` 中出現 `permission` 字樣，則簽名本身已校驗通過，問題在於該 API Key 未開通此接口所需的權限（讀取 / 交易 / 提幣），請到 API Key 管理頁檢查權限勾選
 
 <aside class="notice">
 若以上各項均已確認無誤，請檢查發起請求的出口 IP 是否已綁定到該 API Key。
@@ -1473,12 +1474,15 @@ list字段說明
 
 | 參數名稱 | 是否必須 | 數據類型 | 描述 | 取值範圍                          |
 | -------- | -------- | -------- | ---- | --------------------------------- |
-| balance  | true     | string   | 餘額 |                                   |
+| balance  | true     | string   | 該條目的總額 | 掛單凍結**不會**改變此值           |
 | currency | true     | string   | 幣種 |                                   |
-| type     | true     | string   | 類型 | trade: 交易餘額，frozen: 凍結餘額 |
-| available| true     | string   | 餘額 | 最大可用餘額                     |
+| type     | true     | string   | 條目類型 | trade：交易餘額，frozen：凍結餘額。注意此處的 type 與賬戶級的 type（spot / monetary 等）**是兩個不同的欄位** |
+| available| true     | string   | 可用額 | 實際可用於下單的金額。掛單後按凍結金額減少 |
 | debt     | true     | string   | 餘額 | 負債                           |
 | seq-num     | true     | int   | 版本號 |                            |
+<aside class="notice">
+<b>下單凍結的表現方式</b>：掛單後，<code>type="trade"</code> 條目的 <code>balance</code> 保持不變、<code>available</code> 按凍結金額減少，同時 <code>list</code> 中<b>新增一條 <code>type="frozen"</code> 的記錄</b>記錄被凍結的金額。凍結金額並非透過同一條目的 <code>balance − available</code> 體現。做資金風控請讀 <code>available</code>，不要讀 <code>balance</code>。
+</aside>
 
 ## 賬戶流水
 
@@ -1632,7 +1636,7 @@ API Key 權限：交易
   "account-id": "100009",
   "amount": "10.1",
   "price": "100.1",
-  "source": "api",
+  "source": "spot-api",
   "symbol": "ethusdt",
   "type": "buy-limit",
   "client-order-id": "a0001"
@@ -1656,13 +1660,16 @@ API Key 權限：交易
 ```json
 {  
   "status": "ok",
-  "data": "59378"
+  "data": "1234567890123456789"
 }
 ```
 
 ### 響應數據
 
 返回的主數據對象是一個對應下單單號的字符串。
+<aside class="notice">
+訂單 ID 是長度約 19 位的<b>數字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整數範圍（<code>9007199254740991</code>）。請按字符串處理，<b>不要轉換為整數類型</b>，否則會發生精度丟失，導致撤單、查詢訂單等後續請求攜帶錯誤的訂單 ID。
+</aside>
 
 如client order ID（在24小時內）被復用，節點將返回錯誤消息invalid.client.order.id。
 
@@ -1767,7 +1774,7 @@ API Key 權限：交易<br>
 ```json
 {  
   "status": "ok",
-  "data": "59378"
+  "data": "1234567890123456789"
 }
 ```
 
@@ -1912,7 +1919,7 @@ API Key 權限：讀取<br>
 
 | 字段名稱           | 數據類型 | 描述                                                         |
 | ------------------ | -------- | ------------------------------------------------------------ |
-| id                 | integer  | 訂單id，無大小順序，可作為下一次翻頁查詢請求的from字段       |
+| id                 | string   | 訂單id，無大小順序，可作為下一次翻頁查詢請求的from字段       |
 | client-order-id    | string   | 用戶自編訂單號（所有open訂單可返回client-order-id）          |
 | symbol             | string   | 交易對, 例如btcusdt, ethbtc                                  |
 | price              | string   | limit order的交易價格                                        |
@@ -1921,7 +1928,7 @@ API Key 權限：讀取<br>
 | filled-amount      | string   | 訂單中已成交部分的數量                                       |
 | filled-cash-amount | string   | 訂單中已成交部分的總價格                                     |
 | filled-fees        | string   | 已交交易手續費總額                                           |
-| source             | string   | 現貨交易填寫「api」                                            |
+| source             | string   | 訂單來源，如 spot-api（透過 API 下單）、web（透過網頁端下單）  |
 | state              | string   | 訂單狀態，包括submitted, partial-filled, cancelling, created, pre-submitted, submitting, failed, place_timeout |
 | account-id           | string | 賬戶 ID                                       |
 | amount           | string   | 訂單數量                                     |
@@ -2100,7 +2107,7 @@ API Key 權限：讀取<br>
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "source": "api",
+    "source": "spot-api",
     "state": "filled",
     "canceled-at": 0,
     "client-order-id": ""
@@ -2120,10 +2127,10 @@ API Key 權限：讀取<br>
 | field-cash-amount | true     | string   | 已成交總金額                                                 |                                                              |
 | field-fees        | true     | string   | 已成交手續費（買入為幣，賣出為錢）                           |                                                              |
 | finished-at       | false    | long     | 訂單變為終結態的時間，不是成交時間，包含「已撤單」狀態         |                                                              |
-| id                | true     | long     | 訂單ID                                                       |                                                              |
+| id                | true     | string  | 訂單ID                                                       |                                                              |
 | client-order-id   | false    | string   | 用戶自編訂單號（所有open訂單可返回client-order-id（如有）；僅7天內（基於訂單創建時間）的closed訂單（state <> canceled）可返回client-order-id（如有）；僅24小時內（基於訂單創建時間）的closed訂單（state = canceled）可返回client-order-id（如有）） |                                                              |
 | price             | true     | string   | 訂單價格                                                     |                                                              |
-| source            | true     | string   | 訂單來源                                                     | api                                                          |
+| source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷， created, pre-submitted 準備提交, submitting 提交中, failed 失敗, place_timeout 下單超時 |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type              | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
@@ -2163,7 +2170,7 @@ API Key 權限：讀取<br>
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "source": "api",
+    "source": "spot-api",
     "state": "filled",
     "canceled-at": 0,
     "client-order-id": ""
@@ -2183,10 +2190,10 @@ API Key 權限：讀取<br>
 | field-cash-amount | true     | string   | 已成交總金額                                                 |                                                              |
 | field-fees        | true     | string   | 已成交手續費（買入為幣，賣出為錢）                           |                                                              |
 | finished-at       | false    | long     | 訂單變為終結態的時間，不是成交時間，包含「已撤單」狀態         |                                                              |
-| id                | true     | long     | 訂單ID                                                       |                                                              |
+| id                | true     | string  | 訂單ID                                                       |                                                              |
 | client-order-id   | false    | string   | 用戶自編訂單號（僅24小時內（基於訂單創建時間）的訂單可被查詢.） |                                                              |
 | price             | true     | string   | 訂單價格                                                     |                                                              |
-| source            | true     | string   | 訂單來源                                                     | api                                                          |
+| source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created, pre-submitted 準備提交, submitting 提交中, failed 失敗, place_timeout 下單超時 |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type              | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
@@ -2230,7 +2237,7 @@ API Key 權限：讀取<br>
       "trade-id": 100282808529,
       "symbol": "ethusdt",
       "type": "buy-limit",
-      "source": "api",
+      "source": "spot-api",
       "price": "100.1000000000",
       "filled-amount": "9.1155000000",
       "filled-fees": "0.0182310000",
@@ -2261,7 +2268,7 @@ API Key 權限：讀取<br>
 | order-id            | true     | long     | 訂單ID，成交所屬訂單的ID                                     |                                                              |
 | trade-id            | false    | integer  | Unique trade ID (NEW)唯一成交編號，成交時產生的唯一編號ID    |                                                              |
 | price               | true     | string   | 成交價格                                                     |                                                              |
-| source              | true     | string   | 訂單來源                                                     | api                                                          |
+| source              | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | symbol              | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type                | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
@@ -2328,7 +2335,7 @@ API Key 權限：讀取<br>
       "field-cash-amount": "1011.0100000000",
       "field-fees": "0.0202000000",
       "finished-at": 1494901400468,
-      "source": "api",
+      "source": "spot-api",
       "state": "filled",
       "canceled-at": 0
     }
@@ -2349,10 +2356,10 @@ API Key 權限：讀取<br>
 | field-cash-amount | true     | string   | 已成交總金額                                                 |                                                              |
 | field-fees        | true     | string   | 已成交手續費（買入為基礎幣，賣出為計價幣）                   |                                                              |
 | finished-at       | false    | long     | 最後成交時間                                                 |                                                              |
-| id                | true     | long     | 訂單ID，無大小順序，可作為下一次翻頁查詢請求的from字段       |                                                              |
+| id                | true     | string  | 訂單ID，無大小順序，可作為下一次翻頁查詢請求的from字段       |                                                              |
 | client-order-id   | false    | string   | 用戶自編訂單號（所有open訂單可返回client-order-id（如有）；僅7天內（基於訂單創建時間）的closed訂單（state <> canceled）可返回client-order-id（如有）；僅24小時內（基於訂單創建時間）的closed訂單（state = canceled）可被查詢） |                                                              |
 | price             | true     | string   | 訂單價格                                                     |                                                              |
-| source            | true     | string   | 訂單來源                                                     | api                                                          |
+| source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created, pre-submitted 準備提交, submitting 提交中, failed 失敗, place_timeout 下單超時 |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type              | true     | string   | 訂單類型                                                     | submit-cancel：已提交撤單申請  ,buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
@@ -2437,10 +2444,10 @@ API Key 權限：讀取<br>
 | field-cash-amount | true     | string   | 已成交總金額                                                 |                                                              |
 | field-fees        | true     | string   | 已成交手續費（買入為基礎幣，賣出為計價幣）                   |                                                              |
 | finished-at       | false    | long     | 最後成交時間                                                 |                                                              |
-| id                | true     | long     | 訂單ID，無大小順序                                           |                                                              |
+| id                | true     | string  | 訂單ID，無大小順序                                           |                                                              |
 | client-order-id   | false    | string   | 用戶自編訂單號（僅48小時內（基於訂單創建時間）的closed訂單（state <> canceled）可返回client-order-id（如有）；僅24小時內（基於訂單創建時間）的closed訂單（state = canceled）可被查詢） |                                                              |
 | price             | true     | string   | 訂單價格                                                     |                                                              |
-| source            | true     | string   | 訂單來源                                                     | api                                                          |
+| source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷 |
 | symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type}             | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
@@ -2482,7 +2489,7 @@ API Key 權限：讀取<br>
       "match-id": 59335,
       "symbol": "ethusdt",
       "type": "buy-limit",
-      "source": "api",
+      "source": "spot-api",
       "price": "100.1000000000",
       "filled-amount": "9.1155000000",
       "filled-fees": "0.0182310000",
@@ -2514,7 +2521,7 @@ API Key 權限：讀取<br>
 | order-id            | true     | long     | 訂單 ID                                                      |                                                              |
 | trade-id            | false    | integer  | 唯一成交編號                                                 |                                                              |
 | price               | true     | string   | 成交價格                                                     |                                                              |
-| source              | true     | string   | 訂單來源                                                     | api                                                          |
+| source              | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | symbol              | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
 | type                | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |

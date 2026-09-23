@@ -571,7 +571,7 @@
 </ul>
 
 <aside class="notice">
-Each API Key can be bound to a maximum of 10 IP addresses (host or network addresses). For security reasons, it is strongly recommended that you bind an IP address.
+Each API Key can be bound to a maximum of 10 IP addresses. Only individual host addresses are supported; network segments (CIDR) are not supported. You must bind an IP address when creating an API Key.
 </aside>
 <aside class="warning"> 
  <red><b>Risk Note</b></red>: These two keys are closely related to account security, please do not disclose them to other people <b>at</b> any time; API Key leakage may cause loss of your assets , if you find API Key leakage, please delete the API Key as soon as possible.
@@ -782,7 +782,10 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 <p>Account types include:</p>
 
 <ul>
-  <li>Spot: Spot trading account</li>
+  <li>spot: spot account</li>
+  <li>depository: depository account</li>
+  <li>monetary: monetary account</li>
+  <li>intermediary: intermediary account</li>
 </ul>
 
 <h3 id="order-and-trade-related-id-explanation">Order and Trade-related ID Explanation</h3>
@@ -812,7 +815,6 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
   <li>Market: A market order only requires specifying the order amount or quantity, without specifying a price. The order is matched directly with the counterparty until the amount or quantity is lower than the minimum trade amount or quantity.</li>
   <li>Limit-maker: A limit order that can only enter the market depth as a maker. If the order would result in a match, the matching process will directly reject the order.</li>
   <li>IOC: Immediate or cancel. After entering the matching process, if the order cannot be immediately matched, it will be canceled (the remaining part will also be canceled after partial fulfillment).</li>
-  <li>Stop-limit: A stop-loss or take-profit order that is set above or below the market price. The order is only officially placed in the matching queue when the trigger price is reached.</li>
 </ul>
 
 <h3 id="order-status">Order Status</h3>
@@ -824,6 +826,10 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
   <li>Partial-canceled: Partially filled and canceled. Orders in this status are not in the matching queue anymore. They transition from the <code>partial-filled</code> status, where a portion of the order quantity was filled but later canceled.</li>
   <li>Canceled: Canceled. Orders in this status are not in the matching queue anymore. They have not been filled and have been successfully canceled.</li>
   <li>Canceling: Canceling. Orders in this status are in the process of being canceled. The order needs to be removed from the matching queue to be completely canceled, so this status serves as an intermediate state.</li>
+  <li>Pre-submitted: The order has been received but has not yet entered the matching queue.</li>
+  <li>Submitting: The order is being submitted to the matching queue.</li>
+  <li>Failed: The order was not successfully submitted.</li>
+  <li>Place_timeout: The order placement request did not complete within the allowed time.</li>
 </ul>
 
 <h1 id="integration-guide">Integration Guide</h1>
@@ -982,6 +988,105 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
   </tbody>
 </table>
 
+<h3 id="error-response-format">Error Response Format</h3>
+
+<aside class="warning">
+The HTTP status code is always <code>200</code>, whether the request succeeds or fails. Do not rely on the HTTP status code to determine the result; always read the <code>status</code> field in the response body.
+</aside>
+
+<p>When a request fails, the response body has the following structure:</p>
+
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"err-code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api-signature-not-valid"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"err-msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Signature not valid"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/v1/account/accounts"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1790067073324</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>status</td>
+      <td>string</td>
+      <td><code>error</code> when the request fails; <code>ok</code> when it succeeds</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>object</td>
+      <td><code>null</code> when the request fails</td>
+    </tr>
+    <tr>
+      <td>err-code</td>
+      <td>string</td>
+      <td>Error code, intended for programmatic handling</td>
+    </tr>
+    <tr>
+      <td>err-msg</td>
+      <td>string</td>
+      <td>Error description, intended for manual troubleshooting</td>
+    </tr>
+    <tr>
+      <td>path</td>
+      <td>string</td>
+      <td>The endpoint path where the error occurred. <strong>Returned only on failure</strong></td>
+    </tr>
+    <tr>
+      <td>timestamp</td>
+      <td>long</td>
+      <td>Server timestamp in milliseconds. <strong>Returned only on failure</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<aside class="notice">
+<code>path</code> and <code>timestamp</code> appear only in failed responses and are not included in successful ones. The wording of <code>err-msg</code> may change between versions; use <code>err-code</code> for programmatic checks.
+</aside>
+
+<h3 id="troubleshooting-authentication-failures">Troubleshooting Authentication Failures</h3>
+
+<p>There are two authentication-related error codes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>err-code</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>token-not-valid</td>
+      <td>The request does not carry the parameters required for signature authentication</td>
+    </tr>
+    <tr>
+      <td>api-signature-not-valid</td>
+      <td>Signature verification failed</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code>api-signature-not-valid</code> covers several failure cases and does not distinguish between them. Check the following in order:</p>
+
+<ol>
+  <li><strong>Signature calculation</strong> — whether the signed parameters are sorted as required, whether URL encoding is correct, and whether the correct Secret Key was used</li>
+  <li><strong>AccessKeyId</strong> — whether it is correct, and whether the API Key has been deleted or has expired</li>
+  <li><strong>Timestamp</strong> — whether <code>Timestamp</code> is in UTC, whether the format is <code>2017-05-11T16:22:06</code>, and whether it deviates too much from server time</li>
+  <li><strong>Request parameters</strong> — whether the parameters used in the signature match those actually sent</li>
+</ol>
+
+<aside class="notice">
+If all of the above are correct, check whether the outbound IP address of your request has been bound to the API Key.
+</aside>
+
 <h2 id="data-types">Data Types</h2>
 
 <p>This document describes the conventions for data types in the JSON format:</p>
@@ -1000,7 +1105,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 <h3 id="security">Security</h3>
 
 <ul>
-  <li>Strongly recommended: When applying for an API Key, bind it to your IP address to ensure that your API Key can only be used from your own IP.</li>
+  <li>IP binding is mandatory: When applying for an API Key, you must bind it to your IP address to ensure that your API Key can only be used from your own IP.</li>
   <li>Strongly recommended: Do not expose your API Key to anyone, including third-party software or organizations. The API Key represents your account privileges, and its exposure may result in loss of information and funds. If your API Key is compromised, please delete it promptly and create a new one.</li>
 </ul>
 
@@ -1233,7 +1338,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 
 <h3 id="q4-when-is-the-k-line-calculated">Q4: When is the K-line calculated?</h3>
 
-<p>A: The K-line period is calculated based on Singapore time. For example, the starting period of the daily K-line is from 0:00 Singapore time to 0:00 Singapore time the next day.</p>
+<p>A: The K-line period is calculated based on UTC+8. For example, the starting period of the daily K-line is from 00:00 UTC+8 to 00:00 UTC+8 the next day.</p>
 
 <h2 id="transaction-related">Transaction related</h2>
 
@@ -1244,7 +1349,10 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 <p>Account types include:</p>
 
 <ul>
-  <li>spot spot account</li>
+  <li>spot: spot account</li>
+  <li>depository: depository account</li>
+  <li>monetary: monetary account</li>
+  <li>intermediary: intermediary account</li>
 </ul>
 
 <h3 id="q2-what-is-client-order-id">Q2: What is client-order-id?</h3>
@@ -1698,7 +1806,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 </table>
 
 <aside class="notice">The current REST API does not support custom time intervals. If you need historical fixed time range data, please refer to the K-line interface in the Websocket API. </aside>
-<aside class="notice">The K-line period is calculated based on Singapore time. For example, the starting period of the daily K-line is from 0:00 Singapore time to 0:00 Singapore time the next day. </aside>
+<aside class="notice">The K-line period is calculated based on UTC+8. For example, the starting period of the daily K-line is from 00:00 UTC+8 to 00:00 UTC+8 the next day. </aside>
 
 <blockquote>
   <p>Response:</p>
@@ -1736,7 +1844,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
     <tr>
       <td>id</td>
       <td>long</td>
-      <td>The timestamp adjusted to Singapore time, in seconds, used as the id of this candlestick</td>
+      <td>The timestamp adjusted to UTC+8, in seconds, used as the id of this candlestick</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -2043,7 +2151,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>Timestamp adjusted to Singapore time, in milliseconds</td>
+      <td>Timestamp adjusted to UTC+8, in milliseconds</td>
     </tr>
     <tr>
       <td>version</td>
@@ -2158,7 +2266,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>Timestamp adjusted to Singapore time, in milliseconds</td>
+      <td>Timestamp adjusted to UTC+8, in milliseconds</td>
     </tr>
     <tr>
       <td>direction</td>
@@ -2260,7 +2368,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
 </span></code></pre></div>
 <h3 id="response-data-4">Response data</h3>
 
-<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to Singapore time, and these transaction records are presented in the form of an array. </aside>
+<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to UTC+8, and these transaction records are presented in the form of an array. </aside>
 
 <table>
   <thead>
@@ -2294,7 +2402,7 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>Timestamp adjusted to Singapore time, in milliseconds</td>
+      <td>Timestamp adjusted to UTC+8, in milliseconds</td>
     </tr>
     <tr>
       <td>direction</td>
@@ -2673,7 +2781,7 @@ Frequency limit value (NEW): 100 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>account type</td>
-      <td>spot: spot account</td>
+      <td>spot: spot account, depository: depository account, monetary: monetary account, intermediary: intermediary account</td>
     </tr>
   </tbody>
 </table>
@@ -2685,7 +2793,10 @@ Frequency limit value (NEW): 100 times/2s</p>
 
 <p>Query the balance of the specified account, the following accounts are supported:</p>
 
-<p>spot: spot account</p>
+<p>spot: spot account
+depository: depository account
+monetary: monetary account
+intermediary: intermediary account</p>
 
 <h3 id="http-requests-11">HTTP requests</h3>
 
@@ -2781,7 +2892,7 @@ Frequency limit value (NEW): 100 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Account type</td>
-      <td>spot: spot account</td>
+      <td>spot: spot account, depository: depository account, monetary: monetary account, intermediary: intermediary account</td>
     </tr>
     <tr>
       <td>list</td>
@@ -3095,7 +3206,7 @@ Frequency limit value (NEW): 5 times/2s</p>
     </tr>
     <tr>
       <td>parameter-required</td>
-      <td>Take Profit Stop Loss order lacks parameter stop-price or operator</td>
+      <td>Required parameter is missing, please check the parameters</td>
     </tr>
     <tr>
       <td>base-record-invalid</td>
@@ -3222,10 +3333,6 @@ Frequency limit value (NEW): 5 times/2s</p>
       <td>The order price is lower than the order limit price before the opening, please place a new order</td>
     </tr>
     <tr>
-      <td>order-stop-order-hit-trigger</td>
-      <td>The stop loss order is triggered by the current price</td>
-    </tr>
-    <tr>
       <td>market-orders-not-support-during-limit-price-trading</td>
       <td>Market orders are not supported for time-limited orders</td>
     </tr>
@@ -3331,7 +3438,7 @@ Frequency limit value; 100 times/2s</p>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
-      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -3447,7 +3554,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
       <td>string</td>
       <td>true</td>
       <td>NA</td>
-      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -3884,7 +3991,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     <tr>
       <td>created-at</td>
       <td>int</td>
-      <td>Timestamp of order creation adjusted to Singapore time, in milliseconds</td>
+      <td>Timestamp of order creation adjusted to UTC+8, in milliseconds</td>
     </tr>
     <tr>
       <td>type</td>
@@ -3914,7 +4021,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     <tr>
       <td>state</td>
       <td>string</td>
-      <td>Order status, including submitted, partial-filled, canceling, created</td>
+      <td>Order status, including submitted, partial-filled, canceling, created, pre-submitted, submitting, failed, place_timeout</td>
     </tr>
     <tr>
       <td>account-id</td>
@@ -4409,7 +4516,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order status</td>
-      <td>submitted, partial-filled, partially-canceled, filled, canceled, created</td>
+      <td>submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout</td>
       <td> </td>
     </tr>
     <tr>
@@ -4417,7 +4524,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Trading pair</td>
-      <td>btcusdt, ethbtc, rcneth …</td>
+      <td>btcusdt, ethbtc, ethhkd …</td>
       <td> </td>
     </tr>
     <tr>
@@ -4425,7 +4532,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)</td>
       <td> </td>
     </tr>
   </tbody>
@@ -4594,21 +4701,21 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order status</td>
-      <td>submitted, partial-filled, partially-canceled, filled, canceled, created</td>
+      <td>submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout</td>
     </tr>
     <tr>
       <td>symbol</td>
       <td>true</td>
       <td>string</td>
       <td>Trading pair</td>
-      <td>btcusdt, ethbtc, rcneth …</td>
+      <td>btcusdt, ethbtc, ethhkd …</td>
     </tr>
     <tr>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)</td>
     </tr>
   </tbody>
 </table>
@@ -4776,14 +4883,14 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Trading pair</td>
-      <td>btcusdt, ethbtc, rcneth, …</td>
+      <td>btcusdt, ethbtc, ethhkd, …</td>
     </tr>
     <tr>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>role</td>
@@ -4879,7 +4986,7 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>string</td>
       <td>Combinations of order types to query, separated by commas</td>
       <td> </td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)</td>
     </tr>
     <tr>
       <td>start-time</td>
@@ -5062,21 +5169,21 @@ Frequency limit value (NEW): 50 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Order status</td>
-      <td>submitted, partial-filled, partially-canceled, filled, canceled, created</td>
+      <td>submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout</td>
     </tr>
     <tr>
       <td>symbol</td>
       <td>true</td>
       <td>string</td>
       <td>Trading pair</td>
-      <td>btcusdt, ethbtc, rcneth …</td>
+      <td>btcusdt, ethbtc, ethhkd …</td>
     </tr>
     <tr>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price</td>
+      <td>submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)</td>
     </tr>
   </tbody>
 </table>
@@ -5323,14 +5430,14 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Trading pair</td>
-      <td>btcusdt, ethbtc, rcneth, etc.</td>
+      <td>btcusdt, ethbtc, ethhkd, etc.</td>
     </tr>
     <tr>
       <td>type }</td>
       <td>true</td>
       <td>string</td>
       <td>Order type</td>
-      <td>buy-market, sell-market, buy-limit, sell-limit, etc.</td>
+      <td>buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, etc.</td>
     </tr>
     <tr>
       <td>next-time</td>
@@ -5383,13 +5490,13 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>string</td>
       <td>Combination of order types to query, separated by ‘,’</td>
       <td>all</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)</td>
     </tr>
     <tr>
       <td>start-date</td>
       <td>false</td>
       <td>string</td>
-      <td>Query start date (Singapore time zone), date format yyyy-mm-dd</td>
+      <td>Query start date (UTC+8), date format yyyy-mm-dd</td>
       <td>-1d</td>
       <td>Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.</td>
     </tr>
@@ -5397,7 +5504,7 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>end-date</td>
       <td>false</td>
       <td>string</td>
-      <td>Query end date (Singapore time zone), date format yyyy-mm-dd</td>
+      <td>Query end date (UTC+8), date format yyyy-mm-dd</td>
       <td>today</td>
       <td>Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.</td>
     </tr>
@@ -5546,14 +5653,14 @@ Frequency limit value (NEW): 20 times/2s</p>
       <td>true</td>
       <td>string</td>
       <td>Trading pair.</td>
-      <td>btcusdt, ethbtc, rcneth …</td>
+      <td>btcusdt, ethbtc, ethhkd …</td>
     </tr>
     <tr>
       <td>type</td>
       <td>true</td>
       <td>string</td>
       <td>Order type.</td>
-      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price</td>
+      <td>buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)</td>
     </tr>
     <tr>
       <td>role</td>
@@ -6056,7 +6163,7 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
 </blockquote>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.htusdt.depth.step0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.depth.step0"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1572362902027</span><span class="p">,</span><span class="w"> </span><span class="err">//system</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">time</span><span class="w">
   </span><span class="nl">"tick"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"bids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -6103,7 +6210,7 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>Timestamp of Singapore time in milliseconds</td>
+      <td>Timestamp of UTC+8 in milliseconds</td>
     </tr>
   </tbody>
 </table>
@@ -6180,7 +6287,7 @@ When the type value is ‘step1’, ‘step2’, ‘step3’, ‘step4’, ‘st
 </span></code></pre></div>
 <p>However, the 5-level/20-level MBP is incremented one by one, and no data is pushed when the order book does not change;<br />
 In the future, the data behavior of 150 increments will be consistent with that of 5 increments, that is, when the order book has not changed, empty messages will no longer be pushed;<br />
-5) Only some trading pairs (btcusdt, ethusdt, xrpusdt, eosusdt, ltcusdt, etcusdt, adausdt, dashusdt, bsvusdt) are supported in the 5-level/20-level incremental market, and 150-level snapshot increments support all trading pairs. <br /></p>
+5) Only some trading pairs are supported in the 5-level/20-level incremental market; 150-level snapshot increments support all trading pairs. <br /></p>
 
 <p>The REQ channel supports the acquisition of full data of 5 files/20 files/150 files. <br /></p>
 
@@ -7299,7 +7406,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>orderStatus</td>
@@ -7322,9 +7429,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
 <p>Note: <br /></p>
 
 <ul>
-  <li>When the take profit and stop loss order has not been triggered, the interface will not push the creation of this order;<br /></li>
   <li>Before the Taker order is completed, the interface will first push its creation event. <br /></li>
-  <li>The order type of the stop loss order is no longer the original order type “buy-stop-limit” or “sell-stop-limit”, but becomes “buy-limit” or “sell-limit”. <br /></li>
 </ul>
 
 <blockquote>
@@ -7394,7 +7499,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>clientOrderId</td>
@@ -7457,7 +7562,6 @@ In the future, the data behavior of 150 increments will be consistent with that 
 <p>Note: <br /></p>
 
 <ul>
-  <li>The order type of the stop loss order is no longer the original order type “buy-stop-limit” or “sell-stop-limit”, but becomes “buy-limit” or “sell-limit”. <br /></li>
   <li>When a taker order is executed with multiple orders of the counterparty at the same time, each resulting transaction (tradePrice, tradeVolume, tradeTime, tradeId, aggressor) will be pushed separately (instead of combined push). <br /></li>
 </ul>
 
@@ -7514,7 +7618,7 @@ In the future, the data behavior of 150 increments will be consistent with that 
     <tr>
       <td>type</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>clientOrderId</td>
@@ -7538,12 +7642,6 @@ In the future, the data behavior of 150 increments will be consistent with that 
     </tr>
   </tbody>
 </table>
-
-<p>Note: <br /></p>
-
-<ul>
-  <li>The order type of the stop loss order is no longer the original order type “buy-stop-limit” or “sell-stop-limit”, but becomes “buy-limit” or “sell-limit”. <br /></li>
-</ul>
 
 <h2 id="subscribe-to-update-transactions-and-cancellations-after-liquidation">Subscribe to update transactions and cancellations after liquidation</h2>
 
@@ -7683,7 +7781,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
     <tr>
       <td>orderType</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>aggressor</td>
@@ -7813,7 +7911,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
     <tr>
       <td>orderType</td>
       <td>string</td>
-      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit</td>
+      <td>Order type, valid values: buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker</td>
     </tr>
     <tr>
       <td>accountId</td>

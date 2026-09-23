@@ -3768,8 +3768,6 @@ API Key 權限：讀取
 | orderSize       | string   | 訂單數量（市價買單無此字段）                                 |
 | orderValue      | string   | 訂單金額（僅市價買單有此字段）                               |
 | clientOrderId   | string   | 用戶自編訂單號                                               |
-| stopPrice       | string   | 訂單觸發價（僅止盈止損訂單有此字段）                         |
-| operator        | string   | 訂單觸發方向（僅止盈止損訂單有此字段）                       |
 | orderCreateTime | long     | 訂單創建時間                                                 |
 | orderStatus     | string   | 訂單狀態，有效值：filled, partial-filled                     |
 
@@ -3792,8 +3790,6 @@ API Key 權限：讀取
 | orderSize       | string   | 訂單數量（市價買單無此字段）                                 |
 | orderValue      | string   | 訂單金額（僅市價買單有此字段）                               |
 | clientOrderId   | string   | 用戶自編訂單號                                               |
-| stopPrice       | string   | 訂單觸發價（僅止盈止損訂單有此字段）                         |
-| operator        | string   | 訂單觸發方向（僅止盈止損訂單有此字段）                       |
 | orderCreateTime | long     | 訂單創建時間                                                 |
 | remainAmt       | string   | 未成交量（對於市價買單，該字段定義為未成交額）               |
 | orderStatus     | string   | 訂單狀態，有效值：canceled, partial-canceled                 |

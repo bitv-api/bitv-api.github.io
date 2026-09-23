@@ -456,6 +456,7 @@ There are two authentication-related error codes:
 2. **AccessKeyId** — whether it is correct, and whether the API Key has been deleted or has expired
 3. **Timestamp** — whether `Timestamp` is in UTC, whether the format is `2017-05-11T16:22:06`, and whether it deviates too much from server time
 4. **Request parameters** — whether the parameters used in the signature match those actually sent
+5. **API Key permissions** — if `err-msg` contains the word `permission`, the signature itself passed verification; the problem is that this API Key lacks the permission required by the endpoint (read / trade / withdraw). Check the permission settings on the API Key management page
 
 <aside class="notice">
 If all of the above are correct, check whether the outbound IP address of your request has been bound to the API Key.
@@ -1477,12 +1478,15 @@ intermediary: intermediary account
 
 | Parameter name | Required | Data type | Description | Value range |
 | -------------- | -------- | --------- | ----------- | ----------- |
-| balance | true | string | Balance | |
+| balance | true | string | Total amount of this entry | Freezing funds for an open order does **not** change this value |
 | currency | true | string | Currency | |
-| type | true | string | Type | trade: trade balance, frozen: frozen balance |
-| available | true | string | Balance | Maximum Available Balance |
+| type | true | string | Entry type | trade: trade balance, frozen: frozen balance. Note this `type` is **a different field** from the account-level `type` (spot / monetary, etc.) |
+| available | true | string | Available amount | The amount actually usable for placing orders. Decreases by the frozen amount once an order is open |
 | debt | true | string | Balance | Debt |
 | seq-num | true | int | Version |  |
+<aside class="notice">
+<b>How order freezing is represented</b>: once an order is open, the <code>balance</code> of the <code>type="trade"</code> entry stays unchanged, its <code>available</code> decreases by the frozen amount, and <b>a new <code>type="frozen"</code> entry is added to <code>list</code></b> holding the frozen amount. The frozen amount is not expressed as <code>balance − available</code> within a single entry. For funds risk control, read <code>available</code>, not <code>balance</code>.
+</aside>
 
 ## Account History
 
@@ -1635,7 +1639,7 @@ Send a new order for matching.
    "account-id": "100009",
    "amount": "10.1",
    "price": "100.1",
-   "source": "api",
+   "source": "spot-api",
    "symbol": "ethusdt",
    "type": "buy-limit",
    "client-order-id": "a0001"
@@ -1659,13 +1663,16 @@ Send a new order for matching.
 ```json
 {
    "status": "ok",
-   "data": "59378"
+   "data": "1234567890123456789"
 }
 ```
 
 ### Response data
 
 The returned master data object is a string corresponding to the order number.
+<aside class="notice">
+The order ID is a <b>numeric string</b> of roughly 19 digits, which exceeds the safe integer range of JavaScript <code>Number</code> (<code>9007199254740991</code>). Handle it as a string and <b>do not convert it to an integer type</b>; otherwise precision loss will cause subsequent requests such as cancel-order and query-order to carry an incorrect order ID.
+</aside>
 
 If the client order ID is reused (within 24 hours), the node will return an error message invalid.client.order.id.
 
@@ -1772,7 +1779,7 @@ This interface sends a request to cancel an order.
 ```json
 {
    "status": "ok",
-   "data": "59378"
+   "data": "1234567890123456789"
 }
 ```
 
@@ -1920,7 +1927,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 
 | Field Name         | Data Type | Description                                                   |
 | ------------------ | --------- | ------------------------------------------------------------- |
-| id                 | integer   | Order ID, can be used as the 'from' field for the next page turning query request |
+| id                 | string    | Order ID, can be used as the 'from' field for the next page turning query request |
 | client-order-id    | string    | User-defined order number (available for all open orders)      |
 | symbol             | string    | Trading pair, such as btcusdt, ethbtc                          |
 | price              | string    | Transaction price of limit order                              |
@@ -1929,7 +1936,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | filled-amount      | string    | Amount of the filled part of the order                         |
 | filled-cash-amount | string    | The total price of the filled portion of the order             |
 | filled-fees        | string    | Total transaction fees paid                                   |
-| source             | string    | Fill in "api" for spot transactions                           |
+| source             | string    | Order source, e.g. spot-api (placed via API), web (placed via web UI) |
 | state              | string    | Order status, including submitted, partial-filled, canceling, created, pre-submitted, submitting, failed, place_timeout |
 | account-id           | string  | Account ID                |
 | amount           | string    | Order quantity                |
@@ -2110,7 +2117,7 @@ This interface returns the latest status and details of the specified order. Ord
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "source": "api",
+    "source": "spot-api",
     "state": "filled",
     "canceled-at": 0,
     "client-order-id": ""
@@ -2130,10 +2137,10 @@ This interface returns the latest status and details of the specified order. Ord
 | field-cash-amount  | true     | string    | Total transaction amount                                                                         |                                                                                                    |
 | field-fees         | true     | string    | Transaction fee (buy for coins, sell for money)                                                  |                                                                                                    |
 | finished-at        | false    | long      | The time when the order becomes finalized, not the transaction time, including the "cancelled" status |                                                                                                    |
-| id                 | true     | long      | Order ID                                                                                         |                                                                                                    |
+| id                 | true     | string   | Order ID                                                                                         |                                                                                                    |
 | client-order-id    | false    | string    | User-defined order number (all open orders can return client-order-id (if any); only closed orders within 7 days (based on order creation time)  (state <> canceled) Can return client-order-id (if any); Only closed orders (state = canceled) within 24 hours (based on order creation time)  can return client-order-id (if any)                                                              |                                                                                                    |
 | price              | true     | string    | Order price                                                                                      |                                                                                                    |
-| source             | true     | string    | Order source                                                                                     | api                                                                                                |
+| source             | true     | string    | Order source                                                                                     | spot-api, web                                                                                      |
 | state              | true     | string    | Order status                                                                                     | submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout                            |
 | symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, ethhkd ...                                                                         |
 | type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)                                                 |                                                                                                    |
@@ -2175,7 +2182,7 @@ This interface returns the latest order status and details of the specified user
     "field-cash-amount": "1011.0100000000",
     "field-fees": "0.0202000000",
     "finished-at": 1494901400468,
-    "source": "api",
+    "source": "spot-api",
     "state": "filled",
     "canceled-at": 0,
     "client-order-id": ""
@@ -2194,10 +2201,10 @@ This interface returns the latest order status and details of the specified user
 | field-cash-amount  | true     | string    | Total transaction amount                                                                       |             |
 | field-fees         | true     | string    | Transaction fee (buy for coins, sell for money)                                                |             |
 | finished-at        | false    | long      | The time when the order becomes finalized, including the "cancelled" status                   |             |
-| id                 | true     | long      | Order ID                                                                                       |             |
+| id                 | true     | string   | Order ID                                                                                       |             |
 | client-order-id    | false    | string    | User-defined order number (Only orders within 24 hours (based on order creation time) can be queried) |             |
 | price              | true     | string    | Order price                                                                                    |             |
-| source             | true     | string    | Order source                                                                                   | api         |
+| source             | true     | string    | Order source                                                                                   | spot-api, web |
 | state              | true     | string    | Order status                                                                                   | submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout            |
 | symbol             | true     | string    | Trading pair                                                                                   | btcusdt, ethbtc, ethhkd …             |
 | type               | true     | string    | Order type                                                                                     | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)            |
@@ -2243,7 +2250,7 @@ This interface returns the transaction details of the specified order.
       "trade-id": 100282808529,
       "symbol": "ethusdt",
       "type": "buy-limit",
-      "source": "api",
+      "source": "spot-api",
       "price": "100.1000000000",
       "filled-amount": "9.1155000000",
       "filled-fees": "0.0182310000",
@@ -2274,7 +2281,7 @@ This interface returns the transaction details of the specified order.
 | order-id           | true     | long      | Order ID                                                |              |
 | trade-id           | false    | integer   | Unique trade ID                                         |              |
 | price              | true     | string    | Transaction price                                       |              |
-| source             | true     | string    | Order source                                            | api          |
+| source             | true     | string    | Order source                                            | spot-api, web |
 | symbol             | true     | string    | Trading pair                                            | btcusdt, ethbtc, ethhkd, ... |
 | type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker  |
 | role               | true     | string    | Transaction role                                        | maker, taker |
@@ -2341,7 +2348,7 @@ It is recommended that users query historical orders by "time range".
       "field-cash-amount": "1011.0100000000",
       "field-fees": "0.0202000000",
       "finished-at": 1494901400468,
-      "source": "api",
+      "source": "spot-api",
       "state": "filled",
       "canceled-at": 0
     }
@@ -2362,10 +2369,10 @@ It is recommended that users query historical orders by "time range".
 | field-cash-amount | true     | string    | Total transaction amount                                                                                                                                                                                                                                                                                                                                                             |                                                                                                                                                                    |
 | field-fees       | true     | string    | Transaction fee (buying is base currency, selling is price currency)                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
 | finished-at      | false    | long      | Last transaction time                                                                                                                                                                                                                                                                                                                                                               |                                                                                                                                                                    |
-| id               | true     | long      | Order ID, no order of size, can be used as the 'from' field of the next page turning query request                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
+| id               | true     | string   | Order ID, no order of size, can be used as the 'from' field of the next page turning query request                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
 | client-order-id  | false    | string    | User-defined order number (all open orders can return 'client-order-id' (if any); only closed orders within 7 days (based on order creation time) (state <> canceled) can return 'client-order-id' (if any); only closed orders (state = canceled) within 24 hours (based on order creation time) can be queried)                                                          |                                                                                                                                                                    |
 | price            | true     | string    | Order price                                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                    |
-| source           | true     | string    | Order source                                                                                                                                                                                                                                                                                                                                                                         | api                                                                                                |
+| source           | true     | string    | Order source                                                                                                                                                                                                                                                                                                                                                                         | spot-api, web                                                                                      |
 | state            | true     | string    | Order status                                                                                                                                                                                                                                                                                                                                                                         | submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout                                                                    |
 | symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, ethhkd ...                                                                         |
 | type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)|
@@ -2449,10 +2456,10 @@ This interface queries historical orders within the last 48 hours based on searc
 | field-cash-amount  | true     | string    | Total transaction amount                                                                                                                                                            |                                                                         |
 | field-fees         | true     | string    | Transaction fee (buying is base currency, selling is price currency)                                                                                                                |                                                                         |
 | finished-at        | false    | long      | Last transaction time                                                                                                                                                               |                                                                         |
-| id                 | true     | long      | Order ID, no size order                                                                                                                                                             |                                                                         |
+| id                 | true     | string   | Order ID, no size order                                                                                                                                                             |                                                                         |
 | client-order-id    | false    | string    | User-defined order number (only closed orders (state <> canceled) within 48 hours (based on order creation time) can return client-order-id (if any); only 24 hours (state = canceled) | can be queried)                                                        |
 | price              | true     | string    | Order price                                                                                                                                                                         |                                                                         |
-| source             | true     | string    | Order source                                                                                                                                                                        | api                                                                     |
+| source             | true     | string    | Order source                                                                                                                                                                        | spot-api, web                                                           |
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
 | symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, ethhkd, etc.                                            |
 | type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, etc. |
@@ -2493,7 +2500,7 @@ This interface queries current and historical transaction records based on searc
       "match-id": 59335,
       "symbol": "ethusdt",
       "type": "buy-limit",
-      "source": "api",
+      "source": "spot-api",
       "price": "100.1000000000",
       "filled-amount": "9.1155000000",
       "filled-fees": "0.0182310000",
@@ -2525,7 +2532,7 @@ This interface queries current and historical transaction records based on searc
 | order-id              | true     | long      | Order ID.                                                                                                                                                                                                                                                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | trade-id              | false    | integer   | Unique trade ID.                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | price                 | true     | string    | Transaction price.                                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| source                | true     | string    | Order source.                                                                                                                                                                                                                                                          | api                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| source                | true     | string    | Order source.                                                                                                                                                                                                                                                          | spot-api, web                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethbtc, ethhkd ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | type                  | true     | string    | Order type.                                                                                                                                                                                                                                                            | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)                                                                                                                                                                                                                                                    |
 | role                  | true     | string    | Transaction role.                                                                                                                                                                                                                                                      | maker, taker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |

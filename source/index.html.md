@@ -1377,7 +1377,7 @@ none
 
 | Parameter name | Required | Data type | Description | Value range |
 | -------------- | -------- | --------- | ----------- | ----------- |
-| id | true | long | account-id | |
+| id | true | string | account-id | |
 | state | true | string | account status | working: normal, lock: account is locked |
 | type | true | string | account type | spot: spot account, depository: depository account, monetary: monetary account, intermediary: intermediary account |
 
@@ -1440,9 +1440,12 @@ intermediary: intermediary account
 
 | Parameter name | Required | Data type | Description | Value range |
 | -------------- | -------- | --------- | ----------- | ----------- |
-| id | true | long | Account ID | |
+| id | true | string | Account ID | |
 | state | true | string | Account status | working: normal, lock: account is locked |
 | type | true | string | Account type | spot: spot account, depository: depository account, monetary: monetary account, intermediary: intermediary account |
+<aside class="notice">
+<code>id</code> (the <code>account-id</code>) is a <b>numeric string</b> of roughly 19 digits, which exceeds the safe integer range of JavaScript <code>Number</code> (<code>9007199254740991</code>). Handle it as a string and <b>do not convert it to an integer type</b>; otherwise precision loss will produce an incorrect <code>account-id</code> in subsequent requests.
+</aside>
 | list | false | Array | | |
 
 **list** field description:
@@ -1521,7 +1524,7 @@ This node returns the account history based on the user account ID.
 | status        | string    | Status code                                              |             |
 | data          | object    |                                                         |             |
 | { data        | array     | Array of transaction records                             |             |
-| [ account-id  | long      | Account number                                           |             |
+| [ account-id  | string    | Account number                                           |             |
 | currency      | string    | Currency                                                 |             |
 | transact-amt  | string    | Change amount |             |
 | transact-type | string    | Transaction type                                         |             |
@@ -1902,7 +1905,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | filled-fees        | string    | Total transaction fees paid                                   |
 | source             | string    | Fill in "api" for spot transactions                           |
 | state              | string    | Order status, including submitted, partial-filled, canceling, created, pre-submitted, submitting, failed, place_timeout |
-| account-id           | long    | Account ID                |
+| account-id           | string  | Account ID                |
 | amount           | string    | Order quantity                |
 
 
@@ -2093,7 +2096,7 @@ This interface returns the latest status and details of the specified order. Ord
 
 | Field name         | Required | Data type | Description                                                                                      | Value range                                                                                         |
 | ------------------ | -------- | --------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| account-id         | true     | long      | Account ID                                                                                       |                                                                                                    |
+| account-id         | true     | string    | Account ID                                                                                       |                                                                                                    |
 | amount             | true     | string    | Order quantity                                                                                   |                                                                                                    |
 | canceled-at        | false    | long      | Order cancellation time                                                                          |                                                                                                    |
 | created-at         | true     | long      | Order creation time                                                                              |                                                                                                    |
@@ -2157,7 +2160,7 @@ This interface returns the latest order status and details of the specified user
 
 | Field name         | Required | Data type | Description                                                                                    | Value range |
 | ------------------ | -------- | --------- | ---------------------------------------------------------------------------------------------- | ----------- |
-| account-id         | true     | long      | Account ID                                                                                     |             |
+| account-id         | true     | string    | Account ID                                                                                     |             |
 | amount             | true     | string    | Order quantity                                                                                 |             |
 | canceled-at        | false    | long      | Order cancellation time                                                                        |             |
 | created-at         | true     | long      | Order creation time                                                                            |             |
@@ -2325,7 +2328,7 @@ It is recommended that users query historical orders by "time range".
 
 | Parameter name   | Required | Data type | Description                                                                                                                                                                                                                                                                                                                                                                         | Value range                                                                                                                                                        |
 | ---------------- | -------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| account-id       | true     | long      | Account ID                                                                                                                                                                                                                                                                                                                                                                           |                                                                                                                                                                    |
+| account-id       | true     | string    | Account ID                                                                                                                                                                                                                                                                                                                                                                           |                                                                                                                                                                    |
 | amount           | true     | string    | Order quantity                                                                                                                                                                                                                                                                                                                                                                       |                                                                                                                                                                    |
 | canceled-at      | false    | long      | The time when the cancellation request was received                                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |
 | created-at       | true     | long      | Order creation time                                                                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                    |

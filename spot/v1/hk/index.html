@@ -923,14 +923,40 @@
 
 <p>所有的接口都是JSON格式。其中v1和v2接口的JSON定義略有區別。</p>
 
-<p><strong>v1接口返回格式</strong>：最上層有四個字段：<code>status</code>, <code>ch</code>,  <code>ts</code> 和 <code>data</code>。前三個字段表示請求狀態和屬性，實際的業務數據在<code>data</code>字段裡。</p>
+<p><strong>v1接口返回格式</strong>：最上層欄位<strong>按接口類型分為兩種</strong>，並非所有接口都返回相同的欄位。</p>
 
-<p>以下是一個返回格式的樣例：</p>
+<table>
+  <thead>
+    <tr>
+      <th>接口類型</th>
+      <th>最上層欄位</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>行情類（<code>/market/*</code>）</td>
+      <td><code>status</code>、<code>ch</code>、<code>ts</code>，以及 <code>data</code> 或 <code>tick</code></td>
+    </tr>
+    <tr>
+      <td>賬戶、訂單等其他接口</td>
+      <td><code>status</code>、<code>data</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>行情類接口樣例：</p>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.kline.1day"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btchkd.kline.1day"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1499223904680</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">nested</span><span class="w"> </span><span class="err">JSON</span><span class="w"> </span><span class="err">object</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>賬戶、訂單等接口樣例：</p>
+
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">nested</span><span class="w"> </span><span class="err">JSON</span><span class="w"> </span><span class="err">object</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -951,17 +977,22 @@
     <tr>
       <td>ch</td>
       <td>string</td>
-      <td>接口數據對應的數據流。部分接口沒有對應數據流因此不返回此字段</td>
+      <td>接口數據對應的數據流。<strong>僅行情類接口返回</strong></td>
     </tr>
     <tr>
       <td>ts</td>
       <td>long</td>
-      <td>接口返回的UTC時間的時間戳，單位毫秒</td>
+      <td>接口返回的UTC時間的時間戳，單位毫秒。<strong>僅行情類接口返回</strong></td>
     </tr>
     <tr>
       <td>data</td>
       <td>object</td>
       <td>接口返回數據主體</td>
+    </tr>
+    <tr>
+      <td>tick</td>
+      <td>object</td>
+      <td>行情數據主體。<strong>部分行情接口（如 <code>GET /market/detail/merged</code>）用此欄位代替 <code>data</code></strong></td>
     </tr>
   </tbody>
 </table>
@@ -1052,18 +1083,44 @@
     <tr>
       <td>path</td>
       <td>string</td>
-      <td>發生錯誤的接口路徑，<strong>僅請求失敗時返回</strong></td>
+      <td>發生錯誤的接口路徑。<strong>僅網關層錯誤返回</strong></td>
     </tr>
     <tr>
       <td>timestamp</td>
       <td>long</td>
-      <td>服務端時間戳，單位毫秒，<strong>僅請求失敗時返回</strong></td>
+      <td>服務端時間戳，單位毫秒。<strong>僅網關層錯誤返回</strong></td>
     </tr>
   </tbody>
 </table>
 
 <aside class="notice">
-<code>path</code> 與 <code>timestamp</code> 僅在請求失敗時出現，成功響應中不包含這兩個欄位。<code>err-msg</code> 的文案可能隨版本調整，程序判斷請以 <code>err-code</code> 為準。
+錯誤響應有兩種結構，取決於請求在哪一層被拒絕：
+</aside>
+
+<table>
+  <thead>
+    <tr>
+      <th>出錯層次</th>
+      <th>典型 err-code</th>
+      <th>返回欄位</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>網關層（鑑權、參數格式）</td>
+      <td><code>token-not-valid</code>、<code>api-signature-not-valid</code>、<code>validation-format-error</code></td>
+      <td><code>status</code>、<code>data</code>、<code>err-code</code>、<code>err-msg</code>、<code>path</code>、<code>timestamp</code></td>
+    </tr>
+    <tr>
+      <td>業務層（賬戶、訂單等業務校驗）</td>
+      <td><code>invalid-account-type</code> 等</td>
+      <td><code>status</code>、<code>data</code>、<code>err-code</code>、<code>err-msg</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<aside class="notice">
+<b>業務層錯誤不返回 <code>path</code> 與 <code>timestamp</code></b>，解析時請勿假定這兩個欄位一定存在。<code>err-msg</code> 的文案可能隨版本調整，程序判斷請以 <code>err-code</code> 為準。
 </aside>
 
 <h3 id="鑑權失敗的排查">鑑權失敗的排查</h3>
@@ -1096,6 +1153,7 @@
   <li><strong>AccessKeyId</strong> —— 是否填寫正確，該 API Key 是否已被刪除或已過有效期</li>
   <li><strong>時間戳</strong> —— <code>Timestamp</code> 是否為 UTC 時間、格式是否為 <code>2017-05-11T16:22:06</code>、與服務端時間的偏差是否過大</li>
   <li><strong>請求參數</strong> —— 參與簽名計算的參數與實際發送的參數是否完全一致</li>
+  <li><strong>API Key 權限</strong> —— 若 <code>err-msg</code> 中出現 <code>permission</code> 字樣，則簽名本身已校驗通過，問題在於該 API Key 未開通此接口所需的權限（讀取 / 交易 / 提幣），請到 API Key 管理頁檢查權限勾選</li>
 </ol>
 
 <aside class="notice">
@@ -2754,40 +2812,14 @@
 </span></code></pre></div>
 <h3 id="響應數據-7">響應數據</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>參數名稱</th>
-      <th>是否必須</th>
-      <th>數據類型</th>
-      <th>描述</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>id</td>
-      <td>true</td>
-      <td>long</td>
-      <td>account-id</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>state</td>
-      <td>true</td>
-      <td>string</td>
-      <td>賬戶狀態</td>
-      <td>working：正常, lock：賬戶被鎖定</td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td>true</td>
-      <td>string</td>
-      <td>賬戶類型</td>
-      <td>spot：現貨賬戶, depository：存管賬戶, monetary：法幣賬戶, intermediary：經紀賬戶</td>
-    </tr>
-  </tbody>
-</table>
+<p>| 參數名稱 | 是否必須 | 數據類型 | 描述       | 取值範圍                        |
+| ——– | ——– | ——– | ———- | ——————————- |
+| id       | true     | string   | account-id |                                 |
+| state    | true     | string   | 賬戶狀態   | working：正常, lock：賬戶被鎖定 |
+| type     | true     | string   | 賬戶類型   | spot：現貨賬戶, depository：存管賬戶, monetary：法幣賬戶, intermediary：經紀賬戶                  |</p>
+<aside class="notice">
+<code>id</code>（即 <code>account-id</code>）是長度約 19 位的<b>數字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整數範圍（<code>9007199254740991</code>）。請按字符串處理，<b>不要轉換為整數類型</b>，否則會發生精度丟失，導致後續請求攜帶的 <code>account-id</code> 不正確。
+</aside>
 
 <h2 id="賬戶餘額">賬戶餘額</h2>
 
@@ -2879,7 +2911,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>賬戶 ID</td>
       <td> </td>
     </tr>
@@ -2909,61 +2941,17 @@ intermediary：經紀賬戶</p>
 
 <p>list字段說明</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>參數名稱</th>
-      <th>是否必須</th>
-      <th>數據類型</th>
-      <th>描述</th>
-      <th>取值範圍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>balance</td>
-      <td>true</td>
-      <td>string</td>
-      <td>餘額</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>currency</td>
-      <td>true</td>
-      <td>string</td>
-      <td>幣種</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>type</td>
-      <td>true</td>
-      <td>string</td>
-      <td>類型</td>
-      <td>trade: 交易餘額，frozen: 凍結餘額</td>
-    </tr>
-    <tr>
-      <td>available</td>
-      <td>true</td>
-      <td>string</td>
-      <td>餘額</td>
-      <td>最大可用餘額</td>
-    </tr>
-    <tr>
-      <td>debt</td>
-      <td>true</td>
-      <td>string</td>
-      <td>餘額</td>
-      <td>負債</td>
-    </tr>
-    <tr>
-      <td>seq-num</td>
-      <td>true</td>
-      <td>int</td>
-      <td>版本號</td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
+<p>| 參數名稱 | 是否必須 | 數據類型 | 描述 | 取值範圍                          |
+| ——– | ——– | ——– | —- | ——————————— |
+| balance  | true     | string   | 該條目的總額 | 掛單凍結<strong>不會</strong>改變此值           |
+| currency | true     | string   | 幣種 |                                   |
+| type     | true     | string   | 條目類型 | trade：交易餘額，frozen：凍結餘額。注意此處的 type 與賬戶級的 type（spot / monetary 等）<strong>是兩個不同的欄位</strong> |
+| available| true     | string   | 可用額 | 實際可用於下單的金額。掛單後按凍結金額減少 |
+| debt     | true     | string   | 餘額 | 負債                           |
+| seq-num     | true     | int   | 版本號 |                            |</p>
+<aside class="notice">
+<b>下單凍結的表現方式</b>：掛單後，<code>type="trade"</code> 條目的 <code>balance</code> 保持不變、<code>available</code> 按凍結金額減少，同時 <code>list</code> 中<b>新增一條 <code>type="frozen"</code> 的記錄</b>記錄被凍結的金額。凍結金額並非透過同一條目的 <code>balance − available</code> 體現。做資金風控請讀 <code>available</code>，不要讀 <code>balance</code>。
+</aside>
 
 <h2 id="賬戶流水">賬戶流水</h2>
 
@@ -3124,7 +3112,7 @@ intermediary：經紀賬戶</p>
     </tr>
     <tr>
       <td>[ account-id</td>
-      <td>long</td>
+      <td>string</td>
       <td>賬戶編號</td>
       <td> </td>
     </tr>
@@ -3310,6 +3298,10 @@ intermediary：經紀賬戶</p>
       <td>訂單類型非法</td>
     </tr>
     <tr>
+      <td>invalid-account-type</td>
+      <td>賬戶類型不支持該操作。下單須使用 spot 賬戶的 account-id</td>
+    </tr>
+    <tr>
       <td>order-orderstate-error</td>
       <td>訂單狀態錯誤</td>
     </tr>
@@ -3405,7 +3397,7 @@ intermediary：經紀賬戶</p>
   </span><span class="nl">"account-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100009"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.1"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
@@ -3482,12 +3474,15 @@ intermediary：經紀賬戶</p>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">  
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-10">響應數據</h3>
 
 <p>返回的主數據對象是一個對應下單單號的字符串。</p>
+<aside class="notice">
+訂單 ID 是長度約 19 位的<b>數字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整數範圍（<code>9007199254740991</code>）。請按字符串處理，<b>不要轉換為整數類型</b>，否則會發生精度丟失，導致撤單、查詢訂單等後續請求攜帶錯誤的訂單 ID。
+</aside>
 
 <p>如client order ID（在24小時內）被復用，節點將返回錯誤消息invalid.client.order.id。</p>
 
@@ -3692,7 +3687,7 @@ intermediary：經紀賬戶</p>
 
 <div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">  
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <h3 id="響應數據-12">響應數據</h3>
@@ -3975,7 +3970,7 @@ intermediary：經紀賬戶</p>
   <tbody>
     <tr>
       <td>id</td>
-      <td>integer</td>
+      <td>string</td>
       <td>訂單id，無大小順序，可作為下一次翻頁查詢請求的from字段</td>
     </tr>
     <tr>
@@ -4021,7 +4016,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>source</td>
       <td>string</td>
-      <td>現貨交易填寫「api」</td>
+      <td>訂單來源，如 spot-api（透過 API 下單）、web（透過網頁端下單）</td>
     </tr>
     <tr>
       <td>state</td>
@@ -4030,7 +4025,7 @@ intermediary：經紀賬戶</p>
     </tr>
     <tr>
       <td>account-id</td>
-      <td>long</td>
+      <td>string</td>
       <td>賬戶 ID</td>
     </tr>
     <tr>
@@ -4399,7 +4394,7 @@ intermediary：經紀賬戶</p>
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
@@ -4422,7 +4417,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>account-id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>賬戶 ID</td>
       <td> </td>
     </tr>
@@ -4478,7 +4473,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>訂單ID</td>
       <td> </td>
     </tr>
@@ -4501,7 +4496,7 @@ intermediary：經紀賬戶</p>
       <td>true</td>
       <td>string</td>
       <td>訂單來源</td>
-      <td>api</td>
+      <td>spot-api, web</td>
     </tr>
     <tr>
       <td>state</td>
@@ -4584,7 +4579,7 @@ intermediary：經紀賬戶</p>
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
@@ -4607,7 +4602,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>account-id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>賬戶 ID</td>
       <td> </td>
     </tr>
@@ -4663,7 +4658,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>訂單ID</td>
       <td> </td>
     </tr>
@@ -4686,7 +4681,7 @@ intermediary：經紀賬戶</p>
       <td>true</td>
       <td>string</td>
       <td>訂單來源</td>
-      <td>api</td>
+      <td>spot-api, web</td>
     </tr>
     <tr>
       <td>state</td>
@@ -4772,7 +4767,7 @@ intermediary：經紀賬戶</p>
       </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100282808529</span><span class="p">,</span><span class="w">
       </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.1000000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.1155000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0182310000"</span><span class="p">,</span><span class="w">
@@ -4870,7 +4865,7 @@ intermediary：經紀賬戶</p>
       <td>true</td>
       <td>string</td>
       <td>訂單來源</td>
-      <td>api</td>
+      <td>spot-api, web</td>
     </tr>
     <tr>
       <td>symbol</td>
@@ -5053,7 +5048,7 @@ intermediary：經紀賬戶</p>
       </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -5077,7 +5072,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>account-id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>賬戶 ID</td>
       <td> </td>
     </tr>
@@ -5133,7 +5128,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>訂單ID，無大小順序，可作為下一次翻頁查詢請求的from字段</td>
       <td> </td>
     </tr>
@@ -5156,7 +5151,7 @@ intermediary：經紀賬戶</p>
       <td>true</td>
       <td>string</td>
       <td>訂單來源</td>
-      <td>api</td>
+      <td>spot-api, web</td>
     </tr>
     <tr>
       <td>state</td>
@@ -5388,7 +5383,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>id</td>
       <td>true</td>
-      <td>long</td>
+      <td>string</td>
       <td>訂單ID，無大小順序</td>
       <td> </td>
     </tr>
@@ -5411,7 +5406,7 @@ intermediary：經紀賬戶</p>
       <td>true</td>
       <td>string</td>
       <td>訂單來源</td>
-      <td>api</td>
+      <td>spot-api, web</td>
     </tr>
     <tr>
       <td>state</td>
@@ -5542,7 +5537,7 @@ intermediary：經紀賬戶</p>
       </span><span class="nl">"match-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">59335</span><span class="p">,</span><span class="w">
       </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.1000000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.1155000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0182310000"</span><span class="p">,</span><span class="w">
@@ -5641,7 +5636,7 @@ intermediary：經紀賬戶</p>
       <td>true</td>
       <td>string</td>
       <td>訂單來源</td>
-      <td>api</td>
+      <td>spot-api, web</td>
     </tr>
     <tr>
       <td>symbol</td>

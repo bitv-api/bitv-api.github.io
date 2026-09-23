@@ -862,13 +862,35 @@
 <h2 id='dac673286f'>返回格式</h2>
 <p>所有的接口都是JSON格式。其中v1和v2接口的JSON定义略有区别。</p>
 
-<p><strong>v1接口返回格式</strong>：最上层有四个字段：<code>status</code>, <code>ch</code>,  <code>ts</code> 和 <code>data</code>。前三个字段表示请求状态和属性，实际的业务数据在<code>data</code>字段里。</p>
+<p><strong>v1 接口返回格式</strong>：最上层字段<strong>按接口类型分为两种</strong>，并非所有接口都返回相同的字段。</p>
 
-<p>以下是一个返回格式的样例：</p>
+<table><thead>
+<tr>
+<th>接口类型</th>
+<th>最上层字段</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>行情类（<code>/market/*</code>）</td>
+<td><code>status</code>、<code>ch</code>、<code>ts</code>，以及 <code>data</code> 或 <code>tick</code></td>
+</tr>
+<tr>
+<td>账户、订单等其他接口</td>
+<td><code>status</code>、<code>data</code></td>
+</tr>
+</tbody></table>
+
+<p>行情类接口样例：</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btcusdt.kline.1day"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"ch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"market.btchkd.kline.1day"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1499223904680</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">nested</span><span class="w"> </span><span class="err">JSON</span><span class="w"> </span><span class="err">object</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>账户、订单等接口样例：</p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">API</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">nested</span><span class="w"> </span><span class="err">JSON</span><span class="w"> </span><span class="err">object</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -887,17 +909,22 @@
 <tr>
 <td>ch</td>
 <td>string</td>
-<td>接口数据对应的数据流。部分接口没有对应数据流因此不返回此字段</td>
+<td>接口数据对应的数据流。<strong>仅行情类接口返回</strong></td>
 </tr>
 <tr>
 <td>ts</td>
 <td>long</td>
-<td>接口返回的UTC时间的时间戳，单位毫秒</td>
+<td>接口返回的UTC时间的时间戳，单位毫秒。<strong>仅行情类接口返回</strong></td>
 </tr>
 <tr>
 <td>data</td>
 <td>object</td>
 <td>接口返回数据主体</td>
+</tr>
+<tr>
+<td>tick</td>
+<td>object</td>
+<td>行情数据主体。<strong>部分行情接口（如 <code>GET /market/detail/merged</code>）用此字段代替 <code>data</code></strong></td>
 </tr>
 </tbody></table>
 
@@ -978,17 +1005,40 @@
 <tr>
 <td>path</td>
 <td>string</td>
-<td>发生错误的接口路径，<strong>仅请求失败时返回</strong></td>
+<td>发生错误的接口路径。<strong>仅网关层错误返回</strong></td>
 </tr>
 <tr>
 <td>timestamp</td>
 <td>long</td>
-<td>服务端时间戳，单位毫秒，<strong>仅请求失败时返回</strong></td>
+<td>服务端时间戳，单位毫秒。<strong>仅网关层错误返回</strong></td>
 </tr>
 </tbody></table>
 
 <aside class="notice">
-<code>path</code> 与 <code>timestamp</code> 仅在请求失败时出现，成功响应中不包含这两个字段。<code>err-msg</code> 的文案可能随版本调整，程序判断请以 <code>err-code</code> 为准。
+错误响应有两种结构，取决于请求在哪一层被拒绝：
+</aside>
+
+<table><thead>
+<tr>
+<th>出错层次</th>
+<th>典型 err-code</th>
+<th>返回字段</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>网关层（鉴权、参数格式）</td>
+<td><code>token-not-valid</code>、<code>api-signature-not-valid</code>、<code>validation-format-error</code></td>
+<td><code>status</code>、<code>data</code>、<code>err-code</code>、<code>err-msg</code>、<code>path</code>、<code>timestamp</code></td>
+</tr>
+<tr>
+<td>业务层（账户、订单等业务校验）</td>
+<td><code>invalid-account-type</code> 等</td>
+<td><code>status</code>、<code>data</code>、<code>err-code</code>、<code>err-msg</code></td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+<b>业务层错误不返回 <code>path</code> 与 <code>timestamp</code></b>，解析时请勿假定这两个字段一定存在。<code>err-msg</code> 的文案可能随版本调整，程序判断请以 <code>err-code</code> 为准。
 </aside>
 <h3 id='895c8313f5'>鉴权失败的排查</h3>
 <p>鉴权相关的错误码有两个：</p>
@@ -1016,6 +1066,7 @@
 <li><strong>AccessKeyId</strong> —— 是否填写正确，该 API Key 是否已被删除或已过有效期</li>
 <li><strong>时间戳</strong> —— <code>Timestamp</code> 是否为 UTC 时间、格式是否为 <code>2017-05-11T16:22:06</code>、与服务端时间的偏差是否过大</li>
 <li><strong>请求参数</strong> —— 参与签名计算的参数与实际发送的参数是否完全一致</li>
+<li><strong>API Key 权限</strong> —— 若 <code>err-msg</code> 中出现 <code>permission</code> 字样，则签名本身已校验通过，问题在于该 API Key 未开通此接口所需的权限（读取 / 交易 / 提币），请到 API Key 管理页检查权限勾选</li>
 </ol>
 
 <aside class="notice">
@@ -2428,7 +2479,7 @@
 <tr>
 <td>id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>account-id</td>
 <td></td>
 </tr>
@@ -2447,6 +2498,10 @@
 <td>spot：现货账户, depository：存管账户, monetary：法币账户, intermediary：经纪账户</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">
+<code>id</code>（即 <code>account-id</code>）是长度约 19 位的<b>数字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整数范围（<code>9007199254740991</code>）。请按字符串处理，<b>不要转换为整数类型</b>，否则会发生精度丢失，导致后续请求携带的 <code>account-id</code> 不正确。
+</aside>
 <h2 id='870c0ab88b'>账户余额</h2>
 <p>API Key 权限：读取<br>
 限频值（NEW）：100次/2s</p>
@@ -2524,7 +2579,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>账户 ID</td>
 <td></td>
 </tr>
@@ -2566,8 +2621,8 @@ intermediary：经纪账户</p>
 <td>balance</td>
 <td>true</td>
 <td>string</td>
-<td>余额</td>
-<td></td>
+<td>该条目的总额</td>
+<td>挂单冻结<strong>不会</strong>改变此值</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -2580,15 +2635,15 @@ intermediary：经纪账户</p>
 <td>type</td>
 <td>true</td>
 <td>string</td>
-<td>类型</td>
-<td>trade: 交易余额，frozen: 冻结余额</td>
+<td>条目类型</td>
+<td>trade：交易余额，frozen：冻结余额。注意此处的 type 与账户级的 type（spot / monetary 等）<strong>是两个不同的字段</strong></td>
 </tr>
 <tr>
 <td>available</td>
 <td>true</td>
 <td>string</td>
-<td>余额</td>
-<td>最大可用余额</td>
+<td>可用额</td>
+<td>实际可用于下单的金额。挂单后按冻结金额减少</td>
 </tr>
 <tr>
 <td>debt</td>
@@ -2605,6 +2660,10 @@ intermediary：经纪账户</p>
 <td></td>
 </tr>
 </tbody></table>
+
+<aside class="notice">
+<b>下单冻结的表现方式</b>：挂单后，<code>type="trade"</code> 条目的 <code>balance</code> 保持不变、<code>available</code> 按冻结金额减少，同时 <code>list</code> 中<b>新增一条 <code>type="frozen"</code> 的记录</b>记录被冻结的金额。冻结金额并非通过同一条目的 <code>balance − available</code> 体现。做资金风控请读 <code>available</code>，不要读 <code>balance</code>。
+</aside>
 <h2 id='84f1b5486d'>账户流水</h2>
 <p>API Key 权限：读取<br>
 限频值（NEW）：5次/2s</p>
@@ -2751,7 +2810,7 @@ intermediary：经纪账户</p>
 </tr>
 <tr>
 <td>[ account-id</td>
-<td>long</td>
+<td>string</td>
 <td>账户编号</td>
 <td></td>
 </tr>
@@ -2930,6 +2989,10 @@ intermediary：经纪账户</p>
 <td>订单类型非法</td>
 </tr>
 <tr>
+<td>invalid-account-type</td>
+<td>账户类型不支持该操作。下单须使用 spot 账户的 account-id</td>
+</tr>
+<tr>
 <td>order-orderstate-error</td>
 <td>订单状态错误</td>
 </tr>
@@ -3019,7 +3082,7 @@ intermediary：经纪账户</p>
   </span><span class="nl">"account-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100009"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.1"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
@@ -3090,10 +3153,13 @@ intermediary：经纪账户</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-11'>响应数据</h3>
-<p>返回的主数据对象是一个对应下单单号的字符串。</p>
+<p>返回的主数据对象是一个对应下单单号的字符串。
+<aside class="notice">
+订单 ID 是长度约 19 位的<b>数字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整数范围（<code>9007199254740991</code>）。请按字符串处理，<b>不要转换为整数类型</b>，否则会发生精度丢失，导致撤单、查询订单等后续请求携带错误的订单 ID。
+</aside></p>
 
 <p>如client order ID（在24小时内）被复用，节点将返回错误消息invalid.client.order.id。</p>
 <h2 id='de93fae07b'>批量下单</h2>
@@ -3272,7 +3338,7 @@ intermediary：经纪账户</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59378"</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-13'>响应数据</h3>
 <p>返回的主数据对象是一个对应下单单号的字符串。</p>
@@ -3513,7 +3579,7 @@ intermediary：经纪账户</p>
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>integer</td>
+<td>string</td>
 <td>订单id，无大小顺序，可作为下一次翻页查询请求的from字段</td>
 </tr>
 <tr>
@@ -3559,7 +3625,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>source</td>
 <td>string</td>
-<td>现货交易填写“api”</td>
+<td>订单来源，如 spot-api（通过 API 下单）、web（通过网页端下单）</td>
 </tr>
 <tr>
 <td>state</td>
@@ -3568,7 +3634,7 @@ intermediary：经纪账户</p>
 </tr>
 <tr>
 <td>account-id</td>
-<td>long</td>
+<td>string</td>
 <td>账户 ID</td>
 </tr>
 <tr>
@@ -3889,7 +3955,7 @@ intermediary：经纪账户</p>
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
@@ -3908,7 +3974,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>account-id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>账户 ID</td>
 <td></td>
 </tr>
@@ -3964,7 +4030,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>订单ID</td>
 <td></td>
 </tr>
@@ -3987,7 +4053,7 @@ intermediary：经纪账户</p>
 <td>true</td>
 <td>string</td>
 <td>订单来源</td>
-<td>api</td>
+<td>spot-api, web</td>
 </tr>
 <tr>
 <td>state</td>
@@ -4059,7 +4125,7 @@ intermediary：经纪账户</p>
     </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
@@ -4078,7 +4144,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>account-id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>账户 ID</td>
 <td></td>
 </tr>
@@ -4134,7 +4200,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>订单ID</td>
 <td></td>
 </tr>
@@ -4157,7 +4223,7 @@ intermediary：经纪账户</p>
 <td>true</td>
 <td>string</td>
 <td>订单来源</td>
-<td>api</td>
+<td>spot-api, web</td>
 </tr>
 <tr>
 <td>state</td>
@@ -4232,7 +4298,7 @@ intermediary：经纪账户</p>
       </span><span class="nl">"trade-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100282808529</span><span class="p">,</span><span class="w">
       </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.1000000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.1155000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0182310000"</span><span class="p">,</span><span class="w">
@@ -4326,7 +4392,7 @@ intermediary：经纪账户</p>
 <td>true</td>
 <td>string</td>
 <td>订单来源</td>
-<td>api</td>
+<td>spot-api, web</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -4492,7 +4558,7 @@ intermediary：经纪账户</p>
       </span><span class="nl">"field-cash-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1011.0100000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"field-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0202000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"finished-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1494901400468</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"filled"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"canceled-at"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -4512,7 +4578,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>account-id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>账户 ID</td>
 <td></td>
 </tr>
@@ -4568,7 +4634,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>订单ID，无大小顺序，可作为下一次翻页查询请求的from字段</td>
 <td></td>
 </tr>
@@ -4591,7 +4657,7 @@ intermediary：经纪账户</p>
 <td>true</td>
 <td>string</td>
 <td>订单来源</td>
-<td>api</td>
+<td>spot-api, web</td>
 </tr>
 <tr>
 <td>state</td>
@@ -4802,7 +4868,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>id</td>
 <td>true</td>
-<td>long</td>
+<td>string</td>
 <td>订单ID，无大小顺序</td>
 <td></td>
 </tr>
@@ -4825,7 +4891,7 @@ intermediary：经纪账户</p>
 <td>true</td>
 <td>string</td>
 <td>订单来源</td>
-<td>api</td>
+<td>spot-api, web</td>
 </tr>
 <tr>
 <td>state</td>
@@ -4945,7 +5011,7 @@ intermediary：经纪账户</p>
       </span><span class="nl">"match-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">59335</span><span class="p">,</span><span class="w">
       </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot-api"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100.1000000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.1155000000"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"filled-fees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0182310000"</span><span class="p">,</span><span class="w">
@@ -5040,7 +5106,7 @@ intermediary：经纪账户</p>
 <td>true</td>
 <td>string</td>
 <td>订单来源</td>
-<td>api</td>
+<td>spot-api, web</td>
 </tr>
 <tr>
 <td>symbol</td>

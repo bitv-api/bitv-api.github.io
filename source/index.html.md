@@ -3791,8 +3791,6 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
 | orderSize | string | Order quantity (not applicable for market buy orders) |
 | orderValue | string | Order amount (only applicable for market buy orders) |
 | clientOrderId | string | User-defined order number |
-| stopPrice | string | Order trigger price (only available for stop-loss orders) |
-| operator | string | Order trigger direction (only applicable for take profit and stop-loss orders) |
 | orderCreateTime | long | Order creation time |
 | orderStatus | string | Order status, valid values: filled, partial-filled |
 
@@ -3817,8 +3815,6 @@ Note: <br>
 | orderSize | string | Order quantity (not applicable for market buy orders) |
 | orderValue | string | Order amount (only applicable for market buy orders) |
 | clientOrderId | string | User-defined order number |
-| stopPrice | string | Order trigger price (only available for stop-loss orders) |
-| operator | string | Order trigger direction (only applicable for take profit and stop-loss orders) |
 | orderCreateTime | long | Order creation time |
 | remainAmt | string | Open volume (for market buy orders, this field is defined as unfilled volume) |
 | orderStatus | string | Order status, valid values: canceled, partial-canceled |

@@ -1376,9 +1376,12 @@ API Key 權限：讀取<br>
 
 | 參數名稱 | 是否必須 | 數據類型 | 描述       | 取值範圍                        |
 | -------- | -------- | -------- | ---------- | ------------------------------- |
-| id       | true     | long     | account-id |                                 |
+| id       | true     | string   | account-id |                                 |
 | state    | true     | string   | 賬戶狀態   | working：正常, lock：賬戶被鎖定 |
 | type     | true     | string   | 賬戶類型   | spot：現貨賬戶, depository：存管賬戶, monetary：法幣賬戶, intermediary：經紀賬戶                  |
+<aside class="notice">
+<code>id</code>（即 <code>account-id</code>）是長度約 19 位的<b>數字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整數範圍（<code>9007199254740991</code>）。請按字符串處理，<b>不要轉換為整數類型</b>，否則會發生精度丟失，導致後續請求攜帶的 <code>account-id</code> 不正確。
+</aside>
 
 ## 賬戶餘額
 
@@ -1437,7 +1440,7 @@ intermediary：經紀賬戶
 
 | 參數名稱 | 是否必須 | 數據類型 | 描述     | 取值範圍                        |
 | -------- | -------- | -------- | -------- | ------------------------------- |
-| id       | true     | long     | 賬戶 ID  |                                 |
+| id       | true     | string   | 賬戶 ID  |                                 |
 | state    | true     | string   | 賬戶狀態 | working：正常  lock：賬戶被鎖定 |
 | type     | true     | string   | 賬戶類型 | spot：現貨賬戶, depository：存管賬戶, monetary：法幣賬戶, intermediary：經紀賬戶                  |
 | list     | false    | Array    |          |                                 |
@@ -1517,7 +1520,7 @@ API Key 權限：讀取<br>
 | status        | string   | 狀態碼                                               |          |
 | data          | object   |                                                      |          |
 | { data        | array    | 流水記錄數組                                           |          |
-| [ account-id  | long     | 賬戶編號                                             |          |
+| [ account-id  | string   | 賬戶編號                                             |          |
 | currency      | string   | 幣種                                                 |          |
 | transact-amt  | string   | 變動金額（入賬為正 or 出賬為負）                     |          |
 | transact-type | string   | 變動類型                                             |          |
@@ -1895,7 +1898,7 @@ API Key 權限：讀取<br>
 | filled-fees        | string   | 已交交易手續費總額                                           |
 | source             | string   | 現貨交易填寫「api」                                            |
 | state              | string   | 訂單狀態，包括submitted, partial-filled, cancelling, created, pre-submitted, submitting, failed, place_timeout |
-| account-id           | long   | 賬戶 ID                                       |
+| account-id           | string | 賬戶 ID                                       |
 | amount           | string   | 訂單數量                                     |
 
 ## 批量撤銷訂單（open orders）
@@ -2084,7 +2087,7 @@ API Key 權限：讀取<br>
 
 | 字段名稱          | 是否必須 | 數據類型 | 描述                                                         | 取值範圍                                                     |
 | ----------------- | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| account-id        | true     | long     | 賬戶 ID                                                      |                                                              |
+| account-id        | true     | string   | 賬戶 ID                                                      |                                                              |
 | amount            | true     | string   | 訂單數量                                                     |                                                              |
 | canceled-at       | false    | long     | 訂單撤銷時間                                                 |                                                              |
 | created-at        | true     | long     | 訂單創建時間                                                 |                                                              |
@@ -2147,7 +2150,7 @@ API Key 權限：讀取<br>
 
 | 字段名稱          | 是否必須 | 數據類型 | 描述                                                         | 取值範圍                                                     |
 | ----------------- | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| account-id        | true     | long     | 賬戶 ID                                                      |                                                              |
+| account-id        | true     | string   | 賬戶 ID                                                      |                                                              |
 | amount            | true     | string   | 訂單數量                                                     |                                                              |
 | canceled-at       | false    | long     | 訂單撤銷時間                                                 |                                                              |
 | created-at        | true     | long     | 訂單創建時間                                                 |                                                              |
@@ -2313,7 +2316,7 @@ API Key 權限：讀取<br>
 
 | 參數名稱          | 是否必須 | 數據類型 | 描述                                                         | 取值範圍                                                     |
 | ----------------- | -------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| account-id        | true     | long     | 賬戶 ID                                                      |                                                              |
+| account-id        | true     | string   | 賬戶 ID                                                      |                                                              |
 | amount            | true     | string   | 訂單數量                                                     |                                                              |
 | canceled-at       | false    | long     | 接到撤單申請的時間                                           |                                                              |
 | created-at        | true     | long     | 訂單創建時間                                                 |                                                              |

@@ -908,7 +908,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | parameter | data type | required | default value | description | value range |
 | --------- | --------- | -------- | ------------- | ----------- | ----------- |
-| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc, etc. |
+| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethhkd, etc. |
 | period    | string    | false     | 1min            | Return data time granularity, i.e., the time interval of each candle | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 | size      | integer   | false    | 150           | Number of K-line data to return | [1, 2000] |
 
@@ -968,7 +968,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 
 | Parameter | Data Type | Required | Default Value | Description | Value Range |
 | --------- | --------- | -------- | ------------- | ----------- | ----------- |
-| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethhkd... (refer to `GET /v1/common/symbols` for value) |
 
 
 > Response:
@@ -1026,7 +1026,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 | parameter | data type | required | default value | description | value range |
 | --------- | --------- | -------- | ------------- | ------------ | ------------------------------------------- |
-| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| symbol    | string    | true     | NA            | Trading pair | btcusdt, ethhkd... (refer to `GET /v1/common/symbols` for value) |
 | depth     | integer   | false    | 20            | Number of depths to return | 5, 10, 20 |
 | type      | string    | true     | step0         | Price aggregation level, see details below | step0, step1, step2, step3, step4, step5 |
 
@@ -1102,7 +1102,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 
 | Parameter | Data Type | Required | Default Value | Description |
 | --------- | --------- | -------- | ------------- | ----------- |
-| symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| symbol    | string    | true     | NA            | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`) |
 
 
 
@@ -1159,7 +1159,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 | parameter | data type | required | default value | description |
 | --------- | --------- | -------- | ------------- | ----------- |
-| symbol    | string    | true     | NA            | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| symbol    | string    | true     | NA            | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`) |
 | size      | integer   | false    | 1             | the number of transaction records to return, the maximum value is 2000 |
 
 > Response:
@@ -1240,7 +1240,7 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 
 | Parameter | Data Type | Required | Default Value | Description |
 | --------- | -------- | -------- | ------------- | ----------- |
-| symbol | string | true | NA | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| symbol | string | true | NA | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`) |
 
 
 > Response:
@@ -1651,7 +1651,7 @@ Send a new order for matching.
 | Parameter Name   | Data Type | Required | Default Value | Description |
 |------------------|-----------|-----------|----------------|-------------|
 | account-id       | string    | true      | NA             | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
-| symbol           | string    | true      | NA             | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
+| symbol           | string    | true      | NA             | Trading pair, such as btcusdt, ethhkd, etc. Refer to `GET /v1/common/symbols` for valid values. |
 | type             | string    | true      | NA             | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker  |
 | amount           | string    | true      | NA             | Order amount (for market orders, it represents the buying amount). |
 | price            | string    | false     | NA             | Order price (not applicable for market orders). |
@@ -1715,7 +1715,7 @@ A batch of up to 10 orders
 | Parameter Name | Data Type | Required | Default Value | Description |
 | -------------- | --------- | -------- | ------------- | ----------- |
 | [{account-id | string | true | NA | Account ID. Refer to `GET /v1/account/accounts` for valid values. For spot transactions, use the account ID of the 'spot' account. |
-| symbol | string | true | NA | Trading pair, such as btcusdt, ethbtc, etc. Refer to `GET /v1/common/symbols` for valid values. |
+| symbol | string | true | NA | Trading pair, such as btcusdt, ethhkd, etc. Refer to `GET /v1/common/symbols` for valid values. |
 | type | string | true | NA | Order type, including buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker  |
 | amount | string | true | NA | Order amount (for market orders, it represents the buying amount) |
 | price | string | false | NA | Order price (not applicable for market orders) |
@@ -1891,7 +1891,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | Parameter Name | Data Type | Required | Default Value | Description |
 | -------------- | --------- | -------- | ------------- | ----------- |
 | account-id     | string    | false     | NA            | Account ID, refer to `GET /v1/account/accounts` for value. Spot transactions use the account-id of the 'spot' account |
-| symbol         | string    | false     | NA            | Trading pair, namely btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for value) |
+| symbol         | string    | false     | NA            | Trading pair, namely btcusdt, ethhkd... (refer to `GET /v1/common/symbols` for value) |
 | side           | string    | false    | both          | Specify to only return orders in one direction, possible values are: buy, sell. By default, both directions are returned. |
 | from           | string    | false    |               | Query starting ID |
 | direct         | string    | false(if field "from" is defined, this field "direct" becomes Required)    |               | Query direction, prev means forward; next means backward (required if the 'from' field is set) |
@@ -1929,7 +1929,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | ------------------ | --------- | ------------------------------------------------------------- |
 | id                 | string    | Order ID, can be used as the 'from' field for the next page turning query request |
 | client-order-id    | string    | User-defined order number (available for all open orders)      |
-| symbol             | string    | Trading pair, such as btcusdt, ethbtc                          |
+| symbol             | string    | Trading pair, such as btcusdt, ethhkd                          |
 | price              | string    | Transaction price of limit order                              |
 | created-at         | int       | Timestamp of order creation adjusted to UTC+8, in milliseconds |
 | type               | string    | Order type                                                    |
@@ -2142,7 +2142,7 @@ This interface returns the latest status and details of the specified order. Ord
 | price              | true     | string    | Order price                                                                                      |                                                                                                    |
 | source             | true     | string    | Order source                                                                                     | spot-api, web                                                                                      |
 | state              | true     | string    | Order status                                                                                     | submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout                            |
-| symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethbtc, ethhkd ...                                                                         |
+| symbol             | true     | string    | Trading pair                                                                                     | btcusdt, ethhkd         ...                                                                         |
 | type               | true     | string    | Order type                                                                                       | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)                                                 |                                                                                                    |
 
 
@@ -2206,7 +2206,7 @@ This interface returns the latest order status and details of the specified user
 | price              | true     | string    | Order price                                                                                    |             |
 | source             | true     | string    | Order source                                                                                   | spot-api, web |
 | state              | true     | string    | Order status                                                                                   | submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout            |
-| symbol             | true     | string    | Trading pair                                                                                   | btcusdt, ethbtc, ethhkd …             |
+| symbol             | true     | string    | Trading pair                                                                                   | btcusdt, ethhkd         …             |
 | type               | true     | string    | Order type                                                                                     | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)            |
 
 
@@ -2282,7 +2282,7 @@ This interface returns the transaction details of the specified order.
 | trade-id           | false    | integer   | Unique trade ID                                         |              |
 | price              | true     | string    | Transaction price                                       |              |
 | source             | true     | string    | Order source                                            | spot-api, web |
-| symbol             | true     | string    | Trading pair                                            | btcusdt, ethbtc, ethhkd, ... |
+| symbol             | true     | string    | Trading pair                                            | btcusdt, ethhkd        , ... |
 | type               | true     | string    | Order type                                              | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker  |
 | role               | true     | string    | Transaction role                                        | maker, taker |
 | filled-points      | true     | string    | Deduction amount                                        |              |
@@ -2320,7 +2320,7 @@ It is recommended that users query historical orders by "time range".
 
 | Parameter name | Required | Type   | Description                                                                                                           | Default value                            | Value range                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | -------------- | -------- | ------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| symbol         | true     | string | Trading pair                                                                                                          |                                          | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                                                                                                                                                                                                                                                                             |
+| symbol         | true     | string | Trading pair                                                                                                          |                                          | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`)                                                                                                                                                                                                                                                                                                                                                             |
 | types          | false    | string | Combinations of order types to query, separated by commas                                                              |                                          | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)                                                                                                                                                                   |
 | start-time     | false    | long   | Query start time, the time format is UTC time in milliseconds. Query based on order generation time                  | -48h                                     | Value range [((end-time) – 48h), (end-time)], the maximum query window is 48 hours, and the translation range is the nearest for 180 days. The translation range of the query window for historical orders that have been completely canceled is only the last 2 hours (state="canceled").                                                                                                                   |
 | end-time       | false    | long   | Query end time, the time format is UTC time in milliseconds. Query based on order generation time                    | present                                  | Value range [(present-179d), present], the maximum query window is 48 hours, the translation range is the last 180 days, and the query window translation range of completely canceled historical orders is only the latest 2 hours (state="canceled").                                                                                                                                                       |
@@ -2374,7 +2374,7 @@ It is recommended that users query historical orders by "time range".
 | price            | true     | string    | Order price                                                                                                                                                                                                                                                                                                                                                                          |                                                                                                                                                                    |
 | source           | true     | string    | Order source                                                                                                                                                                                                                                                                                                                                                                         | spot-api, web                                                                                      |
 | state            | true     | string    | Order status                                                                                                                                                                                                                                                                                                                                                                         | submitted, partial-filled, partial-canceled, filled, canceled, created, pre-submitted, submitting, failed, place_timeout                                                                    |
-| symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethbtc, ethhkd ...                                                                         |
+| symbol           | true     | string    | Trading pair                                                                                                                                                                                                                                                                                                                                                                         | btcusdt, ethhkd         ...                                                                         |
 | type             | true     | string    | Order type                                                                                                                                                                                                                                                                                                                                                                           | submit-cancel: the order cancellation application has been submitted, buy-market: buy at the market price, sell-market: sell at the market price, buy-limit: buy at the limit price, sell-limit: sell at the limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)|
 
 ### Error codes related to start-date and end-date:
@@ -2412,7 +2412,7 @@ This interface queries historical orders within the last 48 hours based on searc
 
 | Parameter name | Required | Type   | Description                                                                                                              | Default value               | Value range                                                  |
 | -------------- | -------- | ------ | ------------------------------------------------------------------------------------------------------------------------ | --------------------------- | ------------------------------------------------------------ |
-| symbol         | false    | string | Trading pair                                                                                                             | all                         | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| symbol         | false    | string | Trading pair                                                                                                             | all                         | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`) |
 | start-time     | false    | long   | Query start time (inclusive)                                                                                             | Time 48 hours ago            | UTC time in milliseconds                                     |
 | end-time       | false    | long   | Query end time (inclusive)                                                                                               | Query time                   | UTC time in milliseconds                                     |
 | direct         | false    | string | Order query direction (Note: it only works when the total number of retrieved items exceeds the limit of the size field) | next                        | prev (forward), next (backward)                              |
@@ -2461,7 +2461,7 @@ This interface queries historical orders within the last 48 hours based on searc
 | price              | true     | string    | Order price                                                                                                                                                                         |                                                                         |
 | source             | true     | string    | Order source                                                                                                                                                                        | spot-api, web                                                           |
 | state              | true     | string    | Order status                                                                                                                                                                        | partial-canceled, partially-filled, completely-filled, canceled          |
-| symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethbtc, ethhkd, etc.                                            |
+| symbol             | true     | string    | Trading pair                                                                                                                                                                        | btcusdt, ethhkd        , etc.                                            |
 | type }              | true     | string    | Order type                                                                                                                                                                          | buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker, etc. |
 | next-time          | false    | long      | Next query start time (valid when the request field "direct" is "prev"), next query end time (valid when the request field "direct" is "next").Note: Only when the total number of items in the search result exceeded the limitation defined in "size", this field exists.                                       | UTC time in milliseconds                                                |
 
@@ -2481,7 +2481,7 @@ This interface queries current and historical transaction records based on searc
 
 | Parameter name | Required | Type   | Description                                                 | Default value | Value range                                                                                                                                                        |
 | -------------- | -------- | ------ | ----------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| symbols         | false     | string | Trading pair                                                | N/A           | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`)                                                                                                      |
+| symbols         | false     | string | Trading pair                                                | N/A           | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`)                                                                                                      |
 | types          | false    | string | Combination of order types to query, separated by ','        | all           | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)  |
 | start-date     | false    | string | Query start date (UTC+8), date format yyyy-mm-dd | -1d           | Range of values [((end-date) – 1), (end-date)], the maximum query window is 2 days, and the window translation range is the last 61 days.                          |
 | end-date       | false    | string | Query end date (UTC+8), date format yyyy-mm-dd   | today         | Value range [(today-60), today], the maximum query window is 2 days, and the window translation range is the last 61 days.                                          |
@@ -2533,7 +2533,7 @@ This interface queries current and historical transaction records based on searc
 | trade-id              | false    | integer   | Unique trade ID.                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | price                 | true     | string    | Transaction price.                                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | source                | true     | string    | Order source.                                                                                                                                                                                                                                                          | spot-api, web                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethbtc, ethhkd ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| symbol                | true     | string    | Trading pair.                                                                                                                                                                                                                                                          | btcusdt, ethhkd         ...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | type                  | true     | string    | Order type.                                                                                                                                                                                                                                                            | buy-market: buy at market price, sell-market: sell at market price, buy-limit: buy at limit price, sell-limit: sell at limit price, buy-ioc: buy with IOC, sell-ioc: sell with IOC, buy-limit-maker: buy at limit price (maker only), sell-limit-maker: sell at limit price (maker only)                                                                                                                                                                                                                                                    |
 | role                  | true     | string    | Transaction role.                                                                                                                                                                                                                                                      | maker, taker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | filled-points         | true     | string    | Deduction amount .                                                                                                                                                                                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -2689,7 +2689,7 @@ Once the K-line data is generated, the Websocket server will push it to the clie
 
 ```json
 {
-   "sub": "market.ethbtc.kline.1min",
+   "sub": "market.btcusdt.kline.1min",
    "id": "id1"
 }
 ```
@@ -2697,7 +2697,7 @@ Once the K-line data is generated, the Websocket server will push it to the clie
 
 | parameter | data type | required | description | value range |
 | ------ | -------- | -------- | -------- | --------------------------------------------------------------- |
-| symbol | string | true | transaction code | btcusdt, ethbtc...etc. |
+| symbol | string | true | transaction code | btcusdt, ethhkd...etc. |
 | period | string | true | K-line period | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 
 
@@ -2707,7 +2707,7 @@ Once the K-line data is generated, the Websocket server will push it to the clie
 {
   "id": "id1",
   "status": "ok",
-  "subbed": "market.ethbtc.kline.1min",
+  "subbed": "market.btcusdt.kline.1min",
   "ts": 1489474081631 //system response time
 }
 ```
@@ -2716,7 +2716,7 @@ Once the K-line data is generated, the Websocket server will push it to the clie
 
 ```json
 {
-  "ch": "market.ethbtc.kline.1min",
+  "ch": "market.btcusdt.kline.1min",
   "ts": 1489474082831, //system update time
   "tick": {
     "id": 1489464480,
@@ -2784,7 +2784,7 @@ This topic sends the latest Depth of Market snapshot. The snapshot frequency is 
 
 | parameter | data type | required | default value | description | value range |
 | ------ | -------- | -------- | ------ | ------------ | ------------------------------------------------------ |
-| symbol | string | true | NA | transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| symbol | string | true | NA | transaction symbol | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`) |
 | type | string | true | step0 | merge depth type | step0, step1, step2, step3, step4, step5 |
 
 **"type" merge depth type**
@@ -3120,7 +3120,7 @@ When any of the data of the first price of buying, the first amount of buying, t
 
 | Parameter name | Data Type | Required | Default Value | Description | Value Range |
 | -------------- | --------- | -------- | ------------- | ----------- | ----------- |
-| symbol         | string    | true     | NA            | Transaction symbol | btcusdt, ethbtc... (value reference `GET /v1/common/symbols`) |
+| symbol         | string    | true     | NA            | Transaction symbol | btcusdt, ethhkd... (value reference `GET /v1/common/symbols`) |
 
 > Response
 
@@ -3186,7 +3186,7 @@ This topic provides a tick-by-tick breakdown of the latest transactions in the m
 
 | Parameter | Data Type | Required | Default Value | Description | Value Range |
 | --------- | --------- | -------- | ------------- | ----------- | ----------- |
-| symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc... (refer to `GET /v1/common/symbols` for values) |
+| symbol | string | true | NA | Transaction symbol | btcusdt, ethhkd... (refer to `GET /v1/common/symbols` for values) |
 
 > Response
 
@@ -3267,7 +3267,7 @@ This topic provides a snapshot of the latest market overview within 24 hours. Th
 
 | Parameter | Data Type | Required | Default Value | Description | Value Range |
 | --------- | -------- | -------- | ------------- | ----------- | ----------- |
-| symbol | string | true | NA | Transaction symbol | btcusdt, ethbtc, etc. (value reference `GET /v1/common/symbols`) |
+| symbol | string | true | NA | Transaction symbol | btcusdt, ethhkd, etc. (value reference `GET /v1/common/symbols`) |
 
 
 > Response

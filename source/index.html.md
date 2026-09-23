@@ -917,7 +917,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | 參數   | 數據類型 | 是否必須 | 默認值 | 描述                                       | 取值範圍                                                     |
 | ------ | -------- | -------- | ------ | ------------------------------------------ | ------------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易對                                     | btcusdt, ethbtc等                                            |
+| symbol | string   | true     | NA     | 交易對                                     | btcusdt, ethhkd等                                            |
 | period | string   | false     | 1min     | 返回數據時間粒度，也就是每根蠟燭的時間區間 | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 | size   | integer  | false    | 150    | 返回 K 線數據條數                          | [1, 2000]                                                    |
 
@@ -975,7 +975,7 @@ curl "https://api.bitv.com/market/detail/merged?symbol=ethusdt"
 
 | 參數   | 數據類型 | 是否必須 | 默認值 | 描述   | 取值範圍                                               |
 | ------ | -------- | -------- | ------ | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易對 | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易對 | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 
 > Response:
 
@@ -1032,7 +1032,7 @@ curl "https://api.bitv.com/market/depth?symbol=btcusdt&type=step2"
 
 | 參數   | 數據類型 | 必須  | 默認值 | 描述                             | 取值範圍                                               |
 | ------ | -------- | ----- | ------ | -------------------------------- | ------------------------------------------------------ |
-| symbol | string   | true  | NA     | 交易對                           | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true  | NA     | 交易對                           | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | depth  | integer  | false | 20     | 返回深度的數量                   | 5，10，20                                              |
 | type   | string   | true  | step0  | 深度的價格聚合度，具體說明見下方 | step0，step1，step2，step3，step4，step5               |
 
@@ -1106,7 +1106,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 
 | 參數   | 數據類型 | 是否必須 | 默認值 | 描述                                                   |
 | ------ | -------- | -------- | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 
 > Response:
 
@@ -1161,7 +1161,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 | 參數   | 數據類型 | 是否必須 | 默認值 | 描述                                                   |
 | ------ | -------- | -------- | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | size   | integer  | false    | 1      | 返回的交易記錄數量，最大值2000                         |
 
 > Response:
@@ -1241,7 +1241,7 @@ curl "https://api.bitv.com/market/detail?symbol=ethusdt"
 
 | 參數   | 數據類型 | 是否必須 | 默認值 | 描述                                                   |
 | ------ | -------- | -------- | ------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 
 > Response:
 
@@ -1648,7 +1648,7 @@ API Key 權限：交易
 | 參數名稱        | 數據類型 | 是否必需 | 默認值   | 描述                                                         |
 | --------------- | -------- | -------- | -------- | ------------------------------------------------------------ |
 | account-id      | string   | true     | NA       | 賬戶 ID，取值參考 `GET /v1/account/accounts`。現貨交易使用 ‘spot’ 賬戶的 account-id |
-| symbol          | string   | true     | NA       | 交易對,即btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol          | string   | true     | NA       | 交易對,即btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | type            | string   | true     | NA       | 訂單類型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker  |
 | amount          | string   | true     | NA       | 訂單交易量（市價買單為訂單交易額）                           |
 | price           | string   | false    | NA       | 訂單價格（對市價單無效）                                     |
@@ -1712,7 +1712,7 @@ API Key 權限：交易<br>
 | 參數名稱        | 數據類型 | 是否必需 | 默認值   | 描述                                                         |
 | --------------- | -------- | -------- | -------- | ------------------------------------------------------------ |
 | [{ account-id   | string   | true     | NA       | 賬戶 ID，取值參考 `GET /v1/account/accounts`。現貨交易使用 ‘spot’ 賬戶的 account-id； |
-| symbol          | string   | true     | NA       | 交易對,即btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol          | string   | true     | NA       | 交易對,即btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | type            | string   | true     | NA       | 訂單類型，包括buy-market, sell-market, buy-limit, sell-limit, buy-ioc, sell-ioc, buy-limit-maker, sell-limit-maker |
 | amount          | string   | true     | NA       | 訂單交易量（市價買單為訂單交易額）                           |
 | price           | string   | false    | NA       | 訂單價格（對市價單無效）                                     |
@@ -1884,7 +1884,7 @@ API Key 權限：讀取<br>
 | 參數名稱   | 數據類型 | 是否必需                                         | 默認值 | 描述                                                         |
 | ---------- | -------- | ------------------------------------------------ | ------ | ------------------------------------------------------------ |
 | account-id | string   | false                                             | NA     | 賬戶 ID，取值參考 `GET /v1/account/accounts`。現貨交易使用‘spot’賬戶的 account-id |
-| symbol     | string   | false                                             | NA     | 交易對,即btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol     | string   | false                                             | NA     | 交易對,即btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | side       | string   | false                                            | both   | 指定只返回某一個方向的訂單，可能的值有: buy, sell. 默認兩個方向都返回。 |
 | from       | string   | false                                            |        | 查詢起始 ID                                                  |
 | direct     | string   | false (如字段'from'已設定，此字段'direct'為必填) |        | 查詢方向，prev 向前；next 向後                               |
@@ -1921,7 +1921,7 @@ API Key 權限：讀取<br>
 | ------------------ | -------- | ------------------------------------------------------------ |
 | id                 | string   | 訂單id，無大小順序，可作為下一次翻頁查詢請求的from字段       |
 | client-order-id    | string   | 用戶自編訂單號（所有open訂單可返回client-order-id）          |
-| symbol             | string   | 交易對, 例如btcusdt, ethbtc                                  |
+| symbol             | string   | 交易對, 例如btcusdt, ethhkd                                  |
 | price              | string   | limit order的交易價格                                        |
 | created-at         | int      | 訂單創建的調整為 UTC+8 的時間戳，單位毫秒                 |
 | type               | string   | 訂單類型                                                     |
@@ -1952,7 +1952,7 @@ API Key 權限：交易<br>
 | 參數名稱   | 是否必須 | 類型   | 描述                                                         | 默認值 | 取值範圍                                          |
 | ---------- | -------- | ------ | ------------------------------------------------------------ | ------ | ------------------------------------------------- |
 | account-id | false    | string | 賬戶ID，取值參考 `GET /v1/account/accounts`                  |        |                                                   |
-| symbol     | false    | string | 交易代碼列表（最多10 個symbols，多個交易代碼間以逗號分隔），btcusdt, ethbtc...（取值參考`/v1/common/symbols`） | all    |                                                   |
+| symbol     | false    | string | 交易代碼列表（最多10 個symbols，多個交易代碼間以逗號分隔），btcusdt, ethhkd...（取值參考`/v1/common/symbols`） | all    |                                                   |
 | side       | false    | string | 主動交易方向                                                 |        | 「buy」或「sell」，缺省將返回所有符合條件尚未成交訂單 |
 | size       | false    | int    | 所需返回記錄數                                               | 100    | [1,100]                                           |
 
@@ -2132,7 +2132,7 @@ API Key 權限：讀取<br>
 | price             | true     | string   | 訂單價格                                                     |                                                              |
 | source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷， created, pre-submitted 準備提交, submitting 提交中, failed 失敗, place_timeout 下單超時 |
-| symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易對                                                       | btcusdt, ethhkd         ...                                  |
 | type              | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 
 ## 查詢訂單詳情（基於client order ID）
@@ -2195,7 +2195,7 @@ API Key 權限：讀取<br>
 | price             | true     | string   | 訂單價格                                                     |                                                              |
 | source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created, pre-submitted 準備提交, submitting 提交中, failed 失敗, place_timeout 下單超時 |
-| symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易對                                                       | btcusdt, ethhkd         ...                                  |
 | type              | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 
 如client order ID不存在，返回如下錯誤信息 
@@ -2269,7 +2269,7 @@ API Key 權限：讀取<br>
 | trade-id            | false    | integer  | Unique trade ID (NEW)唯一成交編號，成交時產生的唯一編號ID    |                                                              |
 | price               | true     | string   | 成交價格                                                     |                                                              |
 | source              | true     | string   | 訂單來源                                                     | spot-api, web                                                |
-| symbol              | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol              | true     | string   | 交易對                                                       | btcusdt, ethhkd         ...                                  |
 | type                | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
 | filled-points       | true     | string   | 抵扣數量                                 |                                                              |
@@ -2306,7 +2306,7 @@ API Key 權限：讀取<br>
 
 | 參數名稱   | 是否必須 | 類型   | 描述                                                         | 默認值                      | 取值範圍                                                     |
 | ---------- | -------- | ------ | ------------------------------------------------------------ | --------------------------- | ------------------------------------------------------------ |
-| symbol     | true     | string | 交易對                                                       |                             | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`）       |
+| symbol     | true     | string | 交易對                                                       |                             | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查詢的訂單類型組合，使用逗號分割                             |                             | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker） |
 | start-time | false    | long   | 查詢開始時間, 時間格式UTC time in millisecond。 以訂單生成時間進行查詢 | -48h 查詢結束時間的前48小時 | 取值範圍 [((end-time) – 48h), (end-time)] ，查詢窗口最大為48小時，窗口平移範圍為最近180天，已完全撤銷的歷史訂單的查詢窗口平移範圍只有最近2小時(state="canceled") |
 | end-time   | false    | long   | 查詢結束時間, 時間格式UTC time in millisecond。 以訂單生成時間進行查詢 | present                     | 取值範圍 [(present-179d), present] ，查詢窗口最大為48小時，窗口平移範圍為最近180天，已完全撤銷的歷史訂單的查詢窗口平移範圍只有最近2小時(state="canceled") |
@@ -2361,7 +2361,7 @@ API Key 權限：讀取<br>
 | price             | true     | string   | 訂單價格                                                     |                                                              |
 | source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | submitted 已提交, partial-filled 部分成交, partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷，created, pre-submitted 準備提交, submitting 提交中, failed 失敗, place_timeout 下單超時 |
-| symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易對                                                       | btcusdt, ethhkd         ...                                  |
 | type              | true     | string   | 訂單類型                                                     | submit-cancel：已提交撤單申請  ,buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 
 ### start-date, end-date相關錯誤碼
@@ -2399,7 +2399,7 @@ API Key 權限：讀取<br>
 
 | 參數名稱   | 是否必須 | 類型   | 描述                                                         | 默認值         | 取值範圍                                               |
 | ---------- | -------- | ------ | ------------------------------------------------------------ | -------------- | ------------------------------------------------------ |
-| symbol     | false    | string | 交易對                                                       | all            | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol     | false    | string | 交易對                                                       | all            | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | start-time | false    | long   | 查詢起始時間（含）                                           | 48小時前的時刻 | UTC time in millisecond                                |
 | end-time   | false    | long   | 查詢結束時間（含）                                           | 查詢時刻       | UTC time in millisecond                                |
 | direct     | false    | string | 訂單查詢方向（注：僅在檢索出的總條目數量超出size字段限定時起作用；如果檢索出的總條目數量在size 字段限定內，direct 字段不起作用。） | next           | prev 向前, next 向後                                   |
@@ -2449,7 +2449,7 @@ API Key 權限：讀取<br>
 | price             | true     | string   | 訂單價格                                                     |                                                              |
 | source            | true     | string   | 訂單來源                                                     | spot-api, web                                                |
 | state             | true     | string   | 訂單狀態                                                     | partial-canceled 部分成交撤銷, filled 完全成交, canceled 已撤銷 |
-| symbol            | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol            | true     | string   | 交易對                                                       | btcusdt, ethhkd         ...                                  |
 | type}             | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 | next-time         | false    | long     | 下一查詢起始時間（當請求字段」direct」為」prev」時有效）, 下一查詢結束時間（當請求字段」direct」為」next」時有效）。注：僅在檢索出的總條目數量超出size字段限定時，此返回字段存在。 | UTC time in millisecond                                      |
 
@@ -2470,7 +2470,7 @@ API Key 權限：讀取<br>
 
 | 參數名稱   | 是否必須 | 類型   | 描述                                           | 默認值                  | 取值範圍                                                     |
 | ---------- | -------- | ------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
-| symbols     | false    | string | 交易對                                         | N/A                     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`）       |
+| symbols     | false    | string | 交易對                                         | N/A                     | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`）       |
 | types      | false    | string | 查詢的訂單類型組合，使用','分割                | all                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 | start-date | false    | string | 查詢開始日期（UTC+8）日期格式yyyy-mm-dd   | -1d 查詢結束日期的前1天 | 取值範圍 [((end-date) – 1), (end-date)] ，查詢窗口最大為2天，窗口平移範圍為最近61天。 |
 | end-date   | false    | string | 查詢結束日期（UTC+8）, 日期格式yyyy-mm-dd | today                   | 取值範圍 [(today-60), today] ，查詢窗口最大為2天，窗口平移範圍為最近61天 |
@@ -2522,7 +2522,7 @@ API Key 權限：讀取<br>
 | trade-id            | false    | integer  | 唯一成交編號                                                 |                                                              |
 | price               | true     | string   | 成交價格                                                     |                                                              |
 | source              | true     | string   | 訂單來源                                                     | spot-api, web                                                |
-| symbol              | true     | string   | 交易對                                                       | btcusdt, ethbtc, ethhkd ...                                  |
+| symbol              | true     | string   | 交易對                                                       | btcusdt, ethhkd         ...                                  |
 | type                | true     | string   | 訂單類型                                                     | buy-market：市價買, sell-market：市價賣, buy-limit：限價買, sell-limit：限價賣, buy-ioc：IOC 買, sell-ioc：IOC 賣, buy-limit-maker：限價買（只做 maker）, sell-limit-maker：限價賣（只做 maker）  |
 | role                | true     | string   | 成交角色                                                     | maker,taker                                                  |
 | filled-points       | true     | string   | 抵扣數量                                |                                                              |
@@ -2679,7 +2679,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 
 ```json
 {
-  "sub": "market.ethbtc.kline.1min",
+  "sub": "market.btcusdt.kline.1min",
   "id": "id1"
 }
 ```
@@ -2688,7 +2688,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 
 | 參數   | 數據類型 | 是否必需 | 描述     | 取值範圍                                                     |
 | ------ | -------- | -------- | -------- | ------------------------------------------------------------ |
-| symbol | string   | true     | 交易代碼 | btcusdt, ethbtc...等                                         |
+| symbol | string   | true     | 交易代碼 | btcusdt, ethhkd...等                                         |
 | period | string   | true     | K線週期  | 1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1mon, 1week, 1year |
 
 > Response
@@ -2697,7 +2697,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 {
   "id": "id1",
   "status": "ok",
-  "subbed": "market.ethbtc.kline.1min",
+  "subbed": "market.btcusdt.kline.1min",
   "ts": 1489474081631 //system response time
 }
 ```
@@ -2706,7 +2706,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 
 ```json
 {
-  "ch": "market.ethbtc.kline.1min",
+  "ch": "market.btcusdt.kline.1min",
   "ts": 1489474082831, //system update time
   "tick": {
     "id": 1489464480,
@@ -2775,7 +2775,7 @@ Websocket服務器同時支持一次性請求數據（pull）。
 
 | 參數   | 數據類型 | 是否必需 | 缺省值 | 描述         | 取值範圍                                               |
 | ------ | -------- | -------- | ------ | ------------ | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易代碼     | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易代碼     | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 | type   | string   | true     | step0  | 合併深度類型 | step0, step1, step2, step3, step4, step5               |
 
 **"type" 合併深度類型**
@@ -3106,7 +3106,7 @@ REQ頻道支持5檔/20檔/150檔全量數據的獲取。<br>
 
 | 參數   | 數據類型 | 是否必需 | 缺省值 | 描述     | 取值範圍                                               |
 | ------ | -------- | -------- | ------ | -------- | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易代碼 | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易代碼 | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 
 > Response
 
@@ -3172,7 +3172,7 @@ REQ頻道支持5檔/20檔/150檔全量數據的獲取。<br>
 
 | 參數   | 數據類型 | 是否必需 | 缺省值 | 描述     | 取值範圍                                               |
 | ------ | -------- | -------- | ------ | -------- | ------------------------------------------------------ |
-| symbol | string   | true     | NA     | 交易代碼 | btcusdt, ethbtc...（取值參考`GET /v1/common/symbols`） |
+| symbol | string   | true     | NA     | 交易代碼 | btcusdt, ethhkd...（取值參考`GET /v1/common/symbols`） |
 
 > Response
 
@@ -3252,7 +3252,7 @@ REQ頻道支持5檔/20檔/150檔全量數據的獲取。<br>
 
 | 參數   | 數據類型 | 是否必需 | 缺省值 | 描述     | 取值範圍             |
 | ------ | -------- | -------- | ------ | -------- | -------------------- |
-| symbol | string   | true     | NA     | 交易代碼 | btcusdt, ethbtc...等 |
+| symbol | string   | true     | NA     | 交易代碼 | btcusdt, ethhkd...等 |
 
 > Response
 

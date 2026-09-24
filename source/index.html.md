@@ -1144,7 +1144,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 | trade-id  | integer  | 唯一成交ID（NEW）                                  |
 | amount    | float    | 以基础币种为单位的交易量                           |
 | price     | float    | 以报价币种为单位的成交价格                         |
-| ts        | integer  | 调整为 UTC+8 的时间戳，单位毫秒                 |
+| ts        | integer  | 成交时间的 UTC 时间戳，单位毫秒                  |
 | direction | string   | 交易方向：“buy” 或 “sell”, “buy” 即买，“sell” 即卖 |
 
 ## 获得近期交易记录
@@ -1216,7 +1216,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 ### 响应数据
 
-<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个调整为 UTC+8 的时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
+<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个 UTC 时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
 
 | 参数      | 数据类型 | 描述                                               |
 | --------- | -------- | -------------------------------------------------- |
@@ -1224,7 +1224,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 | trade-id  | integer  | 唯一成交ID（NEW）                                  |
 | amount    | float    | 以基础币种为单位的交易量                           |
 | price     | float    | 以报价币种为单位的成交价格                         |
-| ts        | integer  | 调整为 UTC+8 的时间戳，单位毫秒                 |
+| ts        | integer  | 成交时间的 UTC 时间戳，单位毫秒                  |
 | direction | string   | 交易方向：“buy” 或 “sell”, “buy” 即买，“sell” 即卖 |
 
 ## 最近24小时行情数据

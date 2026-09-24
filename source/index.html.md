@@ -467,7 +467,7 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 2. **AccessKeyId** —— 是否填寫正確，該 API Key 是否已被刪除或已過有效期
 3. **時間戳** —— `Timestamp` 是否為 UTC 時間、格式是否為 `2017-05-11T16:22:06`、與服務端時間的偏差是否過大
 4. **請求參數** —— 參與簽名計算的參數與實際發送的參數是否完全一致
-5. **API Key 權限** —— 該 API Key 是否已開通此接口所需的權限（讀取 / 交易 / 提幣），請到 API Key 管理頁檢查權限勾選
+5. **API Key 權限** —— 該 API Key 是否已開通此接口所需的權限（讀取 / 交易），請到 API Key 管理頁檢查權限勾選
 
 <aside class="notice">
 若以上各項均已確認無誤，請檢查發起請求的出口 IP 是否已綁定到該 API Key。

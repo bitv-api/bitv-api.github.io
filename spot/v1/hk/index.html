@@ -1905,7 +1905,7 @@
     <tr>
       <td>id</td>
       <td>long</td>
-      <td>調整為 UTC+8 的時間戳，單位秒，並以此作為此K線柱的id</td>
+      <td>UTC 時間戳，單位秒，並以此作為此K線柱的id。⚠️ 數值本身不含時區偏移；但 K 線週期以 UTC+8 劃分（見上方說明），故日 K 線的 id 落在 UTC+8 當日 0 時</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -2327,7 +2327,7 @@
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>調整為 UTC+8 的時間戳，單位毫秒</td>
+      <td>成交時間的 UTC 時間戳，單位毫秒</td>
     </tr>
     <tr>
       <td>direction</td>
@@ -2429,7 +2429,7 @@
 </span></code></pre></div>
 <h3 id="響應數據-4">響應數據</h3>
 
-<aside class="notice">返回的數據對象是一個對象數組，每個數組元素為一個調整為 UTC+8 的時間戳（單位毫秒）下的所有交易記錄，這些交易記錄以數組形式呈現。</aside>
+<aside class="notice">返回的數據對象是一個對象數組，每個數組元素為一個 UTC 時間戳（單位毫秒）下的所有交易記錄，這些交易記錄以數組形式呈現。</aside>
 
 <table>
   <thead>
@@ -2463,7 +2463,7 @@
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>調整為 UTC+8 的時間戳，單位毫秒</td>
+      <td>成交時間的 UTC 時間戳，單位毫秒</td>
     </tr>
     <tr>
       <td>direction</td>
@@ -3991,7 +3991,7 @@ intermediary：經紀賬戶</p>
     <tr>
       <td>created-at</td>
       <td>int</td>
-      <td>訂單創建的調整為 UTC+8 的時間戳，單位毫秒</td>
+      <td>訂單創建時間的 UTC 時間戳，單位毫秒</td>
     </tr>
     <tr>
       <td>type</td>

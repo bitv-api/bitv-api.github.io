@@ -1673,7 +1673,7 @@
 <tr>
 <td>id</td>
 <td>long</td>
-<td>调整为 UTC+8 的时间戳，单位秒，并以此作为此K线柱的id</td>
+<td>UTC 时间戳，单位秒，并以此作为此K线柱的id。⚠️ 数值本身不含时区偏移；但 K 线周期以 UTC+8 划分（见上方说明），故日 K 线的 id 落在 UTC+8 当日 0 时</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -2044,7 +2044,7 @@
 <tr>
 <td>ts</td>
 <td>integer</td>
-<td>调整为 UTC+8 的时间戳，单位毫秒</td>
+<td>成交时间的 UTC 时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>direction</td>
@@ -2132,7 +2132,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='2213f4c32f-5'>响应数据</h3>
-<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个调整为 UTC+8 的时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
+<aside class="notice">返回的数据对象是一个对象数组，每个数组元素为一个 UTC 时间戳（单位毫秒）下的所有交易记录，这些交易记录以数组形式呈现。</aside>
 
 <table><thead>
 <tr>
@@ -2164,7 +2164,7 @@
 <tr>
 <td>ts</td>
 <td>integer</td>
-<td>调整为 UTC+8 的时间戳，单位毫秒</td>
+<td>成交时间的 UTC 时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>direction</td>
@@ -3600,7 +3600,7 @@ intermediary：经纪账户</p>
 <tr>
 <td>created-at</td>
 <td>int</td>
-<td>订单创建的调整为 UTC+8 的时间戳，单位毫秒</td>
+<td>订单创建时间的 UTC 时间戳，单位毫秒</td>
 </tr>
 <tr>
 <td>type</td>

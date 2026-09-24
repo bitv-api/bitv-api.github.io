@@ -1907,7 +1907,7 @@ If all of the above are correct, check whether the outbound IP address of your r
     <tr>
       <td>id</td>
       <td>long</td>
-      <td>The timestamp adjusted to UTC+8, in seconds, used as the id of this candlestick</td>
+      <td>UTC timestamp, in seconds, used as the id of this candlestick. ⚠️ The value itself contains no timezone offset; however, K-line periods are divided by UTC+8 (see the note above), so a daily candlestick’s id falls on 00:00 UTC+8</td>
     </tr>
     <tr>
       <td>amount</td>
@@ -2329,7 +2329,7 @@ If all of the above are correct, check whether the outbound IP address of your r
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>Timestamp adjusted to UTC+8, in milliseconds</td>
+      <td>UTC timestamp of the trade, in milliseconds</td>
     </tr>
     <tr>
       <td>direction</td>
@@ -2431,7 +2431,7 @@ If all of the above are correct, check whether the outbound IP address of your r
 </span></code></pre></div>
 <h3 id="response-data-4">Response data</h3>
 
-<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to UTC+8, and these transaction records are presented in the form of an array. </aside>
+<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a UTC timestamp (in milliseconds), and these transaction records are presented in the form of an array. </aside>
 
 <table>
   <thead>
@@ -2465,7 +2465,7 @@ If all of the above are correct, check whether the outbound IP address of your r
     <tr>
       <td>ts</td>
       <td>integer</td>
-      <td>Timestamp adjusted to UTC+8, in milliseconds</td>
+      <td>UTC timestamp of the trade, in milliseconds</td>
     </tr>
     <tr>
       <td>direction</td>
@@ -3985,7 +3985,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     <tr>
       <td>created-at</td>
       <td>int</td>
-      <td>Timestamp of order creation adjusted to UTC+8, in milliseconds</td>
+      <td>UTC timestamp of order creation, in milliseconds</td>
     </tr>
     <tr>
       <td>type</td>

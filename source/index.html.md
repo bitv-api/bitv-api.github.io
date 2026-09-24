@@ -942,7 +942,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | Field Name | Data Type | Description |
 | ---------- | --------- | ----------- |
-| id         | long      | The timestamp adjusted to UTC+8, in seconds, used as the id of this candlestick |
+| id         | long      | UTC timestamp, in seconds, used as the id of this candlestick. ⚠️ The value itself contains no timezone offset; however, K-line periods are divided by UTC+8 (see the note above), so a daily candlestick's id falls on 00:00 UTC+8 |
 | amount     | float     | Transaction amount in base currency |
 | count      | integer   | Transaction count |
 | open       | float     | Opening price of this candlestick |
@@ -1931,7 +1931,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | client-order-id    | string    | User-defined order number (available for all open orders)      |
 | symbol             | string    | Trading pair, such as btcusdt, ethhkd                          |
 | price              | string    | Transaction price of limit order                              |
-| created-at         | int       | Timestamp of order creation adjusted to UTC+8, in milliseconds |
+| created-at         | int       | UTC timestamp of order creation, in milliseconds |
 | type               | string    | Order type                                                    |
 | filled-amount      | string    | Amount of the filled part of the order                         |
 | filled-cash-amount | string    | The total price of the filled portion of the order             |

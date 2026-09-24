@@ -1140,7 +1140,7 @@ curl "https://api.bitv.com/market/trade?symbol=ethusdt"
 | trade-id   | integer   | unique transaction ID (NEW) |
 | amount     | float     | transaction amount in base currency |
 | price      | float     | transaction price in quote currency |
-| ts         | integer   | Timestamp adjusted to UTC+8, in milliseconds |
+| ts         | integer   | UTC timestamp of the trade, in milliseconds  |
 | direction  | string    | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
 
 ## Get recent transaction records
@@ -1212,7 +1212,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 
 ### Response data
 
-<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a timestamp (in milliseconds) adjusted to UTC+8, and these transaction records are presented in the form of an array. </aside>
+<aside class="notice">The returned data object is an array of objects, and each array element is all transaction records under a UTC timestamp (in milliseconds), and these transaction records are presented in the form of an array. </aside>
 
 | Parameter | Data Type | Description |
 | --------- | -------- | --------------------------- |
@@ -1220,7 +1220,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
 | trade-id | integer | unique transaction ID (NEW) |
 | amount | float | transaction amount in base currency |
 | price | float | transaction price in quote currency |
-| ts | integer | Timestamp adjusted to UTC+8, in milliseconds |
+| ts | integer | UTC timestamp of the trade, in milliseconds  |
 | direction | string | Transaction direction: "buy" or "sell", "buy" means to buy, "sell" means to sell |
 
 

@@ -952,7 +952,7 @@ curl "https://api.bitv.com/market/history/kline?period=1day&size=200&symbol=btcu
 
 | 字段名称 | 数据类型 | 描述                                                    |
 | -------- | -------- | ------------------------------------------------------- |
-| id       | long     | 调整为 UTC+8 的时间戳，单位秒，并以此作为此K线柱的id |
+| id       | long     | UTC 时间戳，单位秒，并以此作为此K线柱的id。⚠️ 数值本身不含时区偏移；但 K 线周期以 UTC+8 划分（见上方说明），故日 K 线的 id 落在 UTC+8 当日 0 时 |
 | amount   | float    | 以基础币种计量的交易量                                  |
 | count    | integer  | 交易次数                                                |
 | open     | float    | 本阶段开盘价                                            |
@@ -1925,7 +1925,7 @@ API Key 权限：读取<br>
 | client-order-id    | string   | 用户自编订单号（所有open订单可返回client-order-id）          |
 | symbol             | string   | 交易对, 例如btcusdt, ethhkd                                  |
 | price              | string   | limit order的交易价格                                        |
-| created-at         | int      | 订单创建的调整为 UTC+8 的时间戳，单位毫秒                 |
+| created-at         | int      | 订单创建时间的 UTC 时间戳，单位毫秒                       |
 | type               | string   | 订单类型                                                     |
 | filled-amount      | string   | 订单中已成交部分的数量                                       |
 | filled-cash-amount | string   | 订单中已成交部分的总价格                                     |

@@ -1805,7 +1805,7 @@ API Key 权限：交易<br>
 | 5           | partial-canceled                                             |
 | 6           | filled                                                       |
 | 7           | canceled                                                     |
-| 10          | cancelling                                                   |
+| 10          | canceling                                                    |
 
 ## 撤销订单（基于client order ID）
 
@@ -1857,7 +1857,7 @@ API Key 权限：交易<br>
 | 5           | partial-canceled                                             |
 | 6           | filled                                                       |
 | 7           | canceled                                                     |
-| 10          | cancelling                                                   |
+| 10          | canceling                                                    |
 
 
 ## 查询当前未成交订单
@@ -1931,7 +1931,7 @@ API Key 权限：读取<br>
 | filled-cash-amount | string   | 订单中已成交部分的总价格                                     |
 | filled-fees        | string   | 已交交易手续费总额                                           |
 | source             | string   | 订单来源，如 spot-api（通过 API 下单）、web（通过网页端下单）  |
-| state              | string   | 订单状态，包括submitted, partial-filled, cancelling, created, pre-submitted, submitting, failed, place_timeout |
+| state              | string   | 订单状态，包括submitted, partial-filled, partial-canceled, filled, canceled, canceling, created, pre-submitted, submitting, failed, place_timeout |
 | account-id           | string | 账户 ID                                        |
 | amount           | string   | 订单数量                                     |
 
@@ -2070,7 +2070,7 @@ API Key 权限：交易<br>
 | 5           | partial-canceled                                             |
 | 6           | filled                                                       |
 | 7           | canceled                                                     |
-| 10          | cancelling                                                   |
+| 10          | canceling                                                    |
 
 ## 查询订单详情
 
@@ -3734,7 +3734,7 @@ API Key 权限：读取
          "orderSide": "buy",
          "aggressor": true,
          "tradeId": 919219323232,
-         "tradeTime": 998787897878,
+         "tradeTime": 1583853365586,
          "transactFee": "19.88",
          "feeDeduct ": "0",
          "feeDeductType": "",
@@ -3744,7 +3744,7 @@ API Key 权限：读取
          "orderPrice": "10000",
          "orderSize": "1",
          "clientOrderId": "a001",
-         "orderCreateTime": 998787897878,
+         "orderCreateTime": 1583853365586,
          "orderStatus": "partial-filled",
          "orderType": "buy-limit"
     }

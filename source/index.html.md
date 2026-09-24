@@ -456,7 +456,7 @@ There are two authentication-related error codes:
 2. **AccessKeyId** — whether it is correct, and whether the API Key has been deleted or has expired
 3. **Timestamp** — whether `Timestamp` is in UTC, whether the format is `2017-05-11T16:22:06`, and whether it deviates too much from server time
 4. **Request parameters** — whether the parameters used in the signature match those actually sent
-5. **API Key permissions** — if `err-msg` contains the word `permission`, the signature itself passed verification; the problem is that this API Key lacks the permission required by the endpoint (read / trade / withdraw). Check the permission settings on the API Key management page
+5. **API Key permissions** — whether this API Key has the permission required by the endpoint (read / trade / withdraw). Check the permission settings on the API Key management page
 
 <aside class="notice">
 If all of the above are correct, check whether the outbound IP address of your request has been bound to the API Key.

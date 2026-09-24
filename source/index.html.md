@@ -1937,7 +1937,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 | filled-cash-amount | string    | The total price of the filled portion of the order             |
 | filled-fees        | string    | Total transaction fees paid                                   |
 | source             | string    | Order source, e.g. spot-api (placed via API), web (placed via web UI) |
-| state              | string    | Order status, including submitted, partial-filled, canceling, created, pre-submitted, submitting, failed, place_timeout |
+| state              | string    | Order status, including submitted, partial-filled, partial-canceled, filled, canceled, canceling, created, pre-submitted, submitting, failed, place_timeout |
 | account-id           | string  | Account ID                |
 | amount           | string    | Order quantity                |
 
@@ -3750,7 +3750,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
           "orderSide": "buy",
           "aggressor": true,
           "tradeId": 919219323232,
-          "tradeTime": 998787897878,
+          "tradeTime": 1583853365586,
           "transactFee": "19.88",
           "feeDeduct": "0",
           "feeDeductType": "",
@@ -3760,7 +3760,7 @@ Optional subscription parameter mode, if not filled or filled with 0, only trans
           "orderPrice": "10000",
           "orderSize": "1",
           "clientOrderId": "a001",
-          "orderCreateTime": 998787897878,
+          "orderCreateTime": 1583853365586,
           "orderStatus": "partial-filled",
           "orderType": "buy-limit"
      }

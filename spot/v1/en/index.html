@@ -1143,7 +1143,7 @@ Error responses come in two shapes, depending on which layer rejected the reques
   <li><strong>AccessKeyId</strong> — whether it is correct, and whether the API Key has been deleted or has expired</li>
   <li><strong>Timestamp</strong> — whether <code>Timestamp</code> is in UTC, whether the format is <code>2017-05-11T16:22:06</code>, and whether it deviates too much from server time</li>
   <li><strong>Request parameters</strong> — whether the parameters used in the signature match those actually sent</li>
-  <li><strong>API Key permissions</strong> — if <code>err-msg</code> contains the word <code>permission</code>, the signature itself passed verification; the problem is that this API Key lacks the permission required by the endpoint (read / trade / withdraw). Check the permission settings on the API Key management page</li>
+  <li><strong>API Key permissions</strong> — whether this API Key has the permission required by the endpoint (read / trade / withdraw). Check the permission settings on the API Key management page</li>
 </ol>
 
 <aside class="notice">

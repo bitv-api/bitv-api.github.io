@@ -1803,7 +1803,7 @@ API Key 權限：交易<br>
 | 5           | partial-canceled                                             |
 | 6           | filled                                                       |
 | 7           | canceled                                                     |
-| 10          | cancelling                                                   |
+| 10          | canceling                                                    |
 
 ## 撤銷訂單（基於client order ID）
 
@@ -1855,7 +1855,7 @@ API Key 權限：交易<br>
 | 5           | partial-canceled                                             |
 | 6           | filled                                                       |
 | 7           | canceled                                                     |
-| 10          | cancelling                                                   |
+| 10          | canceling                                                    |
 
 
 ## 查詢當前未成交訂單
@@ -1929,7 +1929,7 @@ API Key 權限：讀取<br>
 | filled-cash-amount | string   | 訂單中已成交部分的總價格                                     |
 | filled-fees        | string   | 已交交易手續費總額                                           |
 | source             | string   | 訂單來源，如 spot-api（透過 API 下單）、web（透過網頁端下單）  |
-| state              | string   | 訂單狀態，包括submitted, partial-filled, cancelling, created, pre-submitted, submitting, failed, place_timeout |
+| state              | string   | 訂單狀態，包括submitted, partial-filled, partial-canceled, filled, canceled, canceling, created, pre-submitted, submitting, failed, place_timeout |
 | account-id           | string | 賬戶 ID                                       |
 | amount           | string   | 訂單數量                                     |
 
@@ -2068,7 +2068,7 @@ API Key 權限：交易<br>
 | 5           | partial-canceled                                             |
 | 6           | filled                                                       |
 | 7           | canceled                                                     |
-| 10          | cancelling                                                   |
+| 10          | canceling                                                    |
 
 ## 查詢訂單詳情
 
@@ -3727,7 +3727,7 @@ API Key 權限：讀取
          "orderSide": "buy",
          "aggressor": true,
          "tradeId": 919219323232,
-         "tradeTime": 998787897878,
+         "tradeTime": 1583853365586,
          "transactFee": "19.88",
          "feeDeduct ": "0",
          "feeDeductType": "",
@@ -3737,7 +3737,7 @@ API Key 權限：讀取
          "orderPrice": "10000",
          "orderSize": "1",
          "clientOrderId": "a001",
-         "orderCreateTime": 998787897878,
+         "orderCreateTime": 1583853365586,
          "orderStatus": "partial-filled",
          "orderType": "buy-limit"
     }

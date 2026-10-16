@@ -1189,7 +1189,7 @@ curl "https://api.bitv.com/market/history/trade?symbol=ethusdt&size=2"
              {  
                 "amount":73.771000000000000000,
                 "ts":1544390317905,
-                "trade-id": 102043483473
+                "trade-id": 102043483473,
                 "id":3161878751418918532514,
                 "price":94.660000000000000000,
                 "direction":"sell"
@@ -2498,7 +2498,7 @@ API Key 权限：读取<br>
       "filled-fees": "0.0182310000",
       "created-at": 1494901400435,
       "trade-id": 100282808529,
-      "role": taker,
+      "role": "taker",
       "filled-points": "0.0",
       "fee-currency": "eth",
       "fee-deduct-state": "done",
@@ -3312,9 +3312,6 @@ REQ频道支持5档/20档/150档全量数据的获取。<br>
   "id": "id11"
 }
 ```
-
-
-## 
 
 
 # Websocket资产及订单

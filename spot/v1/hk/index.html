@@ -1232,7 +1232,7 @@
 
 <ul>
   <li>建議用戶下單前根據<code>/v1/common/symbols</code>接口中返回的幣種對參數數據對下單價格、下單數量等參進行校驗，避免產生無效的下單請求。</li>
-  <li>推薦下單時攜帶<code>client-order-id</code>參數，且能夠保證該參數的唯一性（每次發送請求時都不同，且唯一），該參數能夠防止在發起下單請求時由於網絡或其他原因造成接口超時或沒有返回的情況，在此情況下，可根據<code>client-order-id</code>對WebSocket中推送過來的數據進行驗證，或使用<code>/v1/order/orders/getClientOrder</code>接口查詢該訂單信息。</li>
+  <li>推薦下單時攜帶<code>client-order-id</code>參數，且能夠保證該參數的唯一性（每次發送請求時都不同，且唯一），該參數能夠防止在發起下單請求時由於網絡或其他原因造成接口超時或沒有返回的情況，在此情況下，可根據<code>client-order-id</code>對WebSocket中推送過來的數據進行驗證，或使用<code>/v1/order/orders/by-client-order-id</code>接口查詢該訂單信息。</li>
 </ul>
 
 <p><strong>搜索歷史訂單（/v1/order/orders）</strong></p>
@@ -3752,7 +3752,7 @@ intermediary：經紀賬戶</p>
 <h3 id="http-請求-15">HTTP 請求</h3>
 
 <ul>
-  <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
+  <li>POST <code>/v1/order/orders/cancel-by-client-order-id</code></li>
 </ul>
 
 <blockquote>
@@ -3861,7 +3861,7 @@ intermediary：經紀賬戶</p>
 <h3 id="http-請求-16">HTTP 請求</h3>
 
 <ul>
-  <li>GET <code>/v1/order/openOrders</code></li>
+  <li>GET <code>/v1/order/open-orders</code></li>
 </ul>
 
 <blockquote>
@@ -4048,7 +4048,7 @@ intermediary：經紀賬戶</p>
 <h3 id="http-請求-17">HTTP 請求</h3>
 
 <ul>
-  <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
+  <li>POST <code>/v1/order/orders/batch-cancel-open-orders</code></li>
 </ul>
 
 <h3 id="請求參數-18">請求參數</h3>
@@ -4532,7 +4532,7 @@ intermediary：經紀賬戶</p>
 <h3 id="http-請求-20">HTTP 請求</h3>
 
 <ul>
-  <li>GET <code>/v1/order/orders/getClientOrder</code></li>
+  <li>GET <code>/v1/order/orders/by-client-order-id</code></li>
 </ul>
 
 <h3 id="請求參數-21">請求參數</h3>

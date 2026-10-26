@@ -1129,7 +1129,7 @@
 
 <ul>
 <li>建议用户下单前根据<code>/v1/common/symbols</code>接口中返回的币种对参数数据对下单价格、下单数量等参进行校验，避免产生无效的下单请求。</li>
-<li>推荐下单时携带<code>client-order-id</code>参数，且能够保证该参数的唯一性（每次发送请求时都不同，且唯一），该参数能够防止在发起下单请求时由于网络或其他原因造成接口超时或没有返回的情况，在此情况下，可根据<code>client-order-id</code>对WebSocket中推送过来的数据进行验证，或使用<code>/v1/order/orders/getClientOrder</code>接口查询该订单信息。</li>
+<li>推荐下单时携带<code>client-order-id</code>参数，且能够保证该参数的唯一性（每次发送请求时都不同，且唯一），该参数能够防止在发起下单请求时由于网络或其他原因造成接口超时或没有返回的情况，在此情况下，可根据<code>client-order-id</code>对WebSocket中推送过来的数据进行验证，或使用<code>/v1/order/orders/by-client-order-id</code>接口查询该订单信息。</li>
 </ul>
 
 <p><strong>搜索历史订单（/v1/order/orders）</strong></p>
@@ -3391,7 +3391,7 @@ intermediary：经纪账户</p>
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
 <h3 id='http-16'>HTTP 请求</h3>
 <ul>
-<li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
+<li>POST <code>/v1/order/orders/cancel-by-client-order-id</code></li>
 </ul>
 
 <blockquote>
@@ -3481,7 +3481,7 @@ intermediary：经纪账户</p>
 <p>查询已提交但是仍未完全成交或未被撤销的订单。</p>
 <h3 id='http-17'>HTTP 请求</h3>
 <ul>
-<li>GET <code>/v1/order/openOrders</code></li>
+<li>GET <code>/v1/order/open-orders</code></li>
 </ul>
 
 <blockquote>
@@ -3652,7 +3652,7 @@ intermediary：经纪账户</p>
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
 <h3 id='http-18'>HTTP 请求</h3>
 <ul>
-<li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
+<li>POST <code>/v1/order/orders/batch-cancel-open-orders</code></li>
 </ul>
 <h3 id='1f9ac54b15-19'>请求参数</h3>
 <table><thead>
@@ -4084,7 +4084,7 @@ intermediary：经纪账户</p>
 <p>此接口返回指定用户自编订单号（24小时内）的订单最新状态和详情。通过API创建的订单，撤销超过2小时后无法查询。</p>
 <h3 id='http-21'>HTTP 请求</h3>
 <ul>
-<li>GET <code>/v1/order/orders/getClientOrder</code></li>
+<li>GET <code>/v1/order/orders/by-client-order-id</code></li>
 </ul>
 <h3 id='1f9ac54b15-22'>请求参数</h3>
 <table><thead>

@@ -1218,7 +1218,7 @@ If all of the above are correct, check whether the outbound IP address of your r
 
 <ul>
   <li>It is recommended to validate the order price, quantity, and other parameters against the currency pair data returned by the <code>/v1/common/symbols</code> API before placing an order. This helps to avoid sending invalid order requests.</li>
-  <li>It is recommended to include the <code>client-order-id</code> parameter when placing an order. Ensure that this parameter is unique for each request. The <code>client-order-id</code> can be used to verify the order information received via WebSocket in case the API times out or fails to respond. You can also use the <code>/v1/order/orders/getClientOrder</code> API to query the order details based on the <code>client-order-id</code>.</li>
+  <li>It is recommended to include the <code>client-order-id</code> parameter when placing an order. Ensure that this parameter is unique for each request. The <code>client-order-id</code> can be used to verify the order information received via WebSocket in case the API times out or fails to respond. You can also use the <code>/v1/order/orders/by-client-order-id</code> API to query the order details based on the <code>client-order-id</code>.</li>
 </ul>
 
 <p><strong>Search Historical Orders (/v1/order/orders)</strong></p>
@@ -3746,7 +3746,7 @@ Frequency limit value (NEW): 100 times/2s</p>
 <h3 id="http-requests-15">HTTP requests</h3>
 
 <ul>
-  <li>POST <code>/v1/order/orders/submitCancelClientOrder</code></li>
+  <li>POST <code>/v1/order/orders/cancel-by-client-order-id</code></li>
 </ul>
 
 <blockquote>
@@ -3855,7 +3855,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 <h3 id="http-requests-16">HTTP requests</h3>
 
 <ul>
-  <li>GET <code>/v1/order/openOrders</code></li>
+  <li>GET <code>/v1/order/open-orders</code></li>
 </ul>
 
 <blockquote>
@@ -4042,7 +4042,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 <h3 id="http-requests-17">HTTP requests</h3>
 
 <ul>
-  <li>POST <code>/v1/order/orders/batchCancelOpenOrders</code></li>
+  <li>POST <code>/v1/order/orders/batch-cancel-open-orders</code></li>
 </ul>
 
 <h3 id="request-parameters-18">Request parameters</h3>
@@ -4542,7 +4542,7 @@ Frequency limit value (NEW): 50 times/2s</p>
 <h3 id="http-requests-20">HTTP requests</h3>
 
 <ul>
-  <li>GET <code>/v1/order/orders/getClientOrder</code></li>
+  <li>GET <code>/v1/order/orders/by-client-order-id</code></li>
 </ul>
 
 <h3 id="request-parameters-21">Request parameters</h3>

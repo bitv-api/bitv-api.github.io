@@ -526,7 +526,7 @@ account-id可通過/v1/account/accounts接口獲取，並根據account-type區�
 **下單接口（/v1/order/orders/place）**
 
 - 建議用戶下單前根據`/v1/common/symbols`接口中返回的幣種對參數數據對下單價格、下單數量等參進行校驗，避免產生無效的下單請求。
-- 推薦下單時攜帶`client-order-id`參數，且能夠保證該參數的唯一性（每次發送請求時都不同，且唯一），該參數能夠防止在發起下單請求時由於網絡或其他原因造成接口超時或沒有返回的情況，在此情況下，可根據`client-order-id`對WebSocket中推送過來的數據進行驗證，或使用`/v1/order/orders/getClientOrder`接口查詢該訂單信息。
+- 推薦下單時攜帶`client-order-id`參數，且能夠保證該參數的唯一性（每次發送請求時都不同，且唯一），該參數能夠防止在發起下單請求時由於網絡或其他原因造成接口超時或沒有返回的情況，在此情況下，可根據`client-order-id`對WebSocket中推送過來的數據進行驗證，或使用`/v1/order/orders/by-client-order-id`接口查詢該訂單信息。
 
 **搜索歷史訂單（/v1/order/orders）**
 
@@ -1816,7 +1816,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST `/v1/order/orders/submitCancelClientOrder`
+- POST `/v1/order/orders/cancel-by-client-order-id`
 
 > Request:
 
@@ -1867,7 +1867,7 @@ API Key 權限：讀取<br>
 
 ### HTTP 請求
 
-- GET `/v1/order/openOrders`
+- GET `/v1/order/open-orders`
 
 > Request:
 
@@ -1944,7 +1944,7 @@ API Key 權限：交易<br>
 
 ### HTTP 請求
 
-- POST `/v1/order/orders/batchCancelOpenOrders`
+- POST `/v1/order/orders/batch-cancel-open-orders`
 
 
 ### 請求參數
@@ -2144,7 +2144,7 @@ API Key 權限：讀取<br>
 
 ### HTTP 請求
 
-- GET `/v1/order/orders/getClientOrder`
+- GET `/v1/order/orders/by-client-order-id`
 
 ### 請求參數
 

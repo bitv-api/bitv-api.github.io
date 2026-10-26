@@ -527,7 +527,7 @@ account-id可通过/v1/account/accounts接口获取，并根据account-type区�
 **下单接口（/v1/order/orders/place）**
 
 - 建议用户下单前根据`/v1/common/symbols`接口中返回的币种对参数数据对下单价格、下单数量等参进行校验，避免产生无效的下单请求。
-- 推荐下单时携带`client-order-id`参数，且能够保证该参数的唯一性（每次发送请求时都不同，且唯一），该参数能够防止在发起下单请求时由于网络或其他原因造成接口超时或没有返回的情况，在此情况下，可根据`client-order-id`对WebSocket中推送过来的数据进行验证，或使用`/v1/order/orders/getClientOrder`接口查询该订单信息。
+- 推荐下单时携带`client-order-id`参数，且能够保证该参数的唯一性（每次发送请求时都不同，且唯一），该参数能够防止在发起下单请求时由于网络或其他原因造成接口超时或没有返回的情况，在此情况下，可根据`client-order-id`对WebSocket中推送过来的数据进行验证，或使用`/v1/order/orders/by-client-order-id`接口查询该订单信息。
 
 **搜索历史订单（/v1/order/orders）**
 
@@ -1818,7 +1818,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST `/v1/order/orders/submitCancelClientOrder`
+- POST `/v1/order/orders/cancel-by-client-order-id`
 
 > Request:
 
@@ -1869,7 +1869,7 @@ API Key 权限：读取<br>
 
 ### HTTP 请求
 
-- GET `/v1/order/openOrders`
+- GET `/v1/order/open-orders`
 
 > Request:
 
@@ -1946,7 +1946,7 @@ API Key 权限：交易<br>
 
 ### HTTP 请求
 
-- POST `/v1/order/orders/batchCancelOpenOrders`
+- POST `/v1/order/orders/batch-cancel-open-orders`
 
 
 ### 请求参数
@@ -2147,7 +2147,7 @@ API Key 权限：读取<br>
 
 ### HTTP 请求
 
-- GET `/v1/order/orders/getClientOrder`
+- GET `/v1/order/orders/by-client-order-id`
 
 ### 请求参数
 

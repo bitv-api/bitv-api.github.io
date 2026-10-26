@@ -11,4 +11,5 @@ gem 'redcarpet', '~> 3.4.0'
 gem 'nokogiri', '~> 1.13'
 
 # Javascript Runtime
-gem 'therubyracer', '~> 0.12.3'
+# therubyracer 已移除：libv8 3.16 无 Windows 包、无 arm64-darwin 包，现有机器上都装不上。
+# execjs 会自动探测 Node 作为 JS runtime。

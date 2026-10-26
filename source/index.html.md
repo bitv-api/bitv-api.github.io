@@ -515,7 +515,7 @@ This document describes the conventions for data types in the JSON format:
 **Placing Orders (/v1/order/orders/place)**
 
 - It is recommended to validate the order price, quantity, and other parameters against the currency pair data returned by the `/v1/common/symbols` API before placing an order. This helps to avoid sending invalid order requests.
-- It is recommended to include the `client-order-id` parameter when placing an order. Ensure that this parameter is unique for each request. The `client-order-id` can be used to verify the order information received via WebSocket in case the API times out or fails to respond. You can also use the `/v1/order/orders/getClientOrder` API to query the order details based on the `client-order-id`.
+- It is recommended to include the `client-order-id` parameter when placing an order. Ensure that this parameter is unique for each request. The `client-order-id` can be used to verify the order information received via WebSocket in case the API times out or fails to respond. You can also use the `/v1/order/orders/by-client-order-id` API to query the order details based on the `client-order-id`.
 
 **Search Historical Orders (/v1/order/orders)**
 
@@ -1822,7 +1822,7 @@ This interface sends a request to cancel an order.
 
 ### HTTP requests
 
-- POST `/v1/order/orders/submitCancelClientOrder`
+- POST `/v1/order/orders/cancel-by-client-order-id`
 
 > Request:
 
@@ -1874,7 +1874,7 @@ Query the orders that have been submitted but have not been fully executed or ca
 
 ### HTTP requests
 
-- GET `/v1/order/openOrders`
+- GET `/v1/order/open-orders`
 
 > Request:
 
@@ -1953,7 +1953,7 @@ This interface sends a request to cancel orders in batches.
 
 ### HTTP requests
 
-- POST `/v1/order/orders/batchCancelOpenOrders`
+- POST `/v1/order/orders/batch-cancel-open-orders`
 
 
 ### Request parameters
@@ -2155,7 +2155,7 @@ This interface returns the latest order status and details of the specified user
 
 ### HTTP requests
 
-- GET `/v1/order/orders/getClientOrder`
+- GET `/v1/order/orders/by-client-order-id`
 
 ### Request parameters
 

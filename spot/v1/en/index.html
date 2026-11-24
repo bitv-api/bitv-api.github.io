@@ -263,6 +263,9 @@
                     <a href="#signature-authentication" class="toc-h2 toc-link" data-title="Signature Authentication">Signature Authentication</a>
                   </li>
                   <li>
+                    <a href="#ed25519-signature-authentication-self-provided-public-key" class="toc-h2 toc-link" data-title="Ed25519 Signature Authentication (Self-provided Public Key)">Ed25519 Signature Authentication (Self-provided Public Key)</a>
+                  </li>
+                  <li>
                     <a href="#business-glossary" class="toc-h2 toc-link" data-title="Business Glossary">Business Glossary</a>
                   </li>
               </ul>
@@ -370,6 +373,9 @@
                   </li>
                   <li>
                     <a href="#account-history" class="toc-h2 toc-link" data-title="Account History">Account History</a>
+                  </li>
+                  <li>
+                    <a href="#account-type-transfer" class="toc-h2 toc-link" data-title="Account Type Transfer">Account Type Transfer</a>
                   </li>
               </ul>
           </li>
@@ -762,6 +768,112 @@ Timestamp needs to be added in YYYY-MM-DDThh:mm:ss format and URL encoded.
     }
 }
 `</p>
+
+<h2 id="ed25519-signature-authentication-self-provided-public-key">Ed25519 Signature Authentication (Self-provided Public Key)</h2>
+
+<p>In addition to HMAC-SHA256, private interfaces also support <strong>Ed25519</strong> asymmetric signatures. The string to sign is constructed exactly the same way for both methods (see the signing steps under “Signature Authentication”); only step 7, “generate the signature with your key”, differs.</p>
+
+<p>Key differences from HMAC:</p>
+
+<ul>
+  <li><strong>You generate the key pair locally and upload only the public key to BitV. Your private key always stays with you — BitV never holds or receives your private key.</strong></li>
+  <li>In the request, <code>SignatureMethod</code> is <code>Ed25519</code> (<strong>case-sensitive</strong>, it must be exactly <code>Ed25519</code>), and <code>SignatureVersion</code> is still <code>2</code>.</li>
+  <li>The signature is produced by signing the <strong>raw UTF-8 bytes</strong> of the string to sign directly with the Ed25519 private key, <strong>without any SHA-256 pre-hashing</strong>; the resulting 64-byte signature is base64-encoded and used as the <code>Signature</code> parameter, added to the request the same way as with HMAC.</li>
+</ul>
+
+<h3 id="1-generate-a-key-pair">1. Generate a key pair</h3>
+
+<p>Generate an Ed25519 key pair locally with OpenSSL (requires OpenSSL 1.1.1 or later):</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>openssl genpkey -algorithm ed25519 -out ed25519_private.pem
+openssl pkey -in ed25519_private.pem -pubout -out ed25519_public.pem
+</code></pre></div>
+<ul>
+  <li><code>ed25519_private.pem</code> is your <strong>private key — keep it safe and never upload or disclose it</strong>.</li>
+  <li><code>ed25519_public.pem</code> is your <strong>public key</strong>, used in the next step.</li>
+</ul>
+
+<h3 id="2-register-the-public-key">2. Register the public key</h3>
+
+<p>When creating an API Key on the API Key management page, choose Ed25519 as the authentication method and paste the <strong>entire content</strong> of <code>ed25519_public.pem</code> into the public key field.</p>
+
+<aside class="warning">
+The public key must be in <b>complete PEM format</b>, i.e. it must include the <code>-----BEGIN PUBLIC KEY-----</code> and <code>-----END PUBLIC KEY-----</code> marker lines; a bare base64 string without these markers is <b>not accepted</b>.
+</aside>
+
+<p>Example of a complete PEM public key:</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+</code></pre></div>
+<aside class="notice">
+Pasting a <b>private key</b> into the public key field is rejected outright, and the private key never leaves your browser. Paste the public key only.
+</aside>
+
+<h3 id="3-build-the-string-to-sign">3. Build the string to sign</h3>
+
+<p>Identical to HMAC (see “Signature Authentication → signing steps”): the request method, the lowercase host, and the interface path each occupy one line (each followed by <code>\n</code>); the fourth line is all parameters URL-encoded, sorted in ascending ASCII order and joined with <code>&amp;</code>, where <code>SignatureMethod=Ed25519</code>.</p>
+
+<aside class="notice">
+Parameters are UTF-8 encoded and URL-encoded, with hexadecimal characters in uppercase (e.g. <code>:</code> is encoded as <code>%3A</code>). <b>Non-ASCII characters (such as a Chinese remark) must be percent-encoded before being signed</b>; for example, the remark value "测试" should be encoded as <code>%E6%B5%8B%E8%AF%95</code>.
+</aside>
+
+<p>Taking the account query (<code>GET /v1/account/accounts</code>) as an example, the string to sign is (four lines, separated by <code>\n</code>, no trailing newline):</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&amp;SignatureMethod=Ed25519&amp;SignatureVersion=2&amp;Timestamp=2026-11-24T08%3A30%3A00
+</code></pre></div>
+<h3 id="4-generate-the-signature">4. Generate the signature</h3>
+
+<p>Sign the <strong>raw bytes</strong> of the string to sign above with the Ed25519 private key, then base64-encode it. After saving the string to sign exactly as-is (including the newlines, no trailing newline) into a file <code>payload.txt</code>:</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>openssl pkeyutl -sign -inkey ed25519_private.pem -rawin -in payload.txt | openssl base64 -A
+</code></pre></div>
+<aside class="notice">
+<code>-rawin</code> means the raw message is signed directly without pre-hashing — this is exactly what Ed25519 requires. Do not apply SHA-256 to the string to sign first.
+</aside>
+
+<h3 id="5-complete-reproducible-example">5. Complete reproducible example</h3>
+
+<p>The following values match one another and can be used to self-check your signing implementation (signing the sample string to sign with the sample private key should yield exactly the same <code>Signature</code>):</p>
+
+<p>Sample private key (<strong>for reproduction only, never use in production</strong>):</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIIE38px7ixgIXEvvkrb8Iry5UcADzogKTMHFsGajmPpo
+-----END PRIVATE KEY-----
+</code></pre></div>
+<p>Corresponding public key:</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+</code></pre></div>
+<p>String to sign (four lines, separated by <code>\n</code>, no trailing newline):</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&amp;SignatureMethod=Ed25519&amp;SignatureVersion=2&amp;Timestamp=2026-11-24T08%3A30%3A00
+</code></pre></div>
+<p>Signature (<code>Signature</code>, base64):</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>fdZSliXAyz0s3+CA5VaFKS5EfN+Z28nMNuwY4W9dxMDfOVts5FyIdqWi7ypis3+w429/7S2cYS9zEENhD48bDQ==
+</code></pre></div>
+<h3 id="6-add-it-to-the-request">6. Add it to the request</h3>
+
+<p>Same as HMAC: URL-encode the base64 signature and add it as the <code>Signature</code> parameter in the request path.</p>
+
+<aside class="warning">
+The base64 signature is <b>case-sensitive</b> and contains <code>+</code> <code>/</code> <code>=</code> characters. When placing it in a URL, be sure to percent-encode it correctly (e.g. <code>+</code>→<code>%2B</code>, <code>=</code>→<code>%3D</code>), and do not let your HTTP library change its case or drop the escaping, otherwise verification will fail.
+</aside>
+
+<aside class="notice">
+The timestamp (Timestamp) must be in UTC, in the format <code>YYYY-MM-DDThh:mm:ss</code>. The server's allowed clock-skew window is <b>±300 seconds</b>; requests outside it are rejected.
+</aside>
 
 <h2 id="business-glossary">Business Glossary</h2>
 
@@ -3163,6 +3275,126 @@ Frequency limit value (NEW): 5 times/2s</p>
   </tbody>
 </table>
 
+<h2 id="account-type-transfer">Account Type Transfer</h2>
+
+<p>Transfer funds between a single user’s own account types (e.g. between the trading account and the custody account).</p>
+
+<p>This interface requires signature authentication, using the same signing method as other private interfaces (see the “Signature Authentication” chapter). The API Key used to call this interface must have the <strong>fund operation (transfer)</strong> permission.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<ul>
+  <li>POST <code>/v1/account/type-transfer</code></li>
+</ul>
+
+<h3 id="request-parameters-13">Request Parameters</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Required</th>
+      <th>Data Type</th>
+      <th>Description</th>
+      <th>Value Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>currency</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Currency, lowercase (e.g. <code>usdt</code>, <code>btc</code>)</td>
+      <td>See <code>GET /v1/common/currencys</code></td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Transfer direction</td>
+      <td>See the value description below; only the 10 listed values are accepted</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>true</td>
+      <td>string</td>
+      <td>Transfer amount</td>
+      <td>Determined by the currency’s precision; an amount exceeding the currency’s precision is rejected</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The amount is validated against the corresponding currency’s precision; an amount exceeding the precision is rejected (returns <code>invalid-amount</code>) and is not silently truncated. Different currencies allow different numbers of decimal places, so round to the currency’s precision before submitting. Consistent with this document’s convention for amount fields, <code>amount</code> is a string; do not deserialize it as a numeric type.</p>
+
+<p><code>type</code> has four account types: <code>spot</code> (trading), <code>depository</code> (depository), <code>monetary</code> (fiat), <code>intermediary</code> (brokerage). The format is <code>&lt;source&gt;-trade-to-&lt;target&gt;-trade</code>, and only the following 10 directions are accepted (transfers between depository and fiat are not supported):</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>depository-trade-to-spot-trade
+depository-trade-to-intermediary-trade
+monetary-trade-to-spot-trade
+monetary-trade-to-intermediary-trade
+spot-trade-to-depository-trade
+spot-trade-to-monetary-trade
+spot-trade-to-intermediary-trade
+intermediary-trade-to-depository-trade
+intermediary-trade-to-monetary-trade
+intermediary-trade-to-spot-trade
+</code></pre></div>
+<blockquote>
+  <p>Response:</p>
+</blockquote>
+
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7528745806200606720"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h3 id="response-data-10">Response Data</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>status</td>
+      <td>string</td>
+      <td>Status code</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>string</td>
+      <td>The transfer order number for this transfer</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A single transfer produces two paired records in <code>GET /v1/account/history</code> (one for the transfer-out, one for the transfer-in): <code>transact-amt</code> is negative on one and positive on the other with the same magnitude, and <code>transact-time</code> is identical. Query by account and time range to locate the two records for this transfer.</p>
+
+<p>Common error codes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>err-code</th>
+      <th>Trigger condition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>invalid-amount</td>
+      <td>Amount is empty, below the minimum, or exceeds the currency’s precision</td>
+    </tr>
+    <tr>
+      <td>order-type-invalid</td>
+      <td><code>type</code> is not one of the 10 directions above</td>
+    </tr>
+  </tbody>
+</table>
+
 <h1 id="spot-trading">Spot Trading</h1>
 
 <h2 id="introduction-4">Introduction</h2>
@@ -3397,7 +3629,7 @@ Frequency limit value; 100 times/2s</p>
    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-13">Request parameters</h3>
+<h3 id="request-parameters-14">Request parameters</h3>
 
 <table>
   <thead>
@@ -3471,7 +3703,7 @@ Frequency limit value; 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-10">Response data</h3>
+<h3 id="response-data-11">Response data</h3>
 
 <p>The returned master data object is a string corresponding to the order number.</p>
 <aside class="notice">
@@ -3516,7 +3748,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
 </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-14">Request parameters</h3>
+<h3 id="request-parameters-15">Request parameters</h3>
 
 <table>
   <thead>
@@ -3599,7 +3831,7 @@ Frequency limit (NEW): 50 times/2s<br /></p>
      </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-11">Response data</h3>
+<h3 id="response-data-12">Response data</h3>
 
 <table>
   <thead>
@@ -3650,7 +3882,7 @@ Frequency limit value (NEW): 100 times/2s</p>
   <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
 
-<h3 id="request-parameters-15">Request parameters</h3>
+<h3 id="request-parameters-16">Request parameters</h3>
 
 <table>
   <thead>
@@ -3684,7 +3916,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-12">Response data</h3>
+<h3 id="response-data-13">Response data</h3>
 
 <p>The returned master data object is a string corresponding to the order number.</p>
 
@@ -3757,7 +3989,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-16">Request parameters</h3>
+<h3 id="request-parameters-17">Request parameters</h3>
 
 <table>
   <thead>
@@ -3791,7 +4023,7 @@ Frequency limit value (NEW): 100 times/2s</p>
    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-13">Response data</h3>
+<h3 id="response-data-14">Response data</h3>
 
 <table>
   <thead>
@@ -3868,7 +4100,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-17">Request parameters</h3>
+<h3 id="request-parameters-18">Request parameters</h3>
 
 <table>
   <thead>
@@ -3951,7 +4183,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-14">Response data</h3>
+<h3 id="response-data-15">Response data</h3>
 
 <table>
   <thead>
@@ -4045,7 +4277,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   <li>POST <code>/v1/order/orders/batch-cancel-open-orders</code></li>
 </ul>
 
-<h3 id="request-parameters-18">Request parameters</h3>
+<h3 id="request-parameters-19">Request parameters</h3>
 
 <table>
   <thead>
@@ -4107,7 +4339,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-15">Response data</h3>
+<h3 id="response-data-16">Response data</h3>
 
 <table>
   <thead>
@@ -4167,7 +4399,7 @@ Frequency limit value (NEW): 50 times/2s</p>
    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-19">Request parameters</h3>
+<h3 id="request-parameters-20">Request parameters</h3>
 
 <table>
   <thead>
@@ -4235,7 +4467,7 @@ Frequency limit value (NEW): 50 times/2s</p>
      </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-16">Response data</h3>
+<h3 id="response-data-17">Response data</h3>
 
 <table>
   <thead>
@@ -4344,7 +4576,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
 
-<h3 id="request-parameters-20">Request parameters</h3>
+<h3 id="request-parameters-21">Request parameters</h3>
 
 <table>
   <thead>
@@ -4395,7 +4627,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-17">Response data</h3>
+<h3 id="response-data-18">Response data</h3>
 
 <table>
   <thead>
@@ -4545,7 +4777,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   <li>GET <code>/v1/order/orders/by-client-order-id</code></li>
 </ul>
 
-<h3 id="request-parameters-21">Request parameters</h3>
+<h3 id="request-parameters-22">Request parameters</h3>
 
 <table>
   <thead>
@@ -4593,7 +4825,7 @@ Frequency limit value (NEW): 50 times/2s</p>
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-18">Response data</h3>
+</span></code></pre></div><h3 id="response-data-19">Response data</h3>
 
 <table>
   <thead>
@@ -4735,7 +4967,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
 
-<h3 id="request-parameters-22">Request parameters</h3>
+<h3 id="request-parameters-23">Request parameters</h3>
 
 <table>
   <thead>
@@ -4787,7 +5019,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-19">Response data</h3>
+<h3 id="response-data-20">Response data</h3>
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 
@@ -4952,7 +5184,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   <li>GET <code>/v1/order/orders</code></li>
 </ul>
 
-<h3 id="request-parameters-23">Request parameters</h3>
+<h3 id="request-parameters-24">Request parameters</h3>
 
 <table>
   <thead>
@@ -5061,7 +5293,7 @@ Frequency limit value (NEW): 50 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-20">Response data</h3>
+<h3 id="response-data-21">Response data</h3>
 
 <table>
   <thead>
@@ -5232,7 +5464,7 @@ Frequency limit value (NEW): 20 times/2s</p>
     </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="request-parameters-24">Request parameters</h3>
+<h3 id="request-parameters-25">Request parameters</h3>
 
 <table>
   <thead>
@@ -5315,7 +5547,7 @@ Frequency limit value (NEW): 20 times/2s</p>
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id="response-data-21">Response data</h3>
+</span></code></pre></div><h3 id="response-data-22">Response data</h3>
 
 <table>
   <thead>
@@ -5456,7 +5688,7 @@ Frequency limit value (NEW): 20 times/2s</p>
   <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
 
-<h3 id="request-parameters-25">Request parameters</h3>
+<h3 id="request-parameters-26">Request parameters</h3>
 
 <table>
   <thead>
@@ -5557,7 +5789,7 @@ Frequency limit value (NEW): 20 times/2s</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="response-data-22">Response data</h3>
+<h3 id="response-data-23">Response data</h3>
 
 <aside class="notice">The main data object returned is an array of objects, each of which represents a transaction result. </aside>
 

@@ -263,6 +263,9 @@
                     <a href="#c64cd15fdc" class="toc-h2 toc-link" data-title="签名认证">签名认证</a>
                   </li>
                   <li>
+                    <a href="#ed25519" class="toc-h2 toc-link" data-title="Ed25519 签名认证（自备公钥）">Ed25519 签名认证（自备公钥）</a>
+                  </li>
+                  <li>
                     <a href="#5dd7427c5e" class="toc-h2 toc-link" data-title="业务字典">业务字典</a>
                   </li>
               </ul>
@@ -370,6 +373,9 @@
                   </li>
                   <li>
                     <a href="#84f1b5486d" class="toc-h2 toc-link" data-title="账户流水">账户流水</a>
+                  </li>
+                  <li>
+                    <a href="#4ba3258303" class="toc-h2 toc-link" data-title="账户间资金划转">账户间资金划转</a>
                   </li>
               </ul>
           </li>
@@ -744,6 +750,90 @@
     }
 }
 </code></p>
+<h2 id='ed25519'>Ed25519 签名认证（自备公钥）</h2>
+<p>除 HMAC-SHA256 外，私有接口也支持 <strong>Ed25519</strong> 非对称签名。两种方式的待签字符串构造完全一致（见「签名认证」章节的签名步骤），仅第 7 步「用密钥生成签名」不同。</p>
+
+<p>与 HMAC 的关键区别：</p>
+
+<ul>
+<li><strong>您在本地自行生成密钥对，只把公钥上传给 BitV，私钥始终保存在您自己手中——BitV 不持有、也不接收您的私钥。</strong></li>
+<li>请求中的 <code>SignatureMethod</code> 取值为 <code>Ed25519</code>（<strong>区分大小写</strong>，必须逐字为 <code>Ed25519</code>），<code>SignatureVersion</code> 仍为 <code>2</code>。</li>
+<li>签名是用 Ed25519 私钥对待签字符串的<strong>原始 UTF-8 字节</strong>直接签名，<strong>不做 SHA-256 预哈希</strong>；所得 64 字节签名经 base64 编码后作为 <code>Signature</code> 参数，加入方式与 HMAC 一致。</li>
+</ul>
+<h3 id='9f055cb029'>一、生成密钥对</h3>
+<p>在本地使用 OpenSSL 生成一对 Ed25519 密钥（需要 OpenSSL 1.1.1 及以上版本）：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>openssl genpkey -algorithm ed25519 -out ed25519_private.pem
+openssl pkey -in ed25519_private.pem -pubout -out ed25519_public.pem
+</code></pre></div>
+<ul>
+<li><code>ed25519_private.pem</code> 是您的<strong>私钥，请妥善保管、切勿上传或泄露</strong>。</li>
+<li><code>ed25519_public.pem</code> 是您的<strong>公钥</strong>，用于下一步登记。</li>
+</ul>
+<h3 id='39fcd967da'>二、登记公钥</h3>
+<p>在 API Key 管理页创建 API Key 时，选择认证方式为 Ed25519，将 <code>ed25519_public.pem</code> 的<strong>完整内容</strong>粘贴进公钥输入框。</p>
+
+<aside class="warning">
+公钥必须是<b>完整的 PEM 格式</b>，即包含首尾的 <code>-----BEGIN PUBLIC KEY-----</code> 与 <code>-----END PUBLIC KEY-----</code> 标记行；<b>不接受</b>去掉首尾标记的纯 base64 字符串。
+</aside>
+
+<p>完整 PEM 公钥示例：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+</code></pre></div>
+<aside class="notice">
+误把<b>私钥</b>粘入公钥框会被直接拒绝，且私钥不会离开您的浏览器。请只粘贴公钥。
+</aside>
+<h3 id='84a2040f10'>三、构造待签字符串</h3>
+<p>与 HMAC 完全相同（参见「签名认证 → 签名步骤」）：请求方法、小写域名、接口路径各占一行（行尾加 <code>\n</code>），第四行是经 URL 编码并按 ASCII 升序排序、以 <code>&amp;</code> 连接的全部参数，其中 <code>SignatureMethod=Ed25519</code>。</p>
+
+<aside class="notice">
+参数使用 UTF-8 编码并进行 URL 编码，十六进制字符大写（如 <code>:</code> 编码为 <code>%3A</code>）。<b>非 ASCII 字符（如中文备注）必须先 percent-encode 再参与签名</b>，例如备注值「测试」应编码为 <code>%E6%B5%8B%E8%AF%95</code>。
+</aside>
+
+<p>以查询账户（<code>GET /v1/account/accounts</code>）为例，待签字符串为（四行，行间为换行符 <code>\n</code>，末行无换行）：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&amp;SignatureMethod=Ed25519&amp;SignatureVersion=2&amp;Timestamp=2026-11-24T08%3A30%3A00
+</code></pre></div><h3 id='92a7b8021b'>四、生成签名</h3>
+<p>用 Ed25519 私钥对上面的待签字符串<strong>原始字节</strong>签名，再做 base64 编码。把待签字符串按原样（含换行符、末行无换行）存入文件 <code>payload.txt</code> 后：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>openssl pkeyutl -sign -inkey ed25519_private.pem -rawin -in payload.txt | openssl base64 -A
+</code></pre></div>
+<aside class="notice">
+<code>-rawin</code> 表示对原始消息直接签名，不做预哈希——这正是 Ed25519 的要求，请勿先对待签字符串做 SHA-256。
+</aside>
+<h3 id='411c2dbc90'>五、完整可复现示例</h3>
+<p>下面一组值互相匹配，可用于自检您的签名实现（用示例私钥对示例待签字符串签名，应得到完全相同的 <code>Signature</code>）：</p>
+
+<p>示例私钥（<strong>仅供复现，切勿用于生产</strong>）：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIIE38px7ixgIXEvvkrb8Iry5UcADzogKTMHFsGajmPpo
+-----END PRIVATE KEY-----
+</code></pre></div>
+<p>对应公钥：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+</code></pre></div>
+<p>待签字符串（四行，行间 <code>\n</code>，末行无换行）：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&amp;SignatureMethod=Ed25519&amp;SignatureVersion=2&amp;Timestamp=2026-11-24T08%3A30%3A00
+</code></pre></div>
+<p>签名结果（<code>Signature</code>，base64）：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>fdZSliXAyz0s3+CA5VaFKS5EfN+Z28nMNuwY4W9dxMDfOVts5FyIdqWi7ypis3+w429/7S2cYS9zEENhD48bDQ==
+</code></pre></div><h3 id='e586ece096'>六、加入请求</h3>
+<p>与 HMAC 一致：把 base64 签名做 URL 编码后作为 <code>Signature</code> 参数加入请求路径。</p>
+
+<aside class="warning">
+base64 签名<b>区分大小写</b>，且含 <code>+</code> <code>/</code> <code>=</code> 字符，放入 URL 时务必正确 percent-encode（如 <code>+</code>→<code>%2B</code>、<code>=</code>→<code>%3D</code>），不要让网络库擅自改写大小写或省略转义，否则验签失败。
+</aside>
+
+<aside class="notice">
+时间戳（Timestamp）须为 UTC、格式 <code>YYYY-MM-DDThh:mm:ss</code>。服务器允许的时间偏差窗口为 <b>±300 秒</b>，超出会被拒绝。
+</aside>
 <h2 id='5dd7427c5e'>业务字典</h2><h3 id='b79e080266'>交易对</h3>
 <p>交易对由基础币种和报价币种组成。以交易对 BTC/USDT 为例，BTC 为基础币种，USDT 为报价币种。  </p>
 
@@ -2863,6 +2953,107 @@ intermediary：经纪账户</p>
 <td></td>
 </tr>
 </tbody></table>
+<h2 id='4ba3258303'>账户间资金划转</h2>
+<p>同一用户在自己的不同账户类型之间划转资金（如交易账户与存管账户之间）。</p>
+
+<p>本接口需签名认证，签名方式与其他私有接口一致（见「签名认证」章节）。调用本接口的 API Key 需具备<strong>资金操作（划转）</strong>权限。</p>
+<h3 id='http-13'>HTTP 请求</h3>
+<ul>
+<li>POST <code>/v1/account/type-transfer</code></li>
+</ul>
+<h3 id='1f9ac54b15-14'>请求参数</h3>
+<table><thead>
+<tr>
+<th>参数名称</th>
+<th>是否必需</th>
+<th>数据类型</th>
+<th>描述</th>
+<th>取值范围</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>currency</td>
+<td>true</td>
+<td>string</td>
+<td>币种，小写（如 <code>usdt</code>、<code>btc</code>）</td>
+<td>取值参考 <code>GET /v1/common/currencys</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td>true</td>
+<td>string</td>
+<td>划转方向</td>
+<td>见下方取值说明，只接受列出的 10 个值</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>true</td>
+<td>string</td>
+<td>划转数量</td>
+<td>由币种精度决定，超出币种精度将被拒绝</td>
+</tr>
+</tbody></table>
+
+<p>金额按对应币种的精度校验，超出精度的金额会被拒绝（返回 <code>invalid-amount</code>），不做静默截断。不同币种允许的小数位数不同，请在传入前按币种精度取整。与本文档金额字段的统一约定一致，<code>amount</code> 为 string，请勿按数字类型反序列化。</p>
+
+<p><code>type</code> 的账户类型共四个：<code>spot</code>（交易）、<code>depository</code>（存管）、<code>monetary</code>（法币）、<code>intermediary</code>（经纪）。构词为 <code>&lt;源账户&gt;-trade-to-&lt;目标账户&gt;-trade</code>，只接受以下 10 个方向（存管与法币之间不支持互转）：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>depository-trade-to-spot-trade
+depository-trade-to-intermediary-trade
+monetary-trade-to-spot-trade
+monetary-trade-to-intermediary-trade
+spot-trade-to-depository-trade
+spot-trade-to-monetary-trade
+spot-trade-to-intermediary-trade
+intermediary-trade-to-depository-trade
+intermediary-trade-to-monetary-trade
+intermediary-trade-to-spot-trade
+</code></pre></div>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7528745806200606720"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='2213f4c32f-11'>响应数据</h3>
+<table><thead>
+<tr>
+<th>字段名称</th>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td>data</td>
+<td>string</td>
+<td>本次划转的单号</td>
+</tr>
+</tbody></table>
+
+<p>一笔划转在 <code>GET /v1/account/history</code> 中产生双边两条记录（转出一条、转入一条），<code>transact-amt</code> 一负一正、数值相同、<code>transact-time</code> 相同。按账户与时间范围查询即可定位本笔划转的两条记录。</p>
+
+<p>常见错误码：</p>
+
+<table><thead>
+<tr>
+<th>err-code</th>
+<th>触发条件</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>invalid-amount</td>
+<td>金额为空、低于最小值、或超出币种精度</td>
+</tr>
+<tr>
+<td>order-type-invalid</td>
+<td><code>type</code> 不在上述 10 个方向内</td>
+</tr>
+</tbody></table>
 <h1 id='57aa173947'>现货交易</h1><h2 id='5ea2e0cde2-5'>简介</h2>
 <p>现货交易接口提供了下单、撤单、订单查询、成交查询、手续费率查询等功能。</p>
 
@@ -3070,7 +3261,7 @@ intermediary：经纪账户</p>
 限频值；100次/2s</p>
 
 <p>发送一个新订单以进行撮合。</p>
-<h3 id='http-13'>HTTP 请求</h3>
+<h3 id='http-14'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/place</code></li>
 </ul>
@@ -3087,7 +3278,7 @@ intermediary：经纪账户</p>
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy-limit"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-14'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-15'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3155,7 +3346,7 @@ intermediary：经纪账户</p>
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-11'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-12'>响应数据</h3>
 <p>返回的主数据对象是一个对应下单单号的字符串。
 <aside class="notice">
 订单 ID 是长度约 19 位的<b>数字字符串</b>，已超出 JavaScript <code>Number</code> 的安全整数范围（<code>9007199254740991</code>）。请按字符串处理，<b>不要转换为整数类型</b>，否则会发生精度丢失，导致撤单、查询订单等后续请求携带错误的订单 ID。
@@ -3167,7 +3358,7 @@ intermediary：经纪账户</p>
 限频值（NEW）：50次/2s<br></p>
 
 <p>一个批量最多10张订单</p>
-<h3 id='http-14'>HTTP 请求</h3>
+<h3 id='http-15'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/batch-orders</code></li>
 </ul>
@@ -3193,7 +3384,7 @@ intermediary：经纪账户</p>
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d2"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-15'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-16'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3270,7 +3461,7 @@ intermediary：经纪账户</p>
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-12'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-13'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3308,11 +3499,11 @@ intermediary：经纪账户</p>
 <p>此接口发送一个撤销订单的请求。</p>
 
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
-<h3 id='http-15'>HTTP 请求</h3>
+<h3 id='http-16'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
-<h3 id='1f9ac54b15-16'>请求参数</h3>
+<h3 id='1f9ac54b15-17'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3340,7 +3531,7 @@ intermediary：经纪账户</p>
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123456789"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-13'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-14'>响应数据</h3>
 <p>返回的主数据对象是一个对应下单单号的字符串。</p>
 <h3 id='e08c1d4f9a'>错误码</h3>
 <blockquote>
@@ -3389,7 +3580,7 @@ intermediary：经纪账户</p>
 <p>此接口发送一个撤销订单的请求。</p>
 
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
-<h3 id='http-16'>HTTP 请求</h3>
+<h3 id='http-17'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/cancel-by-client-order-id</code></li>
 </ul>
@@ -3400,7 +3591,7 @@ intermediary：经纪账户</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-17'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-18'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3428,7 +3619,7 @@ intermediary：经纪账户</p>
   </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-14'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-15'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3479,7 +3670,7 @@ intermediary：经纪账户</p>
 限频值（NEW）：50次/2s</p>
 
 <p>查询已提交但是仍未完全成交或未被撤销的订单。</p>
-<h3 id='http-17'>HTTP 请求</h3>
+<h3 id='http-18'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/open-orders</code></li>
 </ul>
@@ -3492,7 +3683,7 @@ intermediary：经纪账户</p>
    </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethusdt"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-18'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-19'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3569,7 +3760,7 @@ intermediary：经纪账户</p>
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-15'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-16'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3650,11 +3841,11 @@ intermediary：经纪账户</p>
 <p>此接口发送批量撤销订单的请求。</p>
 
 <aside class="warning">此接口只提交取消请求，实际取消结果需要通过订单状态，撮合状态等接口来确认。</aside>
-<h3 id='http-18'>HTTP 请求</h3>
+<h3 id='http-19'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/batch-cancel-open-orders</code></li>
 </ul>
-<h3 id='1f9ac54b15-19'>请求参数</h3>
+<h3 id='1f9ac54b15-20'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3710,7 +3901,7 @@ intermediary：经纪账户</p>
     </span><span class="nl">"next-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5454600</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-16'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-17'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3747,7 +3938,7 @@ intermediary：经纪账户</p>
 限频值（NEW）：50次/2s</p>
 
 <p>此接口同时为多个订单（基于id）发送取消请求。</p>
-<h3 id='http-19'>HTTP 请求</h3>
+<h3 id='http-20'>HTTP 请求</h3>
 <ul>
 <li>POST <code>/v1/order/orders/batchcancel</code></li>
 </ul>
@@ -3760,7 +3951,7 @@ intermediary：经纪账户</p>
    </span><span class="s2">"5983466"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5722939"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5721027"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5719487"</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-20'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-21'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3822,7 +4013,7 @@ intermediary：经纪账户</p>
           </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-17'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-18'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -3912,11 +4103,11 @@ intermediary：经纪账户</p>
 限频值（NEW）：50次/2s</p>
 
 <p>此接口返回指定订单的最新状态和详情。通过API创建的订单，撤销超过2小时后无法查询。</p>
-<h3 id='http-20'>HTTP 请求</h3>
+<h3 id='http-21'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
-<h3 id='1f9ac54b15-21'>请求参数</h3>
+<h3 id='1f9ac54b15-22'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -3961,7 +4152,7 @@ intermediary：经纪账户</p>
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-18'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-19'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -4082,11 +4273,11 @@ intermediary：经纪账户</p>
 限频值（NEW）：50次/2s</p>
 
 <p>此接口返回指定用户自编订单号（24小时内）的订单最新状态和详情。通过API创建的订单，撤销超过2小时后无法查询。</p>
-<h3 id='http-21'>HTTP 请求</h3>
+<h3 id='http-22'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders/by-client-order-id</code></li>
 </ul>
-<h3 id='1f9ac54b15-22'>请求参数</h3>
+<h3 id='1f9ac54b15-23'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4131,7 +4322,7 @@ intermediary：经纪账户</p>
     </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-19'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-20'>响应数据</h3>
 <table><thead>
 <tr>
 <th>字段名称</th>
@@ -4260,11 +4451,11 @@ intermediary：经纪账户</p>
 限频值（NEW）：50次/2s</p>
 
 <p>此接口返回指定订单的成交明细。</p>
-<h3 id='http-22'>HTTP 请求</h3>
+<h3 id='http-23'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
-<h3 id='1f9ac54b15-23'>请求参数</h3>
+<h3 id='1f9ac54b15-24'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4312,7 +4503,7 @@ intermediary：经纪账户</p>
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-20'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-21'>响应数据</h3>
 <aside class="notice">返回的主数据对象为一个对象数组，其中每一个元件代表一个交易结果。</aside>
 
 <table><thead>
@@ -4458,11 +4649,11 @@ intermediary：经纪账户</p>
 </ul>
 
 <p>建议用户以“时间范围“查询历史订单。</p>
-<h3 id='http-23'>HTTP 请求</h3>
+<h3 id='http-24'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/orders</code></li>
 </ul>
-<h3 id='1f9ac54b15-24'>请求参数</h3>
+<h3 id='1f9ac54b15-25'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4565,7 +4756,7 @@ intermediary：经纪账户</p>
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-21'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-22'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4706,7 +4897,7 @@ intermediary：经纪账户</p>
 限频值（NEW）：20次/2s</p>
 
 <p>此接口基于搜索条件查询最近48小时内历史订单。通过API创建的订单，撤销超过2小时后无法查询。</p>
-<h3 id='http-24'>HTTP 请求</h3>
+<h3 id='http-25'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/history</code></li>
 </ul>
@@ -4721,7 +4912,7 @@ intermediary：经纪账户</p>
    </span><span class="nl">"direct"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prev"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='1f9ac54b15-25'>请求参数</h3>
+</span></code></pre></div><h3 id='1f9ac54b15-26'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4799,7 +4990,7 @@ intermediary：经纪账户</p>
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-22'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-23'>响应数据</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -4927,11 +5118,11 @@ intermediary：经纪账户</p>
 限频值（NEW）：20次/2s</p>
 
 <p>此接口基于搜索条件查询当前和历史成交记录。</p>
-<h3 id='http-25'>HTTP 请求</h3>
+<h3 id='http-26'>HTTP 请求</h3>
 <ul>
 <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
-<h3 id='1f9ac54b15-26'>请求参数</h3>
+<h3 id='1f9ac54b15-27'>请求参数</h3>
 <table><thead>
 <tr>
 <th>参数名称</th>
@@ -5026,7 +5217,7 @@ intermediary：经纪账户</p>
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='2213f4c32f-23'>响应数据</h3>
+</span></code></pre></div><h3 id='2213f4c32f-24'>响应数据</h3>
 <aside class="notice">返回的主数据对象为一个对象数组，其中每一个元件代表一个交易结果。</aside>
 
 <table><thead>

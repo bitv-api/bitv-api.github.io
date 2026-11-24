@@ -263,6 +263,9 @@
                     <a href="#簽名認證" class="toc-h2 toc-link" data-title="簽名認證">簽名認證</a>
                   </li>
                   <li>
+                    <a href="#ed25519-簽名認證自備公鑰" class="toc-h2 toc-link" data-title="Ed25519 簽名認證（自備公鑰）">Ed25519 簽名認證（自備公鑰）</a>
+                  </li>
+                  <li>
                     <a href="#業務字典" class="toc-h2 toc-link" data-title="業務字典">業務字典</a>
                   </li>
               </ul>
@@ -370,6 +373,9 @@
                   </li>
                   <li>
                     <a href="#賬戶流水" class="toc-h2 toc-link" data-title="賬戶流水">賬戶流水</a>
+                  </li>
+                  <li>
+                    <a href="#賬戶間資金划轉" class="toc-h2 toc-link" data-title="賬戶間資金划轉">賬戶間資金划轉</a>
                   </li>
               </ul>
           </li>
@@ -772,6 +778,112 @@
     }
 }
 `</p>
+
+<h2 id="ed25519-簽名認證自備公鑰">Ed25519 簽名認證（自備公鑰）</h2>
+
+<p>除 HMAC-SHA256 外，私有接口也支持 <strong>Ed25519</strong> 非對稱簽名。兩種方式的待簽字符串構造完全一致（見「簽名認證」章節的簽名步驟），僅第 7 步「用密鑰生成簽名」不同。</p>
+
+<p>與 HMAC 的關鍵區別：</p>
+
+<ul>
+  <li><strong>您在本地自行生成密鑰對，只把公鑰上傳給 BitV，私鑰始終保存在您自己手中——BitV 不持有、也不接收您的私鑰。</strong></li>
+  <li>請求中的 <code>SignatureMethod</code> 取值為 <code>Ed25519</code>（<strong>區分大小寫</strong>，必須逐字為 <code>Ed25519</code>），<code>SignatureVersion</code> 仍為 <code>2</code>。</li>
+  <li>簽名是用 Ed25519 私鑰對待簽字符串的<strong>原始 UTF-8 字節</strong>直接簽名，<strong>不做 SHA-256 預哈希</strong>；所得 64 字節簽名經 base64 編碼後作為 <code>Signature</code> 參數，加入方式與 HMAC 一致。</li>
+</ul>
+
+<h3 id="一生成密鑰對">一、生成密鑰對</h3>
+
+<p>在本地使用 OpenSSL 生成一對 Ed25519 密鑰（需要 OpenSSL 1.1.1 及以上版本）：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>openssl genpkey -algorithm ed25519 -out ed25519_private.pem
+openssl pkey -in ed25519_private.pem -pubout -out ed25519_public.pem
+</code></pre></div>
+<ul>
+  <li><code>ed25519_private.pem</code> 是您的<strong>私鑰，請妥善保管、切勿上傳或洩露</strong>。</li>
+  <li><code>ed25519_public.pem</code> 是您的<strong>公鑰</strong>，用於下一步登記。</li>
+</ul>
+
+<h3 id="二登記公鑰">二、登記公鑰</h3>
+
+<p>在 API Key 管理頁創建 API Key 時，選擇認證方式為 Ed25519，將 <code>ed25519_public.pem</code> 的<strong>完整內容</strong>貼進公鑰輸入框。</p>
+
+<aside class="warning">
+公鑰必須是<b>完整的 PEM 格式</b>，即包含首尾的 <code>-----BEGIN PUBLIC KEY-----</code> 與 <code>-----END PUBLIC KEY-----</code> 標記行；<b>不接受</b>去掉首尾標記的純 base64 字符串。
+</aside>
+
+<p>完整 PEM 公鑰示例：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+</code></pre></div>
+<aside class="notice">
+誤把<b>私鑰</b>貼入公鑰框會被直接拒絕，且私鑰不會離開您的瀏覽器。請只貼公鑰。
+</aside>
+
+<h3 id="三構造待簽字符串">三、構造待簽字符串</h3>
+
+<p>與 HMAC 完全相同（參見「簽名認證 → 簽名步驟」）：請求方法、小寫域名、接口路徑各佔一行（行尾加 <code>\n</code>），第四行是經 URL 編碼並按 ASCII 升序排序、以 <code>&amp;</code> 連接的全部參數，其中 <code>SignatureMethod=Ed25519</code>。</p>
+
+<aside class="notice">
+參數使用 UTF-8 編碼並進行 URL 編碼，十六進制字符大寫（如 <code>:</code> 編碼為 <code>%3A</code>）。<b>非 ASCII 字符（如中文備註）必須先 percent-encode 再參與簽名</b>，例如備註值「測試」應編碼為 <code>%E6%B8%AC%E8%A9%A6</code>。
+</aside>
+
+<p>以查詢賬戶（<code>GET /v1/account/accounts</code>）為例，待簽字符串為（四行，行間為換行符 <code>\n</code>，末行無換行）：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&amp;SignatureMethod=Ed25519&amp;SignatureVersion=2&amp;Timestamp=2026-11-24T08%3A30%3A00
+</code></pre></div>
+<h3 id="四生成簽名">四、生成簽名</h3>
+
+<p>用 Ed25519 私鑰對上面的待簽字符串<strong>原始字節</strong>簽名，再做 base64 編碼。把待簽字符串按原樣（含換行符、末行無換行）存入文件 <code>payload.txt</code> 後：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>openssl pkeyutl -sign -inkey ed25519_private.pem -rawin -in payload.txt | openssl base64 -A
+</code></pre></div>
+<aside class="notice">
+<code>-rawin</code> 表示對原始消息直接簽名，不做預哈希——這正是 Ed25519 的要求，請勿先對待簽字符串做 SHA-256。
+</aside>
+
+<h3 id="五完整可復現示例">五、完整可復現示例</h3>
+
+<p>下面一組值互相匹配，可用於自檢您的簽名實現（用示例私鑰對示例待簽字符串簽名，應得到完全相同的 <code>Signature</code>）：</p>
+
+<p>示例私鑰（<strong>僅供復現，切勿用於生產</strong>）：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIIE38px7ixgIXEvvkrb8Iry5UcADzogKTMHFsGajmPpo
+-----END PRIVATE KEY-----
+</code></pre></div>
+<p>對應公鑰：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+</code></pre></div>
+<p>待簽字符串（四行，行間 <code>\n</code>，末行無換行）：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&amp;SignatureMethod=Ed25519&amp;SignatureVersion=2&amp;Timestamp=2026-11-24T08%3A30%3A00
+</code></pre></div>
+<p>簽名結果（<code>Signature</code>，base64）：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>fdZSliXAyz0s3+CA5VaFKS5EfN+Z28nMNuwY4W9dxMDfOVts5FyIdqWi7ypis3+w429/7S2cYS9zEENhD48bDQ==
+</code></pre></div>
+<h3 id="六加入請求">六、加入請求</h3>
+
+<p>與 HMAC 一致：把 base64 簽名做 URL 編碼後作為 <code>Signature</code> 參數加入請求路徑。</p>
+
+<aside class="warning">
+base64 簽名<b>區分大小寫</b>，且含 <code>+</code> <code>/</code> <code>=</code> 字符，放入 URL 時務必正確 percent-encode（如 <code>+</code>→<code>%2B</code>、<code>=</code>→<code>%3D</code>），不要讓網絡庫擅自改寫大小寫或省略轉義，否則驗簽失敗。
+</aside>
+
+<aside class="notice">
+時間戳（Timestamp）須為 UTC、格式 <code>YYYY-MM-DDThh:mm:ss</code>。服務器允許的時間偏差窗口為 <b>±300 秒</b>，超出會被拒絕。
+</aside>
 
 <h2 id="業務字典">業務字典</h2>
 
@@ -3167,6 +3279,126 @@ intermediary：經紀賬戶</p>
   </tbody>
 </table>
 
+<h2 id="賬戶間資金划轉">賬戶間資金划轉</h2>
+
+<p>同一用戶在自己的不同賬戶類型之間划轉資金（如交易賬戶與存管賬戶之間）。</p>
+
+<p>本接口需簽名認證，簽名方式與其他私有接口一致（見「簽名認證」章節）。調用本接口的 API Key 需具備<strong>資金操作（划轉）</strong>權限。</p>
+
+<h3 id="http-請求-12">HTTP 請求</h3>
+
+<ul>
+  <li>POST <code>/v1/account/type-transfer</code></li>
+</ul>
+
+<h3 id="請求參數-13">請求參數</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>參數名稱</th>
+      <th>是否必需</th>
+      <th>數據類型</th>
+      <th>描述</th>
+      <th>取值範圍</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>currency</td>
+      <td>true</td>
+      <td>string</td>
+      <td>幣種，小寫（如 <code>usdt</code>、<code>btc</code>）</td>
+      <td>取值參考 <code>GET /v1/common/currencys</code></td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>true</td>
+      <td>string</td>
+      <td>划轉方向</td>
+      <td>見下方取值說明，只接受列出的 10 個值</td>
+    </tr>
+    <tr>
+      <td>amount</td>
+      <td>true</td>
+      <td>string</td>
+      <td>划轉數量</td>
+      <td>由幣種精度決定，超出幣種精度將被拒絕</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>金額按對應幣種的精度校驗，超出精度的金額會被拒絕（返回 <code>invalid-amount</code>），不做靜默截斷。不同幣種允許的小數位數不同，請在傳入前按幣種精度取整。與本文檔金額字段的統一約定一致，<code>amount</code> 為 string，請勿按數字類型反序列化。</p>
+
+<p><code>type</code> 的賬戶類型共四個：<code>spot</code>（交易）、<code>depository</code>（存管）、<code>monetary</code>（法幣）、<code>intermediary</code>（經紀）。構詞為 <code>&lt;源賬戶&gt;-trade-to-&lt;目標賬戶&gt;-trade</code>，只接受以下 10 個方向（存管與法幣之間不支持互轉）：</p>
+
+<div class="highlight"><pre class="highlight plaintext"><code>depository-trade-to-spot-trade
+depository-trade-to-intermediary-trade
+monetary-trade-to-spot-trade
+monetary-trade-to-intermediary-trade
+spot-trade-to-depository-trade
+spot-trade-to-monetary-trade
+spot-trade-to-intermediary-trade
+intermediary-trade-to-depository-trade
+intermediary-trade-to-monetary-trade
+intermediary-trade-to-spot-trade
+</code></pre></div>
+<blockquote>
+  <p>Response:</p>
+</blockquote>
+
+<div class="highlight"><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7528745806200606720"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h3 id="返回數據">返回數據</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>字段名稱</th>
+      <th>數據類型</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>status</td>
+      <td>string</td>
+      <td>狀態碼</td>
+    </tr>
+    <tr>
+      <td>data</td>
+      <td>string</td>
+      <td>本次划轉的單號</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>一筆划轉在 <code>GET /v1/account/history</code> 中產生雙邊兩條記錄（轉出一條、轉入一條），<code>transact-amt</code> 一負一正、數值相同、<code>transact-time</code> 相同。按賬戶與時間範圍查詢即可定位本筆划轉的兩條記錄。</p>
+
+<p>常見錯誤碼：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>err-code</th>
+      <th>觸發條件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>invalid-amount</td>
+      <td>金額為空、低於最小值、或超出幣種精度</td>
+    </tr>
+    <tr>
+      <td>order-type-invalid</td>
+      <td><code>type</code> 不在上述 10 個方向內</td>
+    </tr>
+  </tbody>
+</table>
+
 <h1 id="現貨交易">現貨交易</h1>
 
 <h2 id="簡介-4">簡介</h2>
@@ -3383,7 +3615,7 @@ intermediary：經紀賬戶</p>
 
 <p>發送一個新訂單以進行撮合。</p>
 
-<h3 id="http-請求-12">HTTP 請求</h3>
+<h3 id="http-請求-13">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/place</code></li>
@@ -3403,7 +3635,7 @@ intermediary：經紀賬戶</p>
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-13">請求參數</h3>
+<h3 id="請求參數-14">請求參數</h3>
 
 <table>
   <thead>
@@ -3493,7 +3725,7 @@ intermediary：經紀賬戶</p>
 
 <p>一個批量最多10張訂單</p>
 
-<h3 id="http-請求-13">HTTP 請求</h3>
+<h3 id="http-請求-14">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/batch-orders</code></li>
@@ -3522,7 +3754,7 @@ intermediary：經紀賬戶</p>
 	</span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-14">請求參數</h3>
+<h3 id="請求參數-15">請求參數</h3>
 
 <table>
   <thead>
@@ -3650,13 +3882,13 @@ intermediary：經紀賬戶</p>
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-14">HTTP 請求</h3>
+<h3 id="http-請求-15">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/{order-id}/submitcancel</code></li>
 </ul>
 
-<h3 id="請求參數-15">請求參數</h3>
+<h3 id="請求參數-16">請求參數</h3>
 
 <table>
   <thead>
@@ -3749,7 +3981,7 @@ intermediary：經紀賬戶</p>
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-15">HTTP 請求</h3>
+<h3 id="http-請求-16">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/cancel-by-client-order-id</code></li>
@@ -3763,7 +3995,7 @@ intermediary：經紀賬戶</p>
   </span><span class="nl">"client-order-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a0001"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-16">請求參數</h3>
+<h3 id="請求參數-17">請求參數</h3>
 
 <table>
   <thead>
@@ -3858,7 +4090,7 @@ intermediary：經紀賬戶</p>
 
 <p>查詢已提交但是仍未完全成交或未被撤銷的訂單。</p>
 
-<h3 id="http-請求-16">HTTP 請求</h3>
+<h3 id="http-請求-17">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/open-orders</code></li>
@@ -3874,7 +4106,7 @@ intermediary：經紀賬戶</p>
    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-17">請求參數</h3>
+<h3 id="請求參數-18">請求參數</h3>
 
 <table>
   <thead>
@@ -4045,13 +4277,13 @@ intermediary：經紀賬戶</p>
 
 <aside class="warning">此接口只提交取消請求，實際取消結果需要通過訂單狀態，撮合狀態等接口來確認。</aside>
 
-<h3 id="http-請求-17">HTTP 請求</h3>
+<h3 id="http-請求-18">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batch-cancel-open-orders</code></li>
 </ul>
 
-<h3 id="請求參數-18">請求參數</h3>
+<h3 id="請求參數-19">請求參數</h3>
 
 <table>
   <thead>
@@ -4157,7 +4389,7 @@ intermediary：經紀賬戶</p>
 
 <p>此接口同時為多個訂單（基於id）發送取消請求。</p>
 
-<h3 id="http-請求-18">HTTP 請求</h3>
+<h3 id="http-請求-19">HTTP 請求</h3>
 
 <ul>
   <li>POST <code>/v1/order/orders/batchcancel</code></li>
@@ -4173,7 +4405,7 @@ intermediary：經紀賬戶</p>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-19">請求參數</h3>
+<h3 id="請求參數-20">請求參數</h3>
 
 <table>
   <thead>
@@ -4344,13 +4576,13 @@ intermediary：經紀賬戶</p>
 
 <p>此接口返回指定訂單的最新狀態和詳情。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-19">HTTP 請求</h3>
+<h3 id="http-請求-20">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}</code></li>
 </ul>
 
-<h3 id="請求參數-20">請求參數</h3>
+<h3 id="請求參數-21">請求參數</h3>
 
 <table>
   <thead>
@@ -4529,13 +4761,13 @@ intermediary：經紀賬戶</p>
 
 <p>此接口返回指定用戶自編訂單號（24小時內）的訂單最新狀態和詳情。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-20">HTTP 請求</h3>
+<h3 id="http-請求-21">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/by-client-order-id</code></li>
 </ul>
 
-<h3 id="請求參數-21">請求參數</h3>
+<h3 id="請求參數-22">請求參數</h3>
 
 <table>
   <thead>
@@ -4722,13 +4954,13 @@ intermediary：經紀賬戶</p>
 
 <p>此接口返回指定訂單的成交明細。</p>
 
-<h3 id="http-請求-21">HTTP 請求</h3>
+<h3 id="http-請求-22">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders/{order-id}/matchresults</code></li>
 </ul>
 
-<h3 id="請求參數-22">請求參數</h3>
+<h3 id="請求參數-23">請求參數</h3>
 
 <table>
   <thead>
@@ -4941,13 +5173,13 @@ intermediary：經紀賬戶</p>
 
 <p>建議用戶以「時間範圍「查詢歷史訂單。</p>
 
-<h3 id="http-請求-22">HTTP 請求</h3>
+<h3 id="http-請求-23">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/orders</code></li>
 </ul>
 
-<h3 id="請求參數-23">請求參數</h3>
+<h3 id="請求參數-24">請求參數</h3>
 
 <table>
   <thead>
@@ -5209,7 +5441,7 @@ intermediary：經紀賬戶</p>
 
 <p>此接口基於搜索條件查詢最近48小時內歷史訂單。通過API創建的訂單，撤銷超過2小時後無法查詢。</p>
 
-<h3 id="http-請求-23">HTTP 請求</h3>
+<h3 id="http-請求-24">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/history</code></li>
@@ -5227,7 +5459,7 @@ intermediary：經紀賬戶</p>
    </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<h3 id="請求參數-24">請求參數</h3>
+<h3 id="請求參數-25">請求參數</h3>
 
 <table>
   <thead>
@@ -5446,13 +5678,13 @@ intermediary：經紀賬戶</p>
 
 <p>此接口基於搜索條件查詢當前和歷史成交記錄。</p>
 
-<h3 id="http-請求-24">HTTP 請求</h3>
+<h3 id="http-請求-25">HTTP 請求</h3>
 
 <ul>
   <li>GET <code>/v1/order/matchresults</code></li>
 </ul>
 
-<h3 id="請求參數-25">請求參數</h3>
+<h3 id="請求參數-26">請求參數</h3>
 
 <table>
   <thead>

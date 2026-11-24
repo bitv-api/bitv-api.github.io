@@ -255,6 +255,123 @@ API 请求在通过 internet 传输的过程中极有可能被篡改，为了确
 }
 `
 
+## Ed25519 签名认证（自备公钥）
+
+除 HMAC-SHA256 外，私有接口也支持 **Ed25519** 非对称签名。两种方式的待签字符串构造完全一致（见「签名认证」章节的签名步骤），仅第 7 步「用密钥生成签名」不同。
+
+与 HMAC 的关键区别：
+
+- **您在本地自行生成密钥对，只把公钥上传给 BitV，私钥始终保存在您自己手中——BitV 不持有、也不接收您的私钥。**
+- 请求中的 `SignatureMethod` 取值为 `Ed25519`（**区分大小写**，必须逐字为 `Ed25519`），`SignatureVersion` 仍为 `2`。
+- 签名是用 Ed25519 私钥对待签字符串的**原始 UTF-8 字节**直接签名，**不做 SHA-256 预哈希**；所得 64 字节签名经 base64 编码后作为 `Signature` 参数，加入方式与 HMAC 一致。
+
+### 一、生成密钥对
+
+在本地使用 OpenSSL 生成一对 Ed25519 密钥（需要 OpenSSL 1.1.1 及以上版本）：
+
+```
+openssl genpkey -algorithm ed25519 -out ed25519_private.pem
+openssl pkey -in ed25519_private.pem -pubout -out ed25519_public.pem
+```
+
+- `ed25519_private.pem` 是您的**私钥，请妥善保管、切勿上传或泄露**。
+- `ed25519_public.pem` 是您的**公钥**，用于下一步登记。
+
+### 二、登记公钥
+
+在 API Key 管理页创建 API Key 时，选择认证方式为 Ed25519，将 `ed25519_public.pem` 的**完整内容**粘贴进公钥输入框。
+
+<aside class="warning">
+公钥必须是<b>完整的 PEM 格式</b>，即包含首尾的 <code>-----BEGIN PUBLIC KEY-----</code> 与 <code>-----END PUBLIC KEY-----</code> 标记行；<b>不接受</b>去掉首尾标记的纯 base64 字符串。
+</aside>
+
+完整 PEM 公钥示例：
+
+```
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+```
+
+<aside class="notice">
+误把<b>私钥</b>粘入公钥框会被直接拒绝，且私钥不会离开您的浏览器。请只粘贴公钥。
+</aside>
+
+### 三、构造待签字符串
+
+与 HMAC 完全相同（参见「签名认证 → 签名步骤」）：请求方法、小写域名、接口路径各占一行（行尾加 `\n`），第四行是经 URL 编码并按 ASCII 升序排序、以 `&` 连接的全部参数，其中 `SignatureMethod=Ed25519`。
+
+<aside class="notice">
+参数使用 UTF-8 编码并进行 URL 编码，十六进制字符大写（如 <code>:</code> 编码为 <code>%3A</code>）。<b>非 ASCII 字符（如中文备注）必须先 percent-encode 再参与签名</b>，例如备注值「测试」应编码为 <code>%E6%B5%8B%E8%AF%95</code>。
+</aside>
+
+以查询账户（`GET /v1/account/accounts`）为例，待签字符串为（四行，行间为换行符 `\n`，末行无换行）：
+
+```
+GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&SignatureMethod=Ed25519&SignatureVersion=2&Timestamp=2026-11-24T08%3A30%3A00
+```
+
+### 四、生成签名
+
+用 Ed25519 私钥对上面的待签字符串**原始字节**签名，再做 base64 编码。把待签字符串按原样（含换行符、末行无换行）存入文件 `payload.txt` 后：
+
+```
+openssl pkeyutl -sign -inkey ed25519_private.pem -rawin -in payload.txt | openssl base64 -A
+```
+
+<aside class="notice">
+<code>-rawin</code> 表示对原始消息直接签名，不做预哈希——这正是 Ed25519 的要求，请勿先对待签字符串做 SHA-256。
+</aside>
+
+### 五、完整可复现示例
+
+下面一组值互相匹配，可用于自检您的签名实现（用示例私钥对示例待签字符串签名，应得到完全相同的 `Signature`）：
+
+示例私钥（**仅供复现，切勿用于生产**）：
+
+```
+-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIIE38px7ixgIXEvvkrb8Iry5UcADzogKTMHFsGajmPpo
+-----END PRIVATE KEY-----
+```
+
+对应公钥：
+
+```
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+```
+
+待签字符串（四行，行间 `\n`，末行无换行）：
+
+```
+GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&SignatureMethod=Ed25519&SignatureVersion=2&Timestamp=2026-11-24T08%3A30%3A00
+```
+
+签名结果（`Signature`，base64）：
+
+```
+fdZSliXAyz0s3+CA5VaFKS5EfN+Z28nMNuwY4W9dxMDfOVts5FyIdqWi7ypis3+w429/7S2cYS9zEENhD48bDQ==
+```
+
+### 六、加入请求
+
+与 HMAC 一致：把 base64 签名做 URL 编码后作为 `Signature` 参数加入请求路径。
+
+<aside class="warning">
+base64 签名<b>区分大小写</b>，且含 <code>+</code> <code>/</code> <code>=</code> 字符，放入 URL 时务必正确 percent-encode（如 <code>+</code>→<code>%2B</code>、<code>=</code>→<code>%3D</code>），不要让网络库擅自改写大小写或省略转义，否则验签失败。
+</aside>
+
+<aside class="notice">
+时间戳（Timestamp）须为 UTC、格式 <code>YYYY-MM-DDThh:mm:ss</code>。服务器允许的时间偏差窗口为 <b>±300 秒</b>，超出会被拒绝。
+</aside>
 
 ## 业务字典
 
@@ -1559,6 +1676,66 @@ API Key 权限：读取<br>
 | transact-time | long     | 交易时间（数据库记录时间）                           |          |
 | record-id ]   | long     | 数据库记录编号（全局唯一）                           |          |
 | next-id }     | long     | 下页起始编号（仅在查询结果需要分页返回时包含此字段） |          |
+
+## 账户间资金划转
+
+同一用户在自己的不同账户类型之间划转资金（如交易账户与存管账户之间）。
+
+本接口需签名认证，签名方式与其他私有接口一致（见「签名认证」章节）。调用本接口的 API Key 需具备**资金操作（划转）**权限。
+
+### HTTP 请求
+
+- POST `/v1/account/type-transfer`
+
+### 请求参数
+
+| 参数名称 | 是否必需 | 数据类型 | 描述 | 取值范围 |
+| -------- | -------- | -------- | ---- | -------- |
+| currency | true     | string   | 币种，小写（如 `usdt`、`btc`） | 取值参考 `GET /v1/common/currencys` |
+| type     | true     | string   | 划转方向 | 见下方取值说明，只接受列出的 10 个值 |
+| amount   | true     | string   | 划转数量 | 由币种精度决定，超出币种精度将被拒绝 |
+
+金额按对应币种的精度校验，超出精度的金额会被拒绝（返回 `invalid-amount`），不做静默截断。不同币种允许的小数位数不同，请在传入前按币种精度取整。与本文档金额字段的统一约定一致，`amount` 为 string，请勿按数字类型反序列化。
+
+`type` 的账户类型共四个：`spot`（交易）、`depository`（存管）、`monetary`（法币）、`intermediary`（经纪）。构词为 `<源账户>-trade-to-<目标账户>-trade`，只接受以下 10 个方向（存管与法币之间不支持互转）：
+
+```
+depository-trade-to-spot-trade
+depository-trade-to-intermediary-trade
+monetary-trade-to-spot-trade
+monetary-trade-to-intermediary-trade
+spot-trade-to-depository-trade
+spot-trade-to-monetary-trade
+spot-trade-to-intermediary-trade
+intermediary-trade-to-depository-trade
+intermediary-trade-to-monetary-trade
+intermediary-trade-to-spot-trade
+```
+
+> Response:
+
+```json
+{
+    "status": "ok",
+    "data": "7528745806200606720"
+}
+```
+
+### 响应数据
+
+| 字段名称 | 数据类型 | 描述             |
+| -------- | -------- | ---------------- |
+| status   | string   | 状态码           |
+| data     | string   | 本次划转的单号   |
+
+一笔划转在 `GET /v1/account/history` 中产生双边两条记录（转出一条、转入一条），`transact-amt` 一负一正、数值相同、`transact-time` 相同。按账户与时间范围查询即可定位本笔划转的两条记录。
+
+常见错误码：
+
+| err-code          | 触发条件                                   |
+| ----------------- | ------------------------------------------ |
+| invalid-amount    | 金额为空、低于最小值、或超出币种精度       |
+| order-type-invalid | `type` 不在上述 10 个方向内               |
 
 # 现货交易
 

@@ -236,6 +236,124 @@ For example:
 }
 `
 
+## Ed25519 Signature Authentication (Self-provided Public Key)
+
+In addition to HMAC-SHA256, private interfaces also support **Ed25519** asymmetric signatures. The string to sign is constructed exactly the same way for both methods (see the signing steps under "Signature Authentication"); only step 7, "generate the signature with your key", differs.
+
+Key differences from HMAC:
+
+- **You generate the key pair locally and upload only the public key to BitV. Your private key always stays with you — BitV never holds or receives your private key.**
+- In the request, `SignatureMethod` is `Ed25519` (**case-sensitive**, it must be exactly `Ed25519`), and `SignatureVersion` is still `2`.
+- The signature is produced by signing the **raw UTF-8 bytes** of the string to sign directly with the Ed25519 private key, **without any SHA-256 pre-hashing**; the resulting 64-byte signature is base64-encoded and used as the `Signature` parameter, added to the request the same way as with HMAC.
+
+### 1. Generate a key pair
+
+Generate an Ed25519 key pair locally with OpenSSL (requires OpenSSL 1.1.1 or later):
+
+```
+openssl genpkey -algorithm ed25519 -out ed25519_private.pem
+openssl pkey -in ed25519_private.pem -pubout -out ed25519_public.pem
+```
+
+- `ed25519_private.pem` is your **private key — keep it safe and never upload or disclose it**.
+- `ed25519_public.pem` is your **public key**, used in the next step.
+
+### 2. Register the public key
+
+When creating an API Key on the API Key management page, choose Ed25519 as the authentication method and paste the **entire content** of `ed25519_public.pem` into the public key field.
+
+<aside class="warning">
+The public key must be in <b>complete PEM format</b>, i.e. it must include the <code>-----BEGIN PUBLIC KEY-----</code> and <code>-----END PUBLIC KEY-----</code> marker lines; a bare base64 string without these markers is <b>not accepted</b>.
+</aside>
+
+Example of a complete PEM public key:
+
+```
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+```
+
+<aside class="notice">
+Pasting a <b>private key</b> into the public key field is rejected outright, and the private key never leaves your browser. Paste the public key only.
+</aside>
+
+### 3. Build the string to sign
+
+Identical to HMAC (see "Signature Authentication → signing steps"): the request method, the lowercase host, and the interface path each occupy one line (each followed by `\n`); the fourth line is all parameters URL-encoded, sorted in ascending ASCII order and joined with `&`, where `SignatureMethod=Ed25519`.
+
+<aside class="notice">
+Parameters are UTF-8 encoded and URL-encoded, with hexadecimal characters in uppercase (e.g. <code>:</code> is encoded as <code>%3A</code>). <b>Non-ASCII characters (such as a Chinese remark) must be percent-encoded before being signed</b>; for example, the remark value "测试" should be encoded as <code>%E6%B5%8B%E8%AF%95</code>.
+</aside>
+
+Taking the account query (`GET /v1/account/accounts`) as an example, the string to sign is (four lines, separated by `\n`, no trailing newline):
+
+```
+GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&SignatureMethod=Ed25519&SignatureVersion=2&Timestamp=2026-11-24T08%3A30%3A00
+```
+
+### 4. Generate the signature
+
+Sign the **raw bytes** of the string to sign above with the Ed25519 private key, then base64-encode it. After saving the string to sign exactly as-is (including the newlines, no trailing newline) into a file `payload.txt`:
+
+```
+openssl pkeyutl -sign -inkey ed25519_private.pem -rawin -in payload.txt | openssl base64 -A
+```
+
+<aside class="notice">
+<code>-rawin</code> means the raw message is signed directly without pre-hashing — this is exactly what Ed25519 requires. Do not apply SHA-256 to the string to sign first.
+</aside>
+
+### 5. Complete reproducible example
+
+The following values match one another and can be used to self-check your signing implementation (signing the sample string to sign with the sample private key should yield exactly the same `Signature`):
+
+Sample private key (**for reproduction only, never use in production**):
+
+```
+-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIIE38px7ixgIXEvvkrb8Iry5UcADzogKTMHFsGajmPpo
+-----END PRIVATE KEY-----
+```
+
+Corresponding public key:
+
+```
+-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAcTVDZHw3qhXDrmaALOiTBSZU+ffKsHDy0cmsCd/nNZE=
+-----END PUBLIC KEY-----
+```
+
+String to sign (four lines, separated by `\n`, no trailing newline):
+
+```
+GET
+api.bitv.com
+/v1/account/accounts
+AccessKeyId=11111111-22222222-33333333-44444444&SignatureMethod=Ed25519&SignatureVersion=2&Timestamp=2026-11-24T08%3A30%3A00
+```
+
+Signature (`Signature`, base64):
+
+```
+fdZSliXAyz0s3+CA5VaFKS5EfN+Z28nMNuwY4W9dxMDfOVts5FyIdqWi7ypis3+w429/7S2cYS9zEENhD48bDQ==
+```
+
+### 6. Add it to the request
+
+Same as HMAC: URL-encode the base64 signature and add it as the `Signature` parameter in the request path.
+
+<aside class="warning">
+The base64 signature is <b>case-sensitive</b> and contains <code>+</code> <code>/</code> <code>=</code> characters. When placing it in a URL, be sure to percent-encode it correctly (e.g. <code>+</code>→<code>%2B</code>, <code>=</code>→<code>%3D</code>), and do not let your HTTP library change its case or drop the escaping, otherwise verification will fail.
+</aside>
+
+<aside class="notice">
+The timestamp (Timestamp) must be in UTC, in the format <code>YYYY-MM-DDThh:mm:ss</code>. The server's allowed clock-skew window is <b>±300 seconds</b>; requests outside it are rejected.
+</aside>
+
 ## Business Glossary
 
 ### Trading Pairs
@@ -1562,6 +1680,66 @@ This node returns the account history based on the user account ID.
 | transact-time | long      | Transaction time (database record time)                  |             |
 | record-id ]   | long      | Database record ID (globally unique)                     |             |
 | next-id }     | long      | The start number of the next page (included when the query results need to be returned in pages) |             |
+
+## Account Type Transfer
+
+Transfer funds between a single user's own account types (e.g. between the trading account and the custody account).
+
+This interface requires signature authentication, using the same signing method as other private interfaces (see the "Signature Authentication" chapter). The API Key used to call this interface must have the **fund operation (transfer)** permission.
+
+### HTTP Request
+
+- POST `/v1/account/type-transfer`
+
+### Request Parameters
+
+| Parameter | Required | Data Type | Description | Value Range |
+| -------- | -------- | -------- | ---- | -------- |
+| currency | true     | string   | Currency, lowercase (e.g. `usdt`, `btc`) | See `GET /v1/common/currencys` |
+| type     | true     | string   | Transfer direction | See the value description below; only the 10 listed values are accepted |
+| amount   | true     | string   | Transfer amount | Determined by the currency's precision; an amount exceeding the currency's precision is rejected |
+
+The amount is validated against the corresponding currency's precision; an amount exceeding the precision is rejected (returns `invalid-amount`) and is not silently truncated. Different currencies allow different numbers of decimal places, so round to the currency's precision before submitting. Consistent with this document's convention for amount fields, `amount` is a string; do not deserialize it as a numeric type.
+
+`type` has four account types: `spot` (trading), `depository` (depository), `monetary` (fiat), `intermediary` (brokerage). The format is `<source>-trade-to-<target>-trade`, and only the following 10 directions are accepted (transfers between depository and fiat are not supported):
+
+```
+depository-trade-to-spot-trade
+depository-trade-to-intermediary-trade
+monetary-trade-to-spot-trade
+monetary-trade-to-intermediary-trade
+spot-trade-to-depository-trade
+spot-trade-to-monetary-trade
+spot-trade-to-intermediary-trade
+intermediary-trade-to-depository-trade
+intermediary-trade-to-monetary-trade
+intermediary-trade-to-spot-trade
+```
+
+> Response:
+
+```json
+{
+    "status": "ok",
+    "data": "7528745806200606720"
+}
+```
+
+### Response Data
+
+| Field | Data Type | Description |
+| -------- | -------- | ---------------- |
+| status   | string   | Status code      |
+| data     | string   | The transfer order number for this transfer |
+
+A single transfer produces two paired records in `GET /v1/account/history` (one for the transfer-out, one for the transfer-in): `transact-amt` is negative on one and positive on the other with the same magnitude, and `transact-time` is identical. Query by account and time range to locate the two records for this transfer.
+
+Common error codes:
+
+| err-code          | Trigger condition                          |
+| ----------------- | ------------------------------------------ |
+| invalid-amount    | Amount is empty, below the minimum, or exceeds the currency's precision |
+| order-type-invalid | `type` is not one of the 10 directions above |
 
 # Spot Trading
 
